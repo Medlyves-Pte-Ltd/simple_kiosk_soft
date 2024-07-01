@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_kiosk_software/screens/measurement_pages/base_measure_layout_widget.dart';
 import 'package:simple_kiosk_software/screens/measurement_screen.dart';
 import 'package:simple_kiosk_software/screens/summary_screen.dart';
 import 'package:simple_kiosk_software/screens/user_login.dart';
@@ -18,7 +19,8 @@ final Map<String, Function> routes = {
   '/login': (context, {args}) => const UserLogin(),
   '/measurement': (context, {args}) => const MeasurementScreen(),
   '/summary': (context, {args}) => const SummaryScreen(),
-  '/kiosk_manager': (context, {args}) => KioskManager()
+  '/kiosk_manager': (context, {args}) => KioskManager(),
+  '/BaseMeasureLayoutWidget': (context, {args}) => BaseMeasureLayoutWidget(),
 };
 
 // 定义通用的onGenerateRoute

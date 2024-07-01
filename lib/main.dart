@@ -53,8 +53,8 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           onGenerateRoute: onCustomGenerateRoute,
-          initialRoute: "/",
-          //initialRoute: "/kiosk_manager",
+          //initialRoute: "/",
+          initialRoute: "/BaseMeasureLayoutWidget",
           supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData(
             textTheme: GoogleFonts.robotoTextTheme(textTheme).copyWith(
