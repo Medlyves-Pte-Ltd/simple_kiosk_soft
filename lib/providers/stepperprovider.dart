@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:base_kiosk_software/utils/enum_measurement.dart';
+import 'package:simple_kiosk_software/utils/enum_measurement.dart';
 
 class StepperProvider extends ChangeNotifier {
   Measurement currentMeasurement =

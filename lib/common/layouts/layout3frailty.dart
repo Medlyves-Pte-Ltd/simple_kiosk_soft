@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:base_kiosk_software/common/header_text.dart';
+import 'package:simple_kiosk_software/common/header_text.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Content2Frailty extends StatelessWidget {
@@ -43,7 +43,7 @@ class Content2Frailty extends StatelessWidget {
           child: thirdRow,
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: screenWidth *0.065),
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.065),
           child: Container(
             alignment: Alignment.centerRight,
             height: screenHeight * 0.07,

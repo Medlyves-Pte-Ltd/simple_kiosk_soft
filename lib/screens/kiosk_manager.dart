@@ -1,9 +1,9 @@
-import 'package:base_kiosk_software/common/footer.dart';
-import 'package:base_kiosk_software/utils/storage_utils.dart';
+import 'package:simple_kiosk_software/common/footer.dart';
+import 'package:simple_kiosk_software/utils/storage_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:base_kiosk_software/constants/colors.dart';
+import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:flutter_devices_sdk/view/device_config_login_page.dart';
 import 'package:flutter_devices_sdk/view/device_config_page.dart';
 

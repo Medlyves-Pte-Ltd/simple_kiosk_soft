@@ -1,10 +1,10 @@
-import 'package:base_kiosk_software/blocs/locale/locale_bloc.dart';
+import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:base_kiosk_software/common/buttons.dart';
-import 'package:base_kiosk_software/common/header_text.dart';
-import 'package:base_kiosk_software/common/layouts/layout1.dart';
-import 'package:base_kiosk_software/common/layouts/layout2.dart';
-import 'package:base_kiosk_software/common/video_widget.dart';
+import 'package:simple_kiosk_software/common/buttons.dart';
+import 'package:simple_kiosk_software/common/header_text.dart';
+import 'package:simple_kiosk_software/common/layouts/layout1.dart';
+import 'package:simple_kiosk_software/common/layouts/layout2.dart';
+import 'package:simple_kiosk_software/common/video_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LanguagePage extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:base_kiosk_software/constants/colors.dart';
+import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ClientDetails extends StatelessWidget {

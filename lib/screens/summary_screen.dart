@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:base_kiosk_software/blocs/device/device_bloc.dart';
-import 'package:base_kiosk_software/blocs/device/device_event.dart';
-import 'package:base_kiosk_software/common/buttons.dart';
-import 'package:base_kiosk_software/common/frailty_other_result_card.dart';
-import 'package:base_kiosk_software/common/frailty_result_card.dart';
-import 'package:base_kiosk_software/common/layouts/layout1.dart';
-import 'package:base_kiosk_software/common/layouts/layout3frailty.dart';
+import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
+import 'package:simple_kiosk_software/blocs/device/device_event.dart';
+import 'package:simple_kiosk_software/common/buttons.dart';
+import 'package:simple_kiosk_software/common/frailty_other_result_card.dart';
+import 'package:simple_kiosk_software/common/frailty_result_card.dart';
+import 'package:simple_kiosk_software/common/layouts/layout1.dart';
+import 'package:simple_kiosk_software/common/layouts/layout3frailty.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
-import 'package:base_kiosk_software/utils/print_cmd.dart';
-import 'package:base_kiosk_software/utils/storage_utils.dart';
+import 'package:simple_kiosk_software/utils/print_cmd.dart';
+import 'package:simple_kiosk_software/utils/storage_utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:base_kiosk_software/providers/stepperprovider.dart';
+import 'package:simple_kiosk_software/providers/stepperprovider.dart';
 import 'package:provider/provider.dart';
 
 class SummaryScreen extends StatefulWidget {

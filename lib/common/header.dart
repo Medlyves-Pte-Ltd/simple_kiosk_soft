@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:base_kiosk_software/constants/colors.dart';
+import 'package:simple_kiosk_software/constants/colors.dart';
 
 class Header extends StatefulWidget implements PreferredSizeWidget {
   const Header({

@@ -7,7 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:base_kiosk_software/utils/storage_utils.dart';
+import 'package:simple_kiosk_software/utils/storage_utils.dart';
 import 'device_id_map.dart';
 
 class PrintCmd {
@@ -15,9 +15,9 @@ class PrintCmd {
 
   static Future<void> createBitmapImage(BuildContext context) async {
     Map<String, dynamic> data = (await StorageUtils.getData({
-      'patientId', 
-      'gender', 
-      'age', 
+      'patientId',
+      'gender',
+      'age',
       'height',
       'weight',
       'bmi',
@@ -31,7 +31,8 @@ class PrintCmd {
       'skeletalMusclePercentage',
       'visceralFatLevel',
       'protein'
-    }))..removeWhere((key, value) => value == "");
+    }))
+      ..removeWhere((key, value) => value == "");
 
     // Calculate height of the full receipt
     const int width = 380;
@@ -49,8 +50,7 @@ class PrintCmd {
     separationPaint.strokeCap = ui.StrokeCap.round;
 
     // Load the MedLyves logo image from assets
-    ByteData logoAsset =
-        await rootBundle.load('assets/images/nhc_logo.png');
+    ByteData logoAsset = await rootBundle.load('assets/images/nhc_logo.png');
     List<int> logoBytes = logoAsset.buffer.asUint8List();
     img.Image logoRawImg = img.decodePng(Uint8List.fromList(logoBytes))!;
 
@@ -76,57 +76,52 @@ class PrintCmd {
     // Put data into receipt image
     double yOffset = logoHeight.toDouble() + rowHeight;
 
-    String modeTitle = 
-        "${AppLocalizations.of(context)!.mode}: ";
+    String modeTitle = "${AppLocalizations.of(context)!.mode}: ";
     String modeStr = AppLocalizations.of(context)!.purpose_frailty;
-    drawText(canvas, modeTitle, TextAlign.left, fontSize, const ui.Color(0xFF000000),
-        ui.Offset(0, yOffset), width.toDouble());
+    drawText(canvas, modeTitle, TextAlign.left, fontSize,
+        const ui.Color(0xFF000000), ui.Offset(0, yOffset), width.toDouble());
     yOffset += rowHeight;
-    drawText(canvas, modeStr, TextAlign.left, fontSize, const ui.Color(0xFF000000),
+    drawText(canvas, modeStr, TextAlign.left, fontSize,
+        const ui.Color(0xFF000000), ui.Offset(130, yOffset), width.toDouble());
+    yOffset += rowHeight;
+
+    String patientIdTitle = AppLocalizations.of(context)!.patient_id;
+    String patientId = data['patientId'];
+    drawText(canvas, patientIdTitle, TextAlign.left, fontSize,
+        const ui.Color(0xFF000000), ui.Offset(0, yOffset), width.toDouble());
+    yOffset += rowHeight;
+    drawText(canvas, patientId, TextAlign.left, fontSize,
+        const ui.Color(0xFF000000), ui.Offset(130, yOffset), width.toDouble());
+    yOffset += rowHeight;
+
+    String ageTitle = AppLocalizations.of(context)!.print_age;
+    String age = data['age'];
+    drawText(canvas, ageTitle, TextAlign.left, fontSize,
+        const ui.Color(0xFF000000), ui.Offset(0, yOffset), width.toDouble());
+    yOffset += rowHeight;
+    drawText(canvas, age, TextAlign.left, fontSize, const ui.Color(0xFF000000),
         ui.Offset(130, yOffset), width.toDouble());
     yOffset += rowHeight;
 
-      String patientIdTitle = 
-          AppLocalizations.of(context)!.patient_id;
-      String patientId = data['patientId'];
-      drawText(canvas, patientIdTitle, TextAlign.left, fontSize, const ui.Color(0xFF000000),
-          ui.Offset(0, yOffset), width.toDouble());
-      yOffset += rowHeight;
-      drawText(canvas, patientId, TextAlign.left, fontSize, const ui.Color(0xFF000000),
-          ui.Offset(130, yOffset), width.toDouble());
-      yOffset += rowHeight;
-
-      String ageTitle =
-          AppLocalizations.of(context)!.print_age;
-      String age = data['age'];
-      drawText(canvas, ageTitle, TextAlign.left, fontSize, const ui.Color(0xFF000000),
-          ui.Offset(0, yOffset), width.toDouble());
-      yOffset += rowHeight;
-      drawText(canvas, age, TextAlign.left, fontSize, const ui.Color(0xFF000000),
-          ui.Offset(130, yOffset), width.toDouble());
-      yOffset += rowHeight;
-
-      String genderTitle =
-          AppLocalizations.of(context)!.print_gender;
-      String gender = data['gender'];
-      drawText(canvas, genderTitle, TextAlign.left, fontSize,
-          const ui.Color(0xFF000000), ui.Offset(0, yOffset), width.toDouble());
-      yOffset += rowHeight;
-      drawText(canvas, gender, TextAlign.left, fontSize, const ui.Color(0xFF000000),
-          ui.Offset(130, yOffset), width.toDouble());
-      yOffset += rowHeight;
+    String genderTitle = AppLocalizations.of(context)!.print_gender;
+    String gender = data['gender'];
+    drawText(canvas, genderTitle, TextAlign.left, fontSize,
+        const ui.Color(0xFF000000), ui.Offset(0, yOffset), width.toDouble());
+    yOffset += rowHeight;
+    drawText(canvas, gender, TextAlign.left, fontSize,
+        const ui.Color(0xFF000000), ui.Offset(130, yOffset), width.toDouble());
+    yOffset += rowHeight;
 
     yOffset += rowHeight;
 
-    String timestampTitle =
-        AppLocalizations.of(context)!.print_timestamp;
+    String timestampTitle = AppLocalizations.of(context)!.print_timestamp;
     String timestamp =
         DateFormat('yyyy-MMM-dd hh:mm:ss').format(DateTime.now());
     drawText(canvas, timestampTitle, TextAlign.left, fontSize,
         const ui.Color(0xFF000000), ui.Offset(0, yOffset), width.toDouble());
     yOffset += rowHeight;
-    drawText(canvas, timestamp, TextAlign.left, fontSize, const ui.Color(0xFF000000),
-        ui.Offset(130, yOffset), width.toDouble());
+    drawText(canvas, timestamp, TextAlign.left, fontSize,
+        const ui.Color(0xFF000000), ui.Offset(130, yOffset), width.toDouble());
     yOffset += rowHeight;
 
     yOffset += lineHeight;
@@ -374,5 +369,4 @@ class PrintCmd {
 
     return image;
   }
-
 }

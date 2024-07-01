@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:base_kiosk_software/blocs/locale/locale_state.dart';
+import 'package:simple_kiosk_software/blocs/locale/locale_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LocaleCubit extends Cubit<LocaleState> {

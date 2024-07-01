@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:base_kiosk_software/constants/colors.dart';
+import 'package:simple_kiosk_software/constants/colors.dart';
 
 class Footer extends StatelessWidget {
   const Footer({Key? key});

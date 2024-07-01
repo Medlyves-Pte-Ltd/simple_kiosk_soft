@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:base_kiosk_software/constants/colors.dart';
+import 'package:simple_kiosk_software/constants/colors.dart';
 
 enum ButtonType { language, mode, measure, backtomode, getstarted, end }
 

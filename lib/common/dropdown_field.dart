@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:base_kiosk_software/constants/colors.dart';
+import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum GenderLabel { gender }
@@ -8,7 +8,8 @@ class DropDownField extends StatefulWidget {
   final GenderLabel label;
   final Function(String?) onChanged;
 
-  const DropDownField({Key? key, required this.label, required this.onChanged}) : super(key: key);
+  const DropDownField({Key? key, required this.label, required this.onChanged})
+      : super(key: key);
 
   @override
   State<DropDownField> createState() => _DropDownFieldState();

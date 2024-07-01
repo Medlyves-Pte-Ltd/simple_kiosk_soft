@@ -4,16 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:responsive_framework/responsive_wrapper.dart';
-import 'package:base_kiosk_software/blocs/locale/locale_bloc.dart';
-import 'package:base_kiosk_software/blocs/locale/locale_state.dart';
-import 'package:base_kiosk_software/blocs/device/device_bloc.dart';
+import 'package:responsive_framework/responsive_framework.dart';
+import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
+import 'package:simple_kiosk_software/blocs/locale/locale_state.dart';
+import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
 import 'package:flutter_devices_sdk/devices/device_config.dart';
-import 'package:base_kiosk_software/screens/route_manager.dart';
+import 'package:simple_kiosk_software/screens/route_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DeviceConfig().init();
+
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider<DeviceBloc>(
@@ -28,6 +29,7 @@ void main() async {
     ),
   ));
 
+  // 隐藏系统状态栏和导航栏
   // Hides the system status bar and navigation bar
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
 }
@@ -75,7 +77,7 @@ class MyApp extends StatelessWidget {
             minWidth: 420,
             defaultScale: true,
             breakpoints: [
-              const ResponsiveBreakpoint.resize(470, name: MOBILE),
+              const ResponsiveBreakpoint.resize(600, name: MOBILE),
             ],
             mediaQueryData: MediaQuery.of(context)
                 .copyWith(textScaler: const TextScaler.linear(1.02)),

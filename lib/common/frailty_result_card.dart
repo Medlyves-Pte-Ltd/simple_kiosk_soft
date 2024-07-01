@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:base_kiosk_software/constants/colors.dart';
+import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:base_kiosk_software/utils/device_id_map.dart';
-import 'package:base_kiosk_software/utils/storage_utils.dart';
+import 'package:simple_kiosk_software/utils/device_id_map.dart';
+import 'package:simple_kiosk_software/utils/storage_utils.dart';
 
 enum CardType { HW, BC, BP, BF, BG, ECG, BO, BT }
 

@@ -17,7 +17,7 @@ dependencies:
   image: ^4.1.4
   intl: any
   logger: ^2.3.0
-  responsive_framework: ^1.4.0
+  responsive_framework: ^0.2.0
   shared_preferences: ^2.2.3
   video_player: ^2.9.1
 #  flutter_devices_sdk: # 包名

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:base_kiosk_software/common/buttons.dart';
-import 'package:base_kiosk_software/common/dropdown_field.dart';
-import 'package:base_kiosk_software/common/header_text.dart';
-import 'package:base_kiosk_software/common/layouts/layout1.dart';
-import 'package:base_kiosk_software/common/layouts/layout2.dart';
-import 'package:base_kiosk_software/common/login_textfield.dart';
-import 'package:base_kiosk_software/common/video_widget.dart';
+import 'package:simple_kiosk_software/common/buttons.dart';
+import 'package:simple_kiosk_software/common/dropdown_field.dart';
+import 'package:simple_kiosk_software/common/header_text.dart';
+import 'package:simple_kiosk_software/common/layouts/layout1.dart';
+import 'package:simple_kiosk_software/common/layouts/layout2.dart';
+import 'package:simple_kiosk_software/common/login_textfield.dart';
+import 'package:simple_kiosk_software/common/video_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:base_kiosk_software/constants/colors.dart';
-import 'package:base_kiosk_software/providers/locale_provider.dart';
-import 'package:base_kiosk_software/utils/storage_utils.dart';
+import 'package:simple_kiosk_software/constants/colors.dart';
+import 'package:simple_kiosk_software/providers/locale_provider.dart';
+import 'package:simple_kiosk_software/utils/storage_utils.dart';
 import 'package:provider/provider.dart';
 
 class UserLogin extends StatefulWidget {

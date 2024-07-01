@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:base_kiosk_software/screens/measurement_screen.dart';
-import 'package:base_kiosk_software/screens/summary_screen.dart';
-import 'package:base_kiosk_software/screens/user_login.dart';
-import 'package:base_kiosk_software/screens/language/language_page.dart';
-import 'package:base_kiosk_software/screens/kiosk_manager.dart';
+import 'package:simple_kiosk_software/screens/measurement_screen.dart';
+import 'package:simple_kiosk_software/screens/summary_screen.dart';
+import 'package:simple_kiosk_software/screens/user_login.dart';
+import 'package:simple_kiosk_software/screens/language/language_page.dart';
+import 'package:simple_kiosk_software/screens/kiosk_manager.dart';
 
 // 如果需要从构造函数中获取参数,使用如下
 // If you need to obtain parameters from a constructor, use the following

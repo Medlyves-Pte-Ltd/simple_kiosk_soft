@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:base_kiosk_software/constants/colors.dart';
-import 'package:base_kiosk_software/utils/enum_measurement.dart';
+import 'package:simple_kiosk_software/constants/colors.dart';
+import 'package:simple_kiosk_software/utils/enum_measurement.dart';
 
 enum IconType { greyed, current, completed }
 
