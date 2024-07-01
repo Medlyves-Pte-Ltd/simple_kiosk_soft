@@ -1,0 +1,74 @@
+[
+  {
+    "deviceName": "Body Composition",
+    "deviceType": "BC_DEVICE",
+    "deviceIndex": 1,
+    "deviceList": ["ShengYuanBodyComposition", "ChengDuBodyComposition"],
+    "identificationCodeList": ["","cpt6000"],
+    "enable": true
+  },
+  {
+    "deviceName": "Blood Oxygen",
+    "deviceType": "BO_DEVICE",
+    "deviceIndex": 1,
+    "deviceList": ["BloodOxygen", "ChengDuBloodOxygen"],
+    "identificationCodeList": ["","cpt6000"],
+    "enable": true
+  },
+  {
+    "deviceName": "Blood Pressure",
+    "deviceType": "BP_DEVICE",
+    "deviceIndex": 1,
+    "deviceList": ["RaycomeBloodPressure", "PanasonicBloodPressure"],
+    "identificationCodeList": ["","cpt6000"],
+    "enable": true
+  },
+  {
+    "deviceName": "Temperature",
+    "deviceType": "TEMP_DEVICE",
+    "deviceIndex": 2,
+    "deviceList": ["BodyTemperature", "URIONTemperature", "DT8861Temperature"],
+    "identificationCodeList": ["","DABCb136G04","cpt6000"],
+    "enable": true
+  },
+  {
+    "deviceName": "Height & Weight",
+    "deviceType": "HW_DEVICE",
+    "deviceIndex": 1,
+    "deviceList": ["ShengYuanBodyComposition", "ChengDuBodyComposition"],
+    "identificationCodeList": ["","cpt6000"],
+    "enable": true
+  },
+  {
+    "deviceName": "Blood Fit",
+    "deviceType": "BF_DEVICE",
+    "deviceIndex": 0,
+    "deviceList": ["PreciSCBloodFit"],
+    "identificationCodeList": ["565C002870"],
+    "enable": true
+  },
+  {
+    "deviceName": "ECG",
+    "deviceType": "ECG_DEVICE",
+    "deviceIndex": 0,
+    "deviceList": ["Ecg"],
+    "identificationCodeList": [""],
+    "enable": false
+  },
+  {
+    "deviceName": "Printer",
+    "deviceType": "PRINTER_DEVICE",
+    "deviceIndex": 0,
+    "deviceList": ["Printer"],
+    "identificationCodeList": [""],
+    "enable": false
+  },
+  {
+    "deviceName": "Scanner",
+    "deviceType": "SCANNER_DEVICE",
+    "deviceIndex": 0,
+    "deviceList": ["Scanner"],
+    "identificationCodeList": [""],
+    "enable": false
+  }
+]

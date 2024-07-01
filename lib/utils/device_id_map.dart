@@ -1,0 +1,305 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:base_kiosk_software/utils/global_keys.dart';
+
+class DeviceMap {
+  static Map<String, int> CODETOID = {
+    'height': 1,
+    'weight': 2,
+    'bmi': 3,
+    'bodyFatPercentage': 4,
+    'bodyFatMass': 5,
+    'skeletalMusclePercentage': 6,
+    'bodyWaterPercentage': 7,
+    'totalMoisture': 8,
+    'extracellularWaterPercentage': 9,
+    'intracellularWaterPercentage': 10,
+    'basalMetabolism': 11,
+    'visceralFatLevel': 12,
+    'protein': 13,
+    'mineral': 14,
+    'bodyAge': 15,
+    'overall': 16,
+    'temperature': 17,
+    'systolic': 18,
+    'diastolic': 19,
+    'bpHeartRate': 20,
+    'spo2': 21,
+    'spo2HeartRate': 22,
+    'ecg_img': 23,
+    'ecg_hr': 24,
+    'ecg_rr': 25,
+    'ecg_p_width': 26,
+    'ecg_pr': 27,
+    'ecg_qrs_dur': 28,
+    'ecg_qt': 29,
+    'ecg_qtc': 30,
+    'ecg_p_axis': 31,
+    'ecg_qrs_axis': 32,
+    'ecg_t_axis': 33,
+    'ecg_cln': 34
+  };
+
+  static Map<String, String> CODETOUNIT = {
+    'height': 'm',
+    'weight': 'kg',
+    'bmi': '',
+    'bodyFatPercentage': '%',
+    'bodyFatMass': 'kg',
+    'skeletalMusclePercentage': '%',
+    'bodyWaterPercentage': '%',
+    'totalMoisture': '',
+    'extracellularWaterPercentage': '',
+    'intracellularWaterPercentage': '',
+    'basalMetabolism': 'kcal',
+    'visceralFatLevel': '',
+    'protein': 'kg',
+    'bodyAge': '',
+    'overall': '',
+    'mineral': '',
+    'temperature': '°C',
+    'systolic': 'mmHg',
+    'diastolic': 'mmHg',
+    'bpHeartRate': 'bpm',
+    'spo2': '%',
+    'spo2HeartRate': 'bpm',
+    'ecg_img': '',
+    'ecg_hr': 'bpm',
+    'ecg_rr': 'ms',
+    'ecg_p_width': 'ms',
+    'ecg_pr': 'ms',
+    'ecg_qrs_dur': 'ms',
+    'ecg_qt': 'ms',
+    'ecg_qtc': 'ms',
+    'ecg_p_axis': '',
+    'ecg_qrs_axis': '',
+    'ecg_t_axis': '',
+    'ecg_cln': '',
+    'bp': 'mmHg',
+    'hr': 'bpm',
+  };
+
+  // static Map<String, String> CODETONAME = {
+  //   'height': AppLocalizations.of(navigatorKey.currentContext!)!.height,
+  //   'weight': AppLocalizations.of(navigatorKey.currentContext!)!.weight,
+  //   'bmi': AppLocalizations.of(navigatorKey.currentContext!)!.bmi,
+  //   'bodyFatPercentage':
+  //       AppLocalizations.of(navigatorKey.currentContext!)!.fat_percent,
+  //   'bodyFatMass': AppLocalizations.of(navigatorKey.currentContext!)!.fat_mass,
+  //   'skeletalMusclePercentage':
+  //       AppLocalizations.of(navigatorKey.currentContext!)!.muscle_percent,
+  //   // 'bodyWaterPercentage': 'Body Water Percentage',
+  //   // 'totalMoisture': 'Total Moisture',
+  //   // 'extracellularWaterPercentage': 'Extracellular fluid',
+  //   // 'intracellularWaterPercentage': 'Intracellular fluid',
+  //   'basalMetabolism':
+  //       AppLocalizations.of(navigatorKey.currentContext!)!.basal_meta,
+  //   'visceralFatLevel':
+  //       AppLocalizations.of(navigatorKey.currentContext!)!.fat_lvl,
+  //   'protein': AppLocalizations.of(navigatorKey.currentContext!)!.protein,
+  //   'bodyAge': AppLocalizations.of(navigatorKey.currentContext!)!.body_age,
+  //   'overall': AppLocalizations.of(navigatorKey.currentContext!)!.overall,
+  //   'mineral': AppLocalizations.of(navigatorKey.currentContext!)!.mineral,
+  //   'temperature': AppLocalizations.of(navigatorKey.currentContext!)!.body_temp,
+  //   'hr': AppLocalizations.of(navigatorKey.currentContext!)!.spo2_heart_rate,
+  //   'spo2': AppLocalizations.of(navigatorKey.currentContext!)!.spo2,
+  //   'spo2HeartRate':
+  //       AppLocalizations.of(navigatorKey.currentContext!)!.spo2_heart_rate,
+  //   'systolic': AppLocalizations.of(navigatorKey.currentContext!)!.systolic,
+  //   'diastolic': AppLocalizations.of(navigatorKey.currentContext!)!.diastolic,
+  //   'bpHeartRate':
+  //       AppLocalizations.of(navigatorKey.currentContext!)!.bpHeartRate,
+  //   // 'ecg_img': 'ECG Result Graph',
+  //   'ecg_hr': AppLocalizations.of(navigatorKey.currentContext!)!.ecg_heart_rate,
+  //   'ecg_rr': AppLocalizations.of(navigatorKey.currentContext!)!.ecg_resp_rate,
+  //   'ecg_p_width':
+  //       AppLocalizations.of(navigatorKey.currentContext!)!.ecg_pwave_width,
+  //   'ecg_pr': AppLocalizations.of(navigatorKey.currentContext!)!.ecg_pr_int,
+  //   'ecg_qrs_dur':
+  //       AppLocalizations.of(navigatorKey.currentContext!)!.ecg_qrs_comp_dur,
+  //   'ecg_qt': AppLocalizations.of(navigatorKey.currentContext!)!.ecg_qt_int,
+  //   'ecg_qtc': AppLocalizations.of(navigatorKey.currentContext!)!.ecg_qtc_int,
+  //   'ecg_p_axis':
+  //       AppLocalizations.of(navigatorKey.currentContext!)!.ecg_pwave_amp,
+  //   'ecg_qrs_axis':
+  //       AppLocalizations.of(navigatorKey.currentContext!)!.ecg_qrs_amp,
+  //   'ecg_t_axis':
+  //       AppLocalizations.of(navigatorKey.currentContext!)!.ecg_twave_amp,
+  //   'ecg_cln': AppLocalizations.of(navigatorKey.currentContext!)!.ecg_concl,
+  //   'bp': AppLocalizations.of(navigatorKey.currentContext!)!.bp,
+  //   'ecg': AppLocalizations.of(navigatorKey.currentContext!)!.ecg
+  // };
+
+  static String CODETONAME(BuildContext context, String code) {
+    final loc = AppLocalizations.of(context)!;
+
+    switch (code) {
+      case 'height':
+        return loc.hw_height;
+      case 'weight':
+        return loc.hw_weight;
+      // case 'bmi':
+      //   return loc.bmi;
+      case 'bodyFatPercentage':
+        return loc.bcm_fat;
+      case 'bodyFatMass':
+        return loc.bcm_fatmass;
+      case 'skeletalMusclePercentage':
+        return loc.bcm_skeletal;
+      case 'bodyWaterPercentage':
+        return loc.bcm_water;
+      case 'basalMetabolism':
+        return loc.bcm_metabolism;
+      case 'visceralFatLevel':
+        return loc.bcm_visceralfat;
+      case 'protein':
+        return loc.bcm_protein;
+      // case 'bodyAge':
+      //   return loc.body_age;
+      // case 'overall':
+      //   return loc.overall;
+      // case 'mineral':
+      //   return loc.mineral;
+      // case 'temperature':
+      //   return loc.body_temp;
+      case 'hr':
+        return loc.nounitbp_pulse;
+      // case 'spo2':
+      //   return loc.spo2;
+      // case 'spo2HeartRate':
+      //   return loc.spo2_heart_rate;
+      case 'systolic':
+        return loc.bp_bloodpressure;
+      case 'diastolic':
+        return loc.bp_bloodpressure;
+      case 'bpHeartRate':
+        return loc.bp_pulse;
+      // case 'ecg_hr':
+      //   return loc.ecg_heart_rate;
+      // case 'ecg_rr':
+      //   return loc.ecg_resp_rate;
+      // case 'ecg_p_width':
+      //   return loc.ecg_pwave_width;
+      // case 'ecg_pr':
+      //   return loc.ecg_pr_int;
+      // case 'ecg_qrs_dur':
+      //   return loc.ecg_qrs_comp_dur;
+      // case 'ecg_qt':
+      //   return loc.ecg_qt_int;
+      // case 'ecg_qtc':
+      //   return loc.ecg_qtc_int;
+      // case 'ecg_p_axis':
+      //   return loc.ecg_pwave_amp;
+      // case 'ecg_qrs_axis':
+      //   return loc.ecg_qrs_amp;
+      // case 'ecg_t_axis':
+      //   return loc.ecg_twave_amp;
+      // case 'ecg_cln':
+      //   return loc.ecg_concl;
+      case 'bp':
+        return loc.bp;
+      // case 'ecg':
+      //   return loc.ecg;
+      default:
+        return 'Unknown';
+    }
+  }
+
+  // static String IDTONAME(BuildContext context, int id) {
+  //   final loc = AppLocalizations.of(context)!;
+  //   switch (id) {
+  //     case 1:
+  //       return loc.height;
+  //     case 2:
+  //       return loc.weight;
+  //     case 3:
+  //       return loc.bmi;
+  //     case 4:
+  //       return loc.fat_percent;
+  //     case 5:
+  //       return loc.fat_mass;
+  //     case 6:
+  //       return loc.muscle_percent;
+  //     case 7:
+  //       return loc.water_percent;
+  //     case 8:
+  //       return loc.moisture;
+  //     case 9:
+  //       return loc.extrac_fluid;
+  //     case 10:
+  //       return loc.intrac_fluid;
+  //     case 11:
+  //       return loc.basal_meta;
+  //     case 12:
+  //       return loc.fat_lvl;
+  //     case 13:
+  //       return loc.protein;
+  //     case 14:
+  //       return loc.mineral;
+  //     case 15:
+  //       return loc.body_age;
+  //     case 16:
+  //       return loc.overall;
+  //     case 17:
+  //       return loc.temp;
+  //     case 18:
+  //       return loc.systolic;
+  //     case 19:
+  //       return loc.diastolic;
+  //     case 20:
+  //       return loc.bpHeartRate;
+  //     case 21:
+  //       return loc.spo2;
+  //     case 22:
+  //       return loc.spo2_heart_rate;
+  //     // case 23:
+  //     // return loc.ecg_img;
+  //     case 24:
+  //       return loc.ecg_hr;
+  //     case 25:
+  //       return loc.ecg_rr;
+  //     case 26:
+  //       return loc.ecg_p_width;
+  //     case 27:
+  //       return loc.ecg_pr;
+  //     case 28:
+  //       return loc.ecg_qrs_dur;
+  //     case 29:
+  //       return loc.ecg_qt;
+  //     case 30:
+  //       return loc.ecg_qtc;
+  //     case 31:
+  //       return loc.ecg_p_axis;
+  //     case 32:
+  //       return loc.ecg_qrs_axis;
+  //     case 33:
+  //       return loc.ecg_t_axis;
+  //     case 34:
+  //       return loc.ecg_concl;
+  //     default:
+  //       return 'Unknown';
+  //   }
+  // }
+
+  static Map<String, int> ruiYiDaDevicesMap = {
+    "11": 1,
+    "12": 2,
+    "14": 3,
+    "13": 4,
+    "15": 5,
+    "1": 6,
+    "4": 7,
+    "151": 8,
+    "152": 9,
+    "153": 10,
+    "154": 11,
+    "155": 12,
+    "156": 13,
+    "157": 14,
+    "131": 15,
+    "132": 16,
+    "133": 17,
+    "134": 18,
+    "135": 19,
+  };
+}
