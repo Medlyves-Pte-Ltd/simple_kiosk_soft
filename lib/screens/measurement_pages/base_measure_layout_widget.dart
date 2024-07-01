@@ -42,6 +42,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
 
   // 显示步骤区域
   Widget _buildStepArea() {
+    double radius = height * 0.05;
     return Container(
       height: height * 0.05,
       margin: EdgeInsets.only(
@@ -56,41 +57,53 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
             height: height * 0.06,
           ),
           SizedBox(
-            width: width * 0.1,
+            width: width * 0.05,
           ),
           Container(
-            height: height * 0.15,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle, color: ColorPalette.darkGrey),
-            child: Text(
-              "2",
-              style: TextStyle(color: Colors.white, fontSize: height * 0.04),
-            ),
-          ),
+              height: radius,
+              width: radius,
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle, color: ColorPalette.darkGrey),
+              child: Center(
+                child: Text(
+                  "2",
+                  textAlign: TextAlign.center,
+                  style:
+                      TextStyle(color: Colors.white, fontSize: height * 0.03),
+                ),
+              )),
           SizedBox(
-            width: width * 0.1,
+            width: width * 0.05,
           ),
           Container(
-            height: height * 0.06,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle, color: ColorPalette.darkGrey),
-            child: Text(
-              "3",
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
+              height: radius,
+              width: radius,
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle, color: ColorPalette.darkGrey),
+              child: Center(
+                child: Text(
+                  "3",
+                  textAlign: TextAlign.center,
+                  style:
+                      TextStyle(color: Colors.white, fontSize: height * 0.03),
+                ),
+              )),
           SizedBox(
-            width: width * 0.1,
+            width: width * 0.05,
           ),
           Container(
-            height: height * 0.06,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle, color: ColorPalette.darkGrey),
-            child: Text(
-              "4",
-              style: TextStyle(color: Colors.white, fontSize: height * 0.03),
-            ),
-          )
+              height: radius,
+              width: radius,
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle, color: ColorPalette.darkGrey),
+              child: Center(
+                child: Text(
+                  "4",
+                  textAlign: TextAlign.center,
+                  style:
+                      TextStyle(color: Colors.white, fontSize: height * 0.03),
+                ),
+              )),
         ],
       ),
     );
@@ -129,36 +142,41 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
         children: [
           const Spacer(),
           Container(
-            width: width * 0.2,
-            decoration: BoxDecoration(
-              color: ColorPalette.materialGreen,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Text(
-              "返回",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: height * 0.015,
-                  fontWeight: FontWeight.w600),
-            ),
-          ),
+              height: height * 0.03,
+              width: width * 0.15,
+              decoration: BoxDecoration(
+                color: ColorPalette.materialGreen,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(
+                child: Text(
+                  "返回",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: height * 0.015,
+                      fontWeight: FontWeight.w600),
+                ),
+              )),
           SizedBox(
-            width: width * 0.1,
+            width: width * 0.03,
           ),
           Container(
-            width: width * 0.2,
-            decoration: BoxDecoration(
-              color: ColorPalette.materialGreen,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Text(
-              "下一步",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: height * 0.015,
-                  fontWeight: FontWeight.w600),
-            ),
-          ),
+              height: height * 0.03,
+              width: width * 0.15,
+              decoration: BoxDecoration(
+                color: ColorPalette.materialGreen,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(
+                child: Text(
+                  "下一步",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: height * 0.015,
+                      fontWeight: FontWeight.w600),
+                ),
+              )),
         ],
       ),
     );
