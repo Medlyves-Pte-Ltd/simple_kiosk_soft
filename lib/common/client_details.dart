@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:simple_kiosk_software/utils/user_info.dart';
 
 class ClientDetails extends StatelessWidget {
   final Map<String, dynamic> userDetails;
@@ -49,7 +50,7 @@ class ClientDetails extends StatelessWidget {
     }
 
     // Extract values from userDetails map
-    final String patientId = userDetails['patientId'] ?? '';
+    final String name = userDetails['name'] ?? '';
     final String gender = userDetails['gender'] ?? '';
     final String age = userDetails['age'] ?? '';
 
@@ -57,12 +58,6 @@ class ClientDetails extends StatelessWidget {
       height: cardHeight,
       width: cardWidth,
       padding: const EdgeInsets.all(6),
-
-      // decoration: BoxDecoration(
-      //   border: Border.all(color: ColorPalette.materialGreen, width: 1.0),
-      //   borderRadius: BorderRadius.circular(15),
-      // ),
-
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,24 +80,11 @@ class ClientDetails extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(
-                width: currentLocale.languageCode == 'ta'
-                    ? cardWidth * 0.37
-                    : cardWidth * 0.46,
-                child: buildDetailText(
-                    'ID:',
-                    patientId,
-                    TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: baseFontSize,
-                      color: Colors.black,
-                      overflow: TextOverflow.ellipsis,
-                    )),
-              ),
-              buildDetailText(
-                  AppLocalizations.of(context)!.gender, gender, defaultStyle),
-              buildDetailText(
-                  AppLocalizations.of(context)!.age, age, defaultStyle),
+              buildDetailText('Name:', UserInfo().name, defaultStyle),
+              buildDetailText(AppLocalizations.of(context)!.gender,
+                  UserInfo().gender, defaultStyle),
+              buildDetailText(AppLocalizations.of(context)!.age, UserInfo().age,
+                  defaultStyle),
             ],
           ),
         ],

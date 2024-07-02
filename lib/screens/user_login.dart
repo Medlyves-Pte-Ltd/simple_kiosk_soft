@@ -12,6 +12,7 @@ import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/providers/locale_provider.dart';
 import 'package:simple_kiosk_software/utils/storage_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_kiosk_software/utils/user_info.dart';
 
 class UserLogin extends StatefulWidget {
   const UserLogin({Key? key}) : super(key: key);
@@ -23,7 +24,7 @@ class UserLogin extends StatefulWidget {
 class UserLoginState extends State<UserLogin> {
   final StorageUtils userDetailsrepo = StorageUtils();
   Map<String, String> userDetails = {
-    'patientId': '',
+    'name': '',
     'gender': '', // Assuming gender is selected from the drop-down
     'age': '', // Assuming age is entered in the text field
   };
@@ -98,7 +99,8 @@ class UserLoginState extends State<UserLogin> {
                                 LoginTextField(
                                     textfieldType: TextFieldLabel.patientId,
                                     onChanged: (value) {
-                                      userDetails['patientId'] = value;
+                                      userDetails['name'] = value;
+                                      UserInfo().name = value;
                                     })
                               ]),
                           SizedBox(height: boxHeight),
@@ -109,6 +111,7 @@ class UserLoginState extends State<UserLogin> {
                                     textfieldType: TextFieldLabel.age,
                                     onChanged: (value) {
                                       userDetails['age'] = value;
+                                      UserInfo().age = value!;
                                     })
                               ]),
                           SizedBox(height: topPadding),
@@ -120,6 +123,7 @@ class UserLoginState extends State<UserLogin> {
                                   onChanged: (value) {
                                     setState(() {
                                       userDetails['gender'] = value!;
+                                      UserInfo().gender = value!;
                                       SystemChrome.setEnabledSystemUIMode(
                                           SystemUiMode.manual,
                                           overlays: []);
@@ -141,7 +145,7 @@ class UserLoginState extends State<UserLogin> {
                                 await StorageUtils.saveData(userDetails);
                                 if (context.mounted) {
                                   Navigator.pushNamedAndRemoveUntil(context,
-                                      '/measurement', (route) => false);
+                                      '/HeightWeightMeasure', (route) => false);
                                 }
                               },
                               disabled:

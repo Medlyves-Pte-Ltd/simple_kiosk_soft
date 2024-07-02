@@ -1,6 +1,8 @@
 class UserInfo {
   // 患者ID
   String patientId = '';
+  // 姓名
+  String name = '';
   // 性别
   String gender = '';
   // 年龄

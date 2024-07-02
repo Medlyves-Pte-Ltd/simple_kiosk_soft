@@ -54,7 +54,8 @@ class MyApp extends StatelessWidget {
           ],
           onGenerateRoute: onCustomGenerateRoute,
           //initialRoute: "/",
-          initialRoute: "/BaseMeasureLayoutWidget",
+          initialRoute: "/HeightWeightMeasure",
+          //initialRoute: "/BodyTemperatureMeasure",
           supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData(
             textTheme: GoogleFonts.robotoTextTheme(textTheme).copyWith(

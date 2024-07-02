@@ -6,16 +6,26 @@ import 'package:simple_kiosk_software/common/client_details.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/header.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
+import 'package:flutter_devices_sdk/device_type.dart';
+import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 
 class BaseMeasureLayoutWidget extends StatelessWidget {
-  String videoFile = 'assets/videos/zh/heightweight_ZH.mp4';
-  String iconFile = "assets/images/heightweight_logo.png";
-  String title = "Height & Weight";
-  Color color = ColorPalette.colorbodytemperature;
+  // 步骤原形图标数量
+  final stepCircleCount = 4;
+  String videoFile = '';
+  String iconFile = "";
+  String title = "";
+  Color color = ColorPalette.colorheightWeight;
   double width = 0;
   double height = 0;
-  ValueNotifier<String> _height = ValueNotifier('- - -');
-  ValueNotifier<String> _weight = ValueNotifier('- - -');
+  DeviceType deviceType = DeviceType.UNKOWN_DEVICE;
+
+  BaseMeasureLayoutWidget({super.key}) {}
+
+  // 子类需要实现的数据显示函数
+  Widget buildCardDataShowArea() {
+    throw UnimplementedError();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +38,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
           _buildVideoArea(),
           _buildStepArea(),
           _buildCardArea(),
-          _buildBackNextControlBtn(),
+          _buildBackNextControlBtn(context),
           const Footer()
         ],
       ),
@@ -42,7 +52,8 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
 
   // 显示步骤区域
   Widget _buildStepArea() {
-    double radius = height * 0.05;
+    double radius = height * 0.04;
+    double interval = width * 0.06;
     return Container(
       height: height * 0.05,
       margin: EdgeInsets.only(
@@ -51,60 +62,8 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
           top: height * 0.006,
           bottom: height * 0.006),
       child: Row(
-        children: [
-          Image.asset(
-            iconFile,
-            height: height * 0.06,
-          ),
-          SizedBox(
-            width: width * 0.05,
-          ),
-          Container(
-              height: radius,
-              width: radius,
-              decoration: const BoxDecoration(
-                  shape: BoxShape.circle, color: ColorPalette.darkGrey),
-              child: Center(
-                child: Text(
-                  "2",
-                  textAlign: TextAlign.center,
-                  style:
-                      TextStyle(color: Colors.white, fontSize: height * 0.03),
-                ),
-              )),
-          SizedBox(
-            width: width * 0.05,
-          ),
-          Container(
-              height: radius,
-              width: radius,
-              decoration: const BoxDecoration(
-                  shape: BoxShape.circle, color: ColorPalette.darkGrey),
-              child: Center(
-                child: Text(
-                  "3",
-                  textAlign: TextAlign.center,
-                  style:
-                      TextStyle(color: Colors.white, fontSize: height * 0.03),
-                ),
-              )),
-          SizedBox(
-            width: width * 0.05,
-          ),
-          Container(
-              height: radius,
-              width: radius,
-              decoration: const BoxDecoration(
-                  shape: BoxShape.circle, color: ColorPalette.darkGrey),
-              child: Center(
-                child: Text(
-                  "4",
-                  textAlign: TextAlign.center,
-                  style:
-                      TextStyle(color: Colors.white, fontSize: height * 0.03),
-                ),
-              )),
-        ],
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: buildStepArea(),
       ),
     );
   }
@@ -115,10 +74,10 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
         child: Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-        border: Border.all(color: ColorPalette.darkGrey, width: 1.0),
+        border: Border.all(color: ColorPalette.darkGrey, width: 1.5),
         color: ColorPalette.colorAppBackground,
       ),
-      margin: const EdgeInsets.symmetric(horizontal: 10),
+      margin: EdgeInsets.symmetric(horizontal: width * 0.05),
       padding: const EdgeInsets.all(10),
       child: Column(
         children: [
@@ -126,8 +85,17 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
           const SizedBox(height: 30),
           Expanded(child: buildCardDataShowArea()),
           const Spacer(),
+          Container(
+            margin: EdgeInsets.only(
+                left: width * 0.015,
+                right: width * 0.015,
+                top: height * 0.003,
+                bottom: height * 0.003),
+            color: ColorPalette.darkGrey,
+            height: 1,
+          ),
           const ClientDetails(
-            userDetails: {'patientId': "2014", 'gender': "男", 'age': "30"},
+            userDetails: {'name': "John Doe", 'gender': "Male", 'age': "30"},
           ),
         ],
       ),
@@ -135,48 +103,38 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
   }
 
   // 返回下一步控制按钮
-  Widget _buildBackNextControlBtn() {
+  Widget _buildBackNextControlBtn(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: EdgeInsets.only(
+          top: height * 0.01, bottom: height * 0.01, right: width * 0.05),
       child: Row(
         children: [
           const Spacer(),
-          Container(
-              height: height * 0.03,
-              width: width * 0.15,
-              decoration: BoxDecoration(
-                color: ColorPalette.materialGreen,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Center(
-                child: Text(
-                  "返回",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: height * 0.015,
-                      fontWeight: FontWeight.w600),
+          InkWell(
+            onTap: () {
+              ControlMeasurePageUtils().onBackStep(context);
+            },
+            child: Container(
+                height: height * 0.03,
+                width: width * 0.15,
+                decoration: BoxDecoration(
+                  color: ColorPalette.materialGreen,
+                  borderRadius: BorderRadius.circular(10),
                 ),
-              )),
+                child: Center(
+                  child: Text(
+                    "Back",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: height * 0.015,
+                        fontWeight: FontWeight.w600),
+                  ),
+                )),
+          ),
           SizedBox(
             width: width * 0.03,
           ),
-          Container(
-              height: height * 0.03,
-              width: width * 0.15,
-              decoration: BoxDecoration(
-                color: ColorPalette.materialGreen,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Center(
-                child: Text(
-                  "下一步",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: height * 0.015,
-                      fontWeight: FontWeight.w600),
-                ),
-              )),
+          _buildResultOrNextBtn(context)
         ],
       ),
     );
@@ -184,23 +142,26 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
 
   // 卡片顶部区域
   Widget _buildCardTopArea() {
+    double imageSize = height * 0.05;
+    double titleFontSize = height * 0.02;
+    double btnFontSize = height * 0.02;
     return Row(
       children: [
         Image.asset(
           iconFile,
-          width: 40,
-          height: 40,
+          width: imageSize,
+          height: imageSize,
         ),
         const SizedBox(width: 5),
         Padding(
-          padding: const EdgeInsets.only(top: 10.0),
+          padding: EdgeInsets.symmetric(vertical: height * 0.01),
           child: IntrinsicWidth(
             child: Column(
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 14),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: titleFontSize),
                 ),
                 Container(
                   color: color,
@@ -214,76 +175,133 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
         InkWell(
           onTap: () async {},
           child: Container(
-            padding: const EdgeInsets.all(10),
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(5)),
+            height: height * 0.03,
+            width: width * 0.15,
+            decoration: BoxDecoration(
               color: ColorPalette.materialGreen,
+              borderRadius: BorderRadius.circular(10),
             ),
-            child: const Text("开始",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    color: Colors.white)),
+            child: Center(
+              child: Text("Start",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: btnFontSize,
+                      color: Colors.white)),
+            ),
           ),
         ),
       ],
     );
   }
 
-  Widget buildCardDataShowArea() {
-    //return const SizedBox.shrink();
-    return Center(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text(
-                "高度 (cm)",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+  // 结果或者下一步按钮
+  Widget _buildResultOrNextBtn(BuildContext context) {
+    if (ControlMeasurePageUtils().pageIndex !=
+        ControlMeasurePageUtils().measurelist.length - 1) {
+      return InkWell(
+        onTap: () {
+          ControlMeasurePageUtils().onNextStep(context);
+        },
+        child: Container(
+            height: height * 0.03,
+            width: width * 0.15,
+            decoration: BoxDecoration(
+              color: ColorPalette.materialGreen,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Center(
+              child: Text(
+                "Next",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: height * 0.015,
+                    fontWeight: FontWeight.w600),
               ),
-              const SizedBox(width: 30),
-              ValueListenableBuilder<String>(
-                  valueListenable: _height,
-                  builder: (context, value, child) {
-                    return Text(
-                      value,
-                      style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff4ca9a9)),
-                    );
-                  })
-            ],
+            )),
+      );
+    } else {
+      return InkWell(
+        onTap: () {},
+        child: Container(
+            height: height * 0.03,
+            width: width * 0.15,
+            decoration: BoxDecoration(
+              color: ColorPalette.materialGreen,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Center(
+              child: Text(
+                "Results",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: height * 0.015,
+                    fontWeight: FontWeight.w600),
+              ),
+            )),
+      );
+    }
+  }
+
+  Widget _buildCircleArea(int index, Color color) {
+    double radius = height * 0.04;
+    return Container(
+        height: radius,
+        width: radius,
+        decoration: BoxDecoration(shape: BoxShape.circle, color: color),
+        child: Center(
+          child: Text(
+            "${index + 1}",
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white, fontSize: height * 0.03),
           ),
-          const SizedBox(width: 30),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text(
-                "体重 (kg)",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(width: 30),
-              ValueListenableBuilder<String>(
-                  valueListenable: _weight,
-                  builder: (context, value, child) {
-                    return Text(
-                      value,
-                      style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff4ca9a9)),
-                    );
-                  })
-            ],
-          )
-        ],
-      ),
-    );
-    //throw UnimplementedError();
+        ));
+  }
+
+  List<Widget> buildStepArea() {
+    double radius = height * 0.04;
+    double interval = width * 0.06;
+    List<Widget> list = [];
+    int index = 0;
+    for (int i = 0;
+        i < stepCircleCount && i < ControlMeasurePageUtils().measurelist.length;
+        ++i) {
+      if (ControlMeasurePageUtils().pageIndex < stepCircleCount - 1) {
+        index = i;
+      } else {
+        //
+        index = i + ControlMeasurePageUtils().pageIndex - (stepCircleCount - 2);
+        if (ControlMeasurePageUtils().pageIndex ==
+            ControlMeasurePageUtils().measurelist.length - 1) {
+          index--;
+        }
+      }
+
+      if (index < ControlMeasurePageUtils().measurelist.length) {
+        if (index == ControlMeasurePageUtils().pageIndex) {
+          list.add(Image.asset(
+            ControlMeasurePageUtils().measurelist[index]['icon_file'],
+            height: radius,
+          ));
+        } else if (index < ControlMeasurePageUtils().pageIndex) {
+          if (ControlMeasurePageUtils().measurelist[index]['measured']) {
+            list.add(_buildCircleArea(index,
+                Color(ControlMeasurePageUtils().measurelist[index]['color'])));
+          }
+        } else {
+          list.add(_buildCircleArea(index, ColorPalette.darkGrey));
+        }
+      }
+
+      if (i < stepCircleCount - 1) {
+        list.add(
+          SizedBox(
+            width: interval,
+          ),
+        );
+      }
+    }
+
+    return list;
   }
 }
