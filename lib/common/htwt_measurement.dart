@@ -211,7 +211,7 @@ class HeightWeightMeasurementCardState
     String weight =
         userDetails['weight'] == '' ? '- - -' : userDetails['weight'];
 
-    if (state.deviceType == DeviceType.HW_DEVICE) {
+    if (state.deviceType == DeviceType.HEIGHT_DEVICE) {
       if (state is DeviceDataLoading) {
         height = weight = AppLocalizations.of(context)!.loading;
       } else if (state is DeviceDataUpdated) {
@@ -233,7 +233,7 @@ class HeightWeightMeasurementCardState
   }
 
   void _onStartStopButtonPressed() {
-    DeviceType deviceType = DeviceType.HW_DEVICE;
+    DeviceType deviceType = DeviceType.HEIGHT_DEVICE;
     if (!startButtonPressed) {
       DeviceConnectEvent connectEvent =
           DeviceConnectEvent(deviceType: deviceType);

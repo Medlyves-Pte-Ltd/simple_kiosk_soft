@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
@@ -12,15 +13,18 @@ import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 class BaseMeasureLayoutWidget extends StatelessWidget {
   // 步骤原形图标数量
   final stepCircleCount = 4;
-  String videoFile = '';
+  String startVideoFile = '';
+  String endVideoFile = '';
   String iconFile = "";
   String title = "";
   Color color = ColorPalette.colorheightWeight;
   double width = 0;
   double height = 0;
   DeviceType deviceType = DeviceType.UNKOWN_DEVICE;
-
-  BaseMeasureLayoutWidget({super.key}) {}
+  bool inProgress = false;
+  ValueNotifier<bool> startButtonPressed = ValueNotifier<bool>(false);
+  ValueNotifier<String> playVideoSwitch = ValueNotifier<String>("");
+  late BuildContext mainContext;
 
   // 子类需要实现的数据显示函数
   Widget buildCardDataShowArea() {
@@ -29,6 +33,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    mainContext = context;
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -38,7 +43,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
           _buildVideoArea(),
           _buildStepArea(),
           _buildCardArea(),
-          _buildBackNextControlBtn(context),
+          _buildBackNextControlBtn(),
           const Footer()
         ],
       ),
@@ -47,7 +52,14 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
 
   // 播放视频区域
   Widget _buildVideoArea() {
-    return VideoWidget(videoName: videoFile, setLooping: false);
+    return ValueListenableBuilder(
+        valueListenable: playVideoSwitch,
+        builder: (context, file, child) {
+          return VideoWidget(
+              key: GlobalKey(), videoName: file, setLooping: false);
+        });
+
+    //return VideoWidget(videoName: startVideoFile, setLooping: false);
   }
 
   // 显示步骤区域
@@ -73,9 +85,8 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
     return Expanded(
         child: Container(
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-        border: Border.all(color: ColorPalette.darkGrey, width: 1.5),
-        color: ColorPalette.colorAppBackground,
+        border: Border.all(color: ColorPalette.greyWidgetBorder, width: 2.5),
+        borderRadius: BorderRadius.circular(10),
       ),
       margin: EdgeInsets.symmetric(horizontal: width * 0.05),
       padding: const EdgeInsets.all(10),
@@ -95,7 +106,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
             height: 1,
           ),
           const ClientDetails(
-            userDetails: {'name': "John Doe", 'gender': "Male", 'age': "30"},
+            userDetails: {},
           ),
         ],
       ),
@@ -103,7 +114,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
   }
 
   // 返回下一步控制按钮
-  Widget _buildBackNextControlBtn(BuildContext context) {
+  Widget _buildBackNextControlBtn() {
     return Padding(
       padding: EdgeInsets.only(
           top: height * 0.01, bottom: height * 0.01, right: width * 0.05),
@@ -112,7 +123,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
           const Spacer(),
           InkWell(
             onTap: () {
-              ControlMeasurePageUtils().onBackStep(context);
+              ControlMeasurePageUtils().onBackStep(mainContext);
             },
             child: Container(
                 height: height * 0.03,
@@ -134,7 +145,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
           SizedBox(
             width: width * 0.03,
           ),
-          _buildResultOrNextBtn(context)
+          _buildResultOrNextBtn()
         ],
       ),
     );
@@ -144,7 +155,6 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
   Widget _buildCardTopArea() {
     double imageSize = height * 0.05;
     double titleFontSize = height * 0.02;
-    double btnFontSize = height * 0.02;
     return Row(
       children: [
         Image.asset(
@@ -172,36 +182,67 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        InkWell(
-          onTap: () async {},
-          child: Container(
-            height: height * 0.03,
-            width: width * 0.15,
-            decoration: BoxDecoration(
-              color: ColorPalette.materialGreen,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Center(
-              child: Text("Start",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: btnFontSize,
-                      color: Colors.white)),
-            ),
-          ),
-        ),
+        startButton(),
       ],
     );
   }
 
+  Widget startButton() {
+    double btnFontSize = height * 0.02;
+    return ValueListenableBuilder<bool>(
+        valueListenable: startButtonPressed,
+        builder: (context, value, child) {
+          if (!value) {
+            return InkWell(
+              onTap: onStart,
+              child: Container(
+                height: height * 0.03,
+                width: width * 0.15,
+                decoration: BoxDecoration(
+                  color: ColorPalette.materialGreen,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(
+                  child: Text("Start",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: btnFontSize,
+                          color: Colors.white)),
+                ),
+              ),
+            );
+          } else {
+            return InkWell(
+              onTap: onStop,
+              child: Container(
+                height: height * 0.03,
+                width: width * 0.15,
+                decoration: BoxDecoration(
+                  color: ColorPalette.materialGreen,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(
+                  child: Text("Stop",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: btnFontSize,
+                          color: Colors.white)),
+                ),
+              ),
+            );
+          }
+        });
+  }
+
   // 结果或者下一步按钮
-  Widget _buildResultOrNextBtn(BuildContext context) {
+  Widget _buildResultOrNextBtn() {
     if (ControlMeasurePageUtils().pageIndex !=
         ControlMeasurePageUtils().measurelist.length - 1) {
       return InkWell(
         onTap: () {
-          ControlMeasurePageUtils().onNextStep(context);
+          ControlMeasurePageUtils().onNextStep(mainContext);
         },
         child: Container(
             height: height * 0.03,
@@ -222,7 +263,10 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
       );
     } else {
       return InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.pushNamedAndRemoveUntil(
+              mainContext, "/FrailtySummaryPage", (route) => false);
+        },
         child: Container(
             height: height * 0.03,
             width: width * 0.15,
@@ -242,6 +286,12 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
       );
     }
   }
+
+  // 开始
+  void onStart() async {}
+
+  // 停止
+  void onStop() async {}
 
   Widget _buildCircleArea(int index, Color color) {
     double radius = height * 0.04;
@@ -289,7 +339,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
                 Color(ControlMeasurePageUtils().measurelist[index]['color'])));
           }
         } else {
-          list.add(_buildCircleArea(index, ColorPalette.darkGrey));
+          list.add(_buildCircleArea(index, ColorPalette.greyWidgetBorder));
         }
       }
 

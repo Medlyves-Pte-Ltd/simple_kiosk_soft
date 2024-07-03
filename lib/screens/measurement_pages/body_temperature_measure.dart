@@ -6,12 +6,13 @@ import 'package:simple_kiosk_software/screens/measurement_pages/base_measure_lay
 class BodyTemperatureMeasure extends BaseMeasureLayoutWidget {
   ValueNotifier<String> temperature = ValueNotifier('- - -');
 
-  BodyTemperatureMeasure({super.key}) {
+  BodyTemperatureMeasure() {
     super.color = ColorPalette.colorbodytemperature;
-    super.videoFile = 'assets/videos/zh/temperature_measure_ZH.mp4';
+    super.startVideoFile = 'assets/videos/zh/temperature_measure_ZH.mp4';
     super.iconFile = "assets/images/temperature_icon.png";
     super.title = "Temperature";
     super.deviceType = DeviceType.TEMP_DEVICE;
+    playVideoSwitch.value = super.startVideoFile;
   }
 
   @override

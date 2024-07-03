@@ -19,6 +19,7 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     on<DeviceUpdateDataEvent>(_onDeviceDataUpdatedEvent);
     on<DeviceStopEvent>(_onDeviceStopEvent);
     on<DeviceDisconnectEvent>(_onDeviceDisconnectEvent);
+    on<TestUpdateDataEvent>(_onTestDataUpdatedEvent);
   }
 
   Future<void> _onDeviceConnectEvent(
@@ -52,12 +53,12 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
   Future<void> _onDeviceDataUpdatedEvent(
       DeviceUpdateDataEvent event, Emitter<DeviceState> emit) async {
     DeviceType deviceType = event.deviceType;
-    // DeviceData deviceData = event.deviceData;
+    DeviceData deviceData = event.deviceData;
     LogPrinter.log('Callback received. Cancel subscription.');
-    // _dataSubscription!.cancel();
-    // LogPrinter.log(deviceData.toString());
+    _dataSubscription!.cancel();
+    LogPrinter.log(deviceData.toString());
     LogPrinter.log('Trying to stop the device.');
-    // emit(DeviceDataUpdated(deviceType: deviceType, deviceData: deviceData));
+    emit(DeviceDataUpdated(deviceType: deviceType, deviceData: deviceData));
     Future.delayed(const Duration(milliseconds: 500),
         () => add(DeviceDisconnectEvent(deviceType: event.deviceType)));
   }
@@ -85,5 +86,13 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     await device?.disconnect();
     LogPrinter.log('Disconnected.');
     emit(DeviceDisconnected(deviceType: deviceType));
+  }
+
+  Future<void> _onTestDataUpdatedEvent(
+      TestUpdateDataEvent event, Emitter<DeviceState> emit) async {
+    DeviceType deviceType = event.deviceType;
+    DeviceData deviceData = event.deviceData;
+    LogPrinter.log(deviceData.toString());
+    emit(DeviceDataUpdated(deviceType: deviceType, deviceData: deviceData));
   }
 }

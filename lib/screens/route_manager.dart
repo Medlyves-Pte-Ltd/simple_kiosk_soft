@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_kiosk_software/screens/frailty_summary.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/base_measure_layout_widget.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/blood_oxygen_measure.dart';
 import 'package:simple_kiosk_software/screens/measurement_screen.dart';
@@ -22,7 +23,8 @@ final Map<String, Function> routes = {
   '/login': (context, {args}) => const UserLogin(),
   '/measurement': (context, {args}) => const MeasurementScreen(),
   '/summary': (context, {args}) => const SummaryScreen(),
-  '/kiosk_manager': (context, {args}) => KioskManager(),
+  '/KioskManager': (context, {args}) => KioskManager(),
+  '/FrailtySummaryPage': (context, {args}) => FrailtySummaryPage(),
   '/HeightWeightMeasure': (context, {args}) => HeightWeightMeasure(),
   '/BodyTemperatureMeasure': (context, {args}) => BodyTemperatureMeasure(),
   '/BloodOxygenMeasure': (context, {args}) => BloodOxygenMeasure(),

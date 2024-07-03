@@ -32,3 +32,10 @@ class DeviceDisconnectEvent extends DeviceEvent {
   DeviceDisconnectEvent({required DeviceType deviceType})
       : super(deviceType: deviceType);
 }
+
+class TestUpdateDataEvent extends DeviceEvent {
+  DeviceData deviceData;
+  TestUpdateDataEvent(
+      {required this.deviceData, required DeviceType deviceType})
+      : super(deviceType: deviceType);
+}

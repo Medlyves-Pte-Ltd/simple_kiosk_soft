@@ -7,12 +7,13 @@ class BloodOxygenMeasure extends BaseMeasureLayoutWidget {
   ValueNotifier<String> _bloodOxygen = ValueNotifier('- - -');
   ValueNotifier<String> _pulseRate = ValueNotifier('- - -');
 
-  BloodOxygenMeasure({super.key}) {
+  BloodOxygenMeasure() {
     super.color = ColorPalette.colorheightWeight;
-    super.videoFile = 'assets/videos/zh/spo2_measure_ZH.mp4';
+    super.startVideoFile = 'assets/videos/zh/spo2_measure_ZH.mp4';
     super.iconFile = "assets/images/spo2_icon.png";
     super.title = "Blood Oxygen";
     super.deviceType = DeviceType.BO_DEVICE;
+    playVideoSwitch.value = super.startVideoFile;
   }
 
   @override

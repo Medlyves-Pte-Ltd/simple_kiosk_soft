@@ -39,7 +39,7 @@ class LanguagePageState extends State<LanguagePage> {
             content1: Content1Body(
       stage: StageType.measurement,
       videoSpace: Container(
-          child: const VideoWidget(
+          child: VideoWidget(
         videoName: 'assets/videos/language_selection.mp4',
         setLooping: true,
       )),

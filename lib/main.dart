@@ -13,6 +13,7 @@ import 'package:simple_kiosk_software/screens/route_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await DeviceConfig().clearDeviceConfigStorage();
   await DeviceConfig().init();
 
   runApp(MultiBlocProvider(
@@ -54,8 +55,10 @@ class MyApp extends StatelessWidget {
           ],
           onGenerateRoute: onCustomGenerateRoute,
           //initialRoute: "/",
-          initialRoute: "/HeightWeightMeasure",
+          initialRoute: "/KioskManager",
+          //initialRoute: "/HeightWeightMeasure",
           //initialRoute: "/BodyTemperatureMeasure",
+
           supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData(
             textTheme: GoogleFonts.robotoTextTheme(textTheme).copyWith(

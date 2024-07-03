@@ -32,28 +32,6 @@ class ClientDetails extends StatelessWidget {
           .black, // Ensures text color is explicitly set, aiding readability.
     );
 
-    if (userDetails == null || userDetails.isEmpty) {
-      // Display CircularProgressIndicator while userDetails is loading
-      return Container(
-        height: cardHeight,
-        width: cardWidth,
-        padding: const EdgeInsets.all(6),
-        alignment: Alignment.center,
-        child: const Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CircularProgressIndicator(),
-          ],
-        ),
-      );
-    }
-
-    // Extract values from userDetails map
-    final String name = userDetails['name'] ?? '';
-    final String gender = userDetails['gender'] ?? '';
-    final String age = userDetails['age'] ?? '';
-
     return Container(
       height: cardHeight,
       width: cardWidth,
