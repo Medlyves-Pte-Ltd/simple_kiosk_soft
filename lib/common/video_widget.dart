@@ -25,7 +25,7 @@ class _VideoWidgetState extends State<VideoWidget> {
   void initState() {
     super.initState();
     _controller = VideoPlayerController.asset(widget.videoName)
-      ..setLooping(true)
+      ..setLooping(widget.setLooping)
       ..initialize().then((_) {
         setState(() {});
         widget.onVideoInitialised!(_controller.value.isInitialized);

@@ -8,14 +8,12 @@ import 'package:simple_kiosk_software/common/layouts/layout2.dart';
 import 'package:simple_kiosk_software/common/login_textfield.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:simple_kiosk_software/constants/colors.dart';
-import 'package:simple_kiosk_software/providers/locale_provider.dart';
+
 import 'package:simple_kiosk_software/utils/storage_utils.dart';
-import 'package:provider/provider.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 
 class UserLogin extends StatefulWidget {
-  const UserLogin({Key? key}) : super(key: key);
+  const UserLogin({super.key});
 
   @override
   State<UserLogin> createState() => UserLoginState();

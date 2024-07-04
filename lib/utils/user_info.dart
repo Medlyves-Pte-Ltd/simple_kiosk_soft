@@ -33,6 +33,7 @@ class UserInfo {
   String mineral = '';
   // 血氧
   String bloodOxygen = '';
+  String bloodOxygenHeartRate = '';
   // 温度
   String temperature = '';
   // 水分含量
@@ -54,6 +55,7 @@ class UserInfo {
     bodyWaterPercentage = '';
     temperature = '';
     bloodOxygen = '';
+    bloodOxygenHeartRate = '';
     mineral = '';
     protein = '';
     visceralFatLevel = '';

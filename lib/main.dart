@@ -54,10 +54,9 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           onGenerateRoute: onCustomGenerateRoute,
-          //initialRoute: "/",
-          initialRoute: "/KioskManager",
+          initialRoute: "/",
+          //initialRoute: "/KioskManager",
           //initialRoute: "/HeightWeightMeasure",
-          //initialRoute: "/BodyTemperatureMeasure",
 
           supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData(

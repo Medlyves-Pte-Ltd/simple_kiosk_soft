@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_devices_sdk/device_data/blood_oxygen_data.dart';
+import 'package:flutter_devices_sdk/device_data/blood_pressure_data.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/base_measure_layout_widget.dart';
@@ -11,42 +12,47 @@ import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class BloodOxygenMeasure extends BaseMeasureLayoutWidget {
-  late String _bloodOxygen;
-  late String _pulseRate;
+class BloodPressureMeasure extends BaseMeasureLayoutWidget {
+  // 收缩压
+  String systolic = '';
+  // 舒张压
+  String diastolic = '';
+  // 心率
+  String heartRate = '';
 
-  BloodOxygenMeasure() {
+  BloodPressureMeasure() {
     super.color = ColorPalette.colorheightWeight;
-    super.startVideoFile = 'assets/videos/zh/spo2_measure_ZH.mp4';
-    super.endVideoFile = 'assets/videos/zh/spo2_completed_ZH.mp4';
-    super.iconFile = "assets/images/spo2_icon.png";
-    super.title = "Blood Oxygen";
-    super.deviceType = DeviceType.BO_DEVICE;
-
-    _bloodOxygen = UserInfo().bloodOxygen.isNotEmpty
-        ? UserInfo().bloodOxygen
+    super.startVideoFile = 'assets/videos/zh/bloodpressure_ZH.mp4';
+    super.endVideoFile = 'assets/videos/zh/bloodpressure_completed_ZH.mp4';
+    super.iconFile = "assets/images/bloodpressure_logo.png";
+    super.title = "Blood Pressure";
+    super.deviceType = DeviceType.BP_DEVICE;
+    systolic =
+        UserInfo().systolic.isNotEmpty ? UserInfo().systolic : dataDefaultValue;
+    diastolic = UserInfo().diastolic.isNotEmpty
+        ? UserInfo().diastolic
         : dataDefaultValue;
-    _pulseRate = UserInfo().bloodOxygenHeartRate.isNotEmpty
-        ? UserInfo().bloodOxygenHeartRate
+    heartRate = UserInfo().heartRate.isNotEmpty
+        ? UserInfo().heartRate
         : dataDefaultValue;
   }
 
   @override
   void init() {
-    super.title = AppLocalizations.of(mainContext)!.bo;
+    super.title = AppLocalizations.of(mainContext)!.bp;
   }
 
   @override
   void onStart() async {
     DeviceConnectEvent connectEvent =
-        DeviceConnectEvent(deviceType: DeviceType.BO_DEVICE);
+        DeviceConnectEvent(deviceType: DeviceType.BP_DEVICE);
     BlocProvider.of<DeviceBloc>(mainContext).add(connectEvent);
   }
 
   @override
   void onStop() async {
     DeviceStopEvent stopEvent =
-        DeviceStopEvent(deviceType: DeviceType.BO_DEVICE);
+        DeviceStopEvent(deviceType: DeviceType.BP_DEVICE);
     BlocProvider.of<DeviceBloc>(mainContext).add(stopEvent);
   }
 
@@ -57,13 +63,16 @@ class BloodOxygenMeasure extends BaseMeasureLayoutWidget {
 
     return BlocBuilder<DeviceBloc, DeviceState>(builder: (context, state) {
       if (state is DeviceDataLoading) {
-        _bloodOxygen = _pulseRate = AppLocalizations.of(context)!.loading;
+        systolic =
+            diastolic = heartRate = AppLocalizations.of(context)!.loading;
       } else if (state is DeviceDataUpdated) {
         if (state.deviceData is BloodOxygenData) {
-          _bloodOxygen = (state.deviceData as BloodOxygenData).spo2;
-          _pulseRate = (state.deviceData as BloodOxygenData).heartRate;
-          UserInfo().bloodOxygen = _bloodOxygen;
-          UserInfo().bloodOxygenHeartRate = _pulseRate;
+          systolic = (state.deviceData as BloodPrssureData).systolic;
+          diastolic = (state.deviceData as BloodPrssureData).diastolic;
+          heartRate = (state.deviceData as BloodPrssureData).heartRate;
+          UserInfo().systolic = systolic;
+          UserInfo().diastolic = diastolic;
+          UserInfo().heartRate = heartRate;
 
           ControlMeasurePageUtils().measured = true;
         }
@@ -78,13 +87,13 @@ class BloodOxygenMeasure extends BaseMeasureLayoutWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  AppLocalizations.of(mainContext)!.bo_oxygen_staturation,
+                  AppLocalizations.of(mainContext)!.bp_bloodpressure,
                   style: TextStyle(
                       fontSize: titleFontSize, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: height * 0.02),
                 Text(
-                  _bloodOxygen,
+                  "$systolic/$diastolic",
                   style: TextStyle(
                       fontSize: dataFontSize,
                       fontWeight: FontWeight.bold,
@@ -98,13 +107,13 @@ class BloodOxygenMeasure extends BaseMeasureLayoutWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  AppLocalizations.of(mainContext)!.bo_heartrate,
+                  AppLocalizations.of(mainContext)!.bp_pulse,
                   style: TextStyle(
                       fontSize: titleFontSize, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: height * 0.02),
                 Text(
-                  _pulseRate,
+                  heartRate,
                   style: TextStyle(
                       fontSize: dataFontSize,
                       fontWeight: FontWeight.bold,

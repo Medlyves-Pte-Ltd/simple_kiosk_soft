@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:simple_kiosk_software/screens/frailty_summary.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/base_measure_layout_widget.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/blood_oxygen_measure.dart';
+import 'package:simple_kiosk_software/screens/measurement_pages/blood_pressure_measure.dart';
+import 'package:simple_kiosk_software/screens/measurement_pages/body_composition_measure.dart';
 import 'package:simple_kiosk_software/screens/measurement_screen.dart';
 import 'package:simple_kiosk_software/screens/summary_screen.dart';
 import 'package:simple_kiosk_software/screens/user_login.dart';
@@ -28,6 +30,8 @@ final Map<String, Function> routes = {
   '/HeightWeightMeasure': (context, {args}) => HeightWeightMeasure(),
   '/BodyTemperatureMeasure': (context, {args}) => BodyTemperatureMeasure(),
   '/BloodOxygenMeasure': (context, {args}) => BloodOxygenMeasure(),
+  '/BloodPressureMeasure': (context, {args}) => BloodPressureMeasure(),
+  '/BodyCompositionMeasure': (context, {args}) => BodyCompositionMeasure(),
 };
 
 // 定义通用的onGenerateRoute

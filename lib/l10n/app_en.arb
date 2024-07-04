@@ -31,7 +31,7 @@
   "bg": "Blood Glucose",
   "bg_bloodglucose": "Blood Glucose (mmol/L)",
   "bo": "Blood Oxygen",
-  "bo_bloodpressure": "Blood Pressure (mmHg)",
+  "bo_oxygen_staturation": "Oxygen Staturation（%）",
   "bo_heartrate": "Pulse Rate (bpm)",
   "temperature": "Temperature",
   "temp_temperature": "Temperature(℃)",

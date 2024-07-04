@@ -5,15 +5,19 @@ import 'package:simple_kiosk_software/screens/frailty_result_card.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FrailtySummaryPage extends StatelessWidget {
   double width = 0;
   double height = 0;
+  late BuildContext mainContext;
 
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
+    mainContext = context;
+
     return Scaffold(
       body: SingleChildScrollView(
           padding: const EdgeInsets.all(10),
@@ -28,10 +32,10 @@ class FrailtySummaryPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text(
-                    'Result Summary',
+                  Text(
+                    AppLocalizations.of(context)!.results_title,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                       fontSize: 22,

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_devices_sdk/view/colors.dart';
+import 'package:simple_kiosk_software/constants/colors.dart';
 
 class ControlMeasurePageUtils {
   int pageIndex = 0;
@@ -19,22 +19,16 @@ class ControlMeasurePageUtils {
       "color": ColorPalette.colorbodytemperature.value,
     },
     {
-      "icon_file": "assets/images/spo2_icon.png",
+      "icon_file": "assets/images/bodycomposition_logo.png",
       "measured": false,
-      "page_route": "/BloodOxygenMeasure",
-      "color": ColorPalette.colorbloodoxygen.value,
+      "page_route": "/BodyCompositionMeasure",
+      "color": ColorPalette.colorbodyComposition.value,
     },
     {
-      "icon_file": "assets/images/heightweight_logo.png",
+      "icon_file": "assets/images/bloodpressure_logo.png",
       "measured": false,
-      "page_route": "/HeightWeightMeasure",
-      "color": ColorPalette.colorheightWeight.value,
-    },
-    {
-      "icon_file": "assets/images/heightweight_logo.png",
-      "measured": false,
-      "page_route": "/HeightWeightMeasure",
-      "color": ColorPalette.colorheightWeight.value,
+      "page_route": "/BloodPressureMeasure",
+      "color": ColorPalette.colorbloodPressure.value,
     },
     {
       "icon_file": "assets/images/spo2_icon.png",
@@ -42,19 +36,16 @@ class ControlMeasurePageUtils {
       "page_route": "/BloodOxygenMeasure",
       "color": ColorPalette.colorbloodoxygen.value,
     },
-    {
-      "icon_file": "assets/images/heightweight_logo.png",
-      "measured": false,
-      "page_route": "/HeightWeightMeasure",
-      "color": ColorPalette.colorheightWeight.value,
-    },
-    {
-      "icon_file": "assets/images/heightweight_logo.png",
-      "measured": false,
-      "page_route": "/HeightWeightMeasure",
-      "color": ColorPalette.colorheightWeight.value,
-    }
   ];
+
+  bool get measured =>
+      ControlMeasurePageUtils().measurelist[ControlMeasurePageUtils().pageIndex]
+          ["measured"];
+
+  set measured(bool measured) {
+    ControlMeasurePageUtils().measurelist[ControlMeasurePageUtils().pageIndex]
+        ["measured"] = measured;
+  }
 
   void onBackStep(BuildContext context) {
     if (pageIndex > 0) {

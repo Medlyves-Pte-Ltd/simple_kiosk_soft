@@ -2,15 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_devices_sdk/view/colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple_kiosk_software/constants/colors.dart';
+import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
+import 'package:simple_kiosk_software/blocs/device/device_state.dart';
 import 'package:simple_kiosk_software/common/client_details.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/header.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 
 class BaseMeasureLayoutWidget extends StatelessWidget {
+  String dataDefaultValue = "- - -";
   // 步骤原形图标数量
   final stepCircleCount = 4;
   String startVideoFile = '';
@@ -21,9 +26,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
   double width = 0;
   double height = 0;
   DeviceType deviceType = DeviceType.UNKOWN_DEVICE;
-  bool inProgress = false;
   ValueNotifier<bool> startButtonPressed = ValueNotifier<bool>(false);
-  ValueNotifier<String> playVideoSwitch = ValueNotifier<String>("");
   late BuildContext mainContext;
 
   // 子类需要实现的数据显示函数
@@ -31,9 +34,12 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
     throw UnimplementedError();
   }
 
+  void init() {}
+
   @override
   Widget build(BuildContext context) {
     mainContext = context;
+    init();
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -52,14 +58,24 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
 
   // 播放视频区域
   Widget _buildVideoArea() {
-    return ValueListenableBuilder(
-        valueListenable: playVideoSwitch,
-        builder: (context, file, child) {
-          return VideoWidget(
-              key: GlobalKey(), videoName: file, setLooping: false);
-        });
+    String file = startVideoFile;
+    return BlocListener<DeviceBloc, DeviceState>(
+      listener: (context, state) {
+        if (state is DeviceDataUpdated || ControlMeasurePageUtils().measured) {
+          file = endVideoFile;
+        } else {
+          file = startVideoFile;
+        }
+      },
+      child: BlocBuilder<DeviceBloc, DeviceState>(builder: (context, state) {
+        return VideoWidget(key: GlobalKey(), videoName: file, setLooping: true);
+      }),
+    );
 
-    //return VideoWidget(videoName: startVideoFile, setLooping: false);
+    return BlocBuilder<DeviceBloc, DeviceState>(builder: (context, state) {
+      String file = state is DeviceDataUpdated ? endVideoFile : startVideoFile;
+      return VideoWidget(key: GlobalKey(), videoName: file, setLooping: true);
+    });
   }
 
   // 显示步骤区域
@@ -93,17 +109,15 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
       child: Column(
         children: [
           _buildCardTopArea(),
-          const SizedBox(height: 30),
           Expanded(child: buildCardDataShowArea()),
-          const Spacer(),
           Container(
             margin: EdgeInsets.only(
                 left: width * 0.015,
                 right: width * 0.015,
                 top: height * 0.003,
                 bottom: height * 0.003),
-            color: ColorPalette.darkGrey,
-            height: 1,
+            color: ColorPalette.greyWidgetBorder,
+            height: 1.5,
           ),
           const ClientDetails(
             userDetails: {},
@@ -134,7 +148,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    "Back",
+                    AppLocalizations.of(mainContext)!.back,
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: height * 0.015,
@@ -189,12 +203,66 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
 
   Widget startButton() {
     double btnFontSize = height * 0.02;
+    return BlocBuilder<DeviceBloc, DeviceState>(builder: (context, state) {
+      if (state is DeviceConnected ||
+          state is DeviceDataLoading ||
+          state is DeviceDataUpdated) {
+        return InkWell(
+          onTap: () async {
+            await onStop();
+          },
+          child: Container(
+            height: height * 0.03,
+            width: width * 0.15,
+            decoration: BoxDecoration(
+              color: ColorPalette.materialGreen,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Center(
+              child: Text(AppLocalizations.of(mainContext)!.stop,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: btnFontSize,
+                      color: Colors.white)),
+            ),
+          ),
+        );
+      } else {
+        return InkWell(
+          onTap: () async {
+            ControlMeasurePageUtils().measured = false;
+            await onStart();
+          },
+          child: Container(
+            height: height * 0.03,
+            width: width * 0.15,
+            decoration: BoxDecoration(
+              color: ColorPalette.materialGreen,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Center(
+              child: Text(AppLocalizations.of(mainContext)!.start,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: btnFontSize,
+                      color: Colors.white)),
+            ),
+          ),
+        );
+      }
+    });
+
     return ValueListenableBuilder<bool>(
         valueListenable: startButtonPressed,
         builder: (context, value, child) {
           if (!value) {
             return InkWell(
-              onTap: onStart,
+              onTap: () async {
+                await onStart();
+                startButtonPressed.value = true;
+              },
               child: Container(
                 height: height * 0.03,
                 width: width * 0.15,
@@ -214,7 +282,10 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
             );
           } else {
             return InkWell(
-              onTap: onStop,
+              onTap: () async {
+                await onStop();
+                startButtonPressed.value = false;
+              },
               child: Container(
                 height: height * 0.03,
                 width: width * 0.15,
@@ -253,7 +324,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                "Next",
+                AppLocalizations.of(mainContext)!.next,
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: height * 0.015,
@@ -277,6 +348,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
             child: Center(
               child: Text(
                 "Results",
+                AppLocalizations.of(mainContext)!.results,
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: height * 0.015,
@@ -288,10 +360,10 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
   }
 
   // 开始
-  void onStart() async {}
+  onStart() async {}
 
   // 停止
-  void onStop() async {}
+  onStop() async {}
 
   Widget _buildCircleArea(int index, Color color) {
     double radius = height * 0.04;

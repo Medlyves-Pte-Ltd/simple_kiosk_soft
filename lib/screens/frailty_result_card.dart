@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: constant_identifier_names
 enum CardType { HW, BC, BP, BT, ECG, BO, BF }
@@ -34,30 +35,31 @@ class _FrailtyCardState extends State<FrailtyCard> {
 
     switch (widget.cardtype) {
       case CardType.HW:
-        title = '身高体重';
+        title = AppLocalizations.of(context)!.hw;
         themecolour = ColorPalette.colorheightWeight;
         imagePath = 'assets/images/heightweight_logo.png';
         bodyTextList = ['${UserInfo().height} cm', '${UserInfo().weight} kg'];
         cardHeight = screenHeight * 0.14;
         cardWidth = screenWidth * 0.9;
-        bodyParameterList = ['身高:', '体重:'];
+        bodyParameterList = [
+          '${AppLocalizations.of(context)!.hw_height}:',
+          '${AppLocalizations.of(context)!.hw_weight}:'
+        ];
         break;
       case CardType.BC:
-        title = "身体成分";
-        themecolour = ColorPalette.colorbodyComp;
+        title = AppLocalizations.of(context)!.bcm;
+        themecolour = ColorPalette.colorbodyComposition;
         imagePath = 'assets/images/bodycomposition_logo.png';
         bodyParameterList = [
-          '体脂率:',
-          '体脂量:',
-          '基础代谢:',
-          '水分含量:',
-          '骨骼肌率:',
-          '内脏脂肪水平:',
-          '蛋白质:'
+          '${AppLocalizations.of(context)!.bcm_fat}:',
+          '${AppLocalizations.of(context)!.bcm_metabolism}:',
+          '${AppLocalizations.of(context)!.bcm_water}:',
+          '${AppLocalizations.of(context)!.bcm_skeletal}:',
+          '${AppLocalizations.of(context)!.bcm_visceralfat}:',
+          '${AppLocalizations.of(context)!.bcm_protein}:',
         ];
         bodyTextList = [
           UserInfo().bodyFatPercentage,
-          UserInfo().bodyFatMass,
           UserInfo().basalMetabolism,
           UserInfo().bodyWaterPercentage,
           UserInfo().skeletalMusclePercentage,
@@ -68,14 +70,14 @@ class _FrailtyCardState extends State<FrailtyCard> {
         cardWidth = screenWidth * 0.9;
         break;
       case CardType.BF:
-        title = "血脂";
+        title = AppLocalizations.of(context)!.bf;
         themecolour = ColorPalette.colorbloodoxygen;
         imagePath = 'assets/images/blood_fit.png';
         bodyParameterList = [
-          '胆固醇:',
-          '高密度脂蛋白:',
-          '甘油三酯:',
-          '低密度脂蛋白:',
+        '${AppLocalizations.of(context)!.bf_totalCholesterol}:',
+        '${AppLocalizations.of(context)!.bf_highDensitylipoproteincholesterol}:',
+        '${AppLocalizations.of(context)!.bf_triglyceride}:',
+        '${AppLocalizations.of(context)!.bf_LowDensitylipoproteincholesterol}:',
         ];
         bodyTextList = [
           UserInfo().chol,
@@ -87,7 +89,7 @@ class _FrailtyCardState extends State<FrailtyCard> {
         cardWidth = screenWidth * 0.9;
         break;
       case CardType.BP:
-        title = '血压';
+        title = AppLocalizations.of(context)!.bp,
         themecolour = ColorPalette.colorbloodPressure;
         imagePath = 'assets/images/bloodpressure_logo.png';
         bodyTextList = [
@@ -99,13 +101,13 @@ class _FrailtyCardState extends State<FrailtyCard> {
         bodyParameterList = ['BP:', 'HR:'];
         break;
       case CardType.BT: //增加显示体温
-        title = '体温';
+        title = AppLocalizations.of(context)!.temperature;
         themecolour = ColorPalette.colorbodytemperature;
         imagePath = 'assets/images/temperature_icon.png';
         bodyTextList = ['${UserInfo().temperature} °C'];
         cardHeight = screenHeight * 0.14;
         cardWidth = screenWidth * 0.9;
-        bodyParameterList = ['体温:'];
+        bodyParameterList = ['${AppLocalizations.of(context)!.temperature}:'];
         break;
       case CardType.ECG: //增加显示心电图
         title = "心电图";
@@ -117,13 +119,13 @@ class _FrailtyCardState extends State<FrailtyCard> {
         bodyParameterList = [];
         break;
       case CardType.BO: //增加显示血氧
-        title = "血氧";
+        title = AppLocalizations.of(context)!.bo;
         themecolour = ColorPalette.colorbloodoxygen;
         imagePath = 'assets/images/spo2_icon.png';
         bodyTextList = [UserInfo().bloodOxygen];
         cardHeight = screenHeight * 0.14;
         cardWidth = screenWidth * 0.9;
-        bodyParameterList = ['血氧:'];
+        bodyParameterList = ['${AppLocalizations.of(context)!.bo}:'];
         break;
     }
     return Container(

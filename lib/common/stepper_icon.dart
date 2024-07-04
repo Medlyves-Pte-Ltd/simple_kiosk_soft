@@ -39,7 +39,7 @@ class StepperIcon extends StatelessWidget {
             childWidget = Image.asset('assets/images/heightweight_logo.png');
             break;
           case Measurement.BC:
-            iconColour = ColorPalette.colorbodyComp;
+            iconColour = ColorPalette.colorbodyComposition;
             childWidget = Image.asset('assets/images/bodycomposition_logo.png');
             break;
           case Measurement.BP:
@@ -74,7 +74,7 @@ class StepperIcon extends StatelessWidget {
             );
             break;
           case Measurement.BC:
-            iconColour = ColorPalette.colorbodyComp;
+            iconColour = ColorPalette.colorbodyComposition;
             childWidget = const Text(
               '2',
               style:

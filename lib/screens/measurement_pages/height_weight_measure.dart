@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/device_data/height_data.dart';
 import 'package:flutter_devices_sdk/device_data/weight_data.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
-import 'package:flutter_devices_sdk/view/colors.dart';
+import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
 import 'package:simple_kiosk_software/blocs/device/device_event.dart';
 import 'package:simple_kiosk_software/blocs/device/device_state.dart';
@@ -12,52 +12,53 @@ import 'package:simple_kiosk_software/screens/measurement_pages/base_measure_lay
 import 'package:simple_kiosk_software/utils/user_info.dart';
 
 class HeightWeightMeasure extends BaseMeasureLayoutWidget {
-  String bodyheight = "- - -";
-  String bodyWeight = "- - -";
+  late String bodyHeight;
+  late String bodyWeight;
 
   HeightWeightMeasure() {
     super.color = ColorPalette.colorheightWeight;
     super.startVideoFile = 'assets/videos/zh/heightweight_ZH.mp4';
     super.endVideoFile = 'assets/videos/zh/heightweight_completed_ZH.mp4';
     super.iconFile = "assets/images/heightweight_logo.png";
-    super.title = "Height & Weight";
     super.deviceType = DeviceType.HEIGHT_DEVICE;
-    playVideoSwitch.value = super.startVideoFile;
-    bodyheight = UserInfo().height.isNotEmpty ? UserInfo().height : "- - -";
-    bodyWeight = UserInfo().weight.isNotEmpty ? UserInfo().weight : "- - -";
+    bodyHeight =
+        UserInfo().height.isNotEmpty ? UserInfo().height : dataDefaultValue;
+    bodyWeight =
+        UserInfo().weight.isNotEmpty ? UserInfo().weight : dataDefaultValue;
+  }
+
+  @override
+  void init() {
+    super.title = AppLocalizations.of(mainContext)!.hw;
   }
 
   @override
   void onStart() async {
-    bodyheight = "- - -";
-    bodyWeight = "- - -";
+    bodyHeight = dataDefaultValue;
+    bodyWeight = dataDefaultValue;
 
-    // if (!startButtonPressed.value) {
-    //   DeviceConnectEvent connectEvent =
-    //       DeviceConnectEvent(deviceType: deviceType);
-    //   BlocProvider.of<DeviceBloc>(mainContext).add(connectEvent);
-    // } else {
-    //   DeviceStopEvent stopEvent = DeviceStopEvent(deviceType: deviceType);
-    //   BlocProvider.of<DeviceBloc>(mainContext).add(stopEvent);
-    // }
+    DeviceConnectEvent connectEvent =
+        DeviceConnectEvent(deviceType: DeviceType.HEIGHT_DEVICE);
+    BlocProvider.of<DeviceBloc>(mainContext).add(connectEvent);
 
-    startButtonPressed.value = !startButtonPressed.value;
-    playVideoSwitch.value = super.startVideoFile;
+    // BlocProvider.of<DeviceBloc>(mainContext).add(TestUpdateDataEvent(
+    //     deviceType: DeviceType.HEIGHT_DEVICE, deviceData: HeightData("1.76")));
 
-    BlocProvider.of<DeviceBloc>(mainContext).add(TestUpdateDataEvent(
-        deviceType: DeviceType.HEIGHT_DEVICE, deviceData: HeightData("1.76")));
-
-    Future.delayed(
-        const Duration(milliseconds: 100),
-        () => (BlocProvider.of<DeviceBloc>(mainContext).add(TestUpdateDataEvent(
-            deviceType: DeviceType.WEIGHT_DEVICE,
-            deviceData: WeightData("81")))));
+    // Future.delayed(
+    //     const Duration(milliseconds: 100),
+    //     () => (BlocProvider.of<DeviceBloc>(mainContext).add(TestUpdateDataEvent(
+    //         deviceType: DeviceType.WEIGHT_DEVICE,
+    //         deviceData: WeightData("81")))));
   }
 
   @override
   void onStop() async {
-    startButtonPressed.value = !startButtonPressed.value;
-    playVideoSwitch.value = super.endVideoFile;
+    DeviceStopEvent stopEvent =
+        DeviceStopEvent(deviceType: DeviceType.HEIGHT_DEVICE);
+    BlocProvider.of<DeviceBloc>(mainContext).add(stopEvent);
+
+    stopEvent = DeviceStopEvent(deviceType: DeviceType.WEIGHT_DEVICE);
+    BlocProvider.of<DeviceBloc>(mainContext).add(stopEvent);
   }
 
   @override
@@ -65,13 +66,89 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
     double titleFontSize = height * 0.02;
     double dataFontSize = height * 0.02;
 
+    return BlocListener<DeviceBloc, DeviceState>(listener: (context, state) {
+      if (state is DeviceDataUpdated) {
+        if (state.deviceData is HeightData) {
+          bodyHeight = (state.deviceData as HeightData).height;
+          UserInfo().height = bodyHeight;
+
+          // 如果收到身高数据，先关闭身高设备，再打开体重设备
+          DeviceStopEvent stopEvent =
+              DeviceStopEvent(deviceType: DeviceType.HEIGHT_DEVICE);
+          BlocProvider.of<DeviceBloc>(mainContext).add(stopEvent);
+
+          Future.delayed(const Duration(milliseconds: 100), () {
+            DeviceConnectEvent connectEvent =
+                DeviceConnectEvent(deviceType: DeviceType.WEIGHT_DEVICE);
+            BlocProvider.of<DeviceBloc>(mainContext).add(connectEvent);
+          });
+
+          // BlocProvider.of<DeviceBloc>(mainContext).add(TestUpdateDataEvent(
+          //     deviceType: DeviceType.WEIGHT_DEVICE,
+          //     deviceData: WeightData("81")));
+        } else if (state.deviceData is WeightData) {
+          bodyWeight = (state.deviceData as WeightData).weight;
+          UserInfo().weight = bodyWeight;
+        }
+      } else {
+        bodyHeight = bodyWeight = AppLocalizations.of(context)!.loading;
+      }
+    }, child: BlocBuilder<DeviceBloc, DeviceState>(builder: (context, state) {
+      return Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.hw_height,
+                  style: TextStyle(
+                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: height * 0.02),
+                Text(
+                  bodyHeight,
+                  style: TextStyle(
+                      fontSize: dataFontSize,
+                      fontWeight: FontWeight.bold,
+                      color: ColorPalette.materialGreen),
+                )
+              ],
+            ),
+            SizedBox(width: width * 0.1),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.hw_weight,
+                  style: TextStyle(
+                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: height * 0.02),
+                Text(
+                  bodyWeight,
+                  style: TextStyle(
+                      fontSize: dataFontSize,
+                      fontWeight: FontWeight.bold,
+                      color: ColorPalette.materialGreen),
+                )
+              ],
+            )
+          ],
+        ),
+      );
+    }));
+
     return BlocBuilder<DeviceBloc, DeviceState>(builder: (context, state) {
       if (state is DeviceDataLoading) {
-        bodyheight = bodyWeight = AppLocalizations.of(context)!.loading;
+        bodyHeight = bodyWeight = AppLocalizations.of(context)!.loading;
       } else if (state is DeviceDataUpdated) {
         if (state.deviceData is HeightData) {
-          bodyheight = (state.deviceData as HeightData).height;
-          UserInfo().height = bodyheight;
+          bodyHeight = (state.deviceData as HeightData).height;
+          UserInfo().height = bodyHeight;
         }
         if (state.deviceData is WeightData) {
           bodyWeight = (state.deviceData as WeightData).weight;
@@ -94,7 +171,7 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
                 ),
                 SizedBox(height: height * 0.02),
                 Text(
-                  bodyheight,
+                  bodyHeight,
                   style: TextStyle(
                       fontSize: dataFontSize,
                       fontWeight: FontWeight.bold,

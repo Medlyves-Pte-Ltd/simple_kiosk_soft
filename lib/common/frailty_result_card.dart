@@ -75,7 +75,7 @@ class _FrailtyCardState extends State<FrailtyCard> {
         break;
       case CardType.BC:
         title = AppLocalizations.of(context)!.bcm;
-        themecolour = ColorPalette.colorbodyComp;
+        themecolour = ColorPalette.colorbodyComposition;
         imagePath = 'assets/images/bodycomposition_logo.png';
         bodyParameterList = [
           '${AppLocalizations.of(context)!.bcm_fat}:',
