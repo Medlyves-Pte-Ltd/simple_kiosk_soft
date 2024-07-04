@@ -14,7 +14,6 @@ import 'package:simple_kiosk_software/common/layouts/layout2.dart';
 import 'package:simple_kiosk_software/common/layouts/layout3.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
 import 'package:simple_kiosk_software/common/stepper.dart';
-import 'package:simple_kiosk_software/providers/locale_provider.dart';
 import 'package:simple_kiosk_software/utils/enum_measurement.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_kiosk_software/providers/stepperprovider.dart';

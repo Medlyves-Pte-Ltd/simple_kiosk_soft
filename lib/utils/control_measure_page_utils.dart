@@ -38,6 +38,13 @@ class ControlMeasurePageUtils {
     },
   ];
 
+  Color get color => Color(ControlMeasurePageUtils()
+      .measurelist[ControlMeasurePageUtils().pageIndex]["color"]);
+
+  String get iconFile =>
+      ControlMeasurePageUtils().measurelist[ControlMeasurePageUtils().pageIndex]
+          ["icon_file"];
+
   bool get measured =>
       ControlMeasurePageUtils().measurelist[ControlMeasurePageUtils().pageIndex]
           ["measured"];

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/device_data/height_data.dart';
 import 'package:flutter_devices_sdk/device_data/weight_data.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
+import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
 import 'package:simple_kiosk_software/blocs/device/device_event.dart';
@@ -16,11 +17,6 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
   late String bodyWeight;
 
   HeightWeightMeasure() {
-    super.color = ColorPalette.colorheightWeight;
-    super.startVideoFile = 'assets/videos/zh/heightweight_ZH.mp4';
-    super.endVideoFile = 'assets/videos/zh/heightweight_completed_ZH.mp4';
-    super.iconFile = "assets/images/heightweight_logo.png";
-    super.deviceType = DeviceType.HEIGHT_DEVICE;
     bodyHeight =
         UserInfo().height.isNotEmpty ? UserInfo().height : dataDefaultValue;
     bodyWeight =
@@ -30,6 +26,12 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
   @override
   void init() {
     super.title = AppLocalizations.of(mainContext)!.hw;
+    if (super.startVideoFile.isEmpty) {
+      super.startVideoFile = getVideoFileName(DeviceType.HEIGHT_DEVICE, false);
+    }
+    if (super.endVideoFile.isEmpty) {
+      super.endVideoFile = getVideoFileName(DeviceType.HEIGHT_DEVICE, true);
+    }
   }
 
   @override

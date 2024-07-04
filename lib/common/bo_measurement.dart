@@ -219,7 +219,7 @@ class BloodOxygenMeasurementCardState
     }
 
     return MeasurementConfiguration(measurementLabels: [
-      AppLocalizations.of(context)!.bo_bloodpressure,
+      //AppLocalizations.of(context)!.bo_bloodpressure,
       AppLocalizations.of(context)!.bo_heartrate, //显示检测出的血氧浓度，心率
     ], readingLabels: [
       Bloodoxygenpercent,

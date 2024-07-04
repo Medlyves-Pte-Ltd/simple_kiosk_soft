@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
 import 'package:simple_kiosk_software/blocs/device/device_state.dart';
@@ -20,12 +21,9 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
   final stepCircleCount = 4;
   String startVideoFile = '';
   String endVideoFile = '';
-  String iconFile = "";
   String title = "";
-  Color color = ColorPalette.colorheightWeight;
   double width = 0;
   double height = 0;
-  DeviceType deviceType = DeviceType.UNKOWN_DEVICE;
   ValueNotifier<bool> startButtonPressed = ValueNotifier<bool>(false);
   late BuildContext mainContext;
 
@@ -172,7 +170,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
     return Row(
       children: [
         Image.asset(
-          iconFile,
+          ControlMeasurePageUtils().iconFile,
           width: imageSize,
           height: imageSize,
         ),
@@ -188,7 +186,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
                       fontWeight: FontWeight.bold, fontSize: titleFontSize),
                 ),
                 Container(
-                  color: color,
+                  color: ControlMeasurePageUtils().color,
                   height: 1.5,
                 ),
               ],
@@ -201,8 +199,30 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
     );
   }
 
+  String getVideoFileName(DeviceType type, bool completed) {
+    String localeCode =
+        BlocProvider.of<LocaleCubit>(mainContext).locale.languageCode;
+
+    Map<DeviceType, String> directoryNames = {
+      DeviceType.HEIGHT_DEVICE: "heightweight",
+      DeviceType.BC_DEVICE: "bodycomposition",
+      DeviceType.BP_DEVICE: "bloodpressure",
+      DeviceType.BF_DEVICE: "bloodfat",
+      DeviceType.BO_DEVICE: "spo2_measure",
+      DeviceType.BG_DEVICE: "bloodglucose",
+      DeviceType.TEMP_DEVICE: "temperature",
+      DeviceType.ECG_DEVICE: "ecg"
+    };
+
+    String strCompleted = completed ? "completed_" : "";
+    String videoFileName =
+        '${directoryNames[type]}_$strCompleted${localeCode.toUpperCase()}.mp4';
+
+    return 'assets/videos/$localeCode/$videoFileName';
+  }
+
   Widget startButton() {
-    double btnFontSize = height * 0.02;
+    double btnFontSize = height * 0.025;
     return BlocBuilder<DeviceBloc, DeviceState>(builder: (context, state) {
       if (state is DeviceConnected ||
           state is DeviceDataLoading ||
@@ -347,7 +367,6 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                "Results",
                 AppLocalizations.of(mainContext)!.results,
                 style: TextStyle(
                     color: Colors.white,

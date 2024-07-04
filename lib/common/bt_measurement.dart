@@ -92,7 +92,8 @@ class BodyTemperatureMeasurementCardState
                         child: Column(
                           children: [
                             Text(
-                              AppLocalizations.of(context)!.bt,
+                              //AppLocalizations.of(context)!.bt,
+                              "",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: fontSize),
@@ -214,7 +215,7 @@ class BodyTemperatureMeasurementCardState
 
     return MeasurementConfiguration(
       measurementLabels: [
-        AppLocalizations.of(context)!.bt,
+        "",
       ],
       readingLabels: [bodytemperature],
     );

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/common/buttons.dart';
 import 'package:simple_kiosk_software/common/dropdown_field.dart';
 import 'package:simple_kiosk_software/common/header_text.dart';
@@ -26,16 +28,11 @@ class UserLoginState extends State<UserLogin> {
     'gender': '', // Assuming gender is selected from the drop-down
     'age': '', // Assuming age is entered in the text field
   };
-  String getVideoFileName() {
-    // final videoName = Provider.of<LocaleProvider>(context, listen: false);
-    // String localeCode = videoName.locale.languageCode;
-    // String basePath = 'assets/videos';
-    // String upperLocaleCode = localeCode.toUpperCase();
-    //
-    // String videoFileName = 'welcome_$upperLocaleCode.mp4';
-    // String fullPath = '$basePath/$localeCode/$videoFileName';
 
-    return "assets/videos/zh/welcome_ZH.mp4";
+  String getVideoFileName() {
+    String localeCode =
+        BlocProvider.of<LocaleCubit>(context).locale.languageCode;
+    return 'assets/videos/$localeCode/welcome_${localeCode.toUpperCase()}.mp4';
   }
 
   bool _buttonEnabled = false;
@@ -79,7 +76,7 @@ class UserLoginState extends State<UserLogin> {
                         Padding(
                           padding: EdgeInsets.only(top: topPadding),
                           child: HeaderText(
-                              text: AppLocalizations.of(context)!.welc),
+                              text: AppLocalizations.of(context)!.welcome),
                         )
                       ],
                     ),

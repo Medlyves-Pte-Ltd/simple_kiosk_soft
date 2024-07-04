@@ -58,7 +58,8 @@ class ClientDetails extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              buildDetailText('Name:', UserInfo().name, defaultStyle),
+              buildDetailText(AppLocalizations.of(context)!.name,
+                  UserInfo().name, defaultStyle),
               buildDetailText(AppLocalizations.of(context)!.gender,
                   UserInfo().gender, defaultStyle),
               buildDetailText(AppLocalizations.of(context)!.age, UserInfo().age,

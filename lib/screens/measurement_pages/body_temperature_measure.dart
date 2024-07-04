@@ -15,12 +15,6 @@ class BodyTemperatureMeasure extends BaseMeasureLayoutWidget {
   late String temperature;
 
   BodyTemperatureMeasure() {
-    super.color = ColorPalette.colorbodytemperature;
-    super.startVideoFile = 'assets/videos/zh/temperature_measure_ZH.mp4';
-    super.endVideoFile = 'assets/videos/zh/temperature_completed_ZH.mp4';
-    super.iconFile = "assets/images/temperature_icon.png";
-    super.deviceType = DeviceType.TEMP_DEVICE;
-
     temperature = UserInfo().temperature.isNotEmpty
         ? UserInfo().temperature
         : dataDefaultValue;
@@ -29,6 +23,12 @@ class BodyTemperatureMeasure extends BaseMeasureLayoutWidget {
   @override
   void init() {
     super.title = AppLocalizations.of(mainContext)!.temperature;
+    if (super.startVideoFile.isEmpty) {
+      super.startVideoFile = getVideoFileName(DeviceType.TEMP_DEVICE, false);
+    }
+    if (super.endVideoFile.isEmpty) {
+      super.endVideoFile = getVideoFileName(DeviceType.TEMP_DEVICE, true);
+    }
   }
 
   @override

@@ -21,12 +21,6 @@ class BloodPressureMeasure extends BaseMeasureLayoutWidget {
   String heartRate = '';
 
   BloodPressureMeasure() {
-    super.color = ColorPalette.colorheightWeight;
-    super.startVideoFile = 'assets/videos/zh/bloodpressure_ZH.mp4';
-    super.endVideoFile = 'assets/videos/zh/bloodpressure_completed_ZH.mp4';
-    super.iconFile = "assets/images/bloodpressure_logo.png";
-    super.title = "Blood Pressure";
-    super.deviceType = DeviceType.BP_DEVICE;
     systolic =
         UserInfo().systolic.isNotEmpty ? UserInfo().systolic : dataDefaultValue;
     diastolic = UserInfo().diastolic.isNotEmpty
@@ -39,7 +33,13 @@ class BloodPressureMeasure extends BaseMeasureLayoutWidget {
 
   @override
   void init() {
-    super.title = AppLocalizations.of(mainContext)!.bp;
+    super.title = AppLocalizations.of(mainContext)!.blood_pressure;
+    if (super.startVideoFile.isEmpty) {
+      super.startVideoFile = getVideoFileName(DeviceType.BP_DEVICE, false);
+    }
+    if (super.endVideoFile.isEmpty) {
+      super.endVideoFile = getVideoFileName(DeviceType.BP_DEVICE, true);
+    }
   }
 
   @override

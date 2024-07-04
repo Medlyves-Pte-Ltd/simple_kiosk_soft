@@ -97,7 +97,7 @@ class BloodPressureMeasurementCardState
                         child: Column(
                           children: [
                             Text(
-                              AppLocalizations.of(context)!.bp,
+                              AppLocalizations.of(context)!.blood_pressure,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: fontSize),

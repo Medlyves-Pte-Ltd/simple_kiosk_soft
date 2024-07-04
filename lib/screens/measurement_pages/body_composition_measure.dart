@@ -27,13 +27,6 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
   late String bodyWaterPercentage;
 
   BodyCompositionMeasure() {
-    super.color = ColorPalette.colorheightWeight;
-    super.startVideoFile = 'assets/videos/zh/bodycomposition_ZH.mp4';
-    super.endVideoFile = 'assets/videos/zh/bodycomposition_completed_ZH.mp4';
-    super.iconFile = "assets/images/bodycomposition_logo.png";
-    super.title = "Body Composition";
-    super.deviceType = DeviceType.BC_DEVICE;
-
     bodyFatPercentage = UserInfo().bodyFatPercentage.isNotEmpty
         ? UserInfo().bodyFatPercentage
         : dataDefaultValue;
@@ -56,6 +49,12 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
   @override
   void init() {
     super.title = AppLocalizations.of(mainContext)!.bcm;
+    if (super.startVideoFile.isEmpty) {
+      super.startVideoFile = getVideoFileName(DeviceType.BC_DEVICE, false);
+    }
+    if (super.endVideoFile.isEmpty) {
+      super.endVideoFile = getVideoFileName(DeviceType.BC_DEVICE, true);
+    }
   }
 
   @override

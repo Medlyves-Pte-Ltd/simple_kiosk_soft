@@ -74,10 +74,10 @@ class _FrailtyCardState extends State<FrailtyCard> {
         themecolour = ColorPalette.colorbloodoxygen;
         imagePath = 'assets/images/blood_fit.png';
         bodyParameterList = [
-        '${AppLocalizations.of(context)!.bf_totalCholesterol}:',
-        '${AppLocalizations.of(context)!.bf_highDensitylipoproteincholesterol}:',
-        '${AppLocalizations.of(context)!.bf_triglyceride}:',
-        '${AppLocalizations.of(context)!.bf_LowDensitylipoproteincholesterol}:',
+          '${AppLocalizations.of(context)!.bf_totalCholesterol}:',
+          '${AppLocalizations.of(context)!.bf_highDensitylipoproteincholesterol}:',
+          '${AppLocalizations.of(context)!.bf_triglyceride}:',
+          '${AppLocalizations.of(context)!.bf_LowDensitylipoproteincholesterol}:',
         ];
         bodyTextList = [
           UserInfo().chol,
@@ -89,7 +89,7 @@ class _FrailtyCardState extends State<FrailtyCard> {
         cardWidth = screenWidth * 0.9;
         break;
       case CardType.BP:
-        title = AppLocalizations.of(context)!.bp,
+        title = AppLocalizations.of(context)!.blood_pressure;
         themecolour = ColorPalette.colorbloodPressure;
         imagePath = 'assets/images/bloodpressure_logo.png';
         bodyTextList = [

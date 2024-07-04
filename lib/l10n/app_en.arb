@@ -1,4 +1,5 @@
 {
+  "name": "Name:",
   "age": "Age: ",
   "back": "Back",
   "female": "Female",
@@ -15,7 +16,7 @@
   "bcm_skeletal": "Skeletal Muscle %",
   "bcm_visceralfat": "Visceral Fat Level",
   "bcm_water": "Water Content",
-  "bp": "Blood Pressure",
+  "blood_pressure": "Blood Pressure",
   "bp_bloodpressure": "Blood Pressure (mmHg)",
   "bp_pulse": "Heart Rate (bpm)",
   "client_details": "Client Details",

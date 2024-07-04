@@ -16,13 +16,8 @@ class BloodOxygenMeasure extends BaseMeasureLayoutWidget {
   late String _pulseRate;
 
   BloodOxygenMeasure() {
-    super.color = ColorPalette.colorheightWeight;
     super.startVideoFile = 'assets/videos/zh/spo2_measure_ZH.mp4';
     super.endVideoFile = 'assets/videos/zh/spo2_completed_ZH.mp4';
-    super.iconFile = "assets/images/spo2_icon.png";
-    super.title = "Blood Oxygen";
-    super.deviceType = DeviceType.BO_DEVICE;
-
     _bloodOxygen = UserInfo().bloodOxygen.isNotEmpty
         ? UserInfo().bloodOxygen
         : dataDefaultValue;
@@ -34,6 +29,12 @@ class BloodOxygenMeasure extends BaseMeasureLayoutWidget {
   @override
   void init() {
     super.title = AppLocalizations.of(mainContext)!.bo;
+    if (super.startVideoFile.isEmpty) {
+      super.startVideoFile = getVideoFileName(DeviceType.BO_DEVICE, false);
+    }
+    if (super.endVideoFile.isEmpty) {
+      super.endVideoFile = getVideoFileName(DeviceType.BO_DEVICE, true);
+    }
   }
 
   @override
