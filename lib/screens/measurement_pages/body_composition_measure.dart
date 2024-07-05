@@ -59,9 +59,23 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
 
   @override
   void onStart() async {
+    // // 人体成分需要传入参数
+    // DeviceManager().getDevice(DeviceType.BC_DEVICE)?.customParams = {
+    //   'height': UserInfo().height,
+    //   'weight': UserInfo().weight,
+    //   'age': UserInfo().age,
+    //   'gender': UserInfo().gender.contains('男性') ||
+    //       UserInfo().gender.contains('Male') ||
+    //       UserInfo().gender.contains('Lelaki') ||
+    //       UserInfo().gender.contains('ஆண்')
+    //       ? "Male"
+    //       : "Female",
+    // };
+
+    // 人体成分需要传入参数
     DeviceManager().getDevice(DeviceType.BC_DEVICE)?.customParams = {
-      'height': UserInfo().height,
-      'weight': UserInfo().weight,
+      'height': "176.5",
+      'weight': "81.2",
       'age': UserInfo().age,
       'gender': UserInfo().gender.contains('男性') ||
               UserInfo().gender.contains('Male') ||
@@ -88,11 +102,29 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
     double titleFontSize = height * 0.02;
     double dataFontSize = height * 0.02;
 
-    return BlocBuilder<DeviceBloc, DeviceState>(builder: (context, state) {
-      if (state is DeviceDataLoading) {
+    return BlocBuilder<DeviceBloc, DeviceState>(buildWhen: (previous, state) {
+      bool update = false;
+
+      if (state is DeviceConnected) {
+        ControlMeasurePageUtils().measured = false;
+        bodyFatPercentage = skeletalMusclePercentage = basalMetabolism =
+            skeletalMusclePercentage = visceralFatLevel =
+                protein = bodyWaterPercentage = dataDefaultValue;
+
+        UserInfo().bodyFatPercentage = "";
+        UserInfo().bodyFatMass = "";
+        UserInfo().basalMetabolism = "";
+        UserInfo().skeletalMusclePercentage = "";
+        UserInfo().visceralFatLevel = "";
+        UserInfo().protein = "";
+        UserInfo().mineral = "";
+        UserInfo().bodyWaterPercentage = "";
+        update = true;
+      } else if (state is DeviceDataLoading) {
         bodyFatPercentage = skeletalMusclePercentage = basalMetabolism =
             skeletalMusclePercentage = visceralFatLevel = protein =
-                bodyWaterPercentage = AppLocalizations.of(context)!.loading;
+                bodyWaterPercentage = AppLocalizations.of(mainContext)!.loading;
+        update = true;
       } else if (state is DeviceDataUpdated) {
         if (state.deviceData is BodyCompositionData) {
           BodyCompositionData bodyCompositionData =
@@ -117,9 +149,12 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
               bodyCompositionData.bodyWaterPercentage;
 
           ControlMeasurePageUtils().measured = true;
+          update = true;
         }
       }
 
+      return update;
+    }, builder: (context, state) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -135,7 +170,7 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
                     style: TextStyle(
                         fontSize: titleFontSize, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: height * 0.02),
+                  SizedBox(height: height * 0.01),
                   Text(
                     bodyFatPercentage,
                     style: TextStyle(
@@ -155,7 +190,7 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
                     style: TextStyle(
                         fontSize: titleFontSize, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: height * 0.02),
+                  SizedBox(height: height * 0.01),
                   Text(
                     skeletalMusclePercentage,
                     style: TextStyle(
@@ -181,7 +216,7 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
                     style: TextStyle(
                         fontSize: titleFontSize, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: height * 0.02),
+                  SizedBox(height: height * 0.01),
                   Text(
                     basalMetabolism,
                     style: TextStyle(
@@ -201,7 +236,7 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
                     style: TextStyle(
                         fontSize: titleFontSize, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: height * 0.02),
+                  SizedBox(height: height * 0.01),
                   Text(
                     visceralFatLevel,
                     style: TextStyle(
@@ -225,7 +260,7 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
                     style: TextStyle(
                         fontSize: titleFontSize, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: height * 0.02),
+                  SizedBox(height: height * 0.01),
                   Text(
                     bodyWaterPercentage,
                     style: TextStyle(
@@ -245,7 +280,7 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
                     style: TextStyle(
                         fontSize: titleFontSize, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: height * 0.02),
+                  SizedBox(height: height * 0.01),
                   Text(
                     protein,
                     style: TextStyle(

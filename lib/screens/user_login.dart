@@ -141,6 +141,7 @@ class UserLoginState extends State<UserLogin> {
                                 if (context.mounted) {
                                   Navigator.pushNamedAndRemoveUntil(context,
                                       '/HeightWeightMeasure', (route) => false);
+                                  UserInfo().clear();
                                 }
                               },
                               disabled:

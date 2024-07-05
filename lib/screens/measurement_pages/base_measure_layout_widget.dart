@@ -16,15 +16,23 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 
 class BaseMeasureLayoutWidget extends StatelessWidget {
+  // 数据默认值
   String dataDefaultValue = "- - -";
+  // 当前播放的视频文件
+  String curPlayFile = "";
   // 步骤原形图标数量
   final stepCircleCount = 4;
+  // 测试开始视频
   String startVideoFile = '';
+  // 测试结束视频
   String endVideoFile = '';
+  // 标题
   String title = "";
+  // 屏幕宽度
   double width = 0;
+  // 屏幕高度
   double height = 0;
-  ValueNotifier<bool> startButtonPressed = ValueNotifier<bool>(false);
+  // StatelessWidget需要保存上下文才能进行页面跳转，翻译
   late BuildContext mainContext;
 
   // 子类需要实现的数据显示函数
@@ -44,10 +52,10 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
       body: Column(
         children: [
           const Header(),
-          _buildVideoArea(),
+          buildVideoArea(),
           _buildStepArea(),
-          _buildCardArea(),
-          _buildBackNextControlBtn(),
+          buildCardArea(),
+          buildBackNextControlBtn(),
           const Footer()
         ],
       ),
@@ -55,31 +63,24 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
   }
 
   // 播放视频区域
-  Widget _buildVideoArea() {
-    String file = startVideoFile;
-    return BlocListener<DeviceBloc, DeviceState>(
-      listener: (context, state) {
-        if (state is DeviceDataUpdated || ControlMeasurePageUtils().measured) {
-          file = endVideoFile;
-        } else {
-          file = startVideoFile;
-        }
-      },
-      child: BlocBuilder<DeviceBloc, DeviceState>(builder: (context, state) {
-        return VideoWidget(key: GlobalKey(), videoName: file, setLooping: true);
-      }),
-    );
-
-    return BlocBuilder<DeviceBloc, DeviceState>(builder: (context, state) {
-      String file = state is DeviceDataUpdated ? endVideoFile : startVideoFile;
+  Widget buildVideoArea() {
+    String file = ControlMeasurePageUtils().measured == false
+        ? startVideoFile
+        : endVideoFile;
+    return BlocBuilder<DeviceBloc, DeviceState>(buildWhen: (previous, state) {
+      if (state is DeviceDataUpdated || ControlMeasurePageUtils().measured) {
+        file = endVideoFile;
+      } else if (state is DeviceConnected) {
+        file = startVideoFile;
+      }
+      return file != curPlayFile;
+    }, builder: (context, state) {
       return VideoWidget(key: GlobalKey(), videoName: file, setLooping: true);
     });
   }
 
   // 显示步骤区域
   Widget _buildStepArea() {
-    double radius = height * 0.04;
-    double interval = width * 0.06;
     return Container(
       height: height * 0.05,
       margin: EdgeInsets.only(
@@ -95,7 +96,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
   }
 
   // 卡片信息区域
-  Widget _buildCardArea() {
+  Widget buildCardArea() {
     return Expanded(
         child: Container(
       decoration: BoxDecoration(
@@ -106,7 +107,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: Column(
         children: [
-          _buildCardTopArea(),
+          buildCardTopArea(),
           Expanded(child: buildCardDataShowArea()),
           Container(
             margin: EdgeInsets.only(
@@ -126,7 +127,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
   }
 
   // 返回下一步控制按钮
-  Widget _buildBackNextControlBtn() {
+  Widget buildBackNextControlBtn() {
     return Padding(
       padding: EdgeInsets.only(
           top: height * 0.01, bottom: height * 0.01, right: width * 0.05),
@@ -157,14 +158,14 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
           SizedBox(
             width: width * 0.03,
           ),
-          _buildResultOrNextBtn()
+          buildResultOrNextBtn()
         ],
       ),
     );
   }
 
   // 卡片顶部区域
-  Widget _buildCardTopArea() {
+  Widget buildCardTopArea() {
     double imageSize = height * 0.05;
     double titleFontSize = height * 0.02;
     return Row(
@@ -208,7 +209,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
       DeviceType.BC_DEVICE: "bodycomposition",
       DeviceType.BP_DEVICE: "bloodpressure",
       DeviceType.BF_DEVICE: "bloodfat",
-      DeviceType.BO_DEVICE: "spo2_measure",
+      DeviceType.BO_DEVICE: "spo2",
       DeviceType.BG_DEVICE: "bloodglucose",
       DeviceType.TEMP_DEVICE: "temperature",
       DeviceType.ECG_DEVICE: "ecg"
@@ -232,8 +233,8 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
             await onStop();
           },
           child: Container(
-            height: height * 0.03,
-            width: width * 0.15,
+            height: height * 0.04,
+            width: width * 0.2,
             decoration: BoxDecoration(
               color: ColorPalette.materialGreen,
               borderRadius: BorderRadius.circular(10),
@@ -255,8 +256,8 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
             await onStart();
           },
           child: Container(
-            height: height * 0.03,
-            width: width * 0.15,
+            height: height * 0.04,
+            width: width * 0.2,
             decoration: BoxDecoration(
               color: ColorPalette.materialGreen,
               borderRadius: BorderRadius.circular(10),
@@ -273,62 +274,10 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
         );
       }
     });
-
-    return ValueListenableBuilder<bool>(
-        valueListenable: startButtonPressed,
-        builder: (context, value, child) {
-          if (!value) {
-            return InkWell(
-              onTap: () async {
-                await onStart();
-                startButtonPressed.value = true;
-              },
-              child: Container(
-                height: height * 0.03,
-                width: width * 0.15,
-                decoration: BoxDecoration(
-                  color: ColorPalette.materialGreen,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Center(
-                  child: Text("Start",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: btnFontSize,
-                          color: Colors.white)),
-                ),
-              ),
-            );
-          } else {
-            return InkWell(
-              onTap: () async {
-                await onStop();
-                startButtonPressed.value = false;
-              },
-              child: Container(
-                height: height * 0.03,
-                width: width * 0.15,
-                decoration: BoxDecoration(
-                  color: ColorPalette.materialGreen,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Center(
-                  child: Text("Stop",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: btnFontSize,
-                          color: Colors.white)),
-                ),
-              ),
-            );
-          }
-        });
   }
 
   // 结果或者下一步按钮
-  Widget _buildResultOrNextBtn() {
+  Widget buildResultOrNextBtn() {
     if (ControlMeasurePageUtils().pageIndex !=
         ControlMeasurePageUtils().measurelist.length - 1) {
       return InkWell(
@@ -384,7 +333,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
   // 停止
   onStop() async {}
 
-  Widget _buildCircleArea(int index, Color color) {
+  Widget buildCircleArea(int index, Color color) {
     double radius = height * 0.04;
     return Container(
         height: radius,
@@ -426,11 +375,11 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
           ));
         } else if (index < ControlMeasurePageUtils().pageIndex) {
           if (ControlMeasurePageUtils().measurelist[index]['measured']) {
-            list.add(_buildCircleArea(index,
+            list.add(buildCircleArea(index,
                 Color(ControlMeasurePageUtils().measurelist[index]['color'])));
           }
         } else {
-          list.add(_buildCircleArea(index, ColorPalette.greyWidgetBorder));
+          list.add(buildCircleArea(index, ColorPalette.greyWidgetBorder));
         }
       }
 

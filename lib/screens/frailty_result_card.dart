@@ -85,7 +85,7 @@ class _FrailtyCardState extends State<FrailtyCard> {
           UserInfo().trig,
           UserInfo().ldl,
         ];
-        cardHeight = screenHeight * 0.25;
+        cardHeight = screenHeight * 0.3;
         cardWidth = screenWidth * 0.9;
         break;
       case CardType.BP:

@@ -16,8 +16,6 @@ class BloodOxygenMeasure extends BaseMeasureLayoutWidget {
   late String _pulseRate;
 
   BloodOxygenMeasure() {
-    super.startVideoFile = 'assets/videos/zh/spo2_measure_ZH.mp4';
-    super.endVideoFile = 'assets/videos/zh/spo2_completed_ZH.mp4';
     _bloodOxygen = UserInfo().bloodOxygen.isNotEmpty
         ? UserInfo().bloodOxygen
         : dataDefaultValue;
@@ -56,20 +54,31 @@ class BloodOxygenMeasure extends BaseMeasureLayoutWidget {
     double titleFontSize = height * 0.02;
     double dataFontSize = height * 0.02;
 
-    return BlocBuilder<DeviceBloc, DeviceState>(builder: (context, state) {
-      if (state is DeviceDataLoading) {
-        _bloodOxygen = _pulseRate = AppLocalizations.of(context)!.loading;
-      } else if (state is DeviceDataUpdated) {
-        if (state.deviceData is BloodOxygenData) {
-          _bloodOxygen = (state.deviceData as BloodOxygenData).spo2;
-          _pulseRate = (state.deviceData as BloodOxygenData).heartRate;
-          UserInfo().bloodOxygen = _bloodOxygen;
-          UserInfo().bloodOxygenHeartRate = _pulseRate;
+    return BlocBuilder<DeviceBloc, DeviceState>(buildWhen: (previous, state) {
+      bool update = false;
 
-          ControlMeasurePageUtils().measured = true;
-        }
+      if (state is DeviceConnected) {
+        ControlMeasurePageUtils().measured = false;
+        _bloodOxygen = _pulseRate = dataDefaultValue;
+        UserInfo().bloodOxygen = "";
+        UserInfo().bloodOxygenHeartRate = "";
+        update = true;
+      } else if (state is DeviceDataLoading) {
+        _bloodOxygen = _pulseRate = AppLocalizations.of(mainContext)!.loading;
+        update = true;
+      } else if (state is DeviceDataUpdated &&
+          state.deviceData is BloodOxygenData) {
+        _bloodOxygen =
+            UserInfo().bloodOxygen = (state.deviceData as BloodOxygenData).spo2;
+        _pulseRate = UserInfo().bloodOxygenHeartRate =
+            (state.deviceData as BloodOxygenData).heartRate;
+
+        ControlMeasurePageUtils().measured = true;
+        update = true;
       }
 
+      return update;
+    }, builder: (context, state) {
       return Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

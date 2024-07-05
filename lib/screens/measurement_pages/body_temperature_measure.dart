@@ -50,17 +50,26 @@ class BodyTemperatureMeasure extends BaseMeasureLayoutWidget {
     double titleFontSize = height * 0.02;
     double dataFontSize = height * 0.02;
 
-    return BlocBuilder<DeviceBloc, DeviceState>(builder: (context, state) {
-      if (state is DeviceDataLoading) {
-        temperature = AppLocalizations.of(context)!.loading;
-      } else if (state is DeviceDataUpdated) {
-        if (state.deviceData is BodyTemperatureData) {
-          temperature = (state.deviceData as BodyTemperatureData).temperature;
-          UserInfo().temperature = temperature;
-          ControlMeasurePageUtils().measured = true;
-        }
+    return BlocBuilder<DeviceBloc, DeviceState>(buildWhen: (previous, state) {
+      bool update = false;
+
+      if (state is DeviceConnected) {
+        ControlMeasurePageUtils().measured = false;
+        temperature = dataDefaultValue;
+        UserInfo().temperature = '';
+        update = true;
+      } else if (state is DeviceDataLoading) {
+        temperature = AppLocalizations.of(mainContext)!.loading;
+        update = true;
+      } else if (state is DeviceDataUpdated &&
+          state.deviceData is BodyTemperatureData) {
+        temperature = UserInfo().temperature =
+            (state.deviceData as BodyTemperatureData).temperature;
+        update = true;
       }
 
+      return update;
+    }, builder: (context, state) {
       return Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -61,23 +61,35 @@ class BloodPressureMeasure extends BaseMeasureLayoutWidget {
     double titleFontSize = height * 0.02;
     double dataFontSize = height * 0.02;
 
-    return BlocBuilder<DeviceBloc, DeviceState>(builder: (context, state) {
-      if (state is DeviceDataLoading) {
-        systolic =
-            diastolic = heartRate = AppLocalizations.of(context)!.loading;
-      } else if (state is DeviceDataUpdated) {
-        if (state.deviceData is BloodOxygenData) {
-          systolic = (state.deviceData as BloodPrssureData).systolic;
-          diastolic = (state.deviceData as BloodPrssureData).diastolic;
-          heartRate = (state.deviceData as BloodPrssureData).heartRate;
-          UserInfo().systolic = systolic;
-          UserInfo().diastolic = diastolic;
-          UserInfo().heartRate = heartRate;
+    return BlocBuilder<DeviceBloc, DeviceState>(buildWhen: (previous, state) {
+      bool update = false;
 
-          ControlMeasurePageUtils().measured = true;
-        }
+      if (state is DeviceConnected) {
+        ControlMeasurePageUtils().measured = false;
+        systolic = diastolic = heartRate = dataDefaultValue;
+        UserInfo().systolic = "";
+        UserInfo().diastolic = "";
+        UserInfo().heartRate = "";
+        update = true;
+      } else if (state is DeviceDataLoading) {
+        systolic =
+            diastolic = heartRate = AppLocalizations.of(mainContext)!.loading;
+        update = true;
+      } else if (state is DeviceDataUpdated &&
+          state.deviceData is BloodPrssureData) {
+        systolic = UserInfo().systolic =
+            (state.deviceData as BloodPrssureData).systolic;
+        diastolic = UserInfo().diastolic =
+            (state.deviceData as BloodPrssureData).diastolic;
+        heartRate = UserInfo().heartRate =
+            (state.deviceData as BloodPrssureData).heartRate;
+
+        ControlMeasurePageUtils().measured = true;
+        update = true;
       }
 
+      return update;
+    }, builder: (context, state) {
       return Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
