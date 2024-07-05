@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simple_kiosk_software/common/header.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
-import 'package:simple_kiosk_software/providers/stepperprovider.dart';
-import 'package:provider/provider.dart';
 
 class Layout1 extends StatelessWidget {
   final Widget content1;

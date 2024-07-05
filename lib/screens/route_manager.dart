@@ -3,7 +3,6 @@ import 'package:simple_kiosk_software/screens/frailty_summary.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/blood_oxygen_measure.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/blood_pressure_measure.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/body_composition_measure.dart';
-import 'package:simple_kiosk_software/screens/measurement_screen.dart';
 import 'package:simple_kiosk_software/screens/user_login.dart';
 import 'package:simple_kiosk_software/screens/language/language_page.dart';
 import 'package:simple_kiosk_software/screens/kiosk_manager.dart';
@@ -21,7 +20,6 @@ import 'package:simple_kiosk_software/screens/measurement_pages/body_temperature
 final Map<String, Function> routes = {
   '/': (context, {args}) => const LanguagePage(),
   '/login': (context, {args}) => const UserLogin(),
-  '/measurement': (context, {args}) => const MeasurementScreen(),
   '/KioskManager': (context, {args}) => KioskManager(),
   '/FrailtySummaryPage': (context, {args}) => FrailtySummaryPage(),
   '/HeightWeightMeasure': (context, {args}) => HeightWeightMeasure(),

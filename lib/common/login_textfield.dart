@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:simple_kiosk_software/providers/stepperprovider.dart';
-import 'package:provider/provider.dart';
 
 enum TextFieldLabel {
   patientId,
@@ -25,28 +23,14 @@ class LoginTextField extends StatefulWidget {
 }
 
 class _LoginTextFieldState extends State<LoginTextField> {
-  final FocusNode _textFieldFocusNode = FocusNode();
-
   @override
   void initState() {
     super.initState();
-    _textFieldFocusNode.addListener(_onFocusChange);
   }
 
   @override
   void dispose() {
-    _textFieldFocusNode.removeListener(_onFocusChange);
-    _textFieldFocusNode.dispose();
     super.dispose();
-  }
-
-  void _onFocusChange() {
-    final stepper = Provider.of<StepperProvider>(context, listen: false);
-    if (_textFieldFocusNode.hasFocus) {
-      stepper.setFooterVisibility(false);
-    } else {
-      stepper.setFooterVisibility(true);
-    }
   }
 
   @override
@@ -85,7 +69,6 @@ class _LoginTextFieldState extends State<LoginTextField> {
           height: textfieldHeight,
           width: textfieldWidth,
           child: TextField(
-            focusNode: _textFieldFocusNode,
             keyboardType: getTextInputType(widget.textfieldType),
             maxLength: widget.textfieldType == TextFieldLabel.age ? 2 : null,
             inputFormatters: [
