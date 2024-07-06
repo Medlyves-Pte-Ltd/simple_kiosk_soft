@@ -42,6 +42,12 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
 
   void init() {}
 
+  // 开始
+  Future<void> onStart() async {}
+
+  // 停止
+  Future<void> onStop() async {}
+
   @override
   Widget build(BuildContext context) {
     mainContext = context;
@@ -224,55 +230,45 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
 
   Widget startButton() {
     double btnFontSize = height * 0.025;
-    return BlocBuilder<DeviceBloc, DeviceState>(builder: (context, state) {
-      if (state is DeviceConnected ||
-          state is DeviceDataLoading ||
-          state is DeviceDataUpdated) {
-        return InkWell(
-          onTap: () async {
-            await onStop();
-          },
-          child: Container(
-            height: height * 0.04,
-            width: width * 0.2,
-            decoration: BoxDecoration(
-              color: ColorPalette.materialGreen,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Center(
-              child: Text(AppLocalizations.of(mainContext)!.stop,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: btnFontSize,
-                      color: Colors.white)),
-            ),
-          ),
-        );
-      } else {
-        return InkWell(
-          onTap: () async {
-            ControlMeasurePageUtils().measured = false;
-            await onStart();
-          },
-          child: Container(
-            height: height * 0.04,
-            width: width * 0.2,
-            decoration: BoxDecoration(
-              color: ColorPalette.materialGreen,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Center(
-              child: Text(AppLocalizations.of(mainContext)!.start,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: btnFontSize,
-                      color: Colors.white)),
-            ),
-          ),
-        );
+    String btnText = AppLocalizations.of(mainContext)!.start;
+    return BlocBuilder<DeviceBloc, DeviceState>(buildWhen: (previous, state) {
+      bool update = false;
+
+      if (state is DeviceConnected) {
+        btnText = AppLocalizations.of(mainContext)!.stop;
+        update = true;
+      } else if (state is DeviceDisconnected) {
+        btnText = AppLocalizations.of(mainContext)!.start;
+        update = true;
       }
+
+      return update;
+    }, builder: (context, state) {
+      return InkWell(
+        onTap: () async {
+          if (btnText == AppLocalizations.of(mainContext)!.stop) {
+            await onStop();
+          } else {
+            await onStart();
+          }
+        },
+        child: Container(
+          height: height * 0.04,
+          width: width * 0.2,
+          decoration: BoxDecoration(
+            color: ColorPalette.materialGreen,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Center(
+            child: Text(btnText,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: btnFontSize,
+                    color: Colors.white)),
+          ),
+        ),
+      );
     });
   }
 
@@ -305,7 +301,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
       return InkWell(
         onTap: () {
           Navigator.pushNamedAndRemoveUntil(
-              mainContext, "/FrailtySummaryPage", (route) => false);
+              mainContext, "/Summary", (route) => false);
         },
         child: Container(
             height: height * 0.03,
@@ -326,12 +322,6 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
       );
     }
   }
-
-  // 开始
-  onStart() async {}
-
-  // 停止
-  onStop() async {}
 
   Widget buildCircleArea(int index, Color color) {
     double radius = height * 0.04;
@@ -374,9 +364,13 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
             height: radius,
           ));
         } else if (index < ControlMeasurePageUtils().pageIndex) {
-          if (ControlMeasurePageUtils().measurelist[index]['measured']) {
+          if (ControlMeasurePageUtils().measurelist[index]['measured']
+                  as bool ==
+              true) {
             list.add(buildCircleArea(index,
                 Color(ControlMeasurePageUtils().measurelist[index]['color'])));
+          } else {
+            list.add(buildCircleArea(index, ColorPalette.greyWidgetBorder));
           }
         } else {
           list.add(buildCircleArea(index, ColorPalette.greyWidgetBorder));

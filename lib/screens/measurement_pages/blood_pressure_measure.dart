@@ -43,14 +43,14 @@ class BloodPressureMeasure extends BaseMeasureLayoutWidget {
   }
 
   @override
-  void onStart() async {
+  Future<void> onStart() async {
     DeviceConnectEvent connectEvent =
         DeviceConnectEvent(deviceType: DeviceType.BP_DEVICE);
     BlocProvider.of<DeviceBloc>(mainContext).add(connectEvent);
   }
 
   @override
-  void onStop() async {
+  Future<void> onStop() async {
     DeviceStopEvent stopEvent =
         DeviceStopEvent(deviceType: DeviceType.BP_DEVICE);
     BlocProvider.of<DeviceBloc>(mainContext).add(stopEvent);

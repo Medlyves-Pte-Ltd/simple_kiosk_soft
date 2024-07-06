@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/device_data/height_data.dart';
 import 'package:flutter_devices_sdk/device_data/weight_data.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
-import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
@@ -26,10 +25,58 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
   }
 
   @override
+  Widget startButton() {
+    double btnFontSize = height * 0.025;
+    String btnText = AppLocalizations.of(mainContext)!.start;
+    return BlocBuilder<DeviceBloc, DeviceState>(buildWhen: (previous, state) {
+      bool update = false;
+
+      if (state is DeviceConnected &&
+          state.deviceType == DeviceType.HEIGHT_DEVICE) {
+        btnText = AppLocalizations.of(mainContext)!.stop;
+        update = true;
+      } else if (state is DeviceDisconnected &&
+          state.deviceType == DeviceType.WEIGHT_DEVICE) {
+        btnText = AppLocalizations.of(mainContext)!.start;
+        update = true;
+      }
+
+      return update;
+    }, builder: (context, state) {
+      return InkWell(
+        onTap: () async {
+          if (btnText == AppLocalizations.of(mainContext)!.stop) {
+            await onStop();
+          } else {
+            await onStart();
+          }
+        },
+        child: Container(
+          height: height * 0.04,
+          width: width * 0.2,
+          decoration: BoxDecoration(
+            color: ColorPalette.materialGreen,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Center(
+            child: Text(btnText,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: btnFontSize,
+                    color: Colors.white)),
+          ),
+        ),
+      );
+    });
+  }
+
+  @override
   Widget buildVideoArea() {
     String file = ControlMeasurePageUtils().measured == false
         ? startVideoFile
         : endVideoFile;
+
     return BlocBuilder<DeviceBloc, DeviceState>(
       buildWhen: (previous, current) {
         if (current is DeviceDataUpdated &&
@@ -60,14 +107,14 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
   }
 
   @override
-  void onStart() async {
+  Future<void> onStart() async {
     DeviceConnectEvent connectEvent =
         DeviceConnectEvent(deviceType: DeviceType.HEIGHT_DEVICE);
     BlocProvider.of<DeviceBloc>(mainContext).add(connectEvent);
   }
 
   @override
-  void onStop() async {
+  Future<void> onStop() async {
     DeviceStopEvent stopEvent =
         DeviceStopEvent(deviceType: DeviceType.HEIGHT_DEVICE);
     BlocProvider.of<DeviceBloc>(mainContext).add(stopEvent);

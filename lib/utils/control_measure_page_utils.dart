@@ -47,7 +47,7 @@ class ControlMeasurePageUtils {
 
   bool get measured =>
       ControlMeasurePageUtils().measurelist[ControlMeasurePageUtils().pageIndex]
-          ["measured"];
+          ["measured"] as bool;
 
   set measured(bool measured) {
     ControlMeasurePageUtils().measurelist[ControlMeasurePageUtils().pageIndex]
@@ -66,7 +66,6 @@ class ControlMeasurePageUtils {
 
   void onNextStep(BuildContext context) {
     if (pageIndex < measurelist.length) {
-      measurelist[pageIndex]["measured"] = true;
       pageIndex++;
       String route = measurelist[pageIndex]["page_route"];
       Navigator.pushNamedAndRemoveUntil(context, route, (route) => false);

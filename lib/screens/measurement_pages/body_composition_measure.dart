@@ -58,24 +58,11 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
   }
 
   @override
-  void onStart() async {
-    // // 人体成分需要传入参数
-    // DeviceManager().getDevice(DeviceType.BC_DEVICE)?.customParams = {
-    //   'height': UserInfo().height,
-    //   'weight': UserInfo().weight,
-    //   'age': UserInfo().age,
-    //   'gender': UserInfo().gender.contains('男性') ||
-    //       UserInfo().gender.contains('Male') ||
-    //       UserInfo().gender.contains('Lelaki') ||
-    //       UserInfo().gender.contains('ஆண்')
-    //       ? "Male"
-    //       : "Female",
-    // };
-
+  Future<void> onStart() async {
     // 人体成分需要传入参数
     DeviceManager().getDevice(DeviceType.BC_DEVICE)?.customParams = {
-      'height': "176.5",
-      'weight': "81.2",
+      'height': UserInfo().height,
+      'weight': UserInfo().weight,
       'age': UserInfo().age,
       'gender': UserInfo().gender.contains('男性') ||
               UserInfo().gender.contains('Male') ||
@@ -91,7 +78,7 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
   }
 
   @override
-  void onStop() async {
+  Future<void> onStop() async {
     DeviceStopEvent stopEvent =
         DeviceStopEvent(deviceType: DeviceType.BC_DEVICE);
     BlocProvider.of<DeviceBloc>(mainContext).add(stopEvent);

@@ -75,5 +75,12 @@
   "shortform_bp_pulse": "HR",
   "start": "Mula",
   "stop": "Berhenti",
-  "welcome": "Selamat Datang"
+  "welcome": "Selamat Datang",
+  "print": "Cetak",
+  "exit": "Keluar",
+  "summary_basic_vitals":"Vital\nAsas",
+  "summary_ecg":"Elektrokardiogram",
+  "summary_body_composition": "Komposisi\nbadan",
+  "summary_stethoscope": "Stetoskop",
+  "summary_otoscope": "Otoskop"
 }

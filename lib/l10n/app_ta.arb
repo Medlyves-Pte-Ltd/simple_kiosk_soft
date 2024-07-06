@@ -75,5 +75,12 @@
   "shortform_bp_pulse": "HR",
   "start": "தொடங்கு",
   "stop": "நிறுத்து",
-  "welcome": "நல்வரவு"
+  "welcome": "நல்வரவு",
+  "print": "அச்சிடு",
+  "exit": "வெளியேறு",
+  "summary_basic_vitals":"அடிப்படை\nவிஷயங்கள்",
+  "summary_ecg":"ไฟฟ้าหัวใจ",
+  "summary_body_composition": "உடல் அமைப்பு",
+  "summary_stethoscope": "ஸ்டீடோஸ்கோப்",
+  "summary_otoscope": "ஒடோஸ்கோப்பு"
 }

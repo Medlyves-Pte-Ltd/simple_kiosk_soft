@@ -74,5 +74,12 @@
   "shortform_bp_pulse": "HR",
   "start": "Start",
   "stop": "Stop",
-  "welcome": "Welcome"
+  "welcome": "Welcome",
+  "print": "Print",
+  "exit": "Exit",
+  "summary_basic_vitals":"Basic\nVitals",
+  "summary_ecg":"ECG",
+  "summary_body_composition": "Body\nComposition",
+  "summary_stethoscope": "Stethoscope",
+  "summary_otoscope": "Otoscope"
 }
