@@ -35,10 +35,11 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
           state.deviceType == DeviceType.HEIGHT_DEVICE) {
         btnText = AppLocalizations.of(mainContext)!.stop;
         update = true;
-      } else if (state is DeviceDisconnected &&
-          state.deviceType == DeviceType.WEIGHT_DEVICE) {
-        btnText = AppLocalizations.of(mainContext)!.start;
-        update = true;
+      } else if (state is DeviceDisconnected) {
+        if (state.deviceType == DeviceType.WEIGHT_DEVICE) {
+          btnText = AppLocalizations.of(mainContext)!.start;
+          update = true;
+        }
       }
 
       return update;
@@ -158,6 +159,12 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
           bodyWeight =
               UserInfo().weight = (state.deviceData as WeightData).weight;
           ControlMeasurePageUtils().measured = true;
+          update = true;
+        }
+      } else if (state is DeviceDisconnected) {
+        if (ControlMeasurePageUtils().measured == false) {
+          bodyHeight = dataDefaultValue;
+          bodyWeight = dataDefaultValue;
           update = true;
         }
       }

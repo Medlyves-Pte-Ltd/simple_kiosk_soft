@@ -47,7 +47,15 @@ class UserInfo {
   // 低密度脂蛋白
   String ldl = '';
 
-  void clear() {
+  void clearUserInfo() {
+    name = '';
+    patientId = '';
+    gender = '';
+    age = '';
+  }
+
+  void clearResult() {
+    bodyFatPercentage = '';
     ldl = '';
     trig = '';
     hdl = '';
@@ -63,9 +71,6 @@ class UserInfo {
     basalMetabolism = '';
     bodyFatMass = '';
     heartRate = '';
-    patientId = '';
-    gender = '';
-    age = '';
     height = '';
     weight = '';
     systolic = '';

@@ -138,6 +138,13 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
           ControlMeasurePageUtils().measured = true;
           update = true;
         }
+      } else if (state is DeviceDisconnected) {
+        if (ControlMeasurePageUtils().measured == false) {
+          bodyFatPercentage = skeletalMusclePercentage = basalMetabolism =
+              skeletalMusclePercentage = visceralFatLevel =
+                  protein = bodyWaterPercentage = dataDefaultValue;
+          update = true;
+        }
       }
 
       return update;

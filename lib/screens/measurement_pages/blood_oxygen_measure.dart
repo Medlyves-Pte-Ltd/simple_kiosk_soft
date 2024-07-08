@@ -75,6 +75,11 @@ class BloodOxygenMeasure extends BaseMeasureLayoutWidget {
 
         ControlMeasurePageUtils().measured = true;
         update = true;
+      } else if (state is DeviceDisconnected) {
+        if (ControlMeasurePageUtils().measured == false) {
+          _bloodOxygen = _pulseRate = dataDefaultValue;
+          update = true;
+        }
       }
 
       return update;

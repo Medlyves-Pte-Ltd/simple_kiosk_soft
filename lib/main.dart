@@ -13,7 +13,7 @@ import 'package:simple_kiosk_software/screens/route_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await DeviceConfig().clearDeviceConfigStorage();
+  // await DeviceConfig().clearDeviceConfigStorage();
   await DeviceConfig().init();
 
   runApp(MultiBlocProvider(
@@ -54,10 +54,10 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           onGenerateRoute: onCustomGenerateRoute,
-          //initialRoute: "/",
+          initialRoute: "/",
           //initialRoute: "/Summary",
           //initialRoute: "/KioskManager",
-          initialRoute: "/HeightWeightMeasure",
+          //initialRoute: "/HeightWeightMeasure",
 
           supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData(

@@ -4,13 +4,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 
 class ClientDetails extends StatelessWidget {
-  final Map<String, dynamic> userDetails;
   final TextStyle? style;
   final TextAlign textAlign;
 
   const ClientDetails({
     Key? key,
-    required this.userDetails,
     this.style,
     this.textAlign = TextAlign.center,
   }) : super(key: key);
@@ -23,7 +21,6 @@ class ClientDetails extends StatelessWidget {
     final cardWidth = screenWidth * 0.87;
     final cardHeight = screenHeight * 0.085;
     final boxHeight = screenHeight * 0.01;
-    Locale currentLocale = Localizations.localeOf(context);
 
     TextStyle defaultStyle = TextStyle(
       fontWeight: FontWeight.bold,

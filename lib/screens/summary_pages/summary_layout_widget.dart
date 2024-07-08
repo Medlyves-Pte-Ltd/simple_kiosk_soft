@@ -65,11 +65,6 @@ class SummaryLayoutWidget extends StatelessWidget {
         Tab(text: AppLocalizations.of(mainContext)!.summary_ecg),
         Tab(text: AppLocalizations.of(mainContext)!.summary_stethoscope),
         Tab(text: AppLocalizations.of(mainContext)!.summary_otoscope),
-        // titleItem(AppLocalizations.of(mainContext)!.summary_basic_vitals),
-        // titleItem(AppLocalizations.of(mainContext)!.summary_body_composition),
-        // titleItem(AppLocalizations.of(mainContext)!.summary_ecg),
-        // titleItem(AppLocalizations.of(mainContext)!.summary_stethoscope),
-        // titleItem(AppLocalizations.of(mainContext)!.summary_otoscope)
       ];
     }
   }
@@ -177,8 +172,10 @@ class SummaryLayoutWidget extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              UserInfo().clear();
+              UserInfo().clearUserInfo();
+              UserInfo().clearResult();
               ControlMeasurePageUtils().pageIndex = 0;
+              ControlMeasurePageUtils().clearMeasure();
               Navigator.pushNamedAndRemoveUntil(
                   mainContext, "/", (route) => false);
             },
@@ -208,24 +205,6 @@ class SummaryLayoutWidget extends StatelessWidget {
     String localeCode =
         BlocProvider.of<LocaleCubit>(mainContext).locale.languageCode;
     return 'assets/videos/$localeCode/end_session_${localeCode.toUpperCase()}.mp4';
-  }
-
-  Widget titleItem(String text) {
-    return Container(
-      width: width * 0.25,
-      height: height * 0.1,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: ColorPalette.materialGreen,
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-            color: ColorPalette.greyWidgetBorder,
-            fontSize: height * 0.02,
-            fontWeight: FontWeight.w600),
-      ),
-    );
   }
 
   // 加边框

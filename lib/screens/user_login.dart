@@ -139,9 +139,9 @@ class UserLoginState extends State<UserLogin> {
                               onTap: () async {
                                 await StorageUtils.saveData(userDetails);
                                 if (context.mounted) {
+                                  UserInfo().clearResult();
                                   Navigator.pushNamedAndRemoveUntil(context,
                                       '/HeightWeightMeasure', (route) => false);
-                                  UserInfo().clear();
                                 }
                               },
                               disabled:

@@ -124,9 +124,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
             color: ColorPalette.greyWidgetBorder,
             height: 1.5,
           ),
-          const ClientDetails(
-            userDetails: {},
-          ),
+          const ClientDetails(),
         ],
       ),
     ));
@@ -364,9 +362,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
             height: radius,
           ));
         } else if (index < ControlMeasurePageUtils().pageIndex) {
-          if (ControlMeasurePageUtils().measurelist[index]['measured']
-                  as bool ==
-              true) {
+          if (ControlMeasurePageUtils().measurelist[index]['measured']) {
             list.add(buildCircleArea(index,
                 Color(ControlMeasurePageUtils().measurelist[index]['color'])));
           } else {

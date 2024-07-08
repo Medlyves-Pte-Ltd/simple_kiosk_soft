@@ -65,7 +65,13 @@ class BodyTemperatureMeasure extends BaseMeasureLayoutWidget {
           state.deviceData is BodyTemperatureData) {
         temperature = UserInfo().temperature =
             (state.deviceData as BodyTemperatureData).temperature;
+        ControlMeasurePageUtils().measured = true;
         update = true;
+      } else if (state is DeviceDisconnected) {
+        if (ControlMeasurePageUtils().measured == false) {
+          temperature = dataDefaultValue;
+          update = true;
+        }
       }
 
       return update;

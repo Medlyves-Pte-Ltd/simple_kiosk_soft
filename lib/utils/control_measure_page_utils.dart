@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
+import 'package:simple_kiosk_software/utils/user_info.dart';
 
 class ControlMeasurePageUtils {
   int pageIndex = 0;
@@ -54,12 +55,22 @@ class ControlMeasurePageUtils {
         ["measured"] = measured;
   }
 
+  void clearMeasure() {
+    for (var it in measurelist) {
+      it["measured"] = false;
+    }
+  }
+
   void onBackStep(BuildContext context) {
     if (pageIndex > 0) {
       pageIndex--;
       String route = measurelist[pageIndex]["page_route"];
       Navigator.pushNamedAndRemoveUntil(context, route, (route) => false);
     } else if (pageIndex == 0) {
+      UserInfo().clearUserInfo();
+      UserInfo().clearResult();
+      pageIndex = 0;
+      clearMeasure();
       Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
     }
   }
