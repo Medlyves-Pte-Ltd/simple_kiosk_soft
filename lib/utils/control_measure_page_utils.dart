@@ -32,10 +32,16 @@ class ControlMeasurePageUtils {
       "color": ColorPalette.colorbloodPressure.value,
     },
     {
-      "icon_file": "assets/images/spo2_icon.png",
+      "icon_file": "assets/images/blood_glucose.png",
       "measured": false,
-      "page_route": "/BloodOxygenMeasure",
-      "color": ColorPalette.colorbloodoxygen.value,
+      "page_route": "/BloodGlucoseMeasure",
+      "color": ColorPalette.colorbloodGlucose.value,
+    },
+    {
+      "icon_file": "assets/images/blood_fit.png",
+      "measured": false,
+      "page_route": "/BloodFitMeasure",
+      "color": ColorPalette.colorbloodFat.value,
     },
   ];
 

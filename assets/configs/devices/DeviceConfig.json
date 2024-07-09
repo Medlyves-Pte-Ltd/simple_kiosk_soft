@@ -20,7 +20,7 @@
     "deviceType": "BP_DEVICE",
     "deviceIndex": 1,
     "deviceList": ["RaycomeBloodPressure", "PanasonicBloodPressure"],
-    "identificationCodeList": ["","cpt6000"],
+    "identificationCodeList": ["BZAOb11CN11","cpt6000"],
     "enable": true
   },
   {
@@ -59,9 +59,9 @@
     "deviceName": "Blood Glucose",
     "deviceType": "BG_DEVICE",
     "deviceIndex": 0,
-    "deviceList": ["BloodGlucose"],
-    "identificationCodeList": [""],
-    "enable": false
+    "deviceList": ["SGDianosticsBloodGlucose"],
+    "identificationCodeList": ["5432012098"],
+    "enable": true
   },
   {
     "deviceName": "ECG",

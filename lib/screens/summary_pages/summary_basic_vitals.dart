@@ -36,6 +36,8 @@ class SummaryBasicVitals extends StatelessWidget {
             buildTemperatureArea(),
             buildBloodPressureArea(),
             buildBloodOxygenArea(),
+            buildBloodGlucoseArea(),
+            buildBloodFitArea(),
           ],
         ));
   }
@@ -134,6 +136,188 @@ class SummaryBasicVitals extends StatelessWidget {
                 const Spacer(),
                 Text(
                   UserInfo().bloodOxygenHeartRate,
+                  style: TextStyle(
+                      fontSize: dataFontSize,
+                      fontWeight: FontWeight.bold,
+                      color: ColorPalette.materialGreen),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget buildBloodGlucoseArea() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: width * 0.04),
+      height: height * 0.17,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          buildCardTopArea(
+              "assets/images/blood_glucose.png",
+              AppLocalizations.of(mainContext)!.bg,
+              ColorPalette.colorbloodGlucose),
+          Padding(
+            padding: EdgeInsets.only(
+              left: width * 0.1,
+              right: width * 0.1,
+              top: height * 0.01,
+              bottom: height * 0.01,
+            ),
+            child: Row(
+              children: [
+                Text(
+                  AppLocalizations.of(mainContext)!.bg_ifcc,
+                  style: TextStyle(
+                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                ),
+                const Spacer(),
+                Text(
+                  UserInfo().IFCC,
+                  style: TextStyle(
+                      fontSize: dataFontSize,
+                      fontWeight: FontWeight.bold,
+                      color: ColorPalette.materialGreen),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              left: width * 0.1,
+              right: width * 0.1,
+              top: height * 0.01,
+              bottom: height * 0.01,
+            ),
+            child: Row(
+              children: [
+                Text(
+                  AppLocalizations.of(mainContext)!.bg_bloodglucose,
+                  style: TextStyle(
+                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                ),
+                const Spacer(),
+                Text(
+                  UserInfo().eAG,
+                  style: TextStyle(
+                      fontSize: dataFontSize,
+                      fontWeight: FontWeight.bold,
+                      color: ColorPalette.materialGreen),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget buildBloodFitArea() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: width * 0.04),
+      height: height * 0.3,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          buildCardTopArea("assets/images/blood_fit.png",
+              AppLocalizations.of(mainContext)!.bf, ColorPalette.colorbloodFat),
+          Padding(
+            padding: EdgeInsets.only(
+              left: width * 0.1,
+              right: width * 0.1,
+              top: height * 0.01,
+              bottom: height * 0.01,
+            ),
+            child: Row(
+              children: [
+                Text(
+                  AppLocalizations.of(mainContext)!.bf_totalCholesterol,
+                  style: TextStyle(
+                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                ),
+                const Spacer(),
+                Text(
+                  UserInfo().chol,
+                  style: TextStyle(
+                      fontSize: dataFontSize,
+                      fontWeight: FontWeight.bold,
+                      color: ColorPalette.materialGreen),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              left: width * 0.1,
+              right: width * 0.1,
+              top: height * 0.01,
+              bottom: height * 0.01,
+            ),
+            child: Row(
+              children: [
+                Text(
+                  AppLocalizations.of(mainContext)!.bf_triglyceride,
+                  style: TextStyle(
+                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                ),
+                const Spacer(),
+                Text(
+                  UserInfo().trig,
+                  style: TextStyle(
+                      fontSize: dataFontSize,
+                      fontWeight: FontWeight.bold,
+                      color: ColorPalette.materialGreen),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              left: width * 0.1,
+              right: width * 0.1,
+              top: height * 0.01,
+              bottom: height * 0.01,
+            ),
+            child: Row(
+              children: [
+                Text(
+                  AppLocalizations.of(mainContext)!
+                      .bf_highDensitylipoproteincholesterol,
+                  style: TextStyle(
+                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                ),
+                const Spacer(),
+                Text(
+                  UserInfo().hdl,
+                  style: TextStyle(
+                      fontSize: dataFontSize,
+                      fontWeight: FontWeight.bold,
+                      color: ColorPalette.materialGreen),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              left: width * 0.1,
+              right: width * 0.1,
+              top: height * 0.01,
+              bottom: height * 0.01,
+            ),
+            child: Row(
+              children: [
+                Text(
+                  AppLocalizations.of(mainContext)!
+                      .bf_LowDensitylipoproteincholesterol,
+                  style: TextStyle(
+                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                ),
+                const Spacer(),
+                Text(
+                  UserInfo().ldl,
                   style: TextStyle(
                       fontSize: dataFontSize,
                       fontWeight: FontWeight.bold,

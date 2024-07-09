@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:simple_kiosk_software/screens/measurement_pages/blood_fit_measure.dart';
+import 'package:simple_kiosk_software/screens/measurement_pages/blood_glucose_measure.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/blood_oxygen_measure.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/blood_pressure_measure.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/body_composition_measure.dart';
@@ -26,6 +28,8 @@ final Map<String, Function> routes = {
   '/BloodOxygenMeasure': (context, {args}) => BloodOxygenMeasure(),
   '/BloodPressureMeasure': (context, {args}) => BloodPressureMeasure(),
   '/BodyCompositionMeasure': (context, {args}) => BodyCompositionMeasure(),
+  '/BloodFitMeasure': (context, {args}) => BloodFitMeasure(),
+  '/BloodGlucoseMeasure': (context, {args}) => BloodGlucoseMeasure(),
   '/Summary': (context, {args}) => SummaryLayoutWidget(),
 };
 

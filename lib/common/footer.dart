@@ -14,7 +14,7 @@ class Footer extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomCenter,
       child: InkWell(
-          onTap: () {
+          onDoubleTap: () {
             Navigator.pushNamed(context, '/KioskManager');
           },
           child: Container(

@@ -46,6 +46,10 @@ class UserInfo {
   String trig = '';
   // 低密度脂蛋白
   String ldl = '';
+  // 糖化血红蛋白
+  String IFCC = '';
+  // 平均血糖
+  String eAG = '';
 
   void clearUserInfo() {
     name = '';
@@ -75,6 +79,8 @@ class UserInfo {
     weight = '';
     systolic = '';
     diastolic = '';
+    IFCC = '';
+    eAG = '';
   }
 
   // 私有构造函数

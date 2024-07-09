@@ -212,7 +212,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
       DeviceType.HEIGHT_DEVICE: "heightweight",
       DeviceType.BC_DEVICE: "bodycomposition",
       DeviceType.BP_DEVICE: "bloodpressure",
-      DeviceType.BF_DEVICE: "bloodfat",
+      DeviceType.BF_DEVICE: "bloodfit",
       DeviceType.BO_DEVICE: "spo2",
       DeviceType.BG_DEVICE: "bloodglucose",
       DeviceType.TEMP_DEVICE: "temperature",
