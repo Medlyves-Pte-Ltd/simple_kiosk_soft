@@ -1,58 +1,9 @@
 [
   {
-    "deviceName": "Body Composition",
-    "deviceType": "BC_DEVICE",
-    "deviceIndex": 1,
-    "deviceList": ["ShengYuanBodyComposition", "ChengDuBodyComposition","BoRuiWeiDG681Composition"],
-    "identificationCodeList": ["","cpt6000",""],
-    "enable": true
-  },
-  {
-    "deviceName": "Blood Oxygen",
-    "deviceType": "BO_DEVICE",
-    "deviceIndex": 1,
-    "deviceList": ["BloodOxygen", "ChengDuBloodOxygen", "KeRuiKangBloodOxygen"],
-    "identificationCodeList": ["","cpt6000", ""],
-    "enable": true
-  },
-  {
-    "deviceName": "Blood Pressure",
-    "deviceType": "BP_DEVICE",
-    "deviceIndex": 1,
-    "deviceList": ["RaycomeBloodPressure", "PanasonicBloodPressure"],
-    "identificationCodeList": ["BZAOb11CN11","cpt6000"],
-    "enable": true
-  },
-  {
     "deviceName": "Temperature",
     "deviceType": "TEMP_DEVICE",
     "deviceIndex": 2,
     "deviceList": ["BodyTemperature", "URIONTemperature", "DT8861Temperature", "GaoMuDT8861Temperature"],
-    "identificationCodeList": ["","DABCb136G04","cpt6000", ""],
-    "enable": true
-  },
-  {
-    "deviceName": "Height",
-    "deviceType": "HEIGHT_DEVICE",
-    "deviceIndex": 0,
-    "deviceList": ["ShengYuanHeight", "ZhongKeCQRFHeight"],
-    "identificationCodeList": ["cpt6000",""],
-    "enable": true
-  },
-  {
-    "deviceName": "Weight",
-    "deviceType": "WEIGHT_DEVICE",
-    "deviceIndex": 0,
-    "deviceList": ["ShengYuanWeight", "BoRuiWeiDG681Weight"],
-    "identificationCodeList": ["cpt6000",""],
-    "enable": true
-  },
-  {
-    "deviceName": "Blood Fit",
-    "deviceType": "BF_DEVICE",
-    "deviceIndex": 0,
-    "deviceList": ["PreciSCBloodFit"],
-    "identificationCodeList": ["565C002870"],
     "enable": true
   },
   {
@@ -60,7 +11,48 @@
     "deviceType": "BG_DEVICE",
     "deviceIndex": 0,
     "deviceList": ["SGDianosticsBloodGlucose"],
-    "identificationCodeList": ["5432012098"],
+    "enable": true
+  },
+  {
+    "deviceName": "Blood Fit",
+    "deviceType": "BF_DEVICE",
+    "deviceIndex": 0,
+    "deviceList": ["PreciSCBloodFit"],
+    "enable": true
+  },
+  {
+    "deviceName": "Blood Oxygen",
+    "deviceType": "BO_DEVICE",
+    "deviceIndex": 1,
+    "deviceList": ["BloodOxygen", "ChengDuBloodOxygen", "KeRuiKangBloodOxygen"],
+    "enable": true
+  },
+  {
+    "deviceName": "Blood Pressure",
+    "deviceType": "BP_DEVICE",
+    "deviceIndex": 1,
+    "deviceList": ["RaycomeBloodPressure", "PanasonicBloodPressure"],
+    "enable": true
+  },
+  {
+    "deviceName": "Body Composition",
+    "deviceType": "BC_DEVICE",
+    "deviceIndex": 1,
+    "deviceList": ["ShengYuanBodyComposition", "ChengDuBodyComposition","BoRuiWeiDG681Composition"],
+    "enable": true
+  },
+  {
+    "deviceName": "Height",
+    "deviceType": "HEIGHT_DEVICE",
+    "deviceIndex": 0,
+    "deviceList": ["ShengYuanHeight", "ZhongKeCQRFHeight"],
+    "enable": true
+  },
+  {
+    "deviceName": "Weight",
+    "deviceType": "WEIGHT_DEVICE",
+    "deviceIndex": 0,
+    "deviceList": ["ShengYuanWeight", "BoRuiWeiDG681Weight"],
     "enable": true
   },
   {
@@ -68,7 +60,6 @@
     "deviceType": "ECG_DEVICE",
     "deviceIndex": 0,
     "deviceList": ["Ecg"],
-    "identificationCodeList": [""],
     "enable": false
   },
   {
@@ -76,7 +67,6 @@
     "deviceType": "PRINTER_DEVICE",
     "deviceIndex": 0,
     "deviceList": ["Printer"],
-    "identificationCodeList": [""],
     "enable": false
   },
   {
@@ -84,7 +74,6 @@
     "deviceType": "SCANNER_DEVICE",
     "deviceIndex": 0,
     "deviceList": ["YouKuEP8280CodeScanner"],
-    "identificationCodeList": [""],
     "enable": false
   },
   {
@@ -92,7 +81,6 @@
     "deviceType": "IO_DEVICE",
     "deviceIndex": 0,
     "deviceList": ["BloodIo"],
-    "identificationCodeList": [""],
     "enable": false
   }
 ]
