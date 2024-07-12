@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
+import 'package:flutter_devices_sdk/comm/usb_interface.dart';
 
 class ControlMeasurePageUtils {
   int pageIndex = 0;
@@ -30,6 +31,12 @@ class ControlMeasurePageUtils {
       "measured": false,
       "page_route": "/BloodPressureMeasure",
       "color": ColorPalette.colorbloodPressure.value,
+    },
+    {
+      "icon_file": "assets/images/spo2_icon.png",
+      "measured": false,
+      "page_route": "/BloodOxygenMeasure",
+      "color": ColorPalette.colorbloodoxygen.value,
     },
     {
       "icon_file": "assets/images/blood_glucose.png",

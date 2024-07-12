@@ -1,3 +1,4 @@
+import 'package:flutter_devices_sdk/project_type.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ import 'package:simple_kiosk_software/screens/route_manager.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DeviceConfig().clearDeviceConfigStorage();
-  await DeviceConfig().init();
+  await DeviceConfig().init(ProjectType.cheng_du_npi_test);
 
   runApp(MultiBlocProvider(
     providers: [
