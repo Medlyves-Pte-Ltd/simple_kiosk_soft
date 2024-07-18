@@ -35,18 +35,117 @@ class ScannerPage extends StatelessWidget {
     height = MediaQuery.of(context).size.height;
     init();
     return Scaffold(
+      backgroundColor: ColorPalette.colorAppBackground,
       body: Column(
         children: [
           const Header(),
           buildVideoArea(),
-          // SizedBox(
-          //   height: height * 0.3,
-          //   child: scannerShow(),
-          // ),
-          buildBtn(),
+          SizedBox(
+            height: height * 0.02,
+          ),
+          SizedBox(
+            height: height * 0.3,
+            child: buildTipInfoArea(),
+          ),
+          const Spacer(),
+          buildQrCode(),
+          SizedBox(
+            height: height * 0.02,
+          ),
           const Footer()
         ],
       ),
+    );
+  }
+
+  Widget buildQrCode() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset(
+          "assets/images/qr-code.png",
+          height: width * 0.3,
+          width: width * 0.3,
+        ),
+        Image.asset(
+          "assets/images/red_down_arrow.png",
+          height: width * 0.06,
+        ),
+      ],
+    );
+  }
+
+  Widget buildTipInfoArea() {
+    return Row(
+      children: [
+        SizedBox(width: width * 0.08),
+        SizedBox(
+          width: width * 0.45,
+          child: Column(
+            children: [
+              Text(
+                "Please scan your QR Code from the Medlyves application.",
+                textAlign: TextAlign.left,
+                softWrap: true,
+                style: TextStyle(
+                  fontSize: height * 0.028,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              Text(
+                r"Under Appointments, click 'Start' to get the QR Code.",
+                textAlign: TextAlign.left,
+                softWrap: true,
+                style: TextStyle(
+                  fontSize: height * 0.022,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const Spacer(),
+        SizedBox(
+            width: width * 0.35,
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(height * 0.01),
+                    width: width * 0.25,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: const [
+                          BoxShadow(
+                              color: Colors.grey, // 阴影颜色
+                              offset: Offset(-10, 10), //阴影xy轴偏移量
+                              blurRadius: 25.0, //阴影模糊程度
+                              spreadRadius: 5 //阴影扩散程度
+                              )
+                        ]),
+                    child: Image.asset("assets/images/Medlyves_logo_only.png"),
+                  ),
+                  SizedBox(height: height * 0.008),
+                  Text(
+                    "Medlyves",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: height * 0.018,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  )
+                ],
+              ),
+            )),
+        SizedBox(width: width * 0.05),
+      ],
     );
   }
 
@@ -67,9 +166,10 @@ class ScannerPage extends StatelessWidget {
     double dataFontSize = height * 0.02;
 
     return BlocBuilder<DeviceBloc, DeviceState>(builder: (context, state) {
-      if (state is DeviceDataUpdated && state.deviceData is CodeScannerData) {
-        scannerData = (state.deviceData as CodeScannerData).scanner;
-      }
+      // if (state is DeviceDataUpdated &&
+      //     state.deviceData is CodeScannerData) {
+      //   scannerData = (state.deviceData as CodeScannerData).scanner;
+      // }
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

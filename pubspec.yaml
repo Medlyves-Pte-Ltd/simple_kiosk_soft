@@ -28,14 +28,14 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   permission_handler: ^11.3.1
   flutter_esc_pos_utils: ^1.0.1
-  #  flutter_devices_sdk: # 包名
-  #    git:
-  #      url: https://github.com/Medlyves-Pte-Ltd/flutter_devices_sdk.git
-  #      url: https://gitee.com/caipingan456/flutter_devices_sdk.git
-  #      ref: docking_station # 分支
+  flutter_devices_sdk: # 包名
+      git:
+        #url: https://github.com/Medlyves-Pte-Ltd/flutter_devices_sdk.git
+        url: https://gitee.com/caipingan456/flutter_devices_sdk.git
+        ref: docking_station # 分支
 
-  flutter_devices_sdk:
-    path: D:\Android\Projects\flutter\flutter_devices_sdk
+#  flutter_devices_sdk:
+#    path: D:\Android\Projects\flutter\flutter_devices_sdk
 
 ## 运行生成图标命令
 ## flutter pub run flutter_launcher_icons
