@@ -1,5 +1,12 @@
 [
   {
+    "deviceName": "Body Composition",
+    "deviceType": "BC_DEVICE",
+    "deviceIndex": 2,
+    "deviceList": ["ShengYuanBodyComposition", "ChengDuBodyComposition","BoRuiWeiDG681Composition"],
+    "enable": true
+  },
+  {
     "deviceName": "Printer",
     "deviceType": "PRINTER_DEVICE",
     "deviceIndex": 0,
@@ -11,6 +18,13 @@
     "deviceType": "TEMP_DEVICE",
     "deviceIndex": 3,
     "deviceList": ["BodyTemperature", "URIONTemperature", "ChengDuDT8861Temperature", "CommonDT8861Temperature"],
+    "enable": true
+  },
+  {
+    "deviceName": "Scanner",
+    "deviceType": "SCANNER_DEVICE",
+    "deviceIndex": 0,
+    "deviceList": ["YouKuEP8280CodeScanner"],
     "enable": true
   },
   {
@@ -56,24 +70,10 @@
     "enable": true
   },
   {
-    "deviceName": "Body Composition",
-    "deviceType": "BC_DEVICE",
-    "deviceIndex": 2,
-    "deviceList": ["ShengYuanBodyComposition", "ChengDuBodyComposition","BoRuiWeiDG681Composition"],
-    "enable": true
-  },
-  {
     "deviceName": "ECG",
     "deviceType": "ECG_DEVICE",
     "deviceIndex": 0,
     "deviceList": ["Ecg"],
-    "enable": false
-  },
-  {
-    "deviceName": "Scanner",
-    "deviceType": "SCANNER_DEVICE",
-    "deviceIndex": 0,
-    "deviceList": ["YouKuEP8280CodeScanner"],
     "enable": false
   }
 ]

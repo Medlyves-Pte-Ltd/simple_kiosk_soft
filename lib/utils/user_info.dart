@@ -29,8 +29,12 @@ class UserInfo {
   String visceralFatLevel = '';
   // Protein (蛋白质)
   String protein = '';
+  // Protein Rate (蛋白质率)
+  String proteinPercentage = '';
   // Mineral (无机盐)
   String mineral = '';
+  // 骨量
+  String boneMass = "";
   // 血氧
   String bloodOxygen = '';
   String bloodOxygenHeartRate = '';
@@ -102,7 +106,7 @@ class UserInfo {
       "basalMetabolism": basalMetabolism,
       "visceralFatLevel": visceralFatLevel,
       "bodyWaterPercentage": bodyWaterPercentage,
-      "protein": protein,
+      "proteinPercentage": proteinPercentage,
     };
   }
 

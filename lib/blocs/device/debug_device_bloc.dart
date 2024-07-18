@@ -62,7 +62,12 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
       Future.delayed(const Duration(milliseconds: 1000), () {
         add(DeviceUpdateDataEvent(
             deviceData: BodyCompositionData(
-                "95%", "50kg", "1120Kcal", "70%", "80%", "60", "40", "30"),
+                bodyFatPercentage: "95",
+                basalMetabolism: "1120",
+                bodyWaterPercentage: "70",
+                proteinPercentage: "80",
+                visceralFatLevel: "1",
+                boneMass: "40"),
             deviceType: deviceType));
       });
     } else if (deviceType == DeviceType.BO_DEVICE) {

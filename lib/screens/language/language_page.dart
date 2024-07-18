@@ -25,7 +25,8 @@ class LanguagePageState extends State<LanguagePage> {
 
   void _changeLanguage(String code) {
     BlocProvider.of<LocaleCubit>(context).loadLocale(Locale(code));
-    Navigator.pushNamedAndRemoveUntil(context, '/login', ((route) => false));
+    Navigator.pushNamedAndRemoveUntil(
+        context, '/ScannerPage', ((route) => false));
   }
 
   @override

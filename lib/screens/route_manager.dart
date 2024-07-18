@@ -4,6 +4,7 @@ import 'package:simple_kiosk_software/screens/measurement_pages/blood_glucose_me
 import 'package:simple_kiosk_software/screens/measurement_pages/blood_oxygen_measure.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/blood_pressure_measure.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/body_composition_measure.dart';
+import 'package:simple_kiosk_software/screens/scanner_page.dart';
 import 'package:simple_kiosk_software/screens/summary_pages/summary_layout_widget.dart';
 import 'package:simple_kiosk_software/screens/user_login.dart';
 import 'package:simple_kiosk_software/screens/language/language_page.dart';
@@ -31,6 +32,7 @@ final Map<String, Function> routes = {
   '/BloodFitMeasure': (context, {args}) => BloodFitMeasure(),
   '/BloodGlucoseMeasure': (context, {args}) => BloodGlucoseMeasure(),
   '/Summary': (context, {args}) => SummaryLayoutWidget(),
+  '/ScannerPage': (context, {args}) => ScannerPage(),
 };
 
 // 定义通用的onGenerateRoute

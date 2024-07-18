@@ -120,6 +120,8 @@ class DeviceMap {
         return loc.bcm_water;
       case "protein":
         return loc.bcm_protein;
+      case "proteinPercentage":
+        return loc.bcm_protein_percentage;
 
       //   case 'bmi':
       //     return loc.bmi;

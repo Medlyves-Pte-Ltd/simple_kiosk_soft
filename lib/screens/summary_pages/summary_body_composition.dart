@@ -82,13 +82,13 @@ class SummaryBodyComposition extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  AppLocalizations.of(mainContext)!.bcm_skeletal,
+                  AppLocalizations.of(mainContext)!.bcm_bone_mass,
                   style: TextStyle(
                       fontSize: titleFontSize, fontWeight: FontWeight.bold),
                 ),
                 const Spacer(),
                 Text(
-                  UserInfo().skeletalMusclePercentage,
+                  UserInfo().boneMass,
                   style: TextStyle(
                       fontSize: dataFontSize,
                       fontWeight: FontWeight.bold,
@@ -182,13 +182,13 @@ class SummaryBodyComposition extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  AppLocalizations.of(mainContext)!.bcm_protein,
+                  AppLocalizations.of(mainContext)!.bcm_protein_percentage,
                   style: TextStyle(
                       fontSize: titleFontSize, fontWeight: FontWeight.bold),
                 ),
                 const Spacer(),
                 Text(
-                  UserInfo().protein,
+                  UserInfo().proteinPercentage,
                   style: TextStyle(
                       fontSize: dataFontSize,
                       fontWeight: FontWeight.bold,

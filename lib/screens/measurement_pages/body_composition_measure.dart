@@ -17,12 +17,12 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
   late String bodyFatPercentage;
   // Basal Metabolism (基础代谢)
   late String basalMetabolism;
-  // Skeletal Muscle Rate (骨骼肌率)
-  late String skeletalMusclePercentage;
+  // 骨量
+  late String boneMass;
   // Visceral Fat Level (内脏脂肪等级)
   late String visceralFatLevel;
-  // Protein (蛋白质)
-  late String protein;
+  // Protein Rate (蛋白质率)
+  late String proteinPercentage;
   // 水分含量
   late String bodyWaterPercentage;
 
@@ -33,14 +33,14 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
     basalMetabolism = UserInfo().basalMetabolism.isNotEmpty
         ? UserInfo().basalMetabolism
         : dataDefaultValue;
-    skeletalMusclePercentage = UserInfo().skeletalMusclePercentage.isNotEmpty
-        ? UserInfo().skeletalMusclePercentage
-        : dataDefaultValue;
+    boneMass =
+        UserInfo().boneMass.isNotEmpty ? UserInfo().boneMass : dataDefaultValue;
     visceralFatLevel = UserInfo().visceralFatLevel.isNotEmpty
         ? UserInfo().visceralFatLevel
         : dataDefaultValue;
-    protein =
-        UserInfo().protein.isNotEmpty ? UserInfo().protein : dataDefaultValue;
+    proteinPercentage = UserInfo().proteinPercentage.isNotEmpty
+        ? UserInfo().proteinPercentage
+        : dataDefaultValue;
     bodyWaterPercentage = UserInfo().bodyWaterPercentage.isNotEmpty
         ? UserInfo().bodyWaterPercentage
         : dataDefaultValue;
@@ -59,6 +59,8 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
 
   @override
   Future<void> onStart() async {
+    UserInfo().height = "176";
+    UserInfo().weight = "78.3";
     // 人体成分需要传入参数
     DeviceManager().getDevice(DeviceType.BC_DEVICE)?.mapData = {
       'height': UserInfo().height,
@@ -94,55 +96,57 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
 
       if (state is DeviceConnected) {
         ControlMeasurePageUtils().measured = false;
-        bodyFatPercentage = skeletalMusclePercentage = basalMetabolism =
-            skeletalMusclePercentage = visceralFatLevel =
-                protein = bodyWaterPercentage = dataDefaultValue;
+        bodyFatPercentage = boneMass = basalMetabolism = boneMass =
+            visceralFatLevel =
+                proteinPercentage = bodyWaterPercentage = dataDefaultValue;
 
         UserInfo().bodyFatPercentage = "";
         UserInfo().bodyFatMass = "";
         UserInfo().basalMetabolism = "";
-        UserInfo().skeletalMusclePercentage = "";
+        UserInfo().boneMass = "";
         UserInfo().visceralFatLevel = "";
-        UserInfo().protein = "";
+        UserInfo().proteinPercentage = "";
         UserInfo().mineral = "";
         UserInfo().bodyWaterPercentage = "";
         update = true;
       } else if (state is DeviceDataLoading) {
-        bodyFatPercentage = skeletalMusclePercentage = basalMetabolism =
-            skeletalMusclePercentage = visceralFatLevel = protein =
+        bodyFatPercentage = boneMass = basalMetabolism = boneMass =
+            visceralFatLevel = proteinPercentage =
                 bodyWaterPercentage = AppLocalizations.of(mainContext)!.loading;
         update = true;
       } else if (state is DeviceDataUpdated) {
         if (state.deviceData is BodyCompositionData) {
           BodyCompositionData bodyCompositionData =
               state.deviceData as BodyCompositionData;
-          bodyFatPercentage = bodyCompositionData.bodyFatPercentage;
-          basalMetabolism = bodyCompositionData.basalMetabolism;
-          skeletalMusclePercentage =
-              bodyCompositionData.skeletalMusclePercentage;
-          visceralFatLevel = bodyCompositionData.visceralFatLevel;
-          protein = bodyCompositionData.protein;
-          bodyWaterPercentage = bodyCompositionData.bodyWaterPercentage;
+          bodyFatPercentage = bodyCompositionData.bodyFatPercentage ?? "";
+          basalMetabolism = bodyCompositionData.basalMetabolism ?? "";
+          boneMass = bodyCompositionData.boneMass ?? "";
+          visceralFatLevel = bodyCompositionData.visceralFatLevel ?? "";
+          proteinPercentage = bodyCompositionData.proteinPercentage ?? "";
+          bodyWaterPercentage = bodyCompositionData.bodyWaterPercentage ?? "";
 
-          UserInfo().bodyFatPercentage = bodyCompositionData.bodyFatPercentage;
-          UserInfo().bodyFatMass = bodyCompositionData.bodyFatPercentage;
-          UserInfo().basalMetabolism = bodyCompositionData.basalMetabolism;
-          UserInfo().skeletalMusclePercentage =
-              bodyCompositionData.skeletalMusclePercentage;
-          UserInfo().visceralFatLevel = bodyCompositionData.visceralFatLevel;
-          UserInfo().protein = bodyCompositionData.protein;
-          UserInfo().mineral = bodyCompositionData.mineral;
+          UserInfo().bodyFatPercentage =
+              bodyCompositionData.bodyFatPercentage ?? "";
+          UserInfo().bodyFatMass = bodyCompositionData.bodyFatPercentage ?? "";
+          UserInfo().basalMetabolism =
+              bodyCompositionData.basalMetabolism ?? "";
+          UserInfo().boneMass = bodyCompositionData.boneMass ?? "";
+          UserInfo().visceralFatLevel =
+              bodyCompositionData.visceralFatLevel ?? "";
+          UserInfo().proteinPercentage =
+              bodyCompositionData.proteinPercentage ?? "";
+          UserInfo().mineral = bodyCompositionData.mineral ?? "";
           UserInfo().bodyWaterPercentage =
-              bodyCompositionData.bodyWaterPercentage;
+              bodyCompositionData.bodyWaterPercentage ?? "";
 
           ControlMeasurePageUtils().measured = true;
           update = true;
         }
       } else if (state is DeviceDisconnected) {
         if (ControlMeasurePageUtils().measured == false) {
-          bodyFatPercentage = skeletalMusclePercentage = basalMetabolism =
-              skeletalMusclePercentage = visceralFatLevel =
-                  protein = bodyWaterPercentage = dataDefaultValue;
+          bodyFatPercentage = boneMass = basalMetabolism = boneMass =
+              visceralFatLevel =
+                  proteinPercentage = bodyWaterPercentage = dataDefaultValue;
           update = true;
         }
       }
@@ -180,13 +184,13 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    AppLocalizations.of(context)!.bcm_skeletal,
+                    AppLocalizations.of(context)!.bcm_metabolism,
                     style: TextStyle(
                         fontSize: titleFontSize, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: height * 0.01),
                   Text(
-                    skeletalMusclePercentage,
+                    basalMetabolism,
                     style: TextStyle(
                         fontSize: dataFontSize,
                         fontWeight: FontWeight.bold,
@@ -206,26 +210,6 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    AppLocalizations.of(context)!.bcm_metabolism,
-                    style: TextStyle(
-                        fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: height * 0.01),
-                  Text(
-                    basalMetabolism,
-                    style: TextStyle(
-                        fontSize: dataFontSize,
-                        fontWeight: FontWeight.bold,
-                        color: ColorPalette.materialGreen),
-                  )
-                ],
-              ),
-              SizedBox(width: width * 0.1),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
                     AppLocalizations.of(context)!.bcm_visceralfat,
                     style: TextStyle(
                         fontSize: titleFontSize, fontWeight: FontWeight.bold),
@@ -239,7 +223,27 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
                         color: ColorPalette.materialGreen),
                   )
                 ],
-              )
+              ),
+              SizedBox(width: width * 0.1),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.bcm_bone_mass,
+                    style: TextStyle(
+                        fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: height * 0.01),
+                  Text(
+                    boneMass,
+                    style: TextStyle(
+                        fontSize: dataFontSize,
+                        fontWeight: FontWeight.bold,
+                        color: ColorPalette.materialGreen),
+                  )
+                ],
+              ),
             ],
           ),
           Row(
@@ -270,13 +274,13 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    AppLocalizations.of(context)!.bcm_protein,
+                    AppLocalizations.of(context)!.bcm_protein_percentage,
                     style: TextStyle(
                         fontSize: titleFontSize, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: height * 0.01),
                   Text(
-                    protein,
+                    proteinPercentage,
                     style: TextStyle(
                         fontSize: dataFontSize,
                         fontWeight: FontWeight.bold,
