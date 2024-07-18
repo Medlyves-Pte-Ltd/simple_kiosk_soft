@@ -1,11 +1,11 @@
 import 'dart:core';
-import 'dart:core';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
+import 'package:simple_kiosk_software/utils/print_utils.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/header.dart';
@@ -19,13 +19,6 @@ import 'package:simple_kiosk_software/screens/summary_pages/summary_stethoscope.
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
-
-class _TabData {
-  final Widget tab;
-  final Widget body;
-
-  _TabData({required this.tab, required this.body});
-}
 
 class SummaryLayoutWidget extends StatelessWidget {
   // 文本和Widget顺序需要相同
@@ -47,7 +40,6 @@ class SummaryLayoutWidget extends StatelessWidget {
   double height = 0;
   // StatelessWidget需要保存上下文才能进行页面跳转，翻译
   late BuildContext mainContext;
-
   // 子类需要实现的数据显示函数
   Widget buildCardDataShowArea() {
     return const SizedBox.shrink();
@@ -140,6 +132,11 @@ class SummaryLayoutWidget extends StatelessWidget {
                 ))));
   }
 
+  // 打印
+  void btnPrint() async {
+    PrintUtils().startPrint(mainContext);
+  }
+
   // 打印退出控制按钮
   Widget buildPrintExitControlBtn() {
     return Padding(
@@ -149,7 +146,7 @@ class SummaryLayoutWidget extends StatelessWidget {
         children: [
           const Spacer(),
           InkWell(
-            onTap: () {},
+            onTap: btnPrint,
             child: Container(
                 height: height * 0.03,
                 width: width * 0.15,

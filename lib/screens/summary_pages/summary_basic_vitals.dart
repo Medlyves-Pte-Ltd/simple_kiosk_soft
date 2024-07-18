@@ -284,8 +284,7 @@ class SummaryBasicVitals extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  AppLocalizations.of(mainContext)!
-                      .bf_highDensitylipoproteincholesterol,
+                  AppLocalizations.of(mainContext)!.bf_hgl,
                   style: TextStyle(
                       fontSize: titleFontSize, fontWeight: FontWeight.bold),
                 ),
@@ -310,8 +309,7 @@ class SummaryBasicVitals extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  AppLocalizations.of(mainContext)!
-                      .bf_LowDensitylipoproteincholesterol,
+                  AppLocalizations.of(mainContext)!.bf_ldl,
                   style: TextStyle(
                       fontSize: titleFontSize, fontWeight: FontWeight.bold),
                 ),

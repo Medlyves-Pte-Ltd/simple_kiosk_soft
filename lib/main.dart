@@ -1,5 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_devices_sdk/project_type.dart';
-import 'package:google_fonts/google_fonts.dart';
+//import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,11 +12,34 @@ import 'package:simple_kiosk_software/blocs/locale/locale_state.dart';
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
 import 'package:flutter_devices_sdk/devices/device_config.dart';
 import 'package:simple_kiosk_software/screens/route_manager.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+Future<bool> getStoragePermission() async {
+  late PermissionStatus permissionStatus;
+  if (defaultTargetPlatform == TargetPlatform.android) {
+    permissionStatus = await Permission.storage.request();
+  }
+  if (permissionStatus != PermissionStatus.granted) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+Future<void> checkPermission() async {
+  final permissionState = await getStoragePermission();
+  if (permissionState) {
+  } else {
+    // 权限被拒绝 打开手机上的权限设置页面
+    openAppSettings();
+  }
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await checkPermission();
   await DeviceConfig().clearDeviceConfigStorage();
-  await DeviceConfig().init(ProjectType.cheng_du_npi_test);
+  await DeviceConfig().init(ProjectType.simple_kiosk_software);
 
   runApp(MultiBlocProvider(
     providers: [
@@ -55,27 +79,27 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           onGenerateRoute: onCustomGenerateRoute,
-          initialRoute: "/",
+          //initialRoute: "/",
           //initialRoute: "/Summary",
           //initialRoute: "/KioskManager",
-          //initialRoute: "/HeightWeightMeasure",
+          initialRoute: "/HeightWeightMeasure",
 
           supportedLocales: AppLocalizations.supportedLocales,
-          theme: ThemeData(
-            textTheme: GoogleFonts.robotoTextTheme(textTheme).copyWith(
-              bodyMedium: GoogleFonts.roboto(
-                  textStyle: textTheme.bodyMedium), //measurement readings text
-              labelMedium: GoogleFonts.roboto(
-                  textStyle: textTheme.labelMedium), //navigation button text
-              titleSmall: GoogleFonts.roboto(
-                  textStyle: textTheme.titleSmall), //widget title
-              titleLarge: GoogleFonts.roboto(
-                  textStyle: textTheme
-                      .titleLarge), //Selection buttons and Header titles
-              titleMedium: GoogleFonts.roboto(
-                  textStyle: textTheme.titleMedium), //Get Started button
-            ),
-          ),
+          // theme: ThemeData(
+          //   textTheme: GoogleFonts.robotoTextTheme(textTheme).copyWith(
+          //     bodyMedium: GoogleFonts.roboto(
+          //         textStyle: textTheme.bodyMedium), //measurement readings text
+          //     labelMedium: GoogleFonts.roboto(
+          //         textStyle: textTheme.labelMedium), //navigation button text
+          //     titleSmall: GoogleFonts.roboto(
+          //         textStyle: textTheme.titleSmall), //widget title
+          //     titleLarge: GoogleFonts.roboto(
+          //         textStyle: textTheme
+          //             .titleLarge), //Selection buttons and Header titles
+          //     titleMedium: GoogleFonts.roboto(
+          //         textStyle: textTheme.titleMedium), //Get Started button
+          //   ),
+          // ),
           builder: (context, child) => ResponsiveWrapper.builder(
             child,
             maxWidth: 1200,

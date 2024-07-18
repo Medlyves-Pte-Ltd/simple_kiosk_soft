@@ -83,6 +83,29 @@ class UserInfo {
     eAG = '';
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      "height": height,
+      "weight": weight,
+      "temperature": temperature,
+      "bloodPressure": "$systolic/$diastolic",
+      "bp_pulse": heartRate,
+      "bloodOxygen": bloodOxygen,
+      "IFCC": IFCC,
+      "eAG": eAG,
+      "chol": chol,
+      "trig": trig,
+      "hdl": hdl,
+      "ldl": ldl,
+      "bodyFatPercentage": bodyFatPercentage,
+      "skeletalMusclePercentage": skeletalMusclePercentage,
+      "basalMetabolism": basalMetabolism,
+      "visceralFatLevel": visceralFatLevel,
+      "bodyWaterPercentage": bodyWaterPercentage,
+      "protein": protein,
+    };
+  }
+
   // 私有构造函数
   UserInfo._internal();
   // 保存单例

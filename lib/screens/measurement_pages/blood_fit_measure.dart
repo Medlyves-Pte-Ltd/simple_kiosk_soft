@@ -151,8 +151,7 @@ class BloodFitMeasure extends BaseMeasureLayoutWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                AppLocalizations.of(context)!
-                    .bf_highDensitylipoproteincholesterol,
+                AppLocalizations.of(context)!.bf_hgl,
                 style: TextStyle(
                     fontSize: titleFontSize, fontWeight: FontWeight.bold),
               ),
@@ -172,8 +171,7 @@ class BloodFitMeasure extends BaseMeasureLayoutWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                AppLocalizations.of(context)!
-                    .bf_LowDensitylipoproteincholesterol,
+                AppLocalizations.of(context)!.bf_ldl,
                 style: TextStyle(
                     fontSize: titleFontSize, fontWeight: FontWeight.bold),
               ),
