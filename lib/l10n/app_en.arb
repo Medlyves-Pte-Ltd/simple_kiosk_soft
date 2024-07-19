@@ -84,5 +84,7 @@
   "summary_ecg":"ECG",
   "summary_body_composition": "Body\nComposition",
   "summary_stethoscope": "Stethoscope",
-  "summary_otoscope": "Otoscope"
+  "summary_otoscope": "Otoscope",
+  "scanner_title": "Please scan your QR Code from the Medlyves application.",
+  "scanner_tip": "Under Appointments, click 'Start' to get the QR Code."
 }

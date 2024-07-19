@@ -1,30 +1,9 @@
 [
   {
-    "deviceName": "Body Composition",
-    "deviceType": "BC_DEVICE",
-    "deviceIndex": 2,
-    "deviceList": ["ShengYuanBodyComposition", "ChengDuBodyComposition","BoRuiWeiDG681Composition"],
-    "enable": true
-  },
-  {
-    "deviceName": "Printer",
-    "deviceType": "PRINTER_DEVICE",
-    "deviceIndex": 0,
-    "deviceList": ["YokoscanEM5826Printer"],
-    "enable": true
-  },
-  {
     "deviceName": "Temperature",
     "deviceType": "TEMP_DEVICE",
-    "deviceIndex": 3,
+    "deviceIndex": 1,
     "deviceList": ["BodyTemperature", "URIONTemperature", "ChengDuDT8861Temperature", "CommonDT8861Temperature"],
-    "enable": true
-  },
-  {
-    "deviceName": "Scanner",
-    "deviceType": "SCANNER_DEVICE",
-    "deviceIndex": 0,
-    "deviceList": ["YouKuEP8280CodeScanner"],
     "enable": true
   },
   {
@@ -56,6 +35,20 @@
     "enable": true
   },
   {
+    "deviceName": "Printer",
+    "deviceType": "PRINTER_DEVICE",
+    "deviceIndex": 0,
+    "deviceList": ["YokoscanEM5826Printer"],
+    "enable": true
+  },
+  {
+    "deviceName": "Scanner",
+    "deviceType": "SCANNER_DEVICE",
+    "deviceIndex": 0,
+    "deviceList": ["YouKuEP8280CodeScanner"],
+    "enable": true
+  },
+  {
     "deviceName": "Height",
     "deviceType": "HEIGHT_DEVICE",
     "deviceIndex": 1,
@@ -67,6 +60,13 @@
     "deviceType": "WEIGHT_DEVICE",
     "deviceIndex": 1,
     "deviceList": ["ShengYuanWeight", "BoRuiWeiDG681Weight"],
+    "enable": true
+  },
+  {
+    "deviceName": "Body Composition",
+    "deviceType": "BC_DEVICE",
+    "deviceIndex": 2,
+    "deviceList": ["ShengYuanBodyComposition", "ChengDuBodyComposition","BoRuiWeiDG681Composition"],
     "enable": true
   },
   {

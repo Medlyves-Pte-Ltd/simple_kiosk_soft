@@ -40,7 +40,7 @@
   "mode_selection": "请选择您的模式",
   "next": "下一项",
   "bf": "血脂",
-  "bf_ldl": "低密度脂蛋白胆固醇 （mg/dl）",
+  "bf_ldl": "低密度脂蛋白胆固醇（mg/dl）",
   "bf_hdl": "高密度脂蛋白胆固醇（mg/dl）",
   "bf_totalCholesterol": "总胆固脂（mg/dl）",
   "bf_triglyceride": "三酸甘油酯（mg/dl）",
@@ -85,5 +85,7 @@
   "summary_ecg":"心电图",
   "summary_body_composition": "身体成分",
   "summary_stethoscope": "听诊器",
-  "summary_otoscope": "耳镜"
+  "summary_otoscope": "耳镜",
+  "scanner_title": "请在Medlyves应用程序中扫描您的二维码。",
+  "scanner_tip": "在“预约”下，点击“开始”获取二维码。"
 }

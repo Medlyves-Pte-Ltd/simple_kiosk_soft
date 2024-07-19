@@ -85,5 +85,7 @@
   "summary_ecg":"Elektrokardiogram",
   "summary_body_composition": "Komposisi\nbadan",
   "summary_stethoscope": "Stetoskop",
-  "summary_otoscope": "Otoskop"
+  "summary_otoscope": "Otoskop",
+  "scanner_title": "Sila imbas Kod QR anda dari aplikasi Medlyves.",
+  "scanner_tip": "Di bawah Pertemuan, klik 'Mula' untuk mendapatkan Kod QR."
 }

@@ -1,32 +1,99 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_devices_sdk/device_data/code_scanner_data.dart';
+import 'package:flutter_devices_sdk/device_manager.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
+import 'package:flutter_devices_sdk/devices/device_base_model.dart';
+import 'package:flutter_devices_sdk/utils/app_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
-import 'package:simple_kiosk_software/blocs/device/debug_device_bloc.dart';
-import 'package:simple_kiosk_software/blocs/device/device_event.dart';
-import 'package:simple_kiosk_software/blocs/device/device_state.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/header.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
+import 'package:simple_kiosk_software/utils/user_info.dart';
 
-class ScannerPage extends StatelessWidget {
+class ScannerPage extends StatefulWidget {
+  @override
+  ScannerPageState createState() => ScannerPageState();
+}
+
+class ScannerPageState extends State<ScannerPage> {
   // 数据默认值
   String dataDefaultValue = "- - -";
-  String scannerData = "";
   // 当前播放的视频文件
   String curPlayFile = "";
   // 屏幕宽度
   double width = 0;
   // 屏幕高度
   double height = 0;
-
+  // 扫码器设备
+  DeviceBaseModel? scanner;
   // StatelessWidget需要保存上下文才能进行页面跳转，翻译
   late BuildContext mainContext;
+  // 扫码数据
+  late Map<String, dynamic> scannerData;
+
+  @override
+  void initState() {
+    super.initState();
+    scanner = DeviceManager().getDevice(DeviceType.SCANNER_DEVICE);
+    // 监听数据
+    scanner?.onDataReady.listen((event) {
+      String data = (event as CodeScannerData).scanner;
+      LogPrinter.log("qr code orign data:$data");
+
+      // 判断时候是json数据
+      int startPos = data.lastIndexOf('{');
+      int endPos = data.lastIndexOf('}');
+      if (startPos != -1 && endPos != -1) {
+        data = data.substring(startPos, endPos + 1);
+      } else {
+        Fluttertoast.showToast(msg: "The QR code data format is incorrect!");
+        return;
+      }
+
+      // 解析json数据
+      LogPrinter.log("qr code normal data:$data");
+      try {
+        scannerData = jsonDecode(data);
+
+        UserInfo().name = scannerData["name"].toString();
+        UserInfo().age = scannerData["age"].toString();
+        UserInfo().gender = scannerData["gender"] as int;
+        UserInfo().clearResult();
+      } catch (e) {
+        Fluttertoast.showToast(msg: "The QR code data format is incorrect!");
+        return;
+      }
+
+      // 判断用户信息是否为空
+      if (UserInfo().name.isEmpty || UserInfo().age.isEmpty) {
+        Fluttertoast.showToast(msg: "User information is incorrect!");
+        return;
+      }
+
+      // 延时关闭扫码器
+      Future.delayed(const Duration(milliseconds: 200), () async {
+        await scanner?.stop();
+        await scanner?.disconnect();
+      }).then((data) {
+        Navigator.pushNamedAndRemoveUntil(
+            mainContext, "/HeightWeightMeasure", (route) => false);
+      });
+    });
+
+    // 延时打开扫码器
+    Future.delayed(const Duration(milliseconds: 200), () async {
+      await scanner?.connect();
+      await scanner?.start();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,10 +130,20 @@ class ScannerPage extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset(
-          "assets/images/qr-code.png",
-          height: width * 0.3,
-          width: width * 0.3,
+        GestureDetector(
+          onDoubleTap: () {
+            UserInfo().name = "User";
+            UserInfo().age = "25";
+            UserInfo().gender = 1;
+            UserInfo().clearResult();
+            Navigator.pushNamedAndRemoveUntil(
+                mainContext, "/HeightWeightMeasure", (route) => false);
+          },
+          child: Image.asset(
+            "assets/images/qr-code.png",
+            height: width * 0.3,
+            width: width * 0.3,
+          ),
         ),
         Image.asset(
           "assets/images/red_down_arrow.png",
@@ -85,7 +162,7 @@ class ScannerPage extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                "Please scan your QR Code from the Medlyves application.",
+                AppLocalizations.of(mainContext)!.scanner_title,
                 textAlign: TextAlign.left,
                 softWrap: true,
                 style: TextStyle(
@@ -97,7 +174,7 @@ class ScannerPage extends StatelessWidget {
                 height: height * 0.02,
               ),
               Text(
-                r"Under Appointments, click 'Start' to get the QR Code.",
+                AppLocalizations.of(mainContext)!.scanner_tip,
                 textAlign: TextAlign.left,
                 softWrap: true,
                 style: TextStyle(
@@ -153,101 +230,6 @@ class ScannerPage extends StatelessWidget {
   Widget buildVideoArea() {
     return VideoWidget(
         key: GlobalKey(), videoName: curPlayFile, setLooping: true);
-  }
-
-  void startScanner() async {
-    DeviceConnectEvent connectEvent =
-        DeviceConnectEvent(deviceType: DeviceType.SCANNER_DEVICE);
-    BlocProvider.of<DeviceBloc>(mainContext).add(connectEvent);
-  }
-
-  Widget scannerShow() {
-    double titleFontSize = height * 0.02;
-    double dataFontSize = height * 0.02;
-
-    return BlocBuilder<DeviceBloc, DeviceState>(builder: (context, state) {
-      // if (state is DeviceDataUpdated &&
-      //     state.deviceData is CodeScannerData) {
-      //   scannerData = (state.deviceData as CodeScannerData).scanner;
-      // }
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "二维码信息:",
-              style: TextStyle(
-                  fontSize: titleFontSize, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: height * 0.02),
-            Text(
-              scannerData,
-              style: TextStyle(
-                  fontSize: dataFontSize,
-                  fontWeight: FontWeight.bold,
-                  color: ColorPalette.materialGreen),
-            )
-          ],
-        ),
-      );
-    });
-  }
-
-  Widget buildBtn() {
-    return Padding(
-      padding: EdgeInsets.only(
-          top: height * 0.01, bottom: height * 0.01, right: width * 0.05),
-      child: Row(
-        children: [
-          const Spacer(),
-          InkWell(
-            onTap: startScanner,
-            child: Container(
-                height: height * 0.03,
-                width: width * 0.15,
-                decoration: BoxDecoration(
-                  color: ColorPalette.materialGreen,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Center(
-                  child: Text(
-                    "扫码",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: height * 0.015,
-                        fontWeight: FontWeight.w600),
-                  ),
-                )),
-          ),
-          SizedBox(
-            width: width * 0.03,
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.pushNamedAndRemoveUntil(
-                  mainContext, "/", (route) => false);
-            },
-            child: Container(
-                height: height * 0.03,
-                width: width * 0.15,
-                decoration: BoxDecoration(
-                  color: ColorPalette.materialGreen,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Center(
-                  child: Text(
-                    AppLocalizations.of(mainContext)!.exit,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: height * 0.015,
-                        fontWeight: FontWeight.w600),
-                  ),
-                )),
-          )
-        ],
-      ),
-    );
   }
 
   void init() {

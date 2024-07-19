@@ -57,8 +57,12 @@ class ClientDetails extends StatelessWidget {
             children: [
               buildDetailText(AppLocalizations.of(context)!.name,
                   UserInfo().name, defaultStyle),
-              buildDetailText(AppLocalizations.of(context)!.gender,
-                  UserInfo().gender, defaultStyle),
+              buildDetailText(
+                  AppLocalizations.of(context)!.gender,
+                  UserInfo().gender == 1
+                      ? AppLocalizations.of(context)!.male
+                      : AppLocalizations.of(context)!.female,
+                  defaultStyle),
               buildDetailText(AppLocalizations.of(context)!.age, UserInfo().age,
                   defaultStyle),
             ],

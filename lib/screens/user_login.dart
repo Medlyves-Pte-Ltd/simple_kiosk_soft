@@ -22,11 +22,10 @@ class UserLogin extends StatefulWidget {
 }
 
 class UserLoginState extends State<UserLogin> {
-  final StorageUtils userDetailsrepo = StorageUtils();
   Map<String, String> userDetails = {
-    'name': '',
-    'gender': '', // Assuming gender is selected from the drop-down
-    'age': '', // Assuming age is entered in the text field
+    'name': "",
+    'gender': "", // Assuming gender is selected from the drop-down
+    'age': "", // Assuming age is entered in the text field
   };
 
   String getVideoFileName() {
@@ -118,7 +117,14 @@ class UserLoginState extends State<UserLogin> {
                                   onChanged: (value) {
                                     setState(() {
                                       userDetails['gender'] = value!;
-                                      UserInfo().gender = value!;
+                                      UserInfo().gender =
+                                          value.contains('男性') ||
+                                                  value.contains('Male') ||
+                                                  value.contains('Lelaki') ||
+                                                  value.contains('ஆண்')
+                                              ? 1
+                                              : 0;
+
                                       SystemChrome.setEnabledSystemUIMode(
                                           SystemUiMode.manual,
                                           overlays: []);
@@ -137,7 +143,6 @@ class UserLoginState extends State<UserLogin> {
                               buttonText:
                                   AppLocalizations.of(context)!.getstarted,
                               onTap: () async {
-                                await StorageUtils.saveData(userDetails);
                                 if (context.mounted) {
                                   UserInfo().clearResult();
                                   Navigator.pushNamedAndRemoveUntil(context,

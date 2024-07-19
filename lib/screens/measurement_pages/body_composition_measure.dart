@@ -59,19 +59,12 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
 
   @override
   Future<void> onStart() async {
-    UserInfo().height = "176";
-    UserInfo().weight = "78.3";
     // 人体成分需要传入参数
     DeviceManager().getDevice(DeviceType.BC_DEVICE)?.mapData = {
       'height': UserInfo().height,
       'weight': UserInfo().weight,
       'age': UserInfo().age,
-      'gender': UserInfo().gender.contains('男性') ||
-              UserInfo().gender.contains('Male') ||
-              UserInfo().gender.contains('Lelaki') ||
-              UserInfo().gender.contains('ஆண்')
-          ? "Male"
-          : "Female",
+      'gender': UserInfo().gender
     };
 
     DeviceConnectEvent connectEvent =

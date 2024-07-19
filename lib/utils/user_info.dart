@@ -3,8 +3,8 @@ class UserInfo {
   String patientId = '';
   // 姓名
   String name = '';
-  // 性别
-  String gender = '';
+  // 性别 0:女性 1:男性
+  int gender = 1;
   // 年龄
   String age = '';
   // 身高
@@ -58,7 +58,7 @@ class UserInfo {
   void clearUserInfo() {
     name = '';
     patientId = '';
-    gender = '';
+    gender = 1;
     age = '';
   }
 
@@ -85,6 +85,8 @@ class UserInfo {
     diastolic = '';
     IFCC = '';
     eAG = '';
+    proteinPercentage = '';
+    boneMass = '';
   }
 
   Map<String, dynamic> toJson() {
@@ -102,7 +104,7 @@ class UserInfo {
       "hdl": hdl,
       "ldl": ldl,
       "bodyFatPercentage": bodyFatPercentage,
-      "skeletalMusclePercentage": skeletalMusclePercentage,
+      "boneMass": boneMass,
       "basalMetabolism": basalMetabolism,
       "visceralFatLevel": visceralFatLevel,
       "bodyWaterPercentage": bodyWaterPercentage,

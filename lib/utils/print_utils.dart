@@ -52,8 +52,10 @@ class PrintUtils {
     // 半切纸张命令hex:1D 56 01
     await printer?.sendCommand([29, 86, 1]);
 
-    Future.delayed(const Duration(milliseconds: 5000), () {
-      DeviceManager().getDevice(DeviceType.PRINTER_DEVICE)?.disconnect();
+    // 延时关闭扫码器
+    Future.delayed(const Duration(milliseconds: 5000), () async {
+      await printer?.stop();
+      await printer?.disconnect();
     });
   }
 
@@ -116,7 +118,10 @@ class PrintUtils {
     String genderTitle = AppLocalizations.of(context)!.gender;
     drawText(canvas, genderTitle, TextAlign.left, fontSize,
         const ui.Color(0xFF000000), ui.Offset(0, yOffset), width.toDouble());
-    drawText(canvas, UserInfo().gender, TextAlign.left, fontSize,
+    String gender = UserInfo().gender == 1
+        ? AppLocalizations.of(context)!.male
+        : AppLocalizations.of(context)!.female;
+    drawText(canvas, gender, TextAlign.left, fontSize,
         const ui.Color(0xFF000000), ui.Offset(130, yOffset), width.toDouble());
     yOffset += rowHeight;
     yOffset += rowHeight;

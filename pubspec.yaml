@@ -28,21 +28,22 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   permission_handler: ^11.3.1
   flutter_esc_pos_utils: ^1.0.1
-  flutter_devices_sdk: # 包名
-      git:
-        #url: https://github.com/Medlyves-Pte-Ltd/flutter_devices_sdk.git
-        url: https://gitee.com/caipingan456/flutter_devices_sdk.git
-        ref: docking_station # 分支
+  fluttertoast: ^8.2.6
+#  flutter_devices_sdk: # 包名
+#      git:
+#        #url: https://github.com/Medlyves-Pte-Ltd/flutter_devices_sdk.git
+#        url: https://gitee.com/caipingan456/flutter_devices_sdk.git
+#        ref: docking_station # 分支
 
-#  flutter_devices_sdk:
-#    path: D:\Android\Projects\flutter\flutter_devices_sdk
+  flutter_devices_sdk:
+    path: D:\Android\Projects\flutter\flutter_devices_sdk
 
 ## 运行生成图标命令
 ## flutter pub run flutter_launcher_icons
-#flutter_launcher_icons:
-#  android: true
-#  image_path: "assets/images/Medlyves_logo_only.png"
-#  min_sdk_android: 26 # android min sdk min:16, default 21
+flutter_launcher_icons:
+  android: true
+  image_path: "assets/images/Medlyves_logo_only.png"
+  min_sdk_android: 26 # android min sdk min:16, default 21
 
 dev_dependencies:
   flutter_test:
