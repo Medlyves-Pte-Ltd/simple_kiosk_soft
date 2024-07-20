@@ -123,6 +123,26 @@ class DeviceMap {
       case "proteinPercentage":
         return loc.bcm_protein_percentage;
 
+      // 心电图
+      case "HR":
+        return loc.ecg_hr;
+      case "PR":
+        return loc.ecg_pr;
+      case "QT":
+        return loc.ecg_qt;
+      case "QTc":
+        return loc.ecg_qtc;
+      case "P_Width":
+        return loc.ecg_p_width;
+      case "QRS_Dur":
+        return loc.ecg_qrs_dur;
+      case "P_Axis":
+        return loc.ecg_p_axis;
+      case "QRS_Axis":
+        return loc.ecg_qrs_axis;
+      case "T_Axis":
+        return loc.ecg_t_axis;
+
       //   case 'bmi':
       //     return loc.bmi;
       //   case 'bodyFatPercentage':

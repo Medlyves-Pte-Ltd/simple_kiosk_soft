@@ -37,6 +37,36 @@ class SummaryBodyComposition extends StatelessWidget {
         ));
   }
 
+  Widget buildItem(String title, String? data) {
+    double titleFontSize = height * 0.02;
+    double dataFontSize = height * 0.02;
+    return Padding(
+      padding: EdgeInsets.only(
+        left: width * 0.1,
+        right: width * 0.1,
+        top: height * 0.01,
+        bottom: height * 0.01,
+      ),
+      child: Row(
+        children: [
+          Text(
+            title,
+            style:
+                TextStyle(fontSize: titleFontSize, fontWeight: FontWeight.bold),
+          ),
+          const Spacer(),
+          Text(
+            data ?? "",
+            style: TextStyle(
+                fontSize: dataFontSize,
+                fontWeight: FontWeight.bold,
+                color: ColorPalette.materialGreen),
+          )
+        ],
+      ),
+    );
+  }
+
   Widget buildBodyCompositionArea() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: width * 0.04),
@@ -47,156 +77,18 @@ class SummaryBodyComposition extends StatelessWidget {
               "assets/images/bodycomposition_logo.png",
               AppLocalizations.of(mainContext)!.bcm,
               ColorPalette.colorbodyComposition),
-          Padding(
-            padding: EdgeInsets.only(
-              left: width * 0.1,
-              right: width * 0.1,
-              top: height * 0.01,
-              bottom: height * 0.01,
-            ),
-            child: Row(
-              children: [
-                Text(
-                  AppLocalizations.of(mainContext)!.bcm_fat,
-                  style: TextStyle(
-                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                ),
-                const Spacer(),
-                Text(
-                  UserInfo().bodyFatPercentage,
-                  style: TextStyle(
-                      fontSize: dataFontSize,
-                      fontWeight: FontWeight.bold,
-                      color: ColorPalette.materialGreen),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: width * 0.1,
-              right: width * 0.1,
-              top: height * 0.01,
-              bottom: height * 0.01,
-            ),
-            child: Row(
-              children: [
-                Text(
-                  AppLocalizations.of(mainContext)!.bcm_bone_mass,
-                  style: TextStyle(
-                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                ),
-                const Spacer(),
-                Text(
-                  UserInfo().boneMass,
-                  style: TextStyle(
-                      fontSize: dataFontSize,
-                      fontWeight: FontWeight.bold,
-                      color: ColorPalette.materialGreen),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: width * 0.1,
-              right: width * 0.1,
-              top: height * 0.01,
-              bottom: height * 0.01,
-            ),
-            child: Row(
-              children: [
-                Text(
-                  AppLocalizations.of(mainContext)!.bcm_metabolism,
-                  style: TextStyle(
-                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                ),
-                const Spacer(),
-                Text(
-                  UserInfo().basalMetabolism,
-                  style: TextStyle(
-                      fontSize: dataFontSize,
-                      fontWeight: FontWeight.bold,
-                      color: ColorPalette.materialGreen),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: width * 0.1,
-              right: width * 0.1,
-              top: height * 0.01,
-              bottom: height * 0.01,
-            ),
-            child: Row(
-              children: [
-                Text(
-                  AppLocalizations.of(mainContext)!.bcm_visceralfat,
-                  style: TextStyle(
-                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                ),
-                const Spacer(),
-                Text(
-                  UserInfo().visceralFatLevel,
-                  style: TextStyle(
-                      fontSize: dataFontSize,
-                      fontWeight: FontWeight.bold,
-                      color: ColorPalette.materialGreen),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: width * 0.1,
-              right: width * 0.1,
-              top: height * 0.01,
-              bottom: height * 0.01,
-            ),
-            child: Row(
-              children: [
-                Text(
-                  AppLocalizations.of(mainContext)!.bcm_water,
-                  style: TextStyle(
-                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                ),
-                const Spacer(),
-                Text(
-                  UserInfo().bodyWaterPercentage,
-                  style: TextStyle(
-                      fontSize: dataFontSize,
-                      fontWeight: FontWeight.bold,
-                      color: ColorPalette.materialGreen),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: width * 0.1,
-              right: width * 0.1,
-              top: height * 0.01,
-              bottom: height * 0.01,
-            ),
-            child: Row(
-              children: [
-                Text(
-                  AppLocalizations.of(mainContext)!.bcm_protein_percentage,
-                  style: TextStyle(
-                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                ),
-                const Spacer(),
-                Text(
-                  UserInfo().proteinPercentage,
-                  style: TextStyle(
-                      fontSize: dataFontSize,
-                      fontWeight: FontWeight.bold,
-                      color: ColorPalette.materialGreen),
-                )
-              ],
-            ),
-          ),
+          buildItem(AppLocalizations.of(mainContext)!.bcm_fat,
+              UserInfo().bodyFatPercentage),
+          buildItem(AppLocalizations.of(mainContext)!.bcm_bone_mass,
+              UserInfo().boneMass),
+          buildItem(AppLocalizations.of(mainContext)!.bcm_metabolism,
+              UserInfo().basalMetabolism),
+          buildItem(AppLocalizations.of(mainContext)!.bcm_visceralfat,
+              UserInfo().visceralFatLevel),
+          buildItem(AppLocalizations.of(mainContext)!.bcm_water,
+              UserInfo().bodyWaterPercentage),
+          buildItem(AppLocalizations.of(mainContext)!.bcm_protein_percentage,
+              UserInfo().proteinPercentage),
         ],
       ),
     );

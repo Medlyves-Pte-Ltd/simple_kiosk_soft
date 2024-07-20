@@ -79,11 +79,33 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
     BlocProvider.of<DeviceBloc>(mainContext).add(stopEvent);
   }
 
-  @override
-  Widget buildCardDataShowArea() {
+  Widget buildItem(String title, String? data) {
     double titleFontSize = height * 0.02;
     double dataFontSize = height * 0.02;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          title,
+          style:
+              TextStyle(fontSize: titleFontSize, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: height * 0.01),
+        Text(
+          data ?? "",
+          style: TextStyle(
+              fontSize: dataFontSize,
+              fontWeight: FontWeight.bold,
+              color: ColorPalette.materialGreen),
+        )
+      ],
+    );
+  }
 
+  @override
+  Widget buildCardDataShowArea() {
     return BlocBuilder<DeviceBloc, DeviceState>(buildWhen: (previous, state) {
       bool update = false;
 
@@ -146,144 +168,33 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
 
       return update;
     }, builder: (context, state) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.bcm_fat,
-                    style: TextStyle(
-                        fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: height * 0.01),
-                  Text(
-                    bodyFatPercentage,
-                    style: TextStyle(
-                        fontSize: dataFontSize,
-                        fontWeight: FontWeight.bold,
-                        color: ColorPalette.materialGreen),
-                  )
-                ],
-              ),
-              SizedBox(width: width * 0.1),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.bcm_metabolism,
-                    style: TextStyle(
-                        fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: height * 0.01),
-                  Text(
-                    basalMetabolism,
-                    style: TextStyle(
-                        fontSize: dataFontSize,
-                        fontWeight: FontWeight.bold,
-                        color: ColorPalette.materialGreen),
-                  )
-                ],
-              ),
-            ],
+      return Center(
+        child: GridView(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            // 一行几列
+            crossAxisCount: 2,
+            // 设置每子元素的大小（宽高比）
+            childAspectRatio: 3,
+            // 元素的左右的 距离
+            crossAxisSpacing: width * 0.02,
+            // 子元素上下的 距离
+            mainAxisSpacing: height * 0.01,
           ),
-          SizedBox(height: height * 0.01),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(width: width * 0.1),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.bcm_visceralfat,
-                    style: TextStyle(
-                        fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: height * 0.01),
-                  Text(
-                    visceralFatLevel,
-                    style: TextStyle(
-                        fontSize: dataFontSize,
-                        fontWeight: FontWeight.bold,
-                        color: ColorPalette.materialGreen),
-                  )
-                ],
-              ),
-              SizedBox(width: width * 0.1),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.bcm_bone_mass,
-                    style: TextStyle(
-                        fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: height * 0.01),
-                  Text(
-                    boneMass,
-                    style: TextStyle(
-                        fontSize: dataFontSize,
-                        fontWeight: FontWeight.bold,
-                        color: ColorPalette.materialGreen),
-                  )
-                ],
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.bcm_water,
-                    style: TextStyle(
-                        fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: height * 0.01),
-                  Text(
-                    bodyWaterPercentage,
-                    style: TextStyle(
-                        fontSize: dataFontSize,
-                        fontWeight: FontWeight.bold,
-                        color: ColorPalette.materialGreen),
-                  )
-                ],
-              ),
-              SizedBox(width: width * 0.1),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.bcm_protein_percentage,
-                    style: TextStyle(
-                        fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: height * 0.01),
-                  Text(
-                    proteinPercentage,
-                    style: TextStyle(
-                        fontSize: dataFontSize,
-                        fontWeight: FontWeight.bold,
-                        color: ColorPalette.materialGreen),
-                  )
-                ],
-              ),
-            ],
-          ),
-        ],
+          physics: const NeverScrollableScrollPhysics(), // 禁止滚动
+          shrinkWrap: true,
+          children: [
+            buildItem(AppLocalizations.of(context)!.bcm_fat, bodyFatPercentage),
+            buildItem(
+                AppLocalizations.of(context)!.bcm_metabolism, basalMetabolism),
+            buildItem(AppLocalizations.of(context)!.bcm_visceralfat,
+                visceralFatLevel),
+            buildItem(AppLocalizations.of(context)!.bcm_bone_mass, boneMass),
+            buildItem(
+                AppLocalizations.of(context)!.bcm_water, bodyWaterPercentage),
+            buildItem(AppLocalizations.of(context)!.bcm_protein_percentage,
+                proteinPercentage),
+          ],
+        ),
       );
     });
   }

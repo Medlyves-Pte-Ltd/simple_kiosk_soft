@@ -17,6 +17,14 @@ class UserInfo {
   String diastolic = '';
   // 心率
   String heartRate = '';
+  // 温度
+  String temperature = '';
+
+  // 血氧
+  String bloodOxygen = '';
+  String bloodOxygenHeartRate = '';
+
+  // 人体成分
   // Body Fat Rate (脂肪率)
   String bodyFatPercentage = '';
   // Body Fat Mass (脂肪量)
@@ -35,13 +43,10 @@ class UserInfo {
   String mineral = '';
   // 骨量
   String boneMass = "";
-  // 血氧
-  String bloodOxygen = '';
-  String bloodOxygenHeartRate = '';
-  // 温度
-  String temperature = '';
   // 水分含量
   String bodyWaterPercentage = '';
+
+  // 血脂
   // 胆固醇
   String chol = '';
   // 高密度脂蛋白
@@ -50,10 +55,26 @@ class UserInfo {
   String trig = '';
   // 低密度脂蛋白
   String ldl = '';
+
+  // 血糖
   // 糖化血红蛋白
   String IFCC = '';
   // 平均血糖
   String eAG = '';
+
+  // 心电图数据
+  String HR = '';
+  String P_Width = '';
+  String PR = '';
+  String QRS_Dur = '';
+  String QT = '';
+  String QTc = "";
+  String QRS_Axis = "";
+  String P_Axis = "";
+  String T_Axis = "";
+  String RR = "";
+  String Conclusion = "";
+  String ResultImage = "";
 
   void clearUserInfo() {
     name = '';
@@ -87,6 +108,18 @@ class UserInfo {
     eAG = '';
     proteinPercentage = '';
     boneMass = '';
+    HR = '';
+    P_Width = '';
+    PR = '';
+    QRS_Dur = '';
+    QT = '';
+    QTc = "";
+    QRS_Axis = "";
+    P_Axis = "";
+    T_Axis = "";
+    RR = "";
+    Conclusion = "";
+    ResultImage = "";
   }
 
   Map<String, dynamic> toJson() {
@@ -109,6 +142,15 @@ class UserInfo {
       "visceralFatLevel": visceralFatLevel,
       "bodyWaterPercentage": bodyWaterPercentage,
       "proteinPercentage": proteinPercentage,
+      "HR": HR,
+      "P_Width": P_Width,
+      "PR": PR,
+      "QRS_Dur": QRS_Dur,
+      "QT": QT,
+      "QTc": QTc,
+      "QRS_Axis": QRS_Axis,
+      "P_Axis": P_Axis,
+      "T_Axis": T_Axis,
     };
   }
 

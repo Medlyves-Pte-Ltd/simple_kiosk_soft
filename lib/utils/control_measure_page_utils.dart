@@ -50,6 +50,12 @@ class ControlMeasurePageUtils {
       "page_route": "/BloodFitMeasure",
       "color": ColorPalette.colorbloodFat.value,
     },
+    {
+      "icon_file": "assets/images/ecg.png",
+      "measured": false,
+      "page_route": "/ECGMeasure",
+      "color": ColorPalette.colorEcg.value,
+    },
   ];
 
   Color get color => Color(ControlMeasurePageUtils()

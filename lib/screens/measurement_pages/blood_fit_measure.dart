@@ -53,6 +53,31 @@ class BloodFitMeasure extends BaseMeasureLayoutWidget {
     BlocProvider.of<DeviceBloc>(mainContext).add(stopEvent);
   }
 
+  Widget buildItem(String title, String? data) {
+    double titleFontSize = height * 0.02;
+    double dataFontSize = height * 0.02;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          title,
+          style:
+              TextStyle(fontSize: titleFontSize, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: height * 0.01),
+        Text(
+          data ?? "",
+          style: TextStyle(
+              fontSize: dataFontSize,
+              fontWeight: FontWeight.bold,
+              color: ColorPalette.materialGreen),
+        )
+      ],
+    );
+  }
+
   @override
   Widget buildCardDataShowArea() {
     double titleFontSize = height * 0.02;
@@ -98,94 +123,27 @@ class BloodFitMeasure extends BaseMeasureLayoutWidget {
 
       return update;
     }, builder: (context, state) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.bf_totalCholesterol,
-                    style: TextStyle(
-                        fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: height * 0.01),
-                  Text(
-                    chol,
-                    style: TextStyle(
-                        fontSize: dataFontSize,
-                        fontWeight: FontWeight.bold,
-                        color: ColorPalette.materialGreen),
-                  )
-                ],
-              ),
-              SizedBox(width: width * 0.1),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.bf_triglyceride,
-                    style: TextStyle(
-                        fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: height * 0.01),
-                  Text(
-                    trig,
-                    style: TextStyle(
-                        fontSize: dataFontSize,
-                        fontWeight: FontWeight.bold,
-                        color: ColorPalette.materialGreen),
-                  )
-                ],
-              ),
-            ],
+      return Center(
+        child: GridView(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            // 一行几列
+            crossAxisCount: 2,
+            // 设置每子元素的大小（宽高比）
+            childAspectRatio: 3,
+            // 元素的左右的 距离
+            crossAxisSpacing: width * 0.02,
+            // 子元素上下的 距离
+            mainAxisSpacing: height * 0.01,
           ),
-          SizedBox(height: height * 0.01),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                AppLocalizations.of(context)!.bf_hgl,
-                style: TextStyle(
-                    fontSize: titleFontSize, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: height * 0.01),
-              Text(
-                hdl,
-                style: TextStyle(
-                    fontSize: dataFontSize,
-                    fontWeight: FontWeight.bold,
-                    color: ColorPalette.materialGreen),
-              )
-            ],
-          ),
-          SizedBox(height: height * 0.01),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                AppLocalizations.of(context)!.bf_ldl,
-                style: TextStyle(
-                    fontSize: titleFontSize, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: height * 0.01),
-              Text(
-                ldl,
-                style: TextStyle(
-                    fontSize: dataFontSize,
-                    fontWeight: FontWeight.bold,
-                    color: ColorPalette.materialGreen),
-              )
-            ],
-          ),
-        ],
+          physics: const NeverScrollableScrollPhysics(), // 禁止滚动
+          shrinkWrap: true,
+          children: [
+            buildItem(AppLocalizations.of(context)!.bf_totalCholesterol, chol),
+            buildItem(AppLocalizations.of(context)!.bf_triglyceride, trig),
+            buildItem(AppLocalizations.of(context)!.bf_hgl, hdl),
+            buildItem(AppLocalizations.of(context)!.bf_ldl, ldl),
+          ],
+        ),
       );
     });
   }
