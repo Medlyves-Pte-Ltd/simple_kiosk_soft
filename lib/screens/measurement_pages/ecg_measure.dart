@@ -15,8 +15,6 @@ import 'package:simple_kiosk_software/utils/user_info.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ECGMeasure extends BaseMeasureLayoutWidget {
-  // 扫码器设备
-  DeviceBaseModel? ecg;
   ECGData ecgData = ECGData();
 
   ECGMeasure() {
@@ -51,7 +49,7 @@ class ECGMeasure extends BaseMeasureLayoutWidget {
 
   @override
   Future<void> onStart() async {
-    ecg = DeviceManager().getDevice(DeviceType.ECG_DEVICE);
+    DeviceBaseModel? ecg = DeviceManager().getDevice(DeviceType.ECG_DEVICE);
     ecg?.mapData = {
       'name': UserInfo().name,
       'age': UserInfo().age,
@@ -97,13 +95,14 @@ class ECGMeasure extends BaseMeasureLayoutWidget {
     return BlocBuilder<DeviceBloc, DeviceState>(buildWhen: (previous, state) {
       bool update = false;
 
-      if (state is DeviceDataLoading) {
-        ecgData.HR = ecgData.P_Width = ecgData.PR = ecgData.QRS_Dur =
-            ecgData.QT = ecgData.QTc = ecgData.QRS_Axis = ecgData.P_Axis =
-                ecgData.T_Axis =
-                    ecgData.RR = AppLocalizations.of(mainContext)!.loading;
-        update = true;
-      } else if (state is DeviceDataUpdated && state.deviceData is ECGData) {
+      // if (state is DeviceDataLoading) {
+      //   ecgData.HR = ecgData.P_Width = ecgData.PR = ecgData.QRS_Dur =
+      //       ecgData.QT = ecgData.QTc = ecgData.QRS_Axis = ecgData.P_Axis =
+      //           ecgData.T_Axis =
+      //               ecgData.RR = AppLocalizations.of(mainContext)!.loading;
+      //   update = true;
+      // } else
+      if (state is DeviceDataUpdated && state.deviceData is ECGData) {
         ecgData = state.deviceData as ECGData;
 
         UserInfo().HR = ecgData.HR ?? "";

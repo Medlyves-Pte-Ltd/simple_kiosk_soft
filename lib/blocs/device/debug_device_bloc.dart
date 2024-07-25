@@ -10,7 +10,7 @@ import 'package:simple_kiosk_software/blocs/device/device_state.dart';
 import 'package:flutter_devices_sdk/device_data/device_data.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:simple_kiosk_software/blocs/device/device_event.dart';
-import 'package:simple_kiosk_software/constants/app_constants.dart';
+import 'package:simple_kiosk_software/utils/log_printer.dart';
 
 class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
   DeviceBloc() : super(DeviceInitial()) {

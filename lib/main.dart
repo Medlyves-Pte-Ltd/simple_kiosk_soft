@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_devices_sdk/project_type.dart';
-//import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_state.dart';
@@ -79,27 +79,27 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           onGenerateRoute: onCustomGenerateRoute,
-          //initialRoute: "/",
-          initialRoute: "/Summary",
+          initialRoute: "/",
+          //initialRoute: "/Summary",
           //initialRoute: "/KioskManager",
           //initialRoute: "/HeightWeightMeasure",
 
           supportedLocales: AppLocalizations.supportedLocales,
-          // theme: ThemeData(
-          //   textTheme: GoogleFonts.robotoTextTheme(textTheme).copyWith(
-          //     bodyMedium: GoogleFonts.roboto(
-          //         textStyle: textTheme.bodyMedium), //measurement readings text
-          //     labelMedium: GoogleFonts.roboto(
-          //         textStyle: textTheme.labelMedium), //navigation button text
-          //     titleSmall: GoogleFonts.roboto(
-          //         textStyle: textTheme.titleSmall), //widget title
-          //     titleLarge: GoogleFonts.roboto(
-          //         textStyle: textTheme
-          //             .titleLarge), //Selection buttons and Header titles
-          //     titleMedium: GoogleFonts.roboto(
-          //         textStyle: textTheme.titleMedium), //Get Started button
-          //   ),
-          // ),
+          theme: ThemeData(
+            textTheme: GoogleFonts.robotoTextTheme(textTheme).copyWith(
+              bodyMedium: GoogleFonts.roboto(
+                  textStyle: textTheme.bodyMedium), //measurement readings text
+              labelMedium: GoogleFonts.roboto(
+                  textStyle: textTheme.labelMedium), //navigation button text
+              titleSmall: GoogleFonts.roboto(
+                  textStyle: textTheme.titleSmall), //widget title
+              titleLarge: GoogleFonts.roboto(
+                  textStyle: textTheme
+                      .titleLarge), //Selection buttons and Header titles
+              titleMedium: GoogleFonts.roboto(
+                  textStyle: textTheme.titleMedium), //Get Started button
+            ),
+          ),
           builder: (context, child) => ResponsiveWrapper.builder(
             child,
             maxWidth: 1200,

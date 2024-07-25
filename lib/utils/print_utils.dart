@@ -21,11 +21,10 @@ import 'package:simple_kiosk_software/utils/user_info.dart';
 
 class PrintUtils {
   // 开始打印
-  void startPrint(BuildContext context) async {
+  Future<void> startPrint(BuildContext context, Function callBack) async {
     DeviceBaseModel? printer =
         DeviceManager().getDevice(DeviceType.PRINTER_DEVICE);
     await printer?.connect();
-    // await printer?.sendCommand(await printHeadData());
 
     // uint8list打印
     final profile = await CapabilityProfile.load();
@@ -52,10 +51,13 @@ class PrintUtils {
     // 半切纸张命令hex:1D 56 01
     await printer?.sendCommand([29, 86, 1]);
 
-    // 延时关闭扫码器
+    // 延时关闭打印机
     Future.delayed(const Duration(milliseconds: 5000), () async {
       await printer?.stop();
       await printer?.disconnect();
+      if (callBack != null) {
+        callBack();
+      }
     });
   }
 

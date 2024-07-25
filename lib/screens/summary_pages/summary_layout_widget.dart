@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -40,6 +41,9 @@ class SummaryLayoutWidget extends StatelessWidget {
   double height = 0;
   // StatelessWidget需要保存上下文才能进行页面跳转，翻译
   late BuildContext mainContext;
+  // 能后控制打印
+  ValueNotifier<bool> enableClickPrint = ValueNotifier<bool>(true);
+
   // 子类需要实现的数据显示函数
   Widget buildCardDataShowArea() {
     return const SizedBox.shrink();
@@ -134,7 +138,10 @@ class SummaryLayoutWidget extends StatelessWidget {
 
   // 打印
   void btnPrint() async {
-    PrintUtils().startPrint(mainContext);
+    enableClickPrint.value = false;
+    await PrintUtils().startPrint(mainContext, () {
+      enableClickPrint.value = true;
+    });
   }
 
   // 打印退出控制按钮
@@ -145,25 +152,31 @@ class SummaryLayoutWidget extends StatelessWidget {
       child: Row(
         children: [
           const Spacer(),
-          InkWell(
-            onTap: btnPrint,
-            child: Container(
-                height: height * 0.03,
-                width: width * 0.15,
-                decoration: BoxDecoration(
-                  color: ColorPalette.materialGreen,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Center(
-                  child: Text(
-                    AppLocalizations.of(mainContext)!.print,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: height * 0.015,
-                        fontWeight: FontWeight.w600),
-                  ),
-                )),
-          ),
+          ValueListenableBuilder(
+              valueListenable: enableClickPrint,
+              builder: (context, enable, child) {
+                return InkWell(
+                  onTap: enable ? btnPrint : null,
+                  child: Container(
+                      height: height * 0.03,
+                      width: width * 0.15,
+                      decoration: BoxDecoration(
+                        color: enable
+                            ? ColorPalette.materialGreen
+                            : ColorPalette.darkGrey,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                        child: Text(
+                          AppLocalizations.of(mainContext)!.print,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: height * 0.015,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      )),
+                );
+              }),
           SizedBox(
             width: width * 0.03,
           ),
