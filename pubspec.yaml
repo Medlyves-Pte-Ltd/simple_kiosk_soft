@@ -17,7 +17,7 @@ dependencies:
   flutter_bloc: ^8.1.6
   flutter_localizations:
     sdk: flutter
-  #  google_fonts: ^6.2.1
+  google_fonts: ^6.2.1
   image: ^4.2.0
   intl: any
   logger: ^2.3.0
@@ -29,6 +29,7 @@ dependencies:
   permission_handler: ^11.3.1
   flutter_esc_pos_utils: ^1.0.1
   fluttertoast: ^8.2.6
+  tdesign_flutter: ^0.1.6
 #  flutter_devices_sdk: # 包名
 #      git:
 #        #url: https://github.com/Medlyves-Pte-Ltd/flutter_devices_sdk.git
