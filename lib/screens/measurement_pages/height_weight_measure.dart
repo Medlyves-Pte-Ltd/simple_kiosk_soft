@@ -155,16 +155,11 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
             BlocProvider.of<DeviceBloc>(mainContext).add(connectEvent);
           });
         } else if (state.deviceData is WeightData) {
-          bodyHeight = UserInfo().height;
+          bodyHeight =
+              "${(double.parse(UserInfo().height) / 100.0).toStringAsFixed(2)}";
           bodyWeight =
               UserInfo().weight = (state.deviceData as WeightData).weight;
           ControlMeasurePageUtils().measured = true;
-          update = true;
-        }
-      } else if (state is DeviceDisconnected) {
-        if (ControlMeasurePageUtils().measured == false) {
-          bodyHeight = dataDefaultValue;
-          bodyWeight = dataDefaultValue;
           update = true;
         }
       }

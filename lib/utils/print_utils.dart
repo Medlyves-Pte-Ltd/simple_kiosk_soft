@@ -20,12 +20,19 @@ import 'package:simple_kiosk_software/utils/user_info.dart';
 // 3.打印的图片宽度像素太大会造成打印无反应。
 
 class PrintUtils {
+  DeviceBaseModel? printer;
+
+  Future<void> connect() async {
+    printer = DeviceManager().getDevice(DeviceType.PRINTER_DEVICE);
+    await printer?.connect();
+  }
+
+  Future<void> disconnect() async {
+    await printer?.disconnect();
+  }
+
   // 开始打印
   Future<void> startPrint(BuildContext context, Function callBack) async {
-    DeviceBaseModel? printer =
-        DeviceManager().getDevice(DeviceType.PRINTER_DEVICE);
-    await printer?.connect();
-
     // uint8list打印
     final profile = await CapabilityProfile.load();
     final generator = Generator(PaperSize.mm58, profile);
@@ -53,8 +60,6 @@ class PrintUtils {
 
     // 延时关闭打印机
     Future.delayed(const Duration(milliseconds: 5000), () async {
-      await printer?.stop();
-      await printer?.disconnect();
       if (callBack != null) {
         callBack();
       }

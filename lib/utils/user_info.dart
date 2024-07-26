@@ -7,9 +7,9 @@ class UserInfo {
   int gender = 1;
   // 年龄
   String age = '';
-  // 身高
+  // 身高 cm
   String height = '';
-  // 体重
+  // 体重 kg
   String weight = '';
   // 收缩压
   String systolic = '';
@@ -124,7 +124,8 @@ class UserInfo {
 
   Map<String, dynamic> toJson() {
     return {
-      "height": height,
+      "height":
+          "${(double.parse(UserInfo().height) / 100.0).toStringAsFixed(2)}",
       "weight": weight,
       "temperature": temperature,
       "bloodPressure": "$systolic/$diastolic",

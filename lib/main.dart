@@ -13,33 +13,17 @@ import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
 import 'package:flutter_devices_sdk/devices/device_config.dart';
 import 'package:simple_kiosk_software/screens/route_manager.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-Future<bool> getStoragePermission() async {
-  late PermissionStatus permissionStatus;
-  if (defaultTargetPlatform == TargetPlatform.android) {
-    permissionStatus = await Permission.storage.request();
-  }
-  if (permissionStatus != PermissionStatus.granted) {
-    return false;
-  } else {
-    return true;
-  }
-}
-
-Future<void> checkPermission() async {
-  final permissionState = await getStoragePermission();
-  if (permissionState) {
-  } else {
-    // 权限被拒绝 打开手机上的权限设置页面
-    openAppSettings();
-  }
-}
+import 'package:simple_kiosk_software/utils/print_utils.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // 检查权限
   await checkPermission();
+  // 设备初始化
   await DeviceConfig().clearDeviceConfigStorage();
   await DeviceConfig().init(ProjectType.simple_kiosk_software);
+  // 由于关闭打印机会抛异常，暂时没法解决，先全局使用
+  await PrintUtils().connect();
 
   runApp(MultiBlocProvider(
     providers: [
@@ -50,9 +34,7 @@ void main() async {
         create: (context) => LocaleCubit(),
       ),
     ],
-    child: const MyApp(
-      key: Key("root"),
-    ),
+    child: MyApp(),
   ));
 
   // 隐藏系统状态栏和导航栏
@@ -60,8 +42,22 @@ void main() async {
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => MyAppState();
+}
+
+class MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    PrintUtils().disconnect();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,5 +110,26 @@ class MyApp extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+Future<bool> getStoragePermission() async {
+  late PermissionStatus permissionStatus;
+  if (defaultTargetPlatform == TargetPlatform.android) {
+    permissionStatus = await Permission.storage.request();
+  }
+  if (permissionStatus != PermissionStatus.granted) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+Future<void> checkPermission() async {
+  final permissionState = await getStoragePermission();
+  if (permissionState) {
+  } else {
+    // 权限被拒绝 打开手机上的权限设置页面
+    openAppSettings();
   }
 }
