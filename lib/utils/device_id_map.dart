@@ -108,6 +108,8 @@ class DeviceMap {
         return loc.bf_hgl;
       case "ldl":
         return loc.bf_ldl;
+
+      // 人体成分
       case "bodyFatPercentage":
         return loc.bcm_fat;
       case "skeletalMusclePercentage":
@@ -122,6 +124,8 @@ class DeviceMap {
         return loc.bcm_protein;
       case "proteinPercentage":
         return loc.bcm_protein_percentage;
+      case "boneMass":
+        return loc.bcm_bone_mass;
 
       // 心电图
       case "HR":

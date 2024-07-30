@@ -135,7 +135,7 @@ class SummaryEcg extends StatelessWidget {
   Widget buildEcgImage() {
     if (UserInfo().ResultImage.isNotEmpty) {
       return GestureDetector(
-        child: Image.asset(UserInfo().ResultImage, fit: BoxFit.fitWidth),
+        child: Image.file(File(UserInfo().ResultImage), fit: BoxFit.fitWidth),
         onTap: () {
           Navigator.of(mainContext).push(TDSlidePopupRoute(
               slideTransitionFrom: SlideTransitionFrom.center,

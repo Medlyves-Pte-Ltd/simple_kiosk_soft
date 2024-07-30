@@ -23,6 +23,10 @@ class PrintUtils {
   DeviceBaseModel? printer;
 
   Future<void> connect() async {
+    if (printer != null) {
+      return;
+    }
+
     printer = DeviceManager().getDevice(DeviceType.PRINTER_DEVICE);
     await printer?.connect();
   }

@@ -139,6 +139,8 @@ class SummaryLayoutWidget extends StatelessWidget {
   // 打印
   void btnPrint() async {
     enableClickPrint.value = false;
+    // 由于关闭打印机会抛异常，暂时没法解决，先全局使用
+    await PrintUtils().connect();
     await PrintUtils().startPrint(mainContext, () {
       enableClickPrint.value = true;
     });

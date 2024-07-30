@@ -4,64 +4,28 @@
     "deviceType": "TEMP_DEVICE",
     "deviceIndex": 3,
     "deviceList": ["BodyTemperature", "URIONTemperature", "ChengDuDT8861Temperature", "CommonDT8861Temperature"],
-    "enable": true,
-    "asignUsb": true
-  },
-  {
-    "deviceName": "Height",
-    "deviceType": "HEIGHT_DEVICE",
-    "deviceIndex": 1,
-    "deviceList": ["ShengYuanHeight", "ZhongKeCQRFHeight"],
-    "enable": true,
-    "asignUsb": true
-  },
-  {
-    "deviceName": "Weight",
-    "deviceType": "WEIGHT_DEVICE",
-    "deviceIndex": 1,
-    "deviceList": ["ShengYuanWeight", "BoRuiWeiDG681Weight"],
-    "enable": true,
-    "asignUsb": true
-  },
-  {
-    "deviceName": "Body Composition",
-    "deviceType": "BC_DEVICE",
-    "deviceIndex": 2,
-    "deviceList": ["ShengYuanBodyComposition", "ChengDuBodyComposition","BoRuiWeiDG681Composition"],
-    "enable": true,
-    "asignUsb": true
-  },
-  {
-    "deviceName": "Printer",
-    "deviceType": "PRINTER_DEVICE",
-    "deviceIndex": 0,
-    "deviceList": ["YokoscanEM5826Printer"],
-    "enable": true,
-    "asignUsb": true
+    "enable": true
   },
   {
     "deviceName": "Blood Oxygen",
     "deviceType": "BO_DEVICE",
     "deviceIndex": 3,
     "deviceList": ["BloodOxygen", "ChengDuBloodOxygen", "KeRuiKangBloodOxygen", "OXIMETER_BloodOxygen"],
-    "enable": true,
-    "asignUsb": true
+    "enable": true
   },
   {
     "deviceName": "Blood Glucose",
     "deviceType": "BG_DEVICE",
     "deviceIndex": 0,
     "deviceList": ["SGDianosticsBloodGlucose"],
-    "enable": true,
-    "asignUsb": true
+    "enable": true
   },
   {
     "deviceName": "Blood Fit",
     "deviceType": "BF_DEVICE",
     "deviceIndex": 0,
     "deviceList": ["PreciSCBloodFit"],
-    "enable": true,
-    "asignUsb": true
+    "enable": true
   },
   {
     "deviceName": "Blood Pressure",
@@ -75,23 +39,48 @@
     "deviceType": "ECG_DEVICE",
     "deviceIndex": 0,
     "deviceList": ["HuaQingXinYiEcg"],
-    "enable": true,
-    "asignUsb": true
+    "enable": true
+  },
+  {
+    "deviceName": "Printer",
+    "deviceType": "PRINTER_DEVICE",
+    "deviceIndex": 0,
+    "deviceList": ["YokoscanEM5826Printer"],
+    "enable": true
+  },
+  {
+    "deviceName": "Height",
+    "deviceType": "HEIGHT_DEVICE",
+    "deviceIndex": 1,
+    "deviceList": ["ShengYuanHeight", "ZhongKeCQRFHeight"],
+    "enable": true
   },
   {
     "deviceName": "Scanner",
     "deviceType": "SCANNER_DEVICE",
     "deviceIndex": 0,
     "deviceList": ["YouKuEP8280CodeScanner"],
-    "enable": true,
-    "asignUsb": true
+    "enable": true
+  },
+  {
+    "deviceName": "Weight",
+    "deviceType": "WEIGHT_DEVICE",
+    "deviceIndex": 1,
+    "deviceList": ["ShengYuanWeight", "BoRuiWeiDG681Weight"],
+    "enable": true
+  },
+  {
+    "deviceName": "Body Composition",
+    "deviceType": "BC_DEVICE",
+    "deviceIndex": 2,
+    "deviceList": ["ShengYuanBodyComposition", "ChengDuBodyComposition","BoRuiWeiDG681Composition"],
+    "enable": true
   },
   {
     "deviceName": "Io",
     "deviceType": "IO_DEVICE",
-    "deviceIndex": 1,
-    "deviceList": ["YanMengIoDevice", "ZhongShengIoDevice"],
-    "enable": false,
-    "asignUsb": false
+    "deviceIndex": 0,
+    "deviceList": ["YanMengIoDevice"],
+    "enable": false
   }
 ]

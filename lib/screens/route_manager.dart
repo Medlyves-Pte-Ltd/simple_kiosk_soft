@@ -7,6 +7,7 @@ import 'package:simple_kiosk_software/screens/measurement_pages/body_composition
 import 'package:simple_kiosk_software/screens/measurement_pages/ecg_measure.dart';
 import 'package:simple_kiosk_software/screens/scanner_page.dart';
 import 'package:simple_kiosk_software/screens/summary_pages/summary_layout_widget.dart';
+import 'package:simple_kiosk_software/screens/device_page.dart';
 import 'package:simple_kiosk_software/screens/user_login.dart';
 import 'package:simple_kiosk_software/screens/language/language_page.dart';
 import 'package:simple_kiosk_software/screens/kiosk_manager.dart';
@@ -35,6 +36,7 @@ final Map<String, Function> routes = {
   '/Summary': (context, {args}) => SummaryLayoutWidget(),
   '/ScannerPage': (context, {args}) => ScannerPage(),
   '/ECGMeasure': (context, {args}) => ECGMeasure(),
+  '/DevicePage': (context, {args}) => DevicePage(),
 };
 
 // 定义通用的onGenerateRoute

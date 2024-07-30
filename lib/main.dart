@@ -1,4 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_devices_sdk/devices/device_base_model.dart';
+import 'package:flutter_devices_sdk/devices/device_config.dart';
 import 'package:flutter_devices_sdk/project_type.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +12,10 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_state.dart';
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
-import 'package:flutter_devices_sdk/devices/device_config.dart';
 import 'package:simple_kiosk_software/screens/route_manager.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:simple_kiosk_software/utils/print_utils.dart';
+import "package:flutter_devices_sdk/devices/usb_relay_control.dart";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,8 +24,6 @@ void main() async {
   // 设备初始化
   await DeviceConfig().clearDeviceConfigStorage();
   await DeviceConfig().init(ProjectType.simple_kiosk_software);
-  // 由于关闭打印机会抛异常，暂时没法解决，先全局使用
-  await PrintUtils().connect();
 
   runApp(MultiBlocProvider(
     providers: [
@@ -36,7 +36,11 @@ void main() async {
     ],
     child: MyApp(),
   ));
-
+  // 设置应用程序只支持竖屏方向
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   // 隐藏系统状态栏和导航栏
   // Hides the system status bar and navigation bar
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
@@ -57,6 +61,7 @@ class MyAppState extends State<MyApp> {
   void dispose() {
     super.dispose();
     PrintUtils().disconnect();
+    UsbRelayControl().disConnect();
   }
 
   @override
@@ -75,10 +80,11 @@ class MyAppState extends State<MyApp> {
             GlobalCupertinoLocalizations.delegate,
           ],
           onGenerateRoute: onCustomGenerateRoute,
-          initialRoute: "/",
+          //initialRoute: "/",
+          //initialRoute: "/DevicePage",
           //initialRoute: "/Summary",
           //initialRoute: "/KioskManager",
-          //initialRoute: "/HeightWeightMeasure",
+          initialRoute: "/HeightWeightMeasure",
 
           supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData(
