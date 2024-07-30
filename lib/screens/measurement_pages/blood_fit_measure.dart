@@ -29,6 +29,16 @@ class BloodFitMeasure extends BaseMeasureLayoutWidget {
   }
 
   @override
+  Widget buildVideoArea() {
+    return Image.asset(
+      "assets/images/blood_fit_info.png",
+      fit: BoxFit.fill,
+      width: width,
+      height: width * 9 / 16,
+    );
+  }
+
+  @override
   void init() {
     super.title = AppLocalizations.of(mainContext)!.bf;
     if (super.startVideoFile.isEmpty) {

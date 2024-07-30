@@ -97,7 +97,7 @@ class BloodPressureMeasure extends BaseMeasureLayoutWidget {
       return update;
     }, builder: (context, state) {
       return Center(
-        child: Row(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Column(
@@ -119,7 +119,7 @@ class BloodPressureMeasure extends BaseMeasureLayoutWidget {
                 )
               ],
             ),
-            SizedBox(width: width * 0.1),
+            SizedBox(height: height * 0.02),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,

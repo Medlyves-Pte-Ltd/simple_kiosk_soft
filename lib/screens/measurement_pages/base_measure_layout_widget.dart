@@ -74,7 +74,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
         ? startVideoFile
         : endVideoFile;
     return BlocBuilder<DeviceBloc, DeviceState>(buildWhen: (previous, state) {
-      if (state is DeviceDataUpdated || ControlMeasurePageUtils().measured) {
+      if (state is DeviceDataUpdated) {
         file = endVideoFile;
       } else if (state is DeviceConnected) {
         file = startVideoFile;

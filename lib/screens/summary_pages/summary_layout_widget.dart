@@ -59,8 +59,8 @@ class SummaryLayoutWidget extends StatelessWidget {
         Tab(text: AppLocalizations.of(mainContext)!.summary_basic_vitals),
         Tab(text: AppLocalizations.of(mainContext)!.summary_body_composition),
         Tab(text: AppLocalizations.of(mainContext)!.summary_ecg),
-        Tab(text: AppLocalizations.of(mainContext)!.summary_stethoscope),
-        Tab(text: AppLocalizations.of(mainContext)!.summary_otoscope),
+        // Tab(text: AppLocalizations.of(mainContext)!.summary_stethoscope),
+        // Tab(text: AppLocalizations.of(mainContext)!.summary_otoscope),
       ];
     }
   }
@@ -108,7 +108,7 @@ class SummaryLayoutWidget extends StatelessWidget {
                       contentCenter: true,
                       radius: 10,
                       height: height * 0.07,
-                      width: width * 0.23,
+                      width: width * 0.3,
                       backgroundColor: ColorPalette.materialGreen,
                       borderWidth: 0,
                       // borderColor: ColorPalette.colorAppBackground,

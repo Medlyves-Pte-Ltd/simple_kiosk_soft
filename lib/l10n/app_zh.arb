@@ -42,7 +42,7 @@
   "bf": "血脂",
   "bf_ldl": "LDL（mg/dl）",
   "bf_hdl": "HDL（mg/dl）",
-  "bf_totalCholesterol": "总胆固脂（mg/dl）",
+  "bf_totalCholesterol": "胆固脂（mg/dl）",
   "bf_triglyceride": "三酸甘油酯（mg/dl）",
   "bg": "血糖",
   "bg_bloodglucose": "血糖（mmol/L）",

@@ -80,11 +80,11 @@ class MyAppState extends State<MyApp> {
             GlobalCupertinoLocalizations.delegate,
           ],
           onGenerateRoute: onCustomGenerateRoute,
-          //initialRoute: "/",
+          initialRoute: "/",
           //initialRoute: "/DevicePage",
           //initialRoute: "/Summary",
           //initialRoute: "/KioskManager",
-          initialRoute: "/HeightWeightMeasure",
+          //initialRoute: "/HeightWeightMeasure",
 
           supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData(

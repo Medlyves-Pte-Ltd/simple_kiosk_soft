@@ -168,19 +168,28 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
 
       return update;
     }, builder: (context, state) {
-      return Center(
+      return RawScrollbar(
+        thumbColor: ColorPalette.darkGrey,
+        // 一直显示滑动条
+        thumbVisibility: true,
+        // 滑动条的宽度
+        thickness: 6,
+        radius: const Radius.circular(10),
+        // 滑动条为true 可拖动
+        interactive: true,
         child: GridView(
+          padding: EdgeInsets.symmetric(horizontal: width * 0.005),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             // 一行几列
             crossAxisCount: 2,
             // 设置每子元素的大小（宽高比）
-            childAspectRatio: 3,
+            childAspectRatio: 1.7,
             // 元素的左右的 距离
             crossAxisSpacing: width * 0.02,
             // 子元素上下的 距离
             mainAxisSpacing: height * 0.01,
           ),
-          physics: const NeverScrollableScrollPhysics(), // 禁止滚动
+          physics: const AlwaysScrollableScrollPhysics(), // 禁止滚动
           shrinkWrap: true,
           children: [
             buildItem(AppLocalizations.of(context)!.bcm_fat, bodyFatPercentage),

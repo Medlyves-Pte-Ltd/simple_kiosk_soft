@@ -154,6 +154,9 @@ class ScannerPageState extends State<ScannerPage> {
   }
 
   Widget buildTipInfoArea() {
+    String localeCode =
+        BlocProvider.of<LocaleCubit>(mainContext).locale.languageCode;
+
     return Row(
       children: [
         SizedBox(width: width * 0.08),
@@ -166,7 +169,7 @@ class ScannerPageState extends State<ScannerPage> {
                 textAlign: TextAlign.left,
                 softWrap: true,
                 style: TextStyle(
-                  fontSize: height * 0.028,
+                  fontSize: localeCode == "ta" ? height * 0.02 : height * 0.028,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -178,7 +181,8 @@ class ScannerPageState extends State<ScannerPage> {
                 textAlign: TextAlign.left,
                 softWrap: true,
                 style: TextStyle(
-                  fontSize: height * 0.022,
+                  fontSize:
+                      localeCode == "ta" ? height * 0.018 : height * 0.022,
                   fontWeight: FontWeight.w500,
                 ),
               ),

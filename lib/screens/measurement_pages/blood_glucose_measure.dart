@@ -21,6 +21,16 @@ class BloodGlucoseMeasure extends BaseMeasureLayoutWidget {
   }
 
   @override
+  Widget buildVideoArea() {
+    return Image.asset(
+      "assets/images/blood_glucose_info.jpg",
+      fit: BoxFit.fill,
+      width: width,
+      height: width * 9 / 16,
+    );
+  }
+
+  @override
   void init() {
     super.title = AppLocalizations.of(mainContext)!.bg;
     if (super.startVideoFile.isEmpty) {
