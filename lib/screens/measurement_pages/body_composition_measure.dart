@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_devices_sdk/device_data/body_composition_data.dart';
 import 'package:flutter_devices_sdk/device_manager.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
+import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/base_measure_layout_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -168,6 +169,8 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
 
       return update;
     }, builder: (context, state) {
+      String localeCode =
+          BlocProvider.of<LocaleCubit>(mainContext).locale.languageCode;
       return RawScrollbar(
         thumbColor: ColorPalette.darkGrey,
         // 一直显示滑动条
@@ -183,7 +186,8 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
             // 一行几列
             crossAxisCount: 2,
             // 设置每子元素的大小（宽高比）
-            childAspectRatio: 1.7,
+            childAspectRatio:
+                localeCode == "ta" || localeCode == "ms" ? 1.7 : 3,
             // 元素的左右的 距离
             crossAxisSpacing: width * 0.02,
             // 子元素上下的 距离
