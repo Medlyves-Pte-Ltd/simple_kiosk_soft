@@ -23,7 +23,7 @@ import 'package:simple_kiosk_software/screens/measurement_pages/body_temperature
 // 定义路由列表
 // Define routing list
 final Map<String, Function> routes = {
-  '/': (context, {args}) => const LanguagePage(),
+  '/LanguagePage': (context, {args}) => const LanguagePage(),
   '/login': (context, {args}) => const UserLogin(),
   '/KioskManager': (context, {args}) => KioskManager(),
   '/HeightWeightMeasure': (context, {args}) => HeightWeightMeasure(),

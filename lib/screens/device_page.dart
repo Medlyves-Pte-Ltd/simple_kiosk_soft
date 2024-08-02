@@ -4,6 +4,7 @@ import 'package:flutter_devices_sdk/devices/usb_relay_control.dart';
 import 'package:flutter_devices_sdk/project_type.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/header.dart';
+import 'package:simple_kiosk_software/utils/scanner_utils.dart';
 
 class DevicePage extends StatelessWidget {
   late BuildContext _context;
@@ -16,7 +17,7 @@ class DevicePage extends StatelessWidget {
 
   DevicePage() {
     Future.delayed(const Duration(milliseconds: 10), () async {
-      // usb io 继电器设备
+      // 打开USB IO继电器设备
       await UsbRelayControl().connect();
       _ioCount = UsbRelayControl().ioCount ?? 0;
       await UsbRelayControl().setAutoControl((int index) {
@@ -27,7 +28,11 @@ class DevicePage extends StatelessWidget {
       await DeviceConfig().clearDeviceConfigStorage();
       await DeviceConfig().init(ProjectType.simple_kiosk_software);
 
-      Navigator.pushNamedAndRemoveUntil(_context, '/', (route) => false);
+      // 打开扫码器
+      await ScannerUtils().connect();
+
+      Navigator.pushNamedAndRemoveUntil(
+          _context, '/LanguagePage', (route) => false);
     });
   }
 
@@ -51,15 +56,17 @@ class DevicePage extends StatelessWidget {
 
   Widget _buildProgress() {
     return Container(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.symmetric(horizontal: 25),
         alignment: Alignment.center,
         child: ValueListenableBuilder(
           valueListenable: _curIndex,
           builder: (context, value, child) {
             return Text(
-              "Starting the medical examination device, $value/$_ioCount, please wait...",
+              "Starting the medical examination device, $value  / $_ioCount, please wait...",
+              softWrap: true,
+              maxLines: 5,
               style: TextStyle(
-                  fontSize: height * 0.025, fontWeight: FontWeight.w600),
+                  fontSize: height * 0.03, fontWeight: FontWeight.w600),
             );
           },
         ));

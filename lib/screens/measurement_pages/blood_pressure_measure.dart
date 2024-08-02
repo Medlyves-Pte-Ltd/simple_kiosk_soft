@@ -67,6 +67,7 @@ class BloodPressureMeasure extends BaseMeasureLayoutWidget {
 
       if (state is DeviceConnected) {
         ControlMeasurePageUtils().measured = false;
+        measured = false;
         systolic = diastolic = heartRate = dataDefaultValue;
         UserInfo().systolic = "";
         UserInfo().diastolic = "";
@@ -86,9 +87,10 @@ class BloodPressureMeasure extends BaseMeasureLayoutWidget {
             (state.deviceData as BloodPrssureData).heartRate;
 
         ControlMeasurePageUtils().measured = true;
+        measured = true;
         update = true;
       } else if (state is DeviceDisconnected) {
-        if (ControlMeasurePageUtils().measured == false) {
+        if (!measured) {
           systolic = diastolic = heartRate = dataDefaultValue;
           update = true;
         }

@@ -81,8 +81,17 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
   }
 
   Widget buildItem(String title, String? data) {
-    double titleFontSize = height * 0.02;
-    double dataFontSize = height * 0.02;
+    String localeCode =
+        BlocProvider.of<LocaleCubit>(mainContext).locale.languageCode;
+    double ratio = 0.02;
+    if (localeCode == "ta") {
+      ratio = 0.015;
+    } else if (localeCode == "ms") {
+      ratio = 0.018;
+    }
+    double titleFontSize = height * ratio;
+    double dataFontSize = height * ratio;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -112,6 +121,7 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
 
       if (state is DeviceConnected) {
         ControlMeasurePageUtils().measured = false;
+        measured = false;
         bodyFatPercentage = boneMass = basalMetabolism = boneMass =
             visceralFatLevel =
                 proteinPercentage = bodyWaterPercentage = dataDefaultValue;
@@ -156,10 +166,11 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
               bodyCompositionData.bodyWaterPercentage ?? "";
 
           ControlMeasurePageUtils().measured = true;
+          measured = true;
           update = true;
         }
       } else if (state is DeviceDisconnected) {
-        if (ControlMeasurePageUtils().measured == false) {
+        if (!measured) {
           bodyFatPercentage = boneMass = basalMetabolism = boneMass =
               visceralFatLevel =
                   proteinPercentage = bodyWaterPercentage = dataDefaultValue;
@@ -169,8 +180,6 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
 
       return update;
     }, builder: (context, state) {
-      String localeCode =
-          BlocProvider.of<LocaleCubit>(mainContext).locale.languageCode;
       return RawScrollbar(
         thumbColor: ColorPalette.darkGrey,
         // 一直显示滑动条
@@ -186,8 +195,7 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
             // 一行几列
             crossAxisCount: 2,
             // 设置每子元素的大小（宽高比）
-            childAspectRatio:
-                localeCode == "ta" || localeCode == "ms" ? 1.7 : 3,
+            childAspectRatio: 3,
             // 元素的左右的 距离
             crossAxisSpacing: width * 0.02,
             // 子元素上下的 距离

@@ -1,12 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_devices_sdk/device_data/code_scanner_data.dart';
-import 'package:flutter_devices_sdk/device_manager.dart';
-import 'package:flutter_devices_sdk/device_type.dart';
-import 'package:flutter_devices_sdk/devices/device_base_model.dart';
 import 'package:flutter_devices_sdk/utils/app_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +11,7 @@ import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/header.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
+import 'package:simple_kiosk_software/utils/scanner_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 
 class ScannerPage extends StatefulWidget {
@@ -32,8 +28,6 @@ class ScannerPageState extends State<ScannerPage> {
   double width = 0;
   // 屏幕高度
   double height = 0;
-  // 扫码器设备
-  DeviceBaseModel? scanner;
   // StatelessWidget需要保存上下文才能进行页面跳转，翻译
   late BuildContext mainContext;
   // 扫码数据
@@ -42,57 +36,44 @@ class ScannerPageState extends State<ScannerPage> {
   @override
   void initState() {
     super.initState();
-    scanner = DeviceManager().getDevice(DeviceType.SCANNER_DEVICE);
-    // 监听数据
-    scanner?.onDataReady.listen((event) {
-      String data = (event as CodeScannerData).scanner;
-      LogPrinter.log("qr code orign data:$data");
+    ScannerUtils().listenData = listenScannerData;
+  }
 
-      // 判断时候是json数据
-      int startPos = data.lastIndexOf('{');
-      int endPos = data.lastIndexOf('}');
-      if (startPos != -1 && endPos != -1) {
-        data = data.substring(startPos, endPos + 1);
-      } else {
-        Fluttertoast.showToast(msg: "The QR code data format is incorrect!");
-        return;
-      }
+  // 监听扫码器数据
+  void listenScannerData(String data) {
+    // 判断时候是json数据
+    int startPos = data.lastIndexOf('{');
+    int endPos = data.lastIndexOf('}');
+    if (startPos != -1 && endPos != -1) {
+      data = data.substring(startPos, endPos + 1);
+    } else {
+      Fluttertoast.showToast(msg: "The QR code data format is incorrect!");
+      return;
+    }
 
-      // 解析json数据
-      LogPrinter.log("qr code normal data:$data");
-      try {
-        scannerData = jsonDecode(data);
+    // 解析json数据
+    LogPrinter.log("qr code normal data:$data");
+    try {
+      scannerData = jsonDecode(data);
 
-        UserInfo().name = scannerData["name"].toString();
-        UserInfo().age = scannerData["age"].toString();
-        UserInfo().gender = scannerData["gender"] as int;
-        UserInfo().clearResult();
-      } catch (e) {
-        Fluttertoast.showToast(msg: "The QR code data format is incorrect!");
-        return;
-      }
+      UserInfo().name = scannerData["name"].toString();
+      UserInfo().age = scannerData["age"].toString();
+      UserInfo().gender = scannerData["gender"] as int;
+      UserInfo().clearResult();
+    } catch (e) {
+      Fluttertoast.showToast(msg: "The QR code data format is incorrect!");
+      return;
+    }
 
-      // 判断用户信息是否为空
-      if (UserInfo().name.isEmpty || UserInfo().age.isEmpty) {
-        Fluttertoast.showToast(msg: "User information is incorrect!");
-        return;
-      }
+    // 判断用户信息是否为空
+    if (UserInfo().name.isEmpty || UserInfo().age.isEmpty) {
+      Fluttertoast.showToast(msg: "User information is incorrect!");
+      return;
+    }
 
-      // 延时关闭扫码器
-      Future.delayed(const Duration(milliseconds: 200), () async {
-        await scanner?.stop();
-        await scanner?.disconnect();
-      }).then((data) {
-        Navigator.pushNamedAndRemoveUntil(
-            mainContext, "/HeightWeightMeasure", (route) => false);
-      });
-    });
-
-    // 延时打开扫码器
-    Future.delayed(const Duration(milliseconds: 200), () async {
-      await scanner?.connect();
-      await scanner?.start();
-    });
+    ScannerUtils().listenData = null;
+    Navigator.pushNamedAndRemoveUntil(
+        mainContext, "/HeightWeightMeasure", (route) => false);
   }
 
   @override

@@ -4,13 +4,11 @@ import 'package:video_player/video_player.dart';
 class VideoWidget extends StatefulWidget {
   final String videoName;
   final bool setLooping;
-  final Function(bool)? onVideoInitialised;
 
-  const VideoWidget({
+  VideoWidget({
     Key? key,
     required this.videoName,
     required this.setLooping,
-    this.onVideoInitialised,
   }) : super(key: key);
 
   @override
@@ -28,7 +26,6 @@ class _VideoWidgetState extends State<VideoWidget> {
       ..setLooping(widget.setLooping)
       ..initialize().then((_) {
         setState(() {});
-        widget.onVideoInitialised!(_controller.value.isInitialized);
       })
       ..play();
   }
@@ -41,10 +38,10 @@ class _VideoWidgetState extends State<VideoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     final videoWidth = screenWidth;
     final videoHeight = videoWidth * 9 / 16;
+    print("_VideoWidgetState");
 
     return Center(
       child: SizedBox(

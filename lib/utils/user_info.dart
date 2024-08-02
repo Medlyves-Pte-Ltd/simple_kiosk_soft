@@ -11,18 +11,19 @@ class UserInfo {
   String height = '';
   // 体重 kg
   String weight = '';
+  // 温度
+  String temperature = '';
+
+  // 血压
   // 收缩压
   String systolic = '';
   // 舒张压
   String diastolic = '';
   // 心率
   String heartRate = '';
-  // 温度
-  String temperature = '';
 
   // 血氧
   String bloodOxygen = '';
-  String bloodOxygenHeartRate = '';
 
   // 人体成分
   // Body Fat Rate (脂肪率)
@@ -92,7 +93,6 @@ class UserInfo {
     bodyWaterPercentage = '';
     temperature = '';
     bloodOxygen = '';
-    bloodOxygenHeartRate = '';
     mineral = '';
     protein = '';
     visceralFatLevel = '';
@@ -123,9 +123,13 @@ class UserInfo {
   }
 
   Map<String, dynamic> toJson() {
+    String height = "";
+    if (UserInfo().height.isNotEmpty) {
+      height =
+          "${(double.parse(UserInfo().height) / 100.0).toStringAsFixed(2)}";
+    }
     return {
-      "height":
-          "${(double.parse(UserInfo().height) / 100.0).toStringAsFixed(2)}",
+      "height": height,
       "weight": weight,
       "temperature": temperature,
       "bloodPressure": "$systolic/$diastolic",

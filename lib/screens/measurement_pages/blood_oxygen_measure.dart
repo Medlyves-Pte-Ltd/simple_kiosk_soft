@@ -13,14 +13,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BloodOxygenMeasure extends BaseMeasureLayoutWidget {
   late String _bloodOxygen;
-  late String _pulseRate;
 
   BloodOxygenMeasure() {
     _bloodOxygen = UserInfo().bloodOxygen.isNotEmpty
         ? UserInfo().bloodOxygen
-        : dataDefaultValue;
-    _pulseRate = UserInfo().bloodOxygenHeartRate.isNotEmpty
-        ? UserInfo().bloodOxygenHeartRate
         : dataDefaultValue;
   }
 
@@ -59,25 +55,24 @@ class BloodOxygenMeasure extends BaseMeasureLayoutWidget {
 
       if (state is DeviceConnected) {
         ControlMeasurePageUtils().measured = false;
-        _bloodOxygen = _pulseRate = dataDefaultValue;
+        measured = false;
+        _bloodOxygen = dataDefaultValue;
         UserInfo().bloodOxygen = "";
-        UserInfo().bloodOxygenHeartRate = "";
         update = true;
       } else if (state is DeviceDataLoading) {
-        _bloodOxygen = _pulseRate = AppLocalizations.of(mainContext)!.loading;
+        _bloodOxygen = AppLocalizations.of(mainContext)!.loading;
         update = true;
       } else if (state is DeviceDataUpdated &&
           state.deviceData is BloodOxygenData) {
         _bloodOxygen =
             UserInfo().bloodOxygen = (state.deviceData as BloodOxygenData).spo2;
-        _pulseRate = UserInfo().bloodOxygenHeartRate =
-            (state.deviceData as BloodOxygenData).heartRate;
 
         ControlMeasurePageUtils().measured = true;
+        measured = true;
         update = true;
       } else if (state is DeviceDisconnected) {
-        if (ControlMeasurePageUtils().measured == false) {
-          _bloodOxygen = _pulseRate = dataDefaultValue;
+        if (!measured) {
+          _bloodOxygen = dataDefaultValue;
           update = true;
         }
       }
@@ -85,51 +80,25 @@ class BloodOxygenMeasure extends BaseMeasureLayoutWidget {
       return update;
     }, builder: (context, state) {
       return Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  AppLocalizations.of(mainContext)!.bo_oxygen_staturation,
-                  style: TextStyle(
-                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: height * 0.02),
-                Text(
-                  _bloodOxygen,
-                  style: TextStyle(
-                      fontSize: dataFontSize,
-                      fontWeight: FontWeight.bold,
-                      color: ColorPalette.materialGreen),
-                )
-              ],
-            ),
-            SizedBox(width: width * 0.1),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  AppLocalizations.of(mainContext)!.bo_heartrate,
-                  style: TextStyle(
-                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: height * 0.02),
-                Text(
-                  _pulseRate,
-                  style: TextStyle(
-                      fontSize: dataFontSize,
-                      fontWeight: FontWeight.bold,
-                      color: ColorPalette.materialGreen),
-                )
-              ],
-            )
-          ],
-        ),
-      );
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            AppLocalizations.of(mainContext)!.bo_oxygen_staturation,
+            style:
+                TextStyle(fontSize: titleFontSize, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: height * 0.02),
+          Text(
+            _bloodOxygen,
+            style: TextStyle(
+                fontSize: dataFontSize,
+                fontWeight: FontWeight.bold,
+                color: ColorPalette.materialGreen),
+          )
+        ],
+      ));
     });
   }
 }

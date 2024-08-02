@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 
 class BaseMeasureLayoutWidget extends StatelessWidget {
+  // 是否测过
+  bool measured = false;
   // 数据默认值
   String dataDefaultValue = "- - -";
   // 当前播放的视频文件

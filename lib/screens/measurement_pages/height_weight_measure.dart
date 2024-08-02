@@ -16,7 +16,8 @@ import 'package:simple_kiosk_software/utils/user_info.dart';
 class HeightWeightMeasure extends BaseMeasureLayoutWidget {
   late String bodyHeight;
   late String bodyWeight;
-
+  bool heightMeasured = false;
+  bool weightMeasured = false;
   HeightWeightMeasure() {
     bodyHeight =
         UserInfo().height.isNotEmpty ? UserInfo().height : dataDefaultValue;
@@ -116,6 +117,7 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
 
   @override
   Future<void> onStop() async {
+    heightMeasured = weightMeasured = false;
     DeviceStopEvent stopEvent =
         DeviceStopEvent(deviceType: DeviceType.HEIGHT_DEVICE);
     BlocProvider.of<DeviceBloc>(mainContext).add(stopEvent);
@@ -134,20 +136,20 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
 
       if (state is DeviceConnected &&
           state.deviceType == DeviceType.HEIGHT_DEVICE) {
-        bodyHeight = dataDefaultValue;
-        bodyWeight = dataDefaultValue;
+        bodyHeight = bodyWeight = dataDefaultValue;
         UserInfo().height = "";
         UserInfo().weight = "";
         ControlMeasurePageUtils().measured = false;
+        heightMeasured = weightMeasured = false;
         update = true;
       } else if (state is DeviceDataLoading &&
           state.deviceType == DeviceType.HEIGHT_DEVICE) {
-        bodyHeight = AppLocalizations.of(mainContext)!.loading;
-        bodyWeight = AppLocalizations.of(mainContext)!.loading;
+        bodyHeight = bodyWeight = AppLocalizations.of(mainContext)!.loading;
         update = true;
       } else if (state is DeviceDataUpdated) {
         if (state.deviceData is HeightData) {
           UserInfo().height = (state.deviceData as HeightData).height;
+          heightMeasured = true;
           // 如果收到身高数据，先关闭身高设备，再打开体重设备
           Future.delayed(const Duration(milliseconds: 300), () {
             DeviceConnectEvent connectEvent =
@@ -160,6 +162,12 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
           bodyWeight =
               UserInfo().weight = (state.deviceData as WeightData).weight;
           ControlMeasurePageUtils().measured = true;
+          weightMeasured = true;
+          update = true;
+        }
+      } else if (state is DeviceDisconnected) {
+        if (!heightMeasured && !weightMeasured) {
+          bodyHeight = bodyWeight = dataDefaultValue;
           update = true;
         }
       }

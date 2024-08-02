@@ -90,14 +90,12 @@ class BloodFitMeasure extends BaseMeasureLayoutWidget {
 
   @override
   Widget buildCardDataShowArea() {
-    double titleFontSize = height * 0.02;
-    double dataFontSize = height * 0.02;
-
     return BlocBuilder<DeviceBloc, DeviceState>(buildWhen: (previous, state) {
       bool update = false;
 
       if (state is DeviceConnected) {
         ControlMeasurePageUtils().measured = false;
+        measured = false;
         chol = hdl = trig = ldl = dataDefaultValue;
 
         UserInfo().chol = "";
@@ -122,10 +120,11 @@ class BloodFitMeasure extends BaseMeasureLayoutWidget {
           UserInfo().ldl = bloodFitData.ldl;
 
           ControlMeasurePageUtils().measured = true;
+          measured = true;
           update = true;
         }
       } else if (state is DeviceDisconnected) {
-        if (ControlMeasurePageUtils().measured == false) {
+        if (!measured) {
           chol = hdl = trig = ldl = dataDefaultValue;
           update = true;
         }

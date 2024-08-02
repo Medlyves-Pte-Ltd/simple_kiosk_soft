@@ -59,7 +59,7 @@ class UserLoginState extends State<UserLogin> {
             key: ValueKey(getVideoFileName()),
             videoName: getVideoFileName(),
             setLooping: true,
-            onVideoInitialised: backButtonEnabled,
+            //onVideoInitialised: backButtonEnabled,
           ),
           content2Builder: (context) {
             return SingleChildScrollView(

@@ -65,6 +65,7 @@ class BloodGlucoseMeasure extends BaseMeasureLayoutWidget {
 
       if (state is DeviceConnected) {
         ControlMeasurePageUtils().measured = false;
+        measured = false;
         IFCC = dataDefaultValue;
         eAG = dataDefaultValue;
         UserInfo().IFCC = '';
@@ -80,11 +81,11 @@ class BloodGlucoseMeasure extends BaseMeasureLayoutWidget {
         IFCC = UserInfo().IFCC = (double.parse(ifcc) / 10.0).toStringAsFixed(1);
         eAG = UserInfo().eAG = (state.deviceData as BloodGlucoseData).eAG;
         ControlMeasurePageUtils().measured = true;
+        measured = true;
         update = true;
       } else if (state is DeviceDisconnected) {
-        if (ControlMeasurePageUtils().measured == false) {
-          IFCC = dataDefaultValue;
-          eAG = dataDefaultValue;
+        if (!measured) {
+          IFCC = eAG = dataDefaultValue;
           update = true;
         }
       }

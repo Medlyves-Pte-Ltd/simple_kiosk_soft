@@ -189,7 +189,7 @@ class SummaryLayoutWidget extends StatelessWidget {
               ControlMeasurePageUtils().pageIndex = 0;
               ControlMeasurePageUtils().clearMeasure();
               Navigator.pushNamedAndRemoveUntil(
-                  mainContext, "/", (route) => false);
+                  mainContext, "/LanguagePage", (route) => false);
             },
             child: Container(
                 height: height * 0.03,

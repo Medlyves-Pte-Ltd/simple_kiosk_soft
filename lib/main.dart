@@ -15,14 +15,15 @@ import 'package:simple_kiosk_software/screens/route_manager.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:simple_kiosk_software/utils/print_utils.dart';
 import "package:flutter_devices_sdk/devices/usb_relay_control.dart";
+import 'package:simple_kiosk_software/utils/scanner_utils.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // 检查权限
   await checkPermission();
-  // 设备初始化
-  await DeviceConfig().clearDeviceConfigStorage();
-  await DeviceConfig().init(ProjectType.simple_kiosk_software);
+  // // 设备初始化
+  // await DeviceConfig().clearDeviceConfigStorage();
+  // await DeviceConfig().init(ProjectType.simple_kiosk_software);
 
   runApp(MultiBlocProvider(
     providers: [
@@ -60,6 +61,7 @@ class MyAppState extends State<MyApp> {
   void dispose() {
     super.dispose();
     PrintUtils().disconnect();
+    ScannerUtils().disconnect();
     UsbRelayControl().disConnect();
   }
 
@@ -79,8 +81,8 @@ class MyAppState extends State<MyApp> {
             GlobalCupertinoLocalizations.delegate,
           ],
           onGenerateRoute: onCustomGenerateRoute,
-          initialRoute: "/",
-          //initialRoute: "/DevicePage",
+          //initialRoute: "/",
+          initialRoute: "/DevicePage",
           //initialRoute: "/Summary",
           //initialRoute: "/KioskManager",
           //initialRoute: "/HeightWeightMeasure",
