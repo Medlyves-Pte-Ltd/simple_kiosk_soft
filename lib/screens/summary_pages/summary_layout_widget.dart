@@ -222,12 +222,35 @@ class SummaryLayoutWidget extends StatelessWidget {
   // 加边框
   Widget _buildAddBorder(Widget item) {
     return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: ColorPalette.greyWidgetBorder, width: 2.5),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      margin: EdgeInsets.only(top: height * 0.01),
+      alignment: Alignment.center,
+      margin: EdgeInsets.all(height * 0.01),
       padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Theme.of(mainContext).canvasColor,
+          border: Border.all(
+            width: 1,
+            color: Colors.grey[300] ?? Colors.grey,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey[300] ?? Colors.grey,
+              offset: const Offset(1, 1),
+              blurRadius: 5,
+            ),
+            BoxShadow(
+                color: Colors.grey[300] ?? Colors.grey,
+                offset: const Offset(-1, -1),
+                blurRadius: 5),
+            BoxShadow(
+                color: Colors.grey[300] ?? Colors.grey,
+                offset: const Offset(1, -1),
+                blurRadius: 5),
+            BoxShadow(
+                color: Colors.grey[300] ?? Colors.grey,
+                offset: const Offset(-1, 1),
+                blurRadius: 5)
+          ]),
       child: item,
     );
   }

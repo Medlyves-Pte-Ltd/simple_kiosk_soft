@@ -109,12 +109,35 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
   Widget buildCardArea() {
     return Expanded(
         child: Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: ColorPalette.greyWidgetBorder, width: 2.5),
-        borderRadius: BorderRadius.circular(10),
-      ),
+      alignment: Alignment.center,
       margin: EdgeInsets.symmetric(horizontal: width * 0.05),
-      padding: const EdgeInsets.all(10),
+      padding: EdgeInsets.all(height * 0.01),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Theme.of(mainContext).canvasColor,
+          border: Border.all(
+            width: 1,
+            color: Colors.grey[300] ?? Colors.grey,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey[300] ?? Colors.grey,
+              offset: const Offset(1, 1),
+              blurRadius: 5,
+            ),
+            BoxShadow(
+                color: Colors.grey[300] ?? Colors.grey,
+                offset: const Offset(-1, -1),
+                blurRadius: 5),
+            BoxShadow(
+                color: Colors.grey[300] ?? Colors.grey,
+                offset: const Offset(1, -1),
+                blurRadius: 5),
+            BoxShadow(
+                color: Colors.grey[300] ?? Colors.grey,
+                offset: const Offset(-1, 1),
+                blurRadius: 5)
+          ]),
       child: Column(
         children: [
           buildCardTopArea(),
@@ -125,8 +148,8 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
                 right: width * 0.015,
                 top: height * 0.003,
                 bottom: height * 0.003),
-            color: ColorPalette.greyWidgetBorder,
-            height: 1.5,
+            color: Colors.grey[300] ?? ColorPalette.greyWidgetBorder,
+            height: 2,
           ),
           const ClientDetails(),
         ],

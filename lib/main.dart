@@ -60,9 +60,6 @@ class MyAppState extends State<MyApp> {
   @override
   void dispose() {
     super.dispose();
-    PrintUtils().disconnect();
-    ScannerUtils().disconnect();
-    UsbRelayControl().disConnect();
   }
 
   @override
