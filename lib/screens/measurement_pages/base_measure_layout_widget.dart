@@ -85,6 +85,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
       }
       return file != curPlayFile;
     }, builder: (context, state) {
+      curPlayFile = file;
       return VideoWidget(key: GlobalKey(), videoName: file, setLooping: true);
     });
   }
