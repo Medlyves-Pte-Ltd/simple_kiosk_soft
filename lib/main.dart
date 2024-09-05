@@ -12,19 +12,18 @@ import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_state.dart';
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
 import 'package:simple_kiosk_software/screens/route_manager.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:simple_kiosk_software/utils/print_utils.dart';
-import "package:flutter_devices_sdk/devices/usb_relay_control.dart";
-import 'package:simple_kiosk_software/utils/scanner_utils.dart';
+import 'package:simple_kiosk_software/utils/permission_utils.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // 检查权限
-  await checkPermission();
+  await PermissionUtils().getStoragePermission();
+  await PermissionUtils().getCameraPermission();
+  await PermissionUtils().getMicroPhonePermission();
+
   // // 设备初始化
   // await DeviceConfig().clearDeviceConfigStorage();
   // await DeviceConfig().init(ProjectType.simple_kiosk_software);
-
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider<DeviceBloc>(
@@ -78,12 +77,12 @@ class MyAppState extends State<MyApp> {
             GlobalCupertinoLocalizations.delegate,
           ],
           onGenerateRoute: onCustomGenerateRoute,
-          //initialRoute: "/",
-          initialRoute: "/DevicePage",
+          //initialRoute: "/LanguagePage",
+          //initialRoute: "/DevicePage",
           //initialRoute: "/Summary",
           //initialRoute: "/KioskManager",
           //initialRoute: "/HeightWeightMeasure",
-
+          initialRoute: "/TestDevice",
           supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData(
             textTheme: GoogleFonts.robotoTextTheme(textTheme).copyWith(
@@ -114,26 +113,5 @@ class MyAppState extends State<MyApp> {
         );
       },
     );
-  }
-}
-
-Future<bool> getStoragePermission() async {
-  late PermissionStatus permissionStatus;
-  if (defaultTargetPlatform == TargetPlatform.android) {
-    permissionStatus = await Permission.storage.request();
-  }
-  if (permissionStatus != PermissionStatus.granted) {
-    return false;
-  } else {
-    return true;
-  }
-}
-
-Future<void> checkPermission() async {
-  final permissionState = await getStoragePermission();
-  if (permissionState) {
-  } else {
-    // 权限被拒绝 打开手机上的权限设置页面
-    openAppSettings();
   }
 }

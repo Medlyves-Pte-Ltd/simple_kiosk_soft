@@ -50,6 +50,8 @@
   "ecg_qtc": "QTc",
   "ecg_t_axis": "T Axis",
   "hw": "Height & Weight",
+  "height": "Height",
+  "weight": "Weight",
   "hw_height": "Height (m)",
   "hw_weight": "Weight (kg)",
   "kiosk_title": "Self-service Health Screening Kiosk",
@@ -86,5 +88,9 @@
   "summary_stethoscope": "Stethoscope",
   "summary_otoscope": "Otoscope",
   "scanner_title": "Please scan your QR Code from the Medlyves application.",
-  "scanner_tip": "Under Appointments, click 'Start' to get the QR Code."
+  "scanner_tip": "Under Appointments, click 'Start' to get the QR Code.",
+  "scanner": "scanner",
+  "camera": "camera",
+  "loudspeaker": "loudspeaker",
+  "record": "record"
 }

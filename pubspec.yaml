@@ -28,8 +28,12 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   permission_handler: ^11.3.1
   flutter_esc_pos_utils: ^1.0.1
-  fluttertoast: ^8.2.6
+  #fluttertoast: ^8.2.6
   tdesign_flutter: ^0.1.6
+  camera: ^0.11.0+2
+  audioplayers: ^6.1.0
+  record: ^5.1.2
+  path_provider: ^2.1.4
 #  flutter_devices_sdk: # 包名
 #      git:
 #        #url: https://github.com/Medlyves-Pte-Ltd/flutter_devices_sdk.git
@@ -55,6 +59,7 @@ flutter:
   uses-material-design: true
   generate: true
   assets:
+    - assets/audios/
     - assets/images/
     - assets/videos/
     - assets/videos/en/

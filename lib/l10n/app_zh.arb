@@ -28,6 +28,8 @@
   "get_started": "开始体检",
   "end_session": "结束体检",
   "hw": "身高 & 体重",
+  "height": "身高",
+  "weight": "体重",
   "hw_height": "身高（m）",
   "hw_weight": "体重（kg）",
   "kiosk_title": "自助体检医疗亭",
@@ -87,5 +89,9 @@
   "summary_stethoscope": "听诊器",
   "summary_otoscope": "耳镜",
   "scanner_title": "请在Medlyves应用程序中扫描您的二维码。",
-  "scanner_tip": "在“预约”下，点击“开始”获取二维码。"
+  "scanner_tip": "在“预约”下，点击“开始”获取二维码。",
+  "scanner": "扫码器",
+  "camera": "相机",
+  "loudspeaker": "扬声器",
+  "record": "录音"
 }

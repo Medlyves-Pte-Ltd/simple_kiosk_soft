@@ -28,6 +28,8 @@
   "get_started": "Mulakan",
   "end_session": "Akhiri Sesi",
   "hw": "Tinggi & Berat",
+  "height": "Tinggi",
+  "weight": "Berat",
   "hw_height": "Tinggi (m)",
   "hw_weight": "Berat (kg)",
   "kiosk_title": "Kiosk Pemeriksaan Kesihatan Swa-perkhidmatan",
@@ -87,5 +89,9 @@
   "summary_stethoscope": "Stetoskop",
   "summary_otoscope": "Otoskop",
   "scanner_title": "Sila imbas Kod QR anda dari aplikasi Medlyves.",
-  "scanner_tip": "Di bawah Pertemuan, klik 'Mula' untuk mendapatkan Kod QR."
+  "scanner_tip": "Di bawah Pertemuan, klik 'Mula' untuk mendapatkan Kod QR.",
+  "scanner": "pengimbas",
+  "camera": "Kamera",
+  "loudspeaker": "speaker",
+  "record": "rekod"
 }
