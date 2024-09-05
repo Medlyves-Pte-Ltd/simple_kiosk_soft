@@ -34,14 +34,14 @@ dependencies:
   audioplayers: ^6.1.0
   record: ^5.1.2
   path_provider: ^2.1.4
-#  flutter_devices_sdk: # 包名
-#      git:
-#        #url: https://github.com/Medlyves-Pte-Ltd/flutter_devices_sdk.git
-#        url: https://gitee.com/caipingan456/flutter_devices_sdk.git
-#        ref: docking_station # 分支
+  flutter_devices_sdk: # 包名
+      git:
+        #url: https://github.com/Medlyves-Pte-Ltd/flutter_devices_sdk.git
+        url: https://gitee.com/caipingan456/flutter_devices_sdk.git
+        ref: docking_station # 分支
 
-  flutter_devices_sdk:
-    path: D:\Android\Projects\flutter\flutter_devices_sdk
+#  flutter_devices_sdk:
+#    path: D:\Android\Projects\flutter\flutter_devices_sdk
 
 ## 运行生成图标命令
 ## flutter pub run flutter_launcher_icons

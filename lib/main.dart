@@ -78,11 +78,11 @@ class MyAppState extends State<MyApp> {
           ],
           onGenerateRoute: onCustomGenerateRoute,
           //initialRoute: "/LanguagePage",
-          //initialRoute: "/DevicePage",
+          initialRoute: "/DevicePage",
           //initialRoute: "/Summary",
           //initialRoute: "/KioskManager",
           //initialRoute: "/HeightWeightMeasure",
-          initialRoute: "/TestDevice",
+          //initialRoute: "/TestDevice",
           supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData(
             textTheme: GoogleFonts.robotoTextTheme(textTheme).copyWith(

@@ -118,7 +118,7 @@ class ScannerPageState extends State<ScannerPage> {
             UserInfo().gender = 1;
             UserInfo().clearResult();
             Navigator.pushNamedAndRemoveUntil(
-                context, '/TestDevice', ((route) => false));
+                context, '/HeightWeightMeasure', ((route) => false));
           },
           child: Image.asset(
             "assets/images/qr-code.png",

@@ -26,7 +26,8 @@ class DevicePage extends StatelessWidget {
 
       // 设备初始化
       await DeviceConfig().clearDeviceConfigStorage();
-      await DeviceConfig().init(ProjectType.simple_kiosk_software);
+      // await DeviceConfig().init(ProjectType.simple_kiosk_software);
+      await DeviceConfig().init(ProjectType.stand_kiosk_software);
 
       // 打开扫码器
       await ScannerUtils().connect();
