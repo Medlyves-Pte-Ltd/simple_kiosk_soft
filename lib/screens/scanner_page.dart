@@ -7,6 +7,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
+import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/header.dart';
@@ -20,6 +22,7 @@ class ScannerPage extends StatefulWidget {
 }
 
 class ScannerPageState extends State<ScannerPage> {
+  late final AppointmentBloc appointmentBloc;
   // 数据默认值
   String dataDefaultValue = "- - -";
   // 当前播放的视频文件
@@ -41,11 +44,11 @@ class ScannerPageState extends State<ScannerPage> {
 
   // 监听扫码器数据
   void listenScannerData(String data) {
+    String patientId = "";
     // 判断时候是json数据
-    int startPos = data.lastIndexOf('{');
-    int endPos = data.lastIndexOf('}');
-    if (startPos != -1 && endPos != -1) {
-      data = data.substring(startPos, endPos + 1);
+    int endPos = data.indexOf('_');
+    if (endPos != -1) {
+      patientId = data.substring(0, endPos + 1);
     } else {
       Fluttertoast.showToast(msg: "The QR code data format is incorrect!");
       return;
@@ -54,11 +57,20 @@ class ScannerPageState extends State<ScannerPage> {
     // 解析json数据
     LogPrinter.log("qr code normal data:$data");
     try {
-      scannerData = jsonDecode(data);
-
-      UserInfo().name = scannerData["name"].toString();
-      UserInfo().age = scannerData["age"].toString();
-      UserInfo().gender = scannerData["gender"] as int;
+      var appointmentBloc = BlocProvider.of<AppointmentBloc>(context);
+      appointmentBloc.appointmentRepository.getUserDetails(patientId);
+      Map<String, dynamic> userData = BlocProvider.of<DeviceBloc>(context)
+          .appointmentBloc
+          .getPatientBodyInfo();
+      // 判断是否是远程医疗
+      if (data.contains("_TC")) {
+        UserInfo().teleconsultation = true;
+      } else {
+        UserInfo().teleconsultation = false;
+      }
+      UserInfo().name = userData["name"];
+      UserInfo().age = userData["age"];
+      UserInfo().gender = userData["gender"] as int;
       UserInfo().clearResult();
     } catch (e) {
       Fluttertoast.showToast(msg: "The QR code data format is incorrect!");

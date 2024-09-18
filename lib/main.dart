@@ -8,26 +8,46 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_state.dart';
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
+import 'package:simple_kiosk_software/remote/blocs/teleconsultation/teleconsultation_bloc.dart';
+import 'package:simple_kiosk_software/remote/repositories/appointment_repository.dart';
 import 'package:simple_kiosk_software/screens/route_manager.dart';
+import 'package:simple_kiosk_software/remote/services/appointment_api.dart';
 import 'package:simple_kiosk_software/utils/permission_utils.dart';
+import 'package:simple_kiosk_software/remote/utils/shared_prefs.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SharedPrefs.setData('appointmentId', "xxx");
   // 检查权限
   await PermissionUtils().getStoragePermission();
   await PermissionUtils().getCameraPermission();
   await PermissionUtils().getMicroPhonePermission();
 
+  final appointmentRepository = AppointmentRepository(AppointmentApi());
+  final AppointmentBloc appointmentBloc =
+      AppointmentBloc(appointmentRepository);
+  final DeviceBloc deviceBloc = DeviceBloc(appointmentBloc);
+  final TeleconsultationBloc teleconsultationBloc =
+      TeleconsultationBloc(deviceBloc, appointmentRepository);
+
   // // 设备初始化
   // await DeviceConfig().clearDeviceConfigStorage();
   // await DeviceConfig().init(ProjectType.simple_kiosk_software);
+
   runApp(MultiBlocProvider(
     providers: [
+      BlocProvider(
+        create: (context) => appointmentBloc,
+      ),
+      BlocProvider(
+        create: (context) => teleconsultationBloc,
+      ),
       BlocProvider<DeviceBloc>(
-        create: (context) => DeviceBloc(),
+        create: (context) => deviceBloc,
       ),
       BlocProvider<LocaleCubit>(
         create: (context) => LocaleCubit(),
@@ -45,22 +65,7 @@ void main() async {
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => MyAppState();
-}
-
-class MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -78,8 +83,9 @@ class MyAppState extends State<MyApp> {
           ],
           onGenerateRoute: onCustomGenerateRoute,
           //initialRoute: "/LanguagePage",
-          initialRoute: "/DevicePage",
-          //initialRoute: "/Summary",
+          //initialRoute: "/TCMeetingScreen",
+          //initialRoute: "/DevicePage",
+          initialRoute: "/Summary",
           //initialRoute: "/KioskManager",
           //initialRoute: "/HeightWeightMeasure",
           //initialRoute: "/TestDevice",

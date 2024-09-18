@@ -1,4 +1,6 @@
 class UserInfo {
+  // 是否远程医疗
+  bool teleconsultation = true;
   // 患者ID
   String patientId = '';
   // 姓名
@@ -85,6 +87,7 @@ class UserInfo {
   }
 
   void clearResult() {
+    teleconsultation = false;
     bodyFatPercentage = '';
     ldl = '';
     trig = '';

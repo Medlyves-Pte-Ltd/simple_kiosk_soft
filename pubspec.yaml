@@ -15,9 +15,13 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.6
+  flutter_sizer: ^1.0.5
   flutter_localizations:
     sdk: flutter
   google_fonts: ^6.2.1
+  #flutter_sizer: ^1.0.5
+  dio: ^5.7.0
+  equatable: ^2.0.5
   image: ^4.2.0
   intl: any
   logger: ^2.4.0
@@ -26,19 +30,29 @@ dependencies:
   video_player: ^2.9.1
   buttons_tabbar: ^1.3.13
   flutter_launcher_icons: ^0.13.1
-  permission_handler: ^11.3.1
+  permission_handler: ^10.2.0
   flutter_esc_pos_utils: ^1.0.1
+  device_info_plus: ^9.1.2
   #fluttertoast: ^8.2.6
   tdesign_flutter: ^0.1.6
   camera: ^0.11.0+2
   audioplayers: ^6.1.0
   record: ^5.1.2
   path_provider: ^2.1.4
+  web_socket_channel: ^2.4.0
+  hmssdk_flutter: ^1.10.3
+  easy_image_viewer: ^1.4.0
   flutter_devices_sdk: # 包名
       git:
         #url: https://github.com/Medlyves-Pte-Ltd/flutter_devices_sdk.git
         url: https://gitee.com/caipingan456/flutter_devices_sdk.git
         ref: docking_station # 分支
+  medlyves_mobile_components:
+          git:
+            url: https://gitee.com/caipingan456/medlyves_mobile_components.git
+            ref: enhance-video-quality # 分支
+#            url: git@github.com:Medlyves-Pte-Ltd/medlyves_mobile_components.git
+#            ref: 9adfd05
 
 #  flutter_devices_sdk:
 #    path: D:\Android\Projects\flutter\flutter_devices_sdk

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/blocs/device/device_state.dart';
 import 'package:flutter_devices_sdk/device_manager.dart';
 
@@ -10,10 +11,11 @@ import 'package:simple_kiosk_software/blocs/device/device_event.dart';
 import 'package:simple_kiosk_software/utils/log_printer.dart';
 
 class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
+  AppointmentBloc appointmentBloc;
   DeviceManager deviceManager = DeviceManager();
   StreamSubscription<DeviceData>? _dataSubscription;
 
-  DeviceBloc() : super(DeviceInitial()) {
+  DeviceBloc(this.appointmentBloc) : super(DeviceInitial()) {
     on<DeviceConnectEvent>(_onDeviceConnectEvent);
     on<DeviceStartEvent>(_onDeviceStartEvent);
     on<DeviceUpdateDataEvent>(_onDeviceDataUpdatedEvent);

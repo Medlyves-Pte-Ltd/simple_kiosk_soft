@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_devices_sdk/device_data/body_composition_data.dart';
 import 'package:flutter_devices_sdk/device_manager.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
+import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/base_measure_layout_widget.dart';
@@ -164,6 +165,9 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
           UserInfo().mineral = bodyCompositionData.mineral ?? "";
           UserInfo().bodyWaterPercentage =
               bodyCompositionData.bodyWaterPercentage ?? "";
+
+          BlocProvider.of<AppointmentBloc>(mainContext)
+              .processNewData(state.deviceData.data);
 
           ControlMeasurePageUtils().measured = true;
           measured = true;

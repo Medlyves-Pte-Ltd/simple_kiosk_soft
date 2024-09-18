@@ -83,6 +83,15 @@
   "welcome": "Selamat Datang",
   "print": "Cetak",
   "exit": "Keluar",
+  "call_doc": "Panggil Doktor",
+  "end_appt": "Tamatkan Pelantikan",
+  "enter_id": "Masukkan ID Pesakit",
+  "confirm": "Sahkan",
+  "cancel": "Batal",
+  "ok": "Ok",
+  "start_tc": "Mulakan TC",
+  "cfm_exit": "Sahkan Keluar",
+  "cfm_end_appt": "Adakah anda pasti mahu menamatkan janji temu?",
   "summary_basic_vitals":"Vital\nAsas",
   "summary_ecg":"Elektrokardiogram",
   "summary_body_composition": "Komposisi\nbadan",
@@ -93,5 +102,8 @@
   "scanner": "pengimbas",
   "camera": "Kamera",
   "loudspeaker": "speaker",
-  "record": "rekod"
+  "record": "rekod",
+  "vital": "Penting",
+  "basic_vitals": "Keperluan Asas",
+  "ecg_img_unavail": "Imej ECG tidak tersedia."
 }

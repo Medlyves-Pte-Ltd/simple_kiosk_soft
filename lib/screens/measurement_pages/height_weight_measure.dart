@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/device_data/height_data.dart';
 import 'package:flutter_devices_sdk/device_data/weight_data.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
+import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
@@ -164,6 +165,8 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
           ControlMeasurePageUtils().measured = true;
           weightMeasured = true;
           update = true;
+          BlocProvider.of<AppointmentBloc>(mainContext).processNewData(
+              {"height": UserInfo().height, "weight": UserInfo().weight});
         }
       } else if (state is DeviceDisconnected) {
         if (!heightMeasured && !weightMeasured) {

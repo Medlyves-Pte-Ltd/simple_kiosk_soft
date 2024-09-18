@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/device_data/body_temperature_data.dart';
@@ -5,6 +7,8 @@ import 'package:flutter_devices_sdk/device_data/ecg_data.dart';
 import 'package:flutter_devices_sdk/device_manager.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:flutter_devices_sdk/devices/device_base_model.dart';
+import 'package:flutter_devices_sdk/utils/app_constants.dart';
+import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/base_measure_layout_widget.dart';
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
@@ -115,8 +119,23 @@ class ECGMeasure extends BaseMeasureLayoutWidget {
         UserInfo().P_Axis = ecgData.P_Axis ?? "";
         UserInfo().T_Axis = ecgData.T_Axis ?? "";
         UserInfo().RR = ecgData.RR ?? "";
-        UserInfo().Conclusion = ecgData.Conclusion ?? "";
+        UserInfo().Conclusion =
+            (ecgData.Conclusion ?? "").replaceAll("\n", " ");
         UserInfo().ResultImage = ecgData.ResultImage ?? "";
+
+        // 上传图片
+        if (UserInfo().ResultImage.isNotEmpty) {
+          File img = File(UserInfo().ResultImage);
+          LogPrinter.log("Uploading conclusion and image.");
+          BlocProvider.of<AppointmentBloc>(mainContext)
+              .uploadEcgDocument(img, UserInfo().Conclusion);
+          LogPrinter.log("Image uploaded.");
+          LogPrinter.log(UserInfo().Conclusion);
+        }
+
+        // 上传数据
+        BlocProvider.of<AppointmentBloc>(mainContext)
+            .processNewData(state.deviceData.data);
 
         ControlMeasurePageUtils().measured = true;
         update = true;

@@ -1,3 +1,4 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class PermissionUtils {
@@ -15,16 +16,20 @@ class PermissionUtils {
   }
 
   // 存储权限
-  Future<bool> getStoragePermission() async {
-    PermissionStatus status = await Permission.storage.status;
-    if (status.isRestricted || status.isDenied) {
-      PermissionStatus requestStatus = await Permission.storage.request();
-      // 返回用户是否授权成功
-      return requestStatus.isGranted;
+  Future<void> getStoragePermission() async {
+    DeviceInfoPlugin plugin = DeviceInfoPlugin();
+    AndroidDeviceInfo android = await plugin.androidInfo;
+    if (android.version.sdkInt < 33) {
+      if (await Permission.storage.request().isGranted) {
+      } else if (await Permission.storage.request().isPermanentlyDenied) {
+        await openAppSettings();
+      }
+    } else {
+      if (await Permission.photos.request().isGranted) {
+      } else if (await Permission.photos.request().isPermanentlyDenied) {
+        await openAppSettings();
+      } else if (await Permission.photos.request().isDenied) {}
     }
-
-    // 用户已授权或未询问
-    return status.isGranted;
   }
 
   // 相机权限

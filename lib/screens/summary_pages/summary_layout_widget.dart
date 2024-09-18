@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_devices_sdk/utils/app_constants.dart';
+import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
+import 'package:simple_kiosk_software/remote/utils/enum_appointment_mode.dart';
 import 'package:simple_kiosk_software/utils/print_utils.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
@@ -20,6 +23,7 @@ import 'package:simple_kiosk_software/screens/summary_pages/summary_stethoscope.
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
+import 'package:simple_kiosk_software/remote/config/settings.dart';
 
 class SummaryLayoutWidget extends StatelessWidget {
   // 文本和Widget顺序需要相同
@@ -28,8 +32,8 @@ class SummaryLayoutWidget extends StatelessWidget {
     SummaryBasicVitals(),
     SummaryBodyComposition(),
     SummaryEcg(),
-    SummaryStethoscope(),
-    SummaryOtoscope(),
+    // SummaryStethoscope(),
+    // SummaryOtoscope(),
   ];
   // 当前播放的视频文件
   String _curPlayFile = "";
@@ -71,15 +75,63 @@ class SummaryLayoutWidget extends StatelessWidget {
     init();
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: Column(
-        children: [
-          const Header(),
-          buildVideoArea(),
-          buildCardArea(),
-          buildPrintExitControlBtn(),
-          const Footer()
-        ],
+
+    return BlocListener<AppointmentBloc, AppointmentState>(
+      listener: (context, state) {
+        String? displayName;
+        String? appointmentId;
+
+        if (state is AppointmentStartSent) {
+          displayName = state.appointment!.patientName;
+          appointmentId = state.appointment!.id;
+        } else if (state is AppointmentFailure) {
+          displayName = null;
+        } else if (state is AppointmentTCReady) {
+          displayName = state.appointment!.patientName;
+          appointmentId = state.appointment!.id;
+          Navigator.of(context).pushNamed('/TCMeetingScreen', arguments: {
+            'displayName': displayName,
+            'appointmentId': appointmentId
+          });
+          if (kDebugMode) {
+            print("go to doctor appointment");
+          }
+        } else if (state is AppointmentEnd) {
+          LogPrinter.log('Appointment ended');
+          displayName = null;
+          appointmentId = null;
+          Navigator.pushNamedAndRemoveUntil(
+              mainContext, "/LanguagePage", (route) => false);
+        }
+      },
+      child: BlocBuilder<AppointmentBloc, AppointmentState>(
+        builder: (context, state) {
+          String? displayName;
+          // ignore: unused_local_variable
+          Mode? mode;
+          if (state is AppointmentStartSent) {
+            displayName = state.appointment!.patientName;
+            mode = Mode.values.firstWhere(
+              (e) => e.toString() == 'Mode.${state.appointment!.mode}',
+              orElse: () => Mode.HS,
+            );
+          } else if (state is AppointmentFailure) {
+            displayName = null;
+            mode = Mode.HS;
+          }
+
+          return Scaffold(
+            body: Column(
+              children: [
+                const Header(),
+                buildVideoArea(),
+                buildCardArea(),
+                buildBottomBtn(),
+                const Footer()
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -146,70 +198,119 @@ class SummaryLayoutWidget extends StatelessWidget {
     });
   }
 
-  // 打印退出控制按钮
-  Widget buildPrintExitControlBtn() {
+  Widget buildBottomBtn() {
     return Padding(
       padding: EdgeInsets.only(
           top: height * 0.01, bottom: height * 0.01, right: width * 0.05),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Spacer(),
-          ValueListenableBuilder(
-              valueListenable: enableClickPrint,
-              builder: (context, enable, child) {
-                return InkWell(
-                  onTap: enable ? btnPrint : null,
-                  child: Container(
-                      height: height * 0.03,
-                      width: width * 0.15,
-                      decoration: BoxDecoration(
-                        color: enable
-                            ? ColorPalette.materialGreen
-                            : ColorPalette.darkGrey,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                        child: Text(
-                          AppLocalizations.of(mainContext)!.print,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: height * 0.015,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      )),
-                );
-              }),
-          SizedBox(
-            width: width * 0.03,
+          Text(
+            UserInfo().name ?? 'Default Name',
+            style: TextStyle(
+                fontSize: width * 0.015,
+                fontWeight: FontWeight.bold,
+                color: Colors.white),
           ),
-          InkWell(
-            onTap: () {
-              UserInfo().clearUserInfo();
-              UserInfo().clearResult();
-              ControlMeasurePageUtils().pageIndex = 0;
-              ControlMeasurePageUtils().clearMeasure();
-              Navigator.pushNamedAndRemoveUntil(
-                  mainContext, "/LanguagePage", (route) => false);
-            },
-            child: Container(
-                height: height * 0.03,
-                width: width * 0.15,
-                decoration: BoxDecoration(
-                  color: ColorPalette.materialGreen,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Center(
-                  child: Text(
-                    AppLocalizations.of(mainContext)!.exit,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: height * 0.015,
-                        fontWeight: FontWeight.w600),
-                  ),
-                )),
-          )
+          UserInfo().teleconsultation
+              ? startTCButton()
+              : buildPrintExitControlBtn(),
         ],
       ),
+    );
+  }
+
+  // 远程医疗按钮
+  Widget startTCButton() {
+    return InkWell(
+      onTap: () {
+        LogPrinter.log('Call doctor pressed');
+        // BlocProvider.of<AppointmentBloc>(mainContext)
+        //     .add(SendReadyEvent(kioskId: kioskId));
+        // BlocProvider.of<AppointmentBloc>(mainContext)
+        //     .add(GetTeleconsultToken(kioskId: kioskId));
+        Navigator.pushNamed(mainContext, "/TCMeetingScreen",
+            arguments: {'displayName': "xxx", 'appointmentId': "xxx"});
+      },
+      child: Container(
+          height: height * 0.03,
+          width: width * 0.15,
+          decoration: BoxDecoration(
+            color: ColorPalette.materialGreen,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Center(
+            child: Text(
+              AppLocalizations.of(mainContext)!.call_doc,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: height * 0.015,
+                  fontWeight: FontWeight.w600),
+            ),
+          )),
+    );
+  }
+
+  // 打印退出控制按钮
+  Widget buildPrintExitControlBtn() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        ValueListenableBuilder(
+            valueListenable: enableClickPrint,
+            builder: (context, enable, child) {
+              return InkWell(
+                onTap: enable ? btnPrint : null,
+                child: Container(
+                    height: height * 0.03,
+                    width: width * 0.15,
+                    decoration: BoxDecoration(
+                      color: enable
+                          ? ColorPalette.materialGreen
+                          : ColorPalette.darkGrey,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: Text(
+                        AppLocalizations.of(mainContext)!.print,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: height * 0.015,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    )),
+              );
+            }),
+        SizedBox(
+          width: width * 0.03,
+        ),
+        InkWell(
+          onTap: () {
+            UserInfo().clearUserInfo();
+            UserInfo().clearResult();
+            ControlMeasurePageUtils().pageIndex = 0;
+            ControlMeasurePageUtils().clearMeasure();
+            Navigator.pushNamedAndRemoveUntil(
+                mainContext, "/LanguagePage", (route) => false);
+          },
+          child: Container(
+              height: height * 0.03,
+              width: width * 0.15,
+              decoration: BoxDecoration(
+                color: ColorPalette.materialGreen,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(
+                child: Text(
+                  AppLocalizations.of(mainContext)!.exit,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: height * 0.015,
+                      fontWeight: FontWeight.w600),
+                ),
+              )),
+        )
+      ],
     );
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/device_data/body_temperature_data.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
+import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/base_measure_layout_widget.dart';
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
@@ -66,6 +67,10 @@ class BodyTemperatureMeasure extends BaseMeasureLayoutWidget {
           state.deviceData is BodyTemperatureData) {
         temperature = UserInfo().temperature =
             (state.deviceData as BodyTemperatureData).temperature;
+
+        BlocProvider.of<AppointmentBloc>(mainContext)
+            .processNewData(state.deviceData.data);
+
         ControlMeasurePageUtils().measured = true;
         measured = true;
         update = true;

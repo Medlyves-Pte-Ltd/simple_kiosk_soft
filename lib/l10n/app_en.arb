@@ -82,6 +82,15 @@
   "welcome": "Welcome",
   "print": "Print",
   "exit": "Exit",
+  "call_doc": "Call Doctor",
+  "end_appt": "End Appointment",
+  "enter_id": "Enter Patient ID",
+  "confirm": "Confirm",
+  "cancel": "Cancel",
+  "ok": "OK",
+  "start_tc": "Start TC",
+  "cfm_exit": "Confirm Exit",
+  "cfm_end_appt": "Are you sure you want to end the appointment?",
   "summary_basic_vitals":"Basic\nVitals",
   "summary_ecg":"ECG",
   "summary_body_composition": "Body\nComposition",
@@ -92,5 +101,8 @@
   "scanner": "scanner",
   "camera": "camera",
   "loudspeaker": "loudspeaker",
-  "record": "record"
+  "record": "record",
+  "vital": "Vital",
+  "basic_vitals": "Basic Vitals",
+  "ecg_img_unavail": "ECG Image is not available."
 }

@@ -14,31 +14,34 @@ import 'package:simple_kiosk_software/screens/language/language_page.dart';
 import 'package:simple_kiosk_software/screens/kiosk_manager.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/height_weight_measure.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/body_temperature_measure.dart';
+import 'package:simple_kiosk_software/remote/teleconsultation/tc_page.dart';
 
 // 如果需要从构造函数中获取参数,使用如下
 // If you need to obtain parameters from a constructor, use the following
-// "/summary": (context, {args}) => MeasurementScreen(args: args),
-// MeasurementScreen(Map<String, dynamic> args)
-// Navigator.pushNamed(context, "/summary", args: {'type': 1})
+// "/summary": (context, {arguments}) => MeasurementScreen(arguments: arguments),
+// MeasurementScreen(Map<String, dynamic> arguments)
+// Navigator.pushNamed(context, "/summary", arguments: {'type': 1})
 
 // 定义路由列表
 // Define routing list
 final Map<String, Function> routes = {
-  '/LanguagePage': (context, {args}) => const LanguagePage(),
-  '/login': (context, {args}) => const UserLogin(),
-  '/KioskManager': (context, {args}) => KioskManager(),
-  '/HeightWeightMeasure': (context, {args}) => HeightWeightMeasure(),
-  '/BodyTemperatureMeasure': (context, {args}) => BodyTemperatureMeasure(),
-  '/BloodOxygenMeasure': (context, {args}) => BloodOxygenMeasure(),
-  '/BloodPressureMeasure': (context, {args}) => BloodPressureMeasure(),
-  '/BodyCompositionMeasure': (context, {args}) => BodyCompositionMeasure(),
-  '/BloodFitMeasure': (context, {args}) => BloodFitMeasure(),
-  '/BloodGlucoseMeasure': (context, {args}) => BloodGlucoseMeasure(),
-  '/Summary': (context, {args}) => SummaryLayoutWidget(),
-  '/ScannerPage': (context, {args}) => ScannerPage(),
-  '/ECGMeasure': (context, {args}) => ECGMeasure(),
-  '/DevicePage': (context, {args}) => DevicePage(),
-  '/TestDevice': (context, {args}) => TestDevice(),
+  '/LanguagePage': (context, {arguments}) => const LanguagePage(),
+  '/login': (context, {arguments}) => const UserLogin(),
+  '/KioskManager': (context, {arguments}) => KioskManager(),
+  '/HeightWeightMeasure': (context, {arguments}) => HeightWeightMeasure(),
+  '/BodyTemperatureMeasure': (context, {arguments}) => BodyTemperatureMeasure(),
+  '/BloodOxygenMeasure': (context, {arguments}) => BloodOxygenMeasure(),
+  '/BloodPressureMeasure': (context, {arguments}) => BloodPressureMeasure(),
+  '/BodyCompositionMeasure': (context, {arguments}) => BodyCompositionMeasure(),
+  '/BloodFitMeasure': (context, {arguments}) => BloodFitMeasure(),
+  '/BloodGlucoseMeasure': (context, {arguments}) => BloodGlucoseMeasure(),
+  '/Summary': (context, {arguments}) => SummaryLayoutWidget(),
+  '/ScannerPage': (context, {arguments}) => ScannerPage(),
+  '/ECGMeasure': (context, {arguments}) => ECGMeasure(),
+  '/DevicePage': (context, {arguments}) => DevicePage(),
+  '/TestDevice': (context, {arguments}) => TestDevice(),
+  // '/TCMeetingScreen': (context, {arguments}) =>
+  //     TCMeetingScreen(arguments: arguments),
 };
 
 // 定义通用的onGenerateRoute

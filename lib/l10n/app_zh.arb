@@ -83,6 +83,15 @@
   "welcome": "欢迎",
   "print": "打印",
   "exit": "退出",
+  "call_doc": "呼叫医生",
+  "end_appt": "结束预约",
+  "enter_id": "输入用户 ID",
+  "confirm": "确认",
+  "cancel": "取消",
+  "ok": "好的",
+  "start_tc": "开始远程医疗",
+  "cfm_exit": "确认退出",
+  "cfm_end_appt": "您确定要结束当前会话吗？",
   "summary_basic_vitals":"基本器官",
   "summary_ecg":"心电图",
   "summary_body_composition": "身体成分",
@@ -93,5 +102,8 @@
   "scanner": "扫码器",
   "camera": "相机",
   "loudspeaker": "扬声器",
-  "record": "录音"
+  "record": "录音",
+  "vital": "重要",
+  "basic_vitals": "基本生命体征",
+  "ecg_img_unavail": "没有可用的心电图结果。"
 }
