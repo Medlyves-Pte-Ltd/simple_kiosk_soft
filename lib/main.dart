@@ -6,14 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_state.dart';
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
+import 'package:simple_kiosk_software/remote/blocs/liveness/liveness_bloc.dart';
 import 'package:simple_kiosk_software/remote/blocs/teleconsultation/teleconsultation_bloc.dart';
 import 'package:simple_kiosk_software/remote/repositories/appointment_repository.dart';
+import 'package:simple_kiosk_software/remote/vitals/viewmodels/vital_measurement_controller.dart';
 import 'package:simple_kiosk_software/screens/route_manager.dart';
 import 'package:simple_kiosk_software/remote/services/appointment_api.dart';
 import 'package:simple_kiosk_software/utils/permission_utils.dart';
@@ -33,28 +37,43 @@ void main() async {
   final DeviceBloc deviceBloc = DeviceBloc(appointmentBloc);
   final TeleconsultationBloc teleconsultationBloc =
       TeleconsultationBloc(deviceBloc, appointmentRepository);
+  final LivenessBloc livenessBloc = LivenessBloc();
 
   // // 设备初始化
   // await DeviceConfig().clearDeviceConfigStorage();
   // await DeviceConfig().init(ProjectType.simple_kiosk_software);
 
-  runApp(MultiBlocProvider(
-    providers: [
-      BlocProvider(
-        create: (context) => appointmentBloc,
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<VitalMeasurementsController>(
+          create: (context) => VitalMeasurementsController(),
+        ),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => appointmentBloc,
+          ),
+          BlocProvider(
+            create: (context) => teleconsultationBloc,
+          ),
+          BlocProvider<DeviceBloc>(
+            create: (context) => deviceBloc,
+          ),
+          BlocProvider(
+            create: (context) => livenessBloc,
+          ),
+          BlocProvider<LocaleCubit>(
+            create: (context) => LocaleCubit(),
+          ),
+        ],
+        child: FlutterSizer(builder: (context, orientation, screenType) {
+          return MyApp();
+        }),
       ),
-      BlocProvider(
-        create: (context) => teleconsultationBloc,
-      ),
-      BlocProvider<DeviceBloc>(
-        create: (context) => deviceBloc,
-      ),
-      BlocProvider<LocaleCubit>(
-        create: (context) => LocaleCubit(),
-      ),
-    ],
-    child: MyApp(),
-  ));
+    ),
+  );
   // 设置应用程序只支持竖屏方向
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

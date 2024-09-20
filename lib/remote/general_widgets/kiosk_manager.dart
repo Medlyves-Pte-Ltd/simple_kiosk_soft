@@ -56,12 +56,12 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
   MeasurementType.temperature: MeasurementTypeInfo(
       'Temperature',
       {
-        'English': VideoClip("assets/videos/eng/temperature_measure_EN.mp4",
-            "assets/videos/eng/temperature_completed_EN.mp4"),
+        'English': VideoClip("assets/videos/en/temperature_EN.mp4",
+            "assets/videos/en/temperature_completed_EN.mp4"),
         'Thai': VideoClip("assets/videos/thai/Temp_measure_TH.mp4",
             "assets/videos/thai/Temp_completed_TH.mp4"),
-        'Chinese': VideoClip("assets/videos/chi/temperature_measure_CHI.mp4",
-            "assets/videos/chi/temperature_completed_CHI.mp4"),
+        'Chinese': VideoClip("assets/videos/zh/temperature_ZH.mp4",
+            "assets/videos/zh/temperature_completed_ZH.mp4"),
         // Add more languages if needed
       },
       1,

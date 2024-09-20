@@ -40,8 +40,8 @@ final Map<String, Function> routes = {
   '/ECGMeasure': (context, {arguments}) => ECGMeasure(),
   '/DevicePage': (context, {arguments}) => DevicePage(),
   '/TestDevice': (context, {arguments}) => TestDevice(),
-  // '/TCMeetingScreen': (context, {arguments}) =>
-  //     TCMeetingScreen(arguments: arguments),
+  '/TCMeetingScreen': (context, {arguments}) =>
+      TCMeetingScreen(arguments: arguments),
 };
 
 // 定义通用的onGenerateRoute

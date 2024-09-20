@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
+import 'package:simple_kiosk_software/common/header.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/remote/blocs/teleconsultation/teleconsultation_bloc.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
@@ -32,11 +33,9 @@ import 'dart:async';
 import 'dart:math' as math;
 
 class TCMeetingScreen extends StatelessWidget {
-  final String? displayName;
-  final String? appointmentId;
+  Map<String, dynamic>? arguments;
 
-  const TCMeetingScreen({Key? key, this.displayName, this.appointmentId})
-      : super(key: key);
+  TCMeetingScreen({Key? key, required this.arguments}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +43,8 @@ class TCMeetingScreen extends StatelessWidget {
       create: (context) => RoomOverviewBloc(false, false, false, false)
         ..add(const RoomOverviewSubscriptionRequested()),
       child: TCMeetingScreenContent(
-        displayName: displayName,
-        appointmentId: appointmentId,
+        displayName: arguments?["displayName"],
+        appointmentId: arguments?["appointmentId"],
       ),
     );
   }
@@ -66,7 +65,7 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
   bool startButtonPressed = false;
   bool deviceStart = false;
   VideoPlayerController _controller =
-      VideoPlayerController.asset('assets/videos/eng/welcome_EN.mp4');
+      VideoPlayerController.asset('assets/videos/en/welcome_EN.mp4');
   late String videoUrl;
   int selectedDevice = 3;
   final WebSocketService _webSocketService = WebSocketService();
@@ -75,6 +74,10 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
   String videoName = '';
   bool isUIRendered = false;
   String deviceHeader = '';
+  // 屏幕宽度
+  double width = 0;
+  // 屏幕高度
+  double height = 0;
 
   @override
   void initState() {
@@ -275,18 +278,17 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
         body: Column(
           children: [
+            const Header(),
             SizedBox(
-                height: 4.h,
-                child: Container(
-                  color: ColorPalette.colorAppTheme,
-                )),
-            SizedBox(
-              height: 38.h,
+              height: height * 0.33,
               child: deviceStart
                   ? Center(
                       child: _controller.value.isInitialized
@@ -295,7 +297,7 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
                               child: VideoPlayer(_controller),
                             )
                           : SizedBox(
-                              height: 38.h,
+                              height: height * 0.33,
                               child: const Center(
                                   child: CircularProgressIndicator()),
                             ),
@@ -323,7 +325,7 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
                               return MeetingPage(
                                 onLeaveButtonPress: hangUp,
                                 showOnlyRemotePeer: false,
-                                meetingWidgetHeight: 38.h,
+                                meetingWidgetHeight: height * 0.33,
                               );
                             }
                             return Container(
@@ -334,16 +336,14 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
                       ),
                     ),
             ),
+            Expanded(child: Builder(builder: (context) {
+              return selectDeviceMeasurement();
+              return deviceStart
+                  ? selectDeviceMeasurement()
+                  : const ResultList();
+            })),
             SizedBox(
-              height: 47.h,
-              child: Builder(builder: (context) {
-                return deviceStart
-                    ? selectDeviceMeasurement()
-                    : const ResultList();
-              }),
-            ),
-            SizedBox(
-              height: 7.h,
+              height: height * 0.05,
               child: BlocBuilder<RoomOverviewBloc, RoomOverviewState>(
                 builder: (context, state) {
                   return TCNavigation(
@@ -363,7 +363,7 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
                 },
               ),
             ),
-            SizedBox(height: 4.h, child: const Footer())
+            const Footer()
           ],
         ),
       ),
