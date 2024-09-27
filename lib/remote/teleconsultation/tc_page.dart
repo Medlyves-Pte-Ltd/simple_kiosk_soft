@@ -337,7 +337,7 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
                     ),
             ),
             Expanded(child: Builder(builder: (context) {
-              return selectDeviceMeasurement();
+              //return const ResultList();
               return deviceStart
                   ? selectDeviceMeasurement()
                   : const ResultList();
