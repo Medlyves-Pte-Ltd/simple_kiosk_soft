@@ -43,12 +43,12 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
   MeasurementType.heightWeight: MeasurementTypeInfo(
       'Height & Weight',
       {
-        'English': VideoClip("assets/videos/eng/heightweight_measure_EN.mp4",
-            "assets/videos/eng/heightweight_completed_EN.mp4"),
+        'English': VideoClip("assets/videos/en/heightweight_EN.mp4",
+            "assets/videos/en/heightweight_completed_EN.mp4"),
         'Thai': VideoClip("assets/videos/thai/Height_Weight_measure_TH.mp4",
             "assets/videos/thai/Height_Weight_completed_TH.mp4"),
-        'Chinese': VideoClip("assets/videos/chi/heightweight_measure_CHI.mp4",
-            "assets/videos/chi/heightweight_completed_CHI.mp4"),
+        'Chinese': VideoClip("assets/videos/zh/heightweight_ZH.mp4",
+            "assets/videos/zh/heightweight_completed_ZH.mp4"),
         // Add more languages if needed
       },
       0,
@@ -69,12 +69,12 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
   MeasurementType.bloodPressure: MeasurementTypeInfo(
       'Blood Pressure',
       {
-        'English': VideoClip("assets/videos/eng/bloodpressure_measure_EN.mp4",
-            "assets/videos/eng/bloodpressure_completed_EN.mp4"),
+        'English': VideoClip("assets/videos/en/bloodpressure_EN.mp4",
+            "assets/videos/en/bloodpressure_completed_EN.mp4"),
         'Thai': VideoClip("assets/videos/thai/BloodPressure_measure_TH.mp4",
             "assets/videos/thai/BloodPressure_completed_TH.mp4"),
-        'Chinese': VideoClip("assets/videos/chi/bloodpressure_measure_CHI.mp4",
-            "assets/videos/chi/bloodpressure_completed_CHI.mp4"),
+        'Chinese': VideoClip("assets/videos/zh/bloodpressure_ZH.mp4",
+            "assets/videos/zh/bloodpressure_completed_ZH.mp4"),
         // Add more languages if needed
       },
       2,
@@ -82,13 +82,12 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
   MeasurementType.bodyComposition: MeasurementTypeInfo(
       'Body Composition',
       {
-        'English': VideoClip("assets/videos/eng/bodycomposition_measure_EN.mp4",
-            "assets/videos/eng/bodycomposition_completed_EN.mp4"),
+        'English': VideoClip("assets/videos/en/bodycomposition_EN.mp4",
+            "assets/videos/en/bodycomposition_completed_EN.mp4"),
         'Thai': VideoClip("assets/videos/thai/BodyComp_measure_TH.mp4",
             "assets/videos/thai/BodyComp_completed_TH.mp4"),
-        'Chinese': VideoClip(
-            "assets/videos/chi/bodycomposition_measure_CHI.mp4",
-            "assets/videos/chi/bodycomposition_completed_CHI.mp4"),
+        'Chinese': VideoClip("assets/videos/zh/bodycomposition_ZH.mp4",
+            "assets/videos/zh/bodycomposition_completed_ZH.mp4"),
         // Add more languages if needed
       },
       3,
@@ -96,12 +95,12 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
   MeasurementType.spo2: MeasurementTypeInfo(
       'Oxygen Saturation',
       {
-        'English': VideoClip("assets/videos/eng/spo2_measure_EN.mp4",
-            "assets/videos/eng/sp02_completed_EN.mp4"),
+        'English': VideoClip("assets/videos/en/spo2_EN.mp4",
+            "assets/videos/en/spo2_completed_EN.mp4"),
         'Thai': VideoClip("assets/videos/thai/SPo2_measure_TH.mp4",
             "assets/videos/thai/SPo2_completed_TH.mp4"),
-        'Chinese': VideoClip("assets/videos/chi/spo2_measure_CHI.mp4",
-            "assets/videos/chi/spo2_completed_CHI.mp4"),
+        'Chinese': VideoClip("assets/videos/zh/spo2_ZH.mp4",
+            "assets/videos/zh/spo2_completed_ZH.mp4"),
         // Add more languages if needed
       },
       4,
@@ -109,12 +108,12 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
   MeasurementType.ecg: MeasurementTypeInfo(
       'ECG',
       {
-        'English': VideoClip("assets/videos/eng/ecg_measure_EN.mp4",
-            "assets/videos/eng/ecg_completed_EN.mp4"),
+        'English': VideoClip("aassets/videos/en/ecg_EN.mp4",
+            "assets/videos/en/ecg_completed_EN.mp4"),
         'Thai': VideoClip("assets/videos/thai/ecg_measure_TH.mp4",
             "assets/videos/thai/ecg_completed_TH.mp4"),
-        'Chinese': VideoClip("assets/videos/chi/ecg_measure_CHI.mp4",
-            "assets/videos/chi/ecg_completed_CHI.mp4"),
+        'Chinese': VideoClip("assets/videos/zh/ecg_ZH.mp4",
+            "assets/videos/zh/ecg_completed_ZH.mp4"),
         // Add more languages if needed
       },
       5,
