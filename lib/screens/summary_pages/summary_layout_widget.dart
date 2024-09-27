@@ -60,7 +60,7 @@ class SummaryLayoutWidget extends StatelessWidget {
 
     if (_tabBarList.isEmpty) {
       _tabBarList = [
-        Tab(text: AppLocalizations.of(mainContext)!.summary_basic_vitals),
+        Tab(text: AppLocalizations.of(mainContext)!.basic_vitals),
         Tab(text: AppLocalizations.of(mainContext)!.summary_body_composition),
         Tab(text: AppLocalizations.of(mainContext)!.summary_ecg),
         // Tab(text: AppLocalizations.of(mainContext)!.summary_stethoscope),
