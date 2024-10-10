@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_devices_sdk/device_data/body_composition_data.dart';
+import 'package:flutter_devices_sdk/device_data/device_data.dart';
 import 'package:flutter_devices_sdk/device_manager.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
@@ -13,6 +14,7 @@ import 'package:simple_kiosk_software/blocs/device/device_state.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
   // Body Fat Rate (脂肪率)
@@ -61,6 +63,10 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
 
   @override
   Future<void> onStart() async {
+    if (UserInfo().height.isEmpty || UserInfo().weight.isEmpty) {
+      Fluttertoast.showToast(msg: AppLocalizations.of(mainContext)!.bcm_prereq);
+      return;
+    }
     // 人体成分需要传入参数
     DeviceManager().getDevice(DeviceType.BC_DEVICE)?.mapData = {
       'height': UserInfo().height,
@@ -145,29 +151,28 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
         if (state.deviceData is BodyCompositionData) {
           BodyCompositionData bodyCompositionData =
               state.deviceData as BodyCompositionData;
-          bodyFatPercentage = bodyCompositionData.bodyFatPercentage ?? "";
-          basalMetabolism = bodyCompositionData.basalMetabolism ?? "";
-          boneMass = bodyCompositionData.boneMass ?? "";
-          visceralFatLevel = bodyCompositionData.visceralFatLevel ?? "";
-          proteinPercentage = bodyCompositionData.proteinPercentage ?? "";
-          bodyWaterPercentage = bodyCompositionData.bodyWaterPercentage ?? "";
-
           UserInfo().bodyFatPercentage =
-              bodyCompositionData.bodyFatPercentage ?? "";
-          UserInfo().bodyFatMass = bodyCompositionData.bodyFatPercentage ?? "";
+              bodyFatPercentage = bodyCompositionData.bodyFatPercentage ?? "";
           UserInfo().basalMetabolism =
-              bodyCompositionData.basalMetabolism ?? "";
-          UserInfo().boneMass = bodyCompositionData.boneMass ?? "";
+              basalMetabolism = bodyCompositionData.basalMetabolism ?? "";
+          UserInfo().boneMass = boneMass = bodyCompositionData.boneMass ?? "";
           UserInfo().visceralFatLevel =
-              bodyCompositionData.visceralFatLevel ?? "";
+              visceralFatLevel = bodyCompositionData.visceralFatLevel ?? "";
           UserInfo().proteinPercentage =
-              bodyCompositionData.proteinPercentage ?? "";
-          UserInfo().mineral = bodyCompositionData.mineral ?? "";
-          UserInfo().bodyWaterPercentage =
+              proteinPercentage = bodyCompositionData.proteinPercentage ?? "";
+          UserInfo().bodyWaterPercentage = bodyWaterPercentage =
               bodyCompositionData.bodyWaterPercentage ?? "";
 
-          BlocProvider.of<AppointmentBloc>(mainContext)
-              .processNewData(state.deviceData.data);
+          UserInfo().bodyFatMass = bodyCompositionData.bodyFatPercentage ?? "";
+          UserInfo().mineral = bodyCompositionData.mineral ?? "";
+
+          BlocProvider.of<AppointmentBloc>(mainContext).processNewData({
+            'bodyFatPercentage': UserInfo().bodyFatPercentage,
+            'basalMetabolism': UserInfo().basalMetabolism,
+            'visceralFatLevel': UserInfo().visceralFatLevel,
+            'protein': UserInfo().proteinPercentage,
+            "bodyWaterPercentage": UserInfo().bodyWaterPercentage
+          });
 
           ControlMeasurePageUtils().measured = true;
           measured = true;

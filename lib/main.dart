@@ -17,6 +17,7 @@ import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
 import 'package:simple_kiosk_software/remote/blocs/liveness/liveness_bloc.dart';
 import 'package:simple_kiosk_software/remote/blocs/teleconsultation/teleconsultation_bloc.dart';
 import 'package:simple_kiosk_software/remote/repositories/appointment_repository.dart';
+import 'package:simple_kiosk_software/remote/teleconsultation/tc_page.dart';
 import 'package:simple_kiosk_software/remote/vitals/viewmodels/vital_measurement_controller.dart';
 import 'package:simple_kiosk_software/screens/route_manager.dart';
 import 'package:simple_kiosk_software/remote/services/appointment_api.dart';
@@ -100,11 +101,24 @@ class MyApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          onGenerateRoute: onCustomGenerateRoute,
-          //initialRoute: "/LanguagePage",
+          onGenerateRoute: (settings) {
+            if (settings.name == "/TCMeetingScreen") {
+              final args = settings.arguments as Map<String, dynamic>?;
+              return MaterialPageRoute(
+                builder: (_context) => BlocProvider(
+                  create: (_) => TeleconsultationBloc(
+                      _context.read(), AppointmentRepository(AppointmentApi())),
+                  child: TCMeetingScreen(arguments: args),
+                ),
+              );
+            } else {
+              return onCustomGenerateRoute(settings);
+            }
+          },
+          initialRoute: "/LanguagePage",
           //initialRoute: "/TCMeetingScreen",
           //initialRoute: "/DevicePage",
-          initialRoute: "/Summary",
+          //initialRoute: "/Summary",
           //initialRoute: "/KioskManager",
           //initialRoute: "/HeightWeightMeasure",
           //initialRoute: "/TestDevice",

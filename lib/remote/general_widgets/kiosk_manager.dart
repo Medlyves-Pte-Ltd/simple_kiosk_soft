@@ -52,7 +52,7 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
         // Add more languages if needed
       },
       0,
-      const HtWtMeasurement()),
+      HtWtMeasurement()),
   MeasurementType.temperature: MeasurementTypeInfo(
       'Temperature',
       {

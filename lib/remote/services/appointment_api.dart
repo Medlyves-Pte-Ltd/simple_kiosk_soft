@@ -153,6 +153,7 @@ class AppointmentApi {
         body: jsonEncode(body));
 
     if (response.statusCode == 200) {
+      LogPrinter.log(jsonEncode(response.body));
       return jsonDecode(response.body);
     } else {
       throw Exception('Error uploading device data');

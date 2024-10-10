@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple_kiosk_software/blocs/device/debug_device_bloc.dart';
+import 'package:simple_kiosk_software/remote/blocs/teleconsultation/teleconsultation_bloc.dart';
+import 'package:simple_kiosk_software/remote/repositories/appointment_repository.dart';
+import 'package:simple_kiosk_software/remote/services/appointment_api.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/blood_fit_measure.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/blood_glucose_measure.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/blood_oxygen_measure.dart';
@@ -40,8 +45,23 @@ final Map<String, Function> routes = {
   '/ECGMeasure': (context, {arguments}) => ECGMeasure(),
   '/DevicePage': (context, {arguments}) => DevicePage(),
   '/TestDevice': (context, {arguments}) => TestDevice(),
-  '/TCMeetingScreen': (context, {arguments}) =>
-      TCMeetingScreen(arguments: arguments),
+  // '/TCMeetingScreen': (context, {arguments}) =>
+  //     TCMeetingScreen(arguments: arguments),
+  // '/TCMeetingScreen': (context, {arguments}) {
+  //   return MaterialPageRoute(
+  //     builder: (_context) => BlocProvider(
+  //       create: (_) => TeleconsultationBloc(
+  //           _context.read(), AppointmentRepository(AppointmentApi())),
+  //       child: TCMeetingScreen(arguments: arguments),
+  //     ),
+  //   );
+  //
+  //   // return BlocProvider(
+  //   //   create: (_) => TeleconsultationBloc(
+  //   //       context.read<DeviceBloc>(), AppointmentRepository(AppointmentApi())),
+  //   //   child: TCMeetingScreen(arguments: arguments),
+  //   // );
+  // },
 };
 
 // 定义通用的onGenerateRoute

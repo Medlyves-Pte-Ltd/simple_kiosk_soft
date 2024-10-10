@@ -69,7 +69,7 @@ class BodyTemperatureMeasure extends BaseMeasureLayoutWidget {
             (state.deviceData as BodyTemperatureData).temperature;
 
         BlocProvider.of<AppointmentBloc>(mainContext)
-            .processNewData(state.deviceData.data);
+            .processNewData({"temperature": temperature});
 
         ControlMeasurePageUtils().measured = true;
         measured = true;

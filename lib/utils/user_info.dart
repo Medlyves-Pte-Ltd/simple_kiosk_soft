@@ -87,7 +87,6 @@ class UserInfo {
   }
 
   void clearResult() {
-    teleconsultation = false;
     bodyFatPercentage = '';
     ldl = '';
     trig = '';

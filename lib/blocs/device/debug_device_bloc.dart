@@ -10,10 +10,12 @@ import 'package:simple_kiosk_software/blocs/device/device_state.dart';
 import 'package:flutter_devices_sdk/device_data/device_data.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:simple_kiosk_software/blocs/device/device_event.dart';
+import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/utils/log_printer.dart';
 
 class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
-  DeviceBloc() : super(DeviceInitial()) {
+  AppointmentBloc appointmentBloc;
+  DeviceBloc(this.appointmentBloc) : super(DeviceInitial()) {
     on<DeviceConnectEvent>(_onDeviceConnectEvent);
     on<DeviceStartEvent>(_onDeviceStartEvent);
     on<DeviceUpdateDataEvent>(_onDeviceDataUpdatedEvent);
@@ -57,6 +59,11 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
         add(DeviceUpdateDataEvent(
             deviceData: BloodPrssureData("140", "80", "107"),
             deviceType: deviceType));
+      });
+    } else if (deviceType == DeviceType.BO_DEVICE) {
+      Future.delayed(const Duration(milliseconds: 1000), () {
+        add(DeviceUpdateDataEvent(
+            deviceData: BloodOxygenData("97", "80"), deviceType: deviceType));
       });
     } else if (deviceType == DeviceType.BC_DEVICE) {
       Future.delayed(const Duration(milliseconds: 1000), () {

@@ -13,6 +13,8 @@ import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/header.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
+import 'package:simple_kiosk_software/remote/config/settings.dart';
+import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/scanner_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 
@@ -43,12 +45,13 @@ class ScannerPageState extends State<ScannerPage> {
   }
 
   // 监听扫码器数据
-  void listenScannerData(String data) {
+  void listenScannerData(String data) async {
+    // 测试id ZGVtbzFAbWVkbHl2ZXMuY29t_walkin_TC
     String patientId = "";
     // 判断时候是json数据
     int endPos = data.indexOf('_');
     if (endPos != -1) {
-      patientId = data.substring(0, endPos + 1);
+      patientId = data.substring(0, endPos);
     } else {
       Fluttertoast.showToast(msg: "The QR code data format is incorrect!");
       return;
@@ -58,10 +61,10 @@ class ScannerPageState extends State<ScannerPage> {
     LogPrinter.log("qr code normal data:$data");
     try {
       var appointmentBloc = BlocProvider.of<AppointmentBloc>(context);
-      appointmentBloc.appointmentRepository.getUserDetails(patientId);
-      Map<String, dynamic> userData = BlocProvider.of<DeviceBloc>(context)
-          .appointmentBloc
-          .getPatientBodyInfo();
+      await appointmentBloc.appointmentRepository.sendStartEvent(data, kioskId);
+      await appointmentBloc.appointmentRepository.getUserDetails(data);
+      Map<String, dynamic> userData =
+          appointmentBloc.appointmentRepository.data;
       // 判断是否是远程医疗
       if (data.contains("_TC")) {
         UserInfo().teleconsultation = true;
@@ -70,7 +73,7 @@ class ScannerPageState extends State<ScannerPage> {
       }
       UserInfo().name = userData["name"];
       UserInfo().age = userData["age"];
-      UserInfo().gender = userData["gender"] as int;
+      UserInfo().gender = userData["gender"] == "Female" ? 0 : 1;
       UserInfo().clearResult();
     } catch (e) {
       Fluttertoast.showToast(msg: "The QR code data format is incorrect!");
@@ -84,6 +87,8 @@ class ScannerPageState extends State<ScannerPage> {
     }
 
     ScannerUtils().listenData = null;
+    ControlMeasurePageUtils().pageIndex = 0;
+    ControlMeasurePageUtils().clearMeasure();
     Navigator.pushNamedAndRemoveUntil(
         mainContext, "/HeightWeightMeasure", (route) => false);
   }
@@ -125,12 +130,15 @@ class ScannerPageState extends State<ScannerPage> {
       children: [
         GestureDetector(
           onDoubleTap: () {
-            UserInfo().name = "User";
-            UserInfo().age = "25";
-            UserInfo().gender = 1;
-            UserInfo().clearResult();
-            Navigator.pushNamedAndRemoveUntil(
-                context, '/HeightWeightMeasure', ((route) => false));
+            listenScannerData("ZGVtbzFAbWVkbHl2ZXMuY29t_walkin_TC");
+
+            // // 测试id
+            // UserInfo().name = "User";
+            // UserInfo().age = "25";
+            // UserInfo().gender = 1;
+            // UserInfo().clearResult();
+            // Navigator.pushNamedAndRemoveUntil(
+            //     context, '/HeightWeightMeasure', ((route) => false));
           },
           child: Image.asset(
             "assets/images/qr-code.png",

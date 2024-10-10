@@ -139,48 +139,48 @@ class DeviceMap {
         return loc.weight;
       // case 3:
       //   return loc.bmi;
-      // case 4:
-      //   return loc.fat_percent;
-      // case 5:
-      //   return loc.fat_mass;
-      // case 6:
-      //   return loc.muscle_percent;
-      // case 7:
-      //   return loc.water_percent;
-      // case 8:
-      //   return loc.moisture;
-      // case 9:
-      //   return loc.extrac_fluid;
-      // case 10:
-      //   return loc.intrac_fluid;
-      // case 11:
-      //   return loc.basal_meta;
-      // case 12:
-      //   return loc.fat_lvl;
-      // case 13:
-      //   return loc.protein;
-      // case 14:
-      //   return loc.mineral;
-      // case 15:
-      //   return loc.body_age;
-      // case 16:
-      //   return loc.overall;
-      // case 17:
-      //   return loc.temp;
-      // case 18:
-      //   return loc.systolic;
-      // case 19:
-      //   return loc.diastolic;
-      // case 20:
-      //   return loc.bpHeartRate;
-      // case 21:
-      //   return loc.spo2;
-      // case 22:
-      //   return loc.spo2_heart_rate;
-      // // case 23:
-      // // return loc.ecg_img;
-      // case 24:
-      //   return loc.ecg_hr;
+      case 4:
+        return loc.fat_percent;
+      case 5:
+        return loc.fat_mass;
+      case 6:
+        return loc.muscle_percent;
+      case 7:
+        return loc.water_percent;
+      case 8:
+        return loc.moisture;
+      case 9:
+        return loc.extrac_fluid;
+      case 10:
+        return loc.intrac_fluid;
+      case 11:
+        return loc.basal_meta;
+      case 12:
+        return loc.fat_lvl;
+      case 13:
+        return loc.protein;
+      case 14:
+        return loc.mineral;
+      case 15:
+        return loc.body_age;
+      case 16:
+        return loc.overall;
+      case 17:
+        return loc.temperature;
+      case 18:
+        return loc.systolic;
+      case 19:
+        return loc.diastolic;
+      case 20:
+        return loc.bpHeartRate;
+      case 21:
+        return loc.spo2;
+      case 22:
+        return loc.spo2_heart_rate;
+      // case 23:
+      //   return loc.ecg_img;
+      case 24:
+        return loc.ecg_hr;
       // case 25:
       //   return loc.ecg_rr;
       case 26:

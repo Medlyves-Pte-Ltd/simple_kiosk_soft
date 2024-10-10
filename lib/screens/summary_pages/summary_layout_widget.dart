@@ -225,12 +225,8 @@ class SummaryLayoutWidget extends StatelessWidget {
     return InkWell(
       onTap: () {
         LogPrinter.log('Call doctor pressed');
-        // BlocProvider.of<AppointmentBloc>(mainContext)
-        //     .add(SendReadyEvent(kioskId: kioskId));
-        // BlocProvider.of<AppointmentBloc>(mainContext)
-        //     .add(GetTeleconsultToken(kioskId: kioskId));
-        Navigator.pushNamed(mainContext, "/TCMeetingScreen",
-            arguments: {'displayName': "xxx", 'appointmentId': "xxx"});
+        BlocProvider.of<AppointmentBloc>(mainContext)
+            .add(SendReadyEvent(kioskId: kioskId));
       },
       child: Container(
           height: height * 0.03,

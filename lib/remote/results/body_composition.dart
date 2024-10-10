@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simple_kiosk_software/remote/vitals/viewmodels/vital_measurement_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../../utils/device_id_map.dart';
+import 'package:simple_kiosk_software/remote/utils/device_id_map.dart';
 
 class BodyCompositionWidget extends StatelessWidget {
   final VitalMeasurementsController vitalMeasurementsController;
@@ -16,7 +15,11 @@ class BodyCompositionWidget extends StatelessWidget {
     final bodyCompositionData =
         vitalMeasurementsController.vitalData.where((reading) {
       int deviceId = reading.deviceId;
-      return deviceId >= 4 && deviceId <= 16;
+      return deviceId >= 4 &&
+          deviceId <= 16 &&
+          deviceId != 5 &&
+          deviceId != 6 &&
+          deviceId != 14;
     }).toList();
 
     // sort based on device ID, in ascending order

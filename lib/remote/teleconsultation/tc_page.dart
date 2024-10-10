@@ -146,10 +146,10 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
 
     if (deviceGroup != null) {
       if (isUIRendered) {
+        selectedDevice = deviceGroup;
         await updateVideoName();
 
         setState(() {
-          selectedDevice = deviceGroup;
           deviceStart = true;
           startButtonPressed = true;
         });
@@ -173,7 +173,7 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
   DeviceType handleDeviceType(int selectedDevice) {
     switch (selectedDevice) {
       case 1:
-        return DeviceType.WEIGHT_DEVICE; // Height & Weight
+        return DeviceType.HEIGHT_DEVICE; // Height & Weight
       case 3:
         return DeviceType.TEMP_DEVICE; // Temperature
       case 4:
@@ -185,7 +185,7 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
       case 6:
         return DeviceType.ECG_DEVICE; // ECG
       default:
-        return DeviceType.WEIGHT_DEVICE; // Default
+        return DeviceType.HEIGHT_DEVICE; // Default
     }
   }
 
@@ -378,7 +378,7 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
     switch (step) {
       case 1:
         deviceHeader = AppLocalizations.of(context)!.hw;
-        measurementWidget = const HtWtMeasurement();
+        measurementWidget = HtWtMeasurement();
         break;
       case 2:
         deviceHeader = AppLocalizations.of(context)!.temperature;

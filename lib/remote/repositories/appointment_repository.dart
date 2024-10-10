@@ -54,8 +54,7 @@ class AppointmentRepository {
     this.patientId = patientId;
     final Map<String, dynamic> patientDetails =
         await api.getUserDetails(patientId);
-    final String name =
-        '${patientDetails['first_name']} ${patientDetails['last_name']}';
+    final String name = patientDetails['name'].toString();
     final String age = patientDetails['age'].toString();
     final String gender = patientDetails['gender'];
 
@@ -113,7 +112,7 @@ class AppointmentRepository {
       if (key != 'ecg_cln' && key != 'ecg_img') {
         readings.add({
           'device_id': DeviceMap.CODETOID[key],
-          'value': double.parse(value),
+          'value': value == "" ? 0.0 : double.parse(value),
           'units': DeviceMap.CODETOUNIT[key]
         });
       }
