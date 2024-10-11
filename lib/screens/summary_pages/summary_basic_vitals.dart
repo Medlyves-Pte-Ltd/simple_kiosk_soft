@@ -36,8 +36,8 @@ class SummaryBasicVitals extends StatelessWidget {
             buildTemperatureArea(),
             buildBloodPressureArea(),
             buildBloodOxygenArea(),
-            buildBloodGlucoseArea(),
-            buildBloodFitArea(),
+            // buildBloodGlucoseArea(),
+            // buildBloodFitArea(),
           ],
         ));
   }
@@ -119,19 +119,6 @@ class SummaryBasicVitals extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: width * 0.1,
-              right: width * 0.1,
-              top: height * 0.01,
-              bottom: height * 0.01,
-            ),
-            child: Text(
-              AppLocalizations.of(mainContext)!.bo_heartrate,
-              style: TextStyle(
-                  fontSize: titleFontSize, fontWeight: FontWeight.bold),
-            ),
-          )
         ],
       ),
     );

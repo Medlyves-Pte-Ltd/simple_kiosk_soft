@@ -91,7 +91,7 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
     String localeCode =
         BlocProvider.of<LocaleCubit>(mainContext).locale.languageCode;
     double ratio = 0.02;
-    if (localeCode == "ta") {
+    if (localeCode == "ta" || localeCode == "th") {
       ratio = 0.015;
     } else if (localeCode == "ms") {
       ratio = 0.018;

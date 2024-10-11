@@ -38,18 +38,18 @@ class ControlMeasurePageUtils {
       "page_route": "/BloodOxygenMeasure",
       "color": ColorPalette.colorbloodoxygen.value,
     },
-    {
-      "icon_file": "assets/images/blood_glucose.png",
-      "measured": false,
-      "page_route": "/BloodGlucoseMeasure",
-      "color": ColorPalette.colorbloodGlucose.value,
-    },
-    {
-      "icon_file": "assets/images/blood_fit.png",
-      "measured": false,
-      "page_route": "/BloodFitMeasure",
-      "color": ColorPalette.colorbloodFat.value,
-    },
+    // {
+    //   "icon_file": "assets/images/blood_glucose.png",
+    //   "measured": false,
+    //   "page_route": "/BloodGlucoseMeasure",
+    //   "color": ColorPalette.colorbloodGlucose.value,
+    // },
+    // {
+    //   "icon_file": "assets/images/blood_fit.png",
+    //   "measured": false,
+    //   "page_route": "/BloodFitMeasure",
+    //   "color": ColorPalette.colorbloodFat.value,
+    // },
     {
       "icon_file": "assets/images/ecg.png",
       "measured": false,

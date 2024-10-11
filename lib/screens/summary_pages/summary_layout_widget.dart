@@ -227,6 +227,8 @@ class SummaryLayoutWidget extends StatelessWidget {
         LogPrinter.log('Call doctor pressed');
         BlocProvider.of<AppointmentBloc>(mainContext)
             .add(SendReadyEvent(kioskId: kioskId));
+        BlocProvider.of<AppointmentBloc>(mainContext)
+            .add(GetTeleconsultToken(kioskId: kioskId));
       },
       child: Container(
           height: height * 0.03,

@@ -45,23 +45,6 @@ final Map<String, Function> routes = {
   '/ECGMeasure': (context, {arguments}) => ECGMeasure(),
   '/DevicePage': (context, {arguments}) => DevicePage(),
   '/TestDevice': (context, {arguments}) => TestDevice(),
-  // '/TCMeetingScreen': (context, {arguments}) =>
-  //     TCMeetingScreen(arguments: arguments),
-  // '/TCMeetingScreen': (context, {arguments}) {
-  //   return MaterialPageRoute(
-  //     builder: (_context) => BlocProvider(
-  //       create: (_) => TeleconsultationBloc(
-  //           _context.read(), AppointmentRepository(AppointmentApi())),
-  //       child: TCMeetingScreen(arguments: arguments),
-  //     ),
-  //   );
-  //
-  //   // return BlocProvider(
-  //   //   create: (_) => TeleconsultationBloc(
-  //   //       context.read<DeviceBloc>(), AppointmentRepository(AppointmentApi())),
-  //   //   child: TCMeetingScreen(arguments: arguments),
-  //   // );
-  // },
 };
 
 // 定义通用的onGenerateRoute
