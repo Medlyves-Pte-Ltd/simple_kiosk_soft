@@ -121,7 +121,8 @@ class UserLoginState extends State<UserLogin> {
                                           value.contains('男性') ||
                                                   value.contains('Male') ||
                                                   value.contains('Lelaki') ||
-                                                  value.contains('ஆண்')
+                                                  value.contains('ஆண்') ||
+                                                  value.contains('ชาย')
                                               ? 1
                                               : 0;
 

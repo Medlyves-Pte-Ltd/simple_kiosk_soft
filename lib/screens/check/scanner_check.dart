@@ -96,12 +96,18 @@ class ScannerCheck extends BaseCheckWidget {
               ValueListenableBuilder(
                   valueListenable: scannerData,
                   builder: (context, value, child) {
-                    return Text(
-                      value,
-                      style: TextStyle(
-                          fontSize: dataFontSize,
-                          fontWeight: FontWeight.bold,
-                          color: ColorPalette.materialGreen),
+                    return SizedBox(
+                      width: width * 0.25,
+                      child: Text(
+                        value,
+                        softWrap: true,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: dataFontSize,
+                            fontWeight: FontWeight.bold,
+                            color: ColorPalette.materialGreen),
+                      ),
                     );
                   }),
             ],

@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:medlyves_mobile_components/medlyves_mobile_components.dart'
     as mobile_components;
 import 'package:path/path.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'dart:convert';
 import 'dart:developer';
 import '../config/settings.dart';
@@ -224,7 +225,7 @@ class AppointmentApi {
 
     final response = await http.get(
       Uri.parse(
-          '$httpPrefix$host/appointment/current/?kiosk_id=$kioskId&detail=patient'),
+          '$httpPrefix$host/appointment/current/?kiosk_id=${AppConfig().kioskId}&detail=patient'),
       headers: {
         'accept': 'application/json',
         'Content-Type': 'application/json',

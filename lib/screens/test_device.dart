@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/header.dart';
 import 'package:simple_kiosk_software/screens/check/audio_player_check.dart';
@@ -16,15 +18,24 @@ import 'package:simple_kiosk_software/screens/check/height_check.dart';
 import 'package:simple_kiosk_software/screens/check/printer_check.dart';
 import 'package:simple_kiosk_software/screens/check/scanner_check.dart';
 import 'package:simple_kiosk_software/screens/check/weight_check.dart';
+import 'package:simple_kiosk_software/utils/user_info.dart';
 
 class TestDevice extends StatelessWidget {
+  late BuildContext mainContext;
+  TestDevice() {
+    UserInfo().name = "User";
+    UserInfo().age = "25";
+    UserInfo().gender = 1;
+    UserInfo().clearResult();
+  }
+
   List<Widget> items = [
     HeightCheck(),
     WeightCheck(),
     BodyTemperatureCheck(),
     BloodOxygenCheck(),
-    BloodFitCheck(),
-    BloodGlucoseCheck(),
+    // BloodFitCheck(),
+    // BloodGlucoseCheck(),
     BloodPressureCheck(),
     BodyCompositionCheck(),
     ECGCheck(),
@@ -43,6 +54,8 @@ class TestDevice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    mainContext = context;
+    //BlocProvider.of<LocaleCubit>(context).loadLocale(Locale("zh"));
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -51,10 +64,41 @@ class TestDevice extends StatelessWidget {
           const Header(),
           SizedBox(height: height * 0.01),
           Expanded(child: _renderScrollArea()),
+          renderBottomBtnArea(),
           const Footer()
         ],
       ),
     );
+  }
+
+  // 底部按钮区域
+  Widget renderBottomBtnArea() {
+    return Container(
+        padding: const EdgeInsets.all(10),
+        height: height * 0.08,
+        child: Row(
+          children: [
+            const Spacer(),
+            InkWell(
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    mainContext, '/KioskManager', ((route) => false));
+              },
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  color: Colors.teal,
+                ),
+                child: Text("Exit",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: height * 0.014,
+                        color: Colors.white)),
+              ),
+            ),
+          ],
+        ));
   }
 
   // 滚动区域

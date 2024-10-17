@@ -84,7 +84,7 @@ class _DropDownFieldState extends State<DropDownField> {
                   child: Text(
                     gender,
                     style: TextStyle(
-                      fontSize: fontSize * 0.9,
+                      fontSize: fontSize * 0.5,
                     ),
                   ),
                 );

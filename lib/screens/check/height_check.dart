@@ -64,8 +64,7 @@ class HeightCheck extends BaseCheckWidget {
         update = true;
       } else if (state is DeviceDataUpdated && state.deviceData is HeightData) {
         UserInfo().height = (state.deviceData as HeightData).height;
-        bodyHeight =
-            (double.parse(UserInfo().height) / 100.0).toStringAsFixed(2);
+        bodyHeight = UserInfo().height;
         measured = true;
         update = true;
       } else if (state is DeviceDisconnected) {

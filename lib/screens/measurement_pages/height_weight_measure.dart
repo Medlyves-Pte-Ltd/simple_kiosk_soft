@@ -11,6 +11,7 @@ import 'package:simple_kiosk_software/blocs/device/device_event.dart';
 import 'package:simple_kiosk_software/blocs/device/device_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/base_measure_layout_widget.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 
@@ -158,15 +159,17 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
             BlocProvider.of<DeviceBloc>(mainContext).add(connectEvent);
           });
         } else if (state.deviceData is WeightData) {
-          bodyHeight =
-              "${(double.parse(UserInfo().height) / 100.0).toStringAsFixed(2)}";
+          bodyHeight = UserInfo().height;
           bodyWeight =
               UserInfo().weight = (state.deviceData as WeightData).weight;
           ControlMeasurePageUtils().measured = true;
           weightMeasured = true;
           update = true;
-          BlocProvider.of<AppointmentBloc>(mainContext).processNewData(
-              {"height": UserInfo().height, "weight": UserInfo().weight});
+
+          if (AppConfig().enableTC) {
+            BlocProvider.of<AppointmentBloc>(mainContext).processNewData(
+                {"height": UserInfo().height, "weight": UserInfo().weight});
+          }
         }
       } else if (state is DeviceDisconnected) {
         if (!heightMeasured && !weightMeasured) {

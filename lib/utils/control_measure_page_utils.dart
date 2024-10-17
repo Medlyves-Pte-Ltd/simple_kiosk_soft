@@ -90,8 +90,7 @@ class ControlMeasurePageUtils {
       UserInfo().clearResult();
       pageIndex = 0;
       clearMeasure();
-      Navigator.pushNamedAndRemoveUntil(
-          context, "/LanguagePage", (route) => false);
+      Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
     }
   }
 

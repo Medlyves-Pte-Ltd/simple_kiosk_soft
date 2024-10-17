@@ -52,7 +52,7 @@
   "hw": "ความสูงและน้ำหนัก",
   "height": "ความสูง",
   "weight": "น้ำหนัก",
-  "hw_height": "ความสูง (m)",
+  "hw_height": "ความสูง (cm)",
   "hw_weight": "น้ำหนัก (kg)",
   "kiosk_title": "Self-service Health Screening Kiosk",
   "language_selection": "โปรดเลือกภาษาที่คุณต้องการ",

@@ -26,7 +26,7 @@ class UserInfo {
 
   // 血氧
   String bloodOxygen = '';
-
+  String spo2HeartRate = "";
   // 人体成分
   // Body Fat Rate (脂肪率)
   String bodyFatPercentage = '';
@@ -95,6 +95,7 @@ class UserInfo {
     bodyWaterPercentage = '';
     temperature = '';
     bloodOxygen = '';
+    spo2HeartRate = "";
     mineral = '';
     protein = '';
     visceralFatLevel = '';
@@ -125,11 +126,6 @@ class UserInfo {
   }
 
   Map<String, dynamic> toJson() {
-    String height = "";
-    if (UserInfo().height.isNotEmpty) {
-      height =
-          "${(double.parse(UserInfo().height) / 100.0).toStringAsFixed(2)}";
-    }
     return {
       "height": height,
       "weight": weight,
@@ -137,6 +133,7 @@ class UserInfo {
       "bloodPressure": "$systolic/$diastolic",
       "bp_pulse": heartRate,
       "bloodOxygen": bloodOxygen,
+      "bo_heartrate": spo2HeartRate,
       // "IFCC": IFCC,
       // "eAG": eAG,
       // "chol": chol,

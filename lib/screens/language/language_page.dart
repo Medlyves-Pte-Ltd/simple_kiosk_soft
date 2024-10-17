@@ -1,12 +1,10 @@
-import 'package:provider/provider.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_kiosk_software/common/buttons.dart';
-import 'package:simple_kiosk_software/common/header_text.dart';
-import 'package:simple_kiosk_software/common/layouts/layout1.dart';
-import 'package:simple_kiosk_software/common/layouts/layout2.dart';
+import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple_kiosk_software/screens/language/date_time_section.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 
 class LanguagePage extends StatefulWidget {
   const LanguagePage({Key? key}) : super(key: key);
@@ -16,14 +14,14 @@ class LanguagePage extends StatefulWidget {
 }
 
 class LanguagePageState extends State<LanguagePage> {
-  final double spaceBetweenButtons = 25.0;
+  final double spaceBetweenButtons = 15.0;
   late Locale locale;
   final List<Map<String, String>> languages = [
     {"name": "English", "code": "en"},
     {"name": "中文", "code": "zh"},
+    {"name": "ภาษาไทย", "code": "th"},
     // {"name": "Bahasa Melayu", "code": "ms"},
     // {"name": "தமிழ்", "code": "ta"},
-    {"name": "ภาษาไทย", "code": "th"},
   ];
 
   void _changeLanguage(String code) {
@@ -35,40 +33,57 @@ class LanguagePageState extends State<LanguagePage> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
-    double boxHeight = screenHeight * 0.045;
-    double topPadding = screenHeight * 0.045;
-
     return Scaffold(
-        body: Layout1(
-            content1: Content1Body(
-      stage: StageType.measurement,
-      videoSpace: VideoWidget(
-        videoName: 'assets/videos/language_selection.mp4',
-        setLooping: true,
+      backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        color: Colors.white,
+        child: Column(
+          children: [
+            // const Footer(),
+            const DateTimeSection(),
+            VideoWidget(
+              videoName: 'assets/videos/th/welcome_TH.mp4',
+              setLooping: true,
+            ),
+            // const Footer(),
+            SizedBox(height: screenHeight * 0.03),
+            Expanded(
+                child: SingleChildScrollView(
+              child: Column(
+                children: languages
+                    .map((language) => Padding(
+                          padding: EdgeInsets.only(bottom: spaceBetweenButtons),
+                          child: _buildLanguageButton(
+                              language["name"]!, language["code"]!),
+                        ))
+                    .toList(),
+              ),
+            )),
+            IconButton(
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, '/KioskManager', ((route) => false));
+                },
+                icon: Icon(Icons.settings)),
+            const Footer(),
+          ],
+        ),
       ),
-      content2Builder: (context) {
-        return Padding(
-          padding: EdgeInsets.only(top: screenHeight * 0.05),
-          child: Column(
-            children: languages
-                .map((language) => Padding(
-                      padding: EdgeInsets.only(bottom: spaceBetweenButtons),
-                      child: _buildLanguageButton(
-                          language["name"]!, language["code"]!),
-                    ))
-                .toList(),
-          ),
-        );
-      },
-    )));
+    );
   }
 
   Widget _buildLanguageButton(String languageName, String languageCode) {
     return ElevatedButton(
       onPressed: () {
         BlocProvider.of<LocaleCubit>(context).loadLocale(Locale(languageCode));
-        Navigator.pushNamedAndRemoveUntil(
-            context, '/ScannerPage', ((route) => false));
+        if (AppConfig().enableTC) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/ScannerPage', ((route) => false));
+        } else {
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/login', ((route) => false));
+        }
       },
       style: _getButtonStyle(),
       child: Text(languageName, style: _getFontStyle()),

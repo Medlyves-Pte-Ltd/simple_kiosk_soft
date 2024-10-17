@@ -30,7 +30,7 @@ import 'package:simple_kiosk_software/remote/teleconsultation/tc_page.dart';
 // 定义路由列表
 // Define routing list
 final Map<String, Function> routes = {
-  '/LanguagePage': (context, {arguments}) => const LanguagePage(),
+  '/': (context, {arguments}) => const LanguagePage(),
   '/login': (context, {arguments}) => const UserLogin(),
   '/KioskManager': (context, {arguments}) => KioskManager(),
   '/HeightWeightMeasure': (context, {arguments}) => HeightWeightMeasure(),

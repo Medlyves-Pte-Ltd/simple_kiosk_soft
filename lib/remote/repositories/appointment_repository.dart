@@ -34,7 +34,7 @@ class AppointmentRepository {
     this.patientId = patientId;
     final response = await api.sendAppointmentEvent(
         patientId, kioskId, eventToString(Event.START));
-    data = {...data, ...response}; // Update data with info from response
+    data = {...response}; // Update data with info from response
     return Appointment.fromJson(response);
   }
 

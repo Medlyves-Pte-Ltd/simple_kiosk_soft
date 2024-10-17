@@ -9,6 +9,7 @@ import 'package:flutter_devices_sdk/utils/app_constants.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/remote/utils/enum_appointment_mode.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/print_utils.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
@@ -100,8 +101,7 @@ class SummaryLayoutWidget extends StatelessWidget {
           LogPrinter.log('Appointment ended');
           displayName = null;
           appointmentId = null;
-          Navigator.pushNamedAndRemoveUntil(
-              mainContext, "/LanguagePage", (route) => false);
+          Navigator.pushNamedAndRemoveUntil(mainContext, "/", (route) => false);
         }
       },
       child: BlocBuilder<AppointmentBloc, AppointmentState>(
@@ -212,9 +212,10 @@ class SummaryLayoutWidget extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 color: Colors.white),
           ),
-          UserInfo().teleconsultation
-              ? startTCButton()
-              : buildPrintExitControlBtn(),
+          buildPrintExitControlBtn(),
+          // AppConfig().enableTC && UserInfo().teleconsultation
+          //     ? startTCButton()
+          //     : buildPrintExitControlBtn(),
         ],
       ),
     );
@@ -226,9 +227,9 @@ class SummaryLayoutWidget extends StatelessWidget {
       onTap: () {
         LogPrinter.log('Call doctor pressed');
         BlocProvider.of<AppointmentBloc>(mainContext)
-            .add(SendReadyEvent(kioskId: kioskId));
+            .add(SendReadyEvent(kioskId: AppConfig().kioskId));
         BlocProvider.of<AppointmentBloc>(mainContext)
-            .add(GetTeleconsultToken(kioskId: kioskId));
+            .add(GetTeleconsultToken(kioskId: AppConfig().kioskId));
       },
       child: Container(
           height: height * 0.03,
@@ -254,6 +255,12 @@ class SummaryLayoutWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
+        AppConfig().enableTC && UserInfo().teleconsultation
+            ? startTCButton()
+            : const SizedBox.shrink(),
+        SizedBox(
+          width: width * 0.03,
+        ),
         ValueListenableBuilder(
             valueListenable: enableClickPrint,
             builder: (context, enable, child) {
@@ -289,7 +296,7 @@ class SummaryLayoutWidget extends StatelessWidget {
             ControlMeasurePageUtils().pageIndex = 0;
             ControlMeasurePageUtils().clearMeasure();
             Navigator.pushNamedAndRemoveUntil(
-                mainContext, "/LanguagePage", (route) => false);
+                mainContext, "/", (route) => false);
           },
           child: Container(
               height: height * 0.03,
@@ -307,7 +314,7 @@ class SummaryLayoutWidget extends StatelessWidget {
                       fontWeight: FontWeight.w600),
                 ),
               )),
-        )
+        ),
       ],
     );
   }

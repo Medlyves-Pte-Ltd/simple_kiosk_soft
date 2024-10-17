@@ -14,6 +14,7 @@ import 'package:simple_kiosk_software/screens/measurement_pages/base_measure_lay
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
 import 'package:simple_kiosk_software/blocs/device/device_event.dart';
 import 'package:simple_kiosk_software/blocs/device/device_state.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -123,19 +124,21 @@ class ECGMeasure extends BaseMeasureLayoutWidget {
             (ecgData.Conclusion ?? "").replaceAll("\n", " ");
         UserInfo().ResultImage = ecgData.ResultImage ?? "";
 
-        // 上传图片
-        if (UserInfo().ResultImage.isNotEmpty) {
-          File img = File(UserInfo().ResultImage);
-          LogPrinter.log("Uploading conclusion and image.");
-          BlocProvider.of<AppointmentBloc>(mainContext)
-              .uploadEcgDocument(img, UserInfo().Conclusion);
-          LogPrinter.log("Image uploaded.");
-          LogPrinter.log(UserInfo().Conclusion);
-        }
+        if (AppConfig().enableTC) {
+          // 上传图片
+          if (UserInfo().ResultImage.isNotEmpty) {
+            File img = File(UserInfo().ResultImage);
+            LogPrinter.log("Uploading conclusion and image.");
+            BlocProvider.of<AppointmentBloc>(mainContext)
+                .uploadEcgDocument(img, UserInfo().Conclusion);
+            LogPrinter.log("Image uploaded.");
+            LogPrinter.log(UserInfo().Conclusion);
+          }
 
-        // 上传数据
-        BlocProvider.of<AppointmentBloc>(mainContext)
-            .processNewData(state.deviceData.data);
+          // 上传数据
+          BlocProvider.of<AppointmentBloc>(mainContext)
+              .processNewData(state.deviceData.data);
+        }
 
         ControlMeasurePageUtils().measured = true;
         update = true;

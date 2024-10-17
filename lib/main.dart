@@ -21,12 +21,16 @@ import 'package:simple_kiosk_software/remote/teleconsultation/tc_page.dart';
 import 'package:simple_kiosk_software/remote/vitals/viewmodels/vital_measurement_controller.dart';
 import 'package:simple_kiosk_software/screens/route_manager.dart';
 import 'package:simple_kiosk_software/remote/services/appointment_api.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/permission_utils.dart';
 import 'package:simple_kiosk_software/remote/utils/shared_prefs.dart';
+import 'package:simple_kiosk_software/utils/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SharedPrefs.setData('appointmentId', "xxx");
+  await SharedPreferencesUtil.init();
+
+  SharedPrefs.setData('appointmentId', "");
   // 检查权限
   await PermissionUtils().getStoragePermission();
   await PermissionUtils().getCameraPermission();
@@ -39,10 +43,6 @@ void main() async {
   final TeleconsultationBloc teleconsultationBloc =
       TeleconsultationBloc(deviceBloc, appointmentRepository);
   final LivenessBloc livenessBloc = LivenessBloc();
-
-  // // 设备初始化
-  // await DeviceConfig().clearDeviceConfigStorage();
-  // await DeviceConfig().init(ProjectType.simple_kiosk_software);
 
   runApp(
     MultiProvider(
@@ -115,9 +115,9 @@ class MyApp extends StatelessWidget {
               return onCustomGenerateRoute(settings);
             }
           },
-          initialRoute: "/LanguagePage",
+          //initialRoute: "/",
+          initialRoute: "/DevicePage",
           //initialRoute: "/TCMeetingScreen",
-          //initialRoute: "/DevicePage",
           //initialRoute: "/Summary",
           //initialRoute: "/KioskManager",
           //initialRoute: "/HeightWeightMeasure",

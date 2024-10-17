@@ -14,6 +14,7 @@ import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/header.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
 import 'package:simple_kiosk_software/remote/config/settings.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/scanner_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
@@ -61,7 +62,8 @@ class ScannerPageState extends State<ScannerPage> {
     LogPrinter.log("qr code normal data:$data");
     try {
       var appointmentBloc = BlocProvider.of<AppointmentBloc>(context);
-      await appointmentBloc.appointmentRepository.sendStartEvent(data, kioskId);
+      await appointmentBloc.appointmentRepository
+          .sendStartEvent(data, AppConfig().kioskId);
       await appointmentBloc.appointmentRepository.getUserDetails(data);
       Map<String, dynamic> userData =
           appointmentBloc.appointmentRepository.data;
@@ -76,7 +78,7 @@ class ScannerPageState extends State<ScannerPage> {
       UserInfo().gender = userData["gender"] == "Female" ? 0 : 1;
       UserInfo().clearResult();
     } catch (e) {
-      Fluttertoast.showToast(msg: "The QR code data format is incorrect!");
+      Fluttertoast.showToast(msg: "User information acquisition failed!");
       return;
     }
 

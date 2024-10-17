@@ -52,7 +52,7 @@
   "hw": "Height & Weight",
   "height": "Height",
   "weight": "Weight",
-  "hw_height": "Height (m)",
+  "hw_height": "Height (cm)",
   "hw_weight": "Weight (kg)",
   "kiosk_title": "Self-service Health Screening Kiosk",
   "language_selection": "Please Select Your Preferred Language",

@@ -6,6 +6,7 @@ import 'package:simple_kiosk_software/remote/config/settings.dart';
 import 'package:simple_kiosk_software/remote/services/api_methods.dart';
 import 'package:simple_kiosk_software/remote/services/kiosk_api.dart';
 import 'package:simple_kiosk_software/remote/utils/app_constants.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 part 'liveness_event.dart';
 part 'liveness_state.dart';
 
@@ -15,7 +16,7 @@ class LivenessBloc extends Bloc<LivenessEvent, LivenessState> {
   LivenessBloc() : super(const LivenessState(isConnected: false)) {
     const duration = Duration(minutes: 0, seconds: 15);
     Timer.periodic(duration, (Timer _) async {
-      dynamic result = await api.pingKiosk(kioskId);
+      dynamic result = await api.pingKiosk(AppConfig().kioskId);
       if (result is Failure) {
         add(ServerUncontactableEvent(reason: result.errorResponse.toString()));
       } else if (result is Success) {

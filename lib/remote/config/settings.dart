@@ -1,6 +1,6 @@
 // const kioskId = 'Demo-Medlyves'; // Demo
 //const kioskId = 'TH-BC-001'; // praram 9
-const kioskId = 'k123'; // praram 9
+//const kioskId = 'k123'; // praram 9
 // const kioskId = 'TH-SI-001'; //siriraj
 
 // Cloud backend

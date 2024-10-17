@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/remote/config/settings.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 
 class PatientIdInputScreen extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
@@ -36,7 +37,7 @@ class PatientIdInputScreen extends StatelessWidget {
                   // SharedPrefs.setData('patientId', _controller.text);
                   BlocProvider.of<AppointmentBloc>(context).add(SendStartEvent(
                     patientId: _controller.text,
-                    kioskId: kioskId,
+                    kioskId: AppConfig().kioskId,
                   ));
                 },
                 child: Text(AppLocalizations.of(context)!.start_tc),

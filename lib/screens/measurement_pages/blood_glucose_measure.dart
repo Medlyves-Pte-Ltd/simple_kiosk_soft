@@ -8,6 +8,7 @@ import 'package:simple_kiosk_software/screens/measurement_pages/base_measure_lay
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
 import 'package:simple_kiosk_software/blocs/device/device_event.dart';
 import 'package:simple_kiosk_software/blocs/device/device_state.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -81,8 +82,12 @@ class BloodGlucoseMeasure extends BaseMeasureLayoutWidget {
         String ifcc = (state.deviceData as BloodGlucoseData).IFCC;
         IFCC = UserInfo().IFCC = (double.parse(ifcc) / 10.0).toStringAsFixed(1);
         eAG = UserInfo().eAG = (state.deviceData as BloodGlucoseData).eAG;
-        BlocProvider.of<AppointmentBloc>(mainContext)
-            .processNewData(state.deviceData.data);
+
+        if (AppConfig().enableTC) {
+          BlocProvider.of<AppointmentBloc>(mainContext)
+              .processNewData(state.deviceData.data);
+        }
+
         ControlMeasurePageUtils().measured = true;
         measured = true;
         update = true;

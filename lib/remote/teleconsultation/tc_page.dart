@@ -28,6 +28,7 @@ import 'package:medlyves_mobile_components/blocs/hms_room_overview/room_overview
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:developer';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:async';
 import 'dart:math' as math;
@@ -137,7 +138,9 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
   void _handleWebSocketEnd() {
     print("websocket ended by doctor");
     context.read<RoomOverviewBloc>().add(const RoomOverviewLeaveRequested());
-    context.read<AppointmentBloc>().add(SendStopEvent(kioskId: kioskId));
+    context
+        .read<AppointmentBloc>()
+        .add(SendStopEvent(kioskId: AppConfig().kioskId));
     Navigator.of(context).pop();
   }
 
@@ -204,8 +207,13 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
   }
 
   void _handleWebSocketDone() {
-    print("websocket done......");
-    _webSocketService.close();
+    if (!_webSocketService.isManuallyClosed) {
+      print("websocket reconnect......");
+      _connectToWebSocket();
+    } else {
+      print("websocket done......");
+      _webSocketService.close();
+    }
   }
 
   Future<void> updateVideoName() async {
@@ -356,7 +364,7 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
                           .add(const RoomOverviewLeaveRequested());
                       context
                           .read<AppointmentBloc>()
-                          .add(SendStopEvent(kioskId: kioskId));
+                          .add(SendStopEvent(kioskId: AppConfig().kioskId));
                     },
                     isEndbuttonVisible: !deviceStart,
                   );

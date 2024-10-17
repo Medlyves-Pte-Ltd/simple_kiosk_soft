@@ -173,8 +173,8 @@ class DeviceMap {
       //     return loc.spo2_heart_rate;
       //   case 'spo2':
       //     return loc.spo2;
-      //   case 'spo2HeartRate':
-      //     return loc.spo2_heart_rate;
+      case 'bo_heartrate':
+        return loc.bo_heartrate;
       //   case 'systolic':
       //     return loc.systolic;
       //   case 'diastolic':

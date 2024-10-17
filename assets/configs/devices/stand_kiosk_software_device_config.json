@@ -38,7 +38,7 @@
     "deviceName": "Height",
     "deviceType": "HEIGHT_DEVICE",
     "deviceIndex": 1,
-    "deviceList": ["ShengYuanHeight", "ZhongKeCQRFHeight"],
+    "deviceList": ["ShengYuanHeight", "ZhongKeCQRFHeight", "ZhongKeCQRFHeightDeviceThreeInOne"],
     "enable": true
   },
   {

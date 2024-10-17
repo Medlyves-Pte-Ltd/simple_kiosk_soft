@@ -14,10 +14,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BloodOxygenCheck extends BaseCheckWidget {
   late String _bloodOxygen;
-
+  late String spo2HeartRate;
   BloodOxygenCheck() {
     _bloodOxygen = UserInfo().bloodOxygen.isNotEmpty
         ? UserInfo().bloodOxygen
+        : dataDefaultValue;
+    spo2HeartRate = UserInfo().spo2HeartRate.isNotEmpty
+        ? UserInfo().spo2HeartRate
         : dataDefaultValue;
   }
 
@@ -61,22 +64,26 @@ class BloodOxygenCheck extends BaseCheckWidget {
 
       if (state is DeviceConnected) {
         measured = false;
-        _bloodOxygen = dataDefaultValue;
+        spo2HeartRate = dataDefaultValue;
         UserInfo().bloodOxygen = "";
+        UserInfo().spo2HeartRate = "";
         update = true;
       } else if (state is DeviceDataLoading) {
         _bloodOxygen = AppLocalizations.of(mainContext)!.loading;
+        spo2HeartRate = AppLocalizations.of(mainContext)!.loading;
         update = true;
       } else if (state is DeviceDataUpdated &&
           state.deviceData is BloodOxygenData) {
         _bloodOxygen =
             UserInfo().bloodOxygen = (state.deviceData as BloodOxygenData).spo2;
-
+        spo2HeartRate = UserInfo().spo2HeartRate =
+            (state.deviceData as BloodOxygenData).heartRate;
         measured = true;
         update = true;
       } else if (state is DeviceDisconnected) {
         if (!measured) {
           _bloodOxygen = dataDefaultValue;
+          spo2HeartRate = dataDefaultValue;
           update = true;
         }
       }
@@ -84,25 +91,51 @@ class BloodOxygenCheck extends BaseCheckWidget {
       return update;
     }, builder: (context, state) {
       return Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            AppLocalizations.of(mainContext)!.bo_oxygen_staturation,
-            style:
-                TextStyle(fontSize: titleFontSize, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: height * 0.02),
-          Text(
-            _bloodOxygen,
-            style: TextStyle(
-                fontSize: dataFontSize,
-                fontWeight: FontWeight.bold,
-                color: ColorPalette.materialGreen),
-          )
-        ],
-      ));
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  AppLocalizations.of(mainContext)!.bo_oxygen_staturation,
+                  style: TextStyle(
+                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: height * 0.02),
+                Text(
+                  _bloodOxygen,
+                  style: TextStyle(
+                      fontSize: dataFontSize,
+                      fontWeight: FontWeight.bold,
+                      color: ColorPalette.materialGreen),
+                )
+              ],
+            ),
+            SizedBox(height: height * 0.02),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  AppLocalizations.of(mainContext)!.bp_pulse,
+                  style: TextStyle(
+                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: height * 0.02),
+                Text(
+                  spo2HeartRate,
+                  style: TextStyle(
+                      fontSize: dataFontSize,
+                      fontWeight: FontWeight.bold,
+                      color: ColorPalette.materialGreen),
+                )
+              ],
+            )
+          ],
+        ),
+      );
     });
   }
 }

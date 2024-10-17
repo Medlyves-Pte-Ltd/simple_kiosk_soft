@@ -17,6 +17,7 @@ class DevicePage extends StatelessWidget {
 
   DevicePage() {
     Future.delayed(const Duration(milliseconds: 10), () async {
+      //UsbRelayControl().ioCount = 8;
       // 打开USB IO继电器设备
       await UsbRelayControl().connect();
       _ioCount = UsbRelayControl().ioCount ?? 0;
@@ -26,14 +27,12 @@ class DevicePage extends StatelessWidget {
 
       // 设备初始化
       await DeviceConfig().clearDeviceConfigStorage();
-      await DeviceConfig().init(ProjectType.simple_kiosk_software);
-      // await DeviceConfig().init(ProjectType.stand_kiosk_software);
+      await DeviceConfig().init(ProjectType.simple_kiosk_software_v2);
 
       // 打开扫码器
       await ScannerUtils().connect();
 
-      Navigator.pushNamedAndRemoveUntil(
-          _context, '/LanguagePage', (route) => false);
+      Navigator.pushNamedAndRemoveUntil(_context, '/', (route) => false);
     });
   }
 

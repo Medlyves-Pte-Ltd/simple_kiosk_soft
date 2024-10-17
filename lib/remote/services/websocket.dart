@@ -5,6 +5,7 @@ const httpPrefix = 'https://';
 const wsPrefix = 'wss://';
 
 class WebSocketService {
+  bool isManuallyClosed = false;
   late IOWebSocketChannel channel;
   late Completer<void> completer;
 
@@ -22,6 +23,7 @@ class WebSocketService {
   }
 
   Future<void> close() async {
+    isManuallyClosed = true;
     await channel.sink.close();
     if (!completer.isCompleted) {
       completer.complete();

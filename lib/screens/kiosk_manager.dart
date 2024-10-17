@@ -1,11 +1,10 @@
 import 'package:simple_kiosk_software/common/footer.dart';
-import 'package:simple_kiosk_software/utils/storage_utils.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:flutter_devices_sdk/view/device_config_login_page.dart';
-import 'package:flutter_devices_sdk/view/device_config_page.dart';
 
 class KioskManager extends StatefulWidget {
   @override
@@ -13,44 +12,25 @@ class KioskManager extends StatefulWidget {
 }
 
 class _KioskManagerState extends State<KioskManager> {
-  bool _allowEdit = false;
+  bool _allowEdit = true;
   bool _isLogin = false;
-  double screenHeight = 0;
-  double screenWidth = 0;
-  final _scrollController = ScrollController();
-  DeviceManagerInfo _tempDeviceManagerInfo = DeviceManagerInfo();
-  DeviceManagerInfo _deviceManagerInfo = DeviceManagerInfo();
-  final DeviceConfigPage _deviceConfigPage = DeviceConfigPage(
-      allowEdit: false,
-      showLoginWindow: false,
-      showBottomButton: false,
-      showSwithDeviceEnable: true);
+  double height = 0;
+  double weight = 0;
 
   @override
   void initState() {
     super.initState();
-
-    StorageUtils.getData(_tempDeviceManagerInfo.toMap().keys.toSet())
-        .then((data) {
-      _tempDeviceManagerInfo.fromMap(data);
-      _deviceManagerInfo.fromMap(data);
-      setState(() {});
-    }).catchError((error) {
-      print("Error deviceManagerInfo: $error");
-    });
   }
 
   @override
   void dispose() {
     super.dispose();
-    _scrollController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    print("_KioskManagerState");
-    screenHeight = MediaQuery.of(context).size.height;
-    screenWidth = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+    weight = MediaQuery.of(context).size.width;
 
     // 如果登录了，显示主窗口， 否则显示登录窗口
     // If logged in, display the main window; otherwise, display the login window
@@ -63,13 +43,78 @@ class _KioskManagerState extends State<KioskManager> {
       body: Column(
         children: [
           customAppBar(),
-          saveCancelButton(),
+          //saveCancelButton(),
           deviceInfoArea(),
-          Expanded(child: _deviceConfigPage),
+          Expanded(child: settingArea()),
+          renderBottomBtnArea(),
           const Footer()
         ],
       ),
     );
+  }
+
+  Widget settingArea() {
+    return SingleChildScrollView(
+      child: Column(children: [
+        // 远程医疗功能
+        SwitchListTile(
+          title: Text('Enable TC'),
+          value: AppConfig().enableTC,
+          onChanged: (bool value) {
+            AppConfig().enableTC = value;
+            setState(() {});
+          },
+        ),
+      ]),
+    );
+  }
+
+  // 底部按钮区域
+  Widget renderBottomBtnArea() {
+    return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        height: height * 0.08,
+        child: Row(
+          children: [
+            InkWell(
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/TestDevice', ((route) => false));
+              },
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  color: Colors.teal,
+                ),
+                child: Text("Test",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: height * 0.014,
+                        color: Colors.white)),
+              ),
+            ),
+            const Spacer(),
+            InkWell(
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/', ((route) => false));
+              },
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  color: Colors.teal,
+                ),
+                child: Text("Logout",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: height * 0.014,
+                        color: Colors.white)),
+              ),
+            ),
+          ],
+        ));
   }
 
   // 设置编辑状态
@@ -77,14 +122,11 @@ class _KioskManagerState extends State<KioskManager> {
   void setEditStatus(bool allow) {
     _allowEdit = !allow;
     setState(() {});
-    _deviceConfigPage.view.setEditStatus(_allowEdit);
   }
 
   // 保存配置
   // save config
   void saveConfig() async {
-    StorageUtils.saveData(_tempDeviceManagerInfo.toMap());
-    _deviceConfigPage.view.saveConfig();
     _allowEdit = false;
     setState(() {});
   }
@@ -93,8 +135,6 @@ class _KioskManagerState extends State<KioskManager> {
   // cancel save
   void cancelSave() {
     _allowEdit = false;
-    _tempDeviceManagerInfo.fromMap(_deviceManagerInfo.toMap());
-    _deviceConfigPage.view.cancelSave();
     setState(() {});
   }
 
@@ -113,41 +153,44 @@ class _KioskManagerState extends State<KioskManager> {
   // 输入框控件
   // input edit
   Widget inputEdit({required String text, ValueChanged<String>? onChanged}) {
-    return TextField(
-        readOnly: !_allowEdit,
-        textAlignVertical: TextAlignVertical.center,
-        controller: TextEditingController(text: text),
-        obscureText: false,
-        maxLength: 20,
-        keyboardType: TextInputType.text,
-        inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
-        onChanged: onChanged,
-        decoration: InputDecoration(
-          hintText: "Sample Text",
-          counterText: "",
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(
-              color: _allowEdit
-                  ? ColorPalette.materialGreen
-                  : ColorPalette.darkGrey,
-              width: 1.0,
+    return SizedBox(
+      height: height * 0.06,
+      child: TextField(
+          readOnly: !_allowEdit,
+          textAlignVertical: TextAlignVertical.center,
+          controller: TextEditingController(text: text),
+          obscureText: false,
+          maxLength: 20,
+          keyboardType: TextInputType.text,
+          inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
+          onChanged: onChanged,
+          decoration: InputDecoration(
+            hintText: "Sample Text",
+            counterText: "",
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: _allowEdit
+                    ? ColorPalette.materialGreen
+                    : ColorPalette.darkGrey,
+                width: 1.0,
+              ),
             ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: const BorderSide(
-              color: ColorPalette.darkGrey,
-              width: 1.0,
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: const BorderSide(
+                color: ColorPalette.darkGrey,
+                width: 1.0,
+              ),
             ),
-          ),
-        ));
+          )),
+    );
   }
 
   // 设备信息区域
   // device info area
   Widget deviceInfoArea() {
-    double fontSize = screenHeight * 0.017;
+    double fontSize = height * 0.02;
     return Padding(
         padding: const EdgeInsets.all(20),
         child: Table(
@@ -159,10 +202,11 @@ class _KioskManagerState extends State<KioskManager> {
             // kiosk id row
             TableRow(children: [
               Container(
+                alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.all(8),
                 child: Text(
                   textAlign: TextAlign.right,
-                  "Kiosk\nID",
+                  "Kiosk ID",
                   style: TextStyle(
                       color: ColorPalette.blackColor,
                       fontWeight: FontWeight.bold,
@@ -170,19 +214,19 @@ class _KioskManagerState extends State<KioskManager> {
                 ),
               ),
               inputEdit(
-                  text: _tempDeviceManagerInfo.kioskId,
+                  text: AppConfig().kioskId,
                   onChanged: (value) {
-                    _tempDeviceManagerInfo.kioskId = value;
+                    AppConfig().kioskId = value;
                   }),
             ]),
 
             // device model row
             TableRow(children: [
               Container(
+                alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.all(8),
                 child: Text(
-                  textAlign: TextAlign.right,
-                  "Device\nModel",
+                  "Device Model",
                   style: TextStyle(
                       color: ColorPalette.blackColor,
                       fontWeight: FontWeight.bold,
@@ -190,19 +234,19 @@ class _KioskManagerState extends State<KioskManager> {
                 ),
               ),
               inputEdit(
-                  text: _tempDeviceManagerInfo.deviceModel,
+                  text: AppConfig().deviceModel,
                   onChanged: (value) {
-                    _tempDeviceManagerInfo.deviceModel = value;
+                    AppConfig().deviceModel = value;
                   }),
             ]),
 
             // device address row
             TableRow(children: [
               Container(
+                alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.all(8),
                 child: Text(
-                  textAlign: TextAlign.right,
-                  "Device\nAddress",
+                  "Device Address",
                   style: TextStyle(
                       color: ColorPalette.blackColor,
                       fontWeight: FontWeight.bold,
@@ -210,19 +254,19 @@ class _KioskManagerState extends State<KioskManager> {
                 ),
               ),
               inputEdit(
-                  text: _tempDeviceManagerInfo.deviceAddress,
+                  text: AppConfig().deviceAddress,
                   onChanged: (value) {
-                    _tempDeviceManagerInfo.deviceAddress = value;
+                    AppConfig().deviceAddress = value;
                   }),
             ]),
 
             // client name row
             TableRow(children: [
               Container(
+                alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.all(8),
                 child: Text(
-                  textAlign: TextAlign.right,
-                  "Client\nName",
+                  "Client Name",
                   style: TextStyle(
                       color: ColorPalette.blackColor,
                       fontWeight: FontWeight.bold,
@@ -230,9 +274,9 @@ class _KioskManagerState extends State<KioskManager> {
                 ),
               ),
               inputEdit(
-                  text: _tempDeviceManagerInfo.clientName,
+                  text: AppConfig().clientName,
                   onChanged: (value) {
-                    _tempDeviceManagerInfo.clientName = value;
+                    AppConfig().clientName = value;
                   }),
             ]),
           ],
@@ -242,8 +286,8 @@ class _KioskManagerState extends State<KioskManager> {
   // 保存取消按钮
   // Save Cancel button
   Widget saveCancelButton() {
-    double buttonWidth = screenWidth * 0.25;
-    double buttonHeight = screenHeight * 0.04;
+    double buttonWidth = weight * 0.25;
+    double buttonHeight = height * 0.04;
     double fontSize = buttonHeight * 0.55;
 
     return Padding(
@@ -345,11 +389,11 @@ class _KioskManagerState extends State<KioskManager> {
   // 定义标题栏
   // define title bar
   Widget customAppBar() {
-    final headerHeight = screenHeight * 0.08;
-    final boxWidth = screenWidth * 0.04;
+    final headerHeight = height * 0.08;
+    final boxWidth = weight * 0.04;
     final textfontSize = headerHeight * 0.3;
     final bntFontSize = headerHeight * 0.25;
-    final bntWidth = screenWidth * 0.3;
+    final bntWidth = weight * 0.3;
 
     return AppBar(
         backgroundColor: ColorPalette.headerFooterBackground,
@@ -359,7 +403,7 @@ class _KioskManagerState extends State<KioskManager> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            switchEditStatusButton(bntFontSize, bntWidth),
+            // switchEditStatusButton(bntFontSize, bntWidth),
             SizedBox(
               width: boxWidth,
             ),
