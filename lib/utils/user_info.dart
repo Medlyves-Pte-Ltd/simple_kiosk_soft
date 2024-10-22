@@ -28,26 +28,33 @@ class UserInfo {
   String bloodOxygen = '';
   String spo2HeartRate = "";
   // 人体成分
-  // Body Fat Rate (脂肪率)
+  // Body Fat Rate (脂肪率) %
   String bodyFatPercentage = '';
-  // Body Fat Mass (脂肪量)
-  String bodyFatMass = '';
+  // 水分含量 %
+  String bodyWaterPercentage = '';
+  // 肌肉量 kg
+  String muscleMass = ''; //
+  // 骨量 kg
+  String boneMass = "";
   // Basal Metabolism (基础代谢)
   String basalMetabolism = '';
-  // Skeletal Muscle Rate (骨骼肌率)
-  String skeletalMusclePercentage = '';
   // Visceral Fat Level (内脏脂肪等级)
   String visceralFatLevel = '';
+  // 身体年龄
+  String bodyAge = ""; //
+  // Protein Rate (蛋白质率) %
+  String proteinPercentage = '';
+  // Extracellular Water Rate (细胞外液率) %
+  String extracellularFluid = ''; //
+
+  // Body Fat Mass (脂肪量)
+  String bodyFatMass = '';
+  // Skeletal Muscle Rate (骨骼肌率)
+  String skeletalMusclePercentage = '';
   // Protein (蛋白质)
   String protein = '';
-  // Protein Rate (蛋白质率)
-  String proteinPercentage = '';
   // Mineral (无机盐)
   String mineral = '';
-  // 骨量
-  String boneMass = "";
-  // 水分含量
-  String bodyWaterPercentage = '';
 
   // 血脂
   // 胆固醇
@@ -87,7 +94,10 @@ class UserInfo {
   }
 
   void clearResult() {
+    extracellularFluid = "";
+    bodyAge = "";
     bodyFatPercentage = '';
+    muscleMass = '';
     ldl = '';
     trig = '';
     hdl = '';
@@ -146,6 +156,9 @@ class UserInfo {
       "visceralFatLevel": visceralFatLevel,
       "bodyWaterPercentage": bodyWaterPercentage,
       "proteinPercentage": proteinPercentage,
+      "muscleMass": muscleMass,
+      "bodyAge": bodyAge,
+      "extracellularFluid": extracellularFluid,
       "HR": HR,
       "P_Width": P_Width,
       "PR": PR,

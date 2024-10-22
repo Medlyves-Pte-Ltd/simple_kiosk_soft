@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/header.dart';
@@ -73,32 +74,38 @@ class TestDevice extends StatelessWidget {
 
   // 底部按钮区域
   Widget renderBottomBtnArea() {
-    return Container(
-        padding: const EdgeInsets.all(10),
-        height: height * 0.08,
-        child: Row(
-          children: [
-            const Spacer(),
-            InkWell(
-              onTap: () {
-                Navigator.pushNamedAndRemoveUntil(
-                    mainContext, '/KioskManager', ((route) => false));
-              },
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  color: Colors.teal,
+    return Padding(
+      padding: EdgeInsets.only(
+          top: height * 0.01, bottom: height * 0.01, right: width * 0.05),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Spacer(),
+          InkWell(
+            onTap: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  mainContext, '/KioskManager', ((route) => false));
+            },
+            child: Container(
+                height: height * 0.03,
+                width: width * 0.15,
+                decoration: BoxDecoration(
+                  color: ColorPalette.materialGreen,
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                child: Text("Exit",
+                child: Center(
+                  child: Text(
+                    "Exit",
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: height * 0.014,
-                        color: Colors.white)),
-              ),
-            ),
-          ],
-        ));
+                        color: Colors.white,
+                        fontSize: height * 0.015,
+                        fontWeight: FontWeight.w600),
+                  ),
+                )),
+          )
+        ],
+      ),
+    );
   }
 
   // 滚动区域

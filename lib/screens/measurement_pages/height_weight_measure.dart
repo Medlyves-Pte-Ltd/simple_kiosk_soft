@@ -150,7 +150,8 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
         update = true;
       } else if (state is DeviceDataUpdated) {
         if (state.deviceData is HeightData) {
-          UserInfo().height = (state.deviceData as HeightData).height;
+          String h = (state.deviceData as HeightData).height;
+          UserInfo().height = "${double.parse(h).toStringAsFixed(1)}";
           heightMeasured = true;
           // 如果收到身高数据，先关闭身高设备，再打开体重设备
           Future.delayed(const Duration(milliseconds: 300), () {

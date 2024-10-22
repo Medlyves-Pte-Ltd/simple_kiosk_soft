@@ -18,6 +18,8 @@
   "bcm_visceralfat": "ระดับไขมันในช่องท้อง",
   "bcm_water": "ปริมาณน้ำ (%)",
   "bcm_bone_mass": "มวลกระดูก (kg)",
+  "bcm_muscle_mass": "กล้ามเนื้อ（kg）",
+  "bcm_extrac_fluid":"ของเหลวนอกเซลล์（%）",
   "blood_pressure": "ความดันโลหิต",
   "bp_bloodpressure": "ความดันโลหิต (mmHg)",
   "bp_pulse": "อัตราชีพจร (bpm)",

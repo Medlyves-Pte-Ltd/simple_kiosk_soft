@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_devices_sdk/devices/device_config.dart';
 import 'package:flutter_devices_sdk/project_type.dart';
+import 'package:flutter_devices_sdk/device_setting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,8 +29,9 @@ import 'package:simple_kiosk_software/utils/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SharedPreferencesUtil.init();
+  DeviceSetting().init(ProjectType.simple_kiosk_software_v2);
 
+  await SharedPreferencesUtil.init();
   SharedPrefs.setData('appointmentId', "");
   // 检查权限
   await PermissionUtils().getStoragePermission();

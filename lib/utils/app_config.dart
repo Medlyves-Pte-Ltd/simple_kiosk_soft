@@ -2,7 +2,8 @@ import 'package:simple_kiosk_software/utils/shared_preferences.dart';
 
 class AppConfig {
   String get kioskId {
-    return SharedPreferencesUtil.getString("kioskId", defaultValue: "k123");
+    return SharedPreferencesUtil.getString("kioskId",
+        defaultValue: "CN-ICD-DEV-1");
   }
 
   set kioskId(String value) {

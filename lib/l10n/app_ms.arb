@@ -18,6 +18,8 @@
   "bcm_visceralfat": "Tahap lemak visceral",
   "bcm_water": "Kandungan Air (%)",
   "bcm_bone_mass": "Masa tulang(kg)",
+  "bcm_muscle_mass": "Masa otot（kg）",
+  "bcm_extrac_fluid":"Cairan ekstracelular（%）",
   "blood_pressure": "Tekanan Darah",
   "bp_bloodpressure": "Tekanan Darah (mmHg)",
   "bp_pulse": "Kadar Nadi (bpm)",

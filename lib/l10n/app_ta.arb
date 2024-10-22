@@ -16,6 +16,8 @@
   "bcm_protein_percentage": "பாதுகாப்பு விகிதம் (%)",
   "bcm_skeletal": "எலும்பு தசை சதவீதம் (%)",
   "bcm_visceralfat": "காட்சியம் (%)",
+  "bcm_muscle_mass": "சுட்டி（kg）",
+  "bcm_extrac_fluid":"வெளிச்சமான நீர்வு（%）",
   "bcm_water": "தண்ணீர் அளவு (%)",
   "bcm_bone_mass": "எலும்பு அளவு (kg)",
   "blood_pressure": "இரத்த அழுத்தம்",

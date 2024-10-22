@@ -4,83 +4,107 @@
     "deviceType": "TEMP_DEVICE",
     "deviceIndex": 3,
     "deviceList": ["BodyTemperature", "URIONTemperature", "ChengDuDT8861Temperature", "CommonDT8861Temperature"],
-    "enable": true
+    "enable": true,
+    "vid":"",
+    "pid":""
   },
   {
     "deviceName": "Blood Oxygen",
     "deviceType": "BO_DEVICE",
     "deviceIndex": 2,
     "deviceList": ["BloodOxygen", "ChengDuBloodOxygen", "KeRuiKangBloodOxygen", "OXIMETER_BloodOxygen"],
-    "enable": true
+    "enable": true,
+    "vid":"",
+    "pid":""
   },
   {
     "deviceName": "Blood Glucose",
     "deviceType": "BG_DEVICE",
     "deviceIndex": 0,
     "deviceList": ["SGDianosticsBloodGlucose"],
-    "enable": true
+    "enable": true,
+    "vid":"",
+    "pid":""
   },
   {
     "deviceName": "Blood Fit",
     "deviceType": "BF_DEVICE",
     "deviceIndex": 0,
     "deviceList": ["PreciSCBloodFit"],
-    "enable": true
+    "enable": true,
+    "vid":"",
+    "pid":""
   },
   {
     "deviceName": "Blood Pressure",
     "deviceType": "BP_DEVICE",
     "deviceIndex": 0,
     "deviceList": ["RaycomeBloodPressure", "PanasonicBloodPressure"],
-    "enable": true
+    "enable": true,
+    "vid":"",
+    "pid":""
   },
   {
     "deviceName": "Height",
     "deviceType": "HEIGHT_DEVICE",
     "deviceIndex": 1,
     "deviceList": ["ShengYuanHeight", "ZhongKeCQRFHeight", "ZhongKeCQRFHeightDeviceThreeInOne"],
-    "enable": true
+    "enable": true,
+    "vid":"",
+    "pid":""
   },
   {
     "deviceName": "Weight",
     "deviceType": "WEIGHT_DEVICE",
     "deviceIndex": 1,
     "deviceList": ["ShengYuanWeight", "BoRuiWeiDG681Weight"],
-    "enable": true
+    "enable": true,
+    "vid":"",
+    "pid":""
   },
   {
     "deviceName": "Body Composition",
     "deviceType": "BC_DEVICE",
     "deviceIndex": 2,
     "deviceList": ["ShengYuanBodyComposition", "ChengDuBodyComposition","BoRuiWeiDG681Composition"],
-    "enable": true
+    "enable": true,
+    "vid":"",
+    "pid":""
   },
   {
     "deviceName": "ECG",
     "deviceType": "ECG_DEVICE",
     "deviceIndex": 0,
     "deviceList": ["HuaQingXinYiEcg"],
-    "enable": false
+    "enable": false,
+    "vid":"",
+    "pid":""
   },
   {
     "deviceName": "Printer",
     "deviceType": "PRINTER_DEVICE",
     "deviceIndex": 0,
     "deviceList": ["YokoscanEM5826Printer"],
-    "enable": false
+    "enable": false,
+    "vid":"",
+    "pid":""
   },
   {
     "deviceName": "Scanner",
     "deviceType": "SCANNER_DEVICE",
     "deviceIndex": 0,
     "deviceList": ["YouKuEP8280CodeScanner"],
-    "enable": false
+    "enable": false,
+    "vid":"",
+    "pid":""
   },
   {
     "deviceName": "Io",
     "deviceType": "IO_DEVICE",
     "deviceIndex": 0,
     "deviceList": ["YanMengIoDevice"],
-    "enable": false
+    "enable": false,
+    "vid":"",
+    "pid":""
   }
 ]

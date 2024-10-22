@@ -15,7 +15,7 @@ class _KioskManagerState extends State<KioskManager> {
   bool _allowEdit = true;
   bool _isLogin = false;
   double height = 0;
-  double weight = 0;
+  double width = 0;
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _KioskManagerState extends State<KioskManager> {
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
-    weight = MediaQuery.of(context).size.width;
+    width = MediaQuery.of(context).size.width;
 
     // 如果登录了，显示主窗口， 否则显示登录窗口
     // If logged in, display the main window; otherwise, display the login window
@@ -71,50 +71,63 @@ class _KioskManagerState extends State<KioskManager> {
 
   // 底部按钮区域
   Widget renderBottomBtnArea() {
-    return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        height: height * 0.08,
-        child: Row(
-          children: [
-            InkWell(
-              onTap: () {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, '/TestDevice', ((route) => false));
-              },
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  color: Colors.teal,
+    return Padding(
+      padding: EdgeInsets.only(
+          top: height * 0.01, bottom: height * 0.01, right: width * 0.05),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Spacer(),
+          InkWell(
+            onTap: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/TestDevice', ((route) => false));
+            },
+            child: Container(
+                height: height * 0.03,
+                width: width * 0.15,
+                decoration: BoxDecoration(
+                  color: ColorPalette.materialGreen,
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                child: Text("Test",
+                child: Center(
+                  child: Text(
+                    "Test",
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: height * 0.014,
-                        color: Colors.white)),
-              ),
-            ),
-            const Spacer(),
-            InkWell(
-              onTap: () {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, '/', ((route) => false));
-              },
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  color: Colors.teal,
+                        color: Colors.white,
+                        fontSize: height * 0.015,
+                        fontWeight: FontWeight.w600),
+                  ),
+                )),
+          ),
+          SizedBox(
+            width: width * 0.03,
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/', ((route) => false));
+            },
+            child: Container(
+                height: height * 0.03,
+                width: width * 0.15,
+                decoration: BoxDecoration(
+                  color: ColorPalette.materialGreen,
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                child: Text("Logout",
+                child: Center(
+                  child: Text(
+                    "Exit",
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: height * 0.014,
-                        color: Colors.white)),
-              ),
-            ),
-          ],
-        ));
+                        color: Colors.white,
+                        fontSize: height * 0.015,
+                        fontWeight: FontWeight.w600),
+                  ),
+                )),
+          )
+        ],
+      ),
+    );
   }
 
   // 设置编辑状态
@@ -286,7 +299,7 @@ class _KioskManagerState extends State<KioskManager> {
   // 保存取消按钮
   // Save Cancel button
   Widget saveCancelButton() {
-    double buttonWidth = weight * 0.25;
+    double buttonWidth = width * 0.25;
     double buttonHeight = height * 0.04;
     double fontSize = buttonHeight * 0.55;
 
@@ -390,10 +403,10 @@ class _KioskManagerState extends State<KioskManager> {
   // define title bar
   Widget customAppBar() {
     final headerHeight = height * 0.08;
-    final boxWidth = weight * 0.04;
+    final boxWidth = width * 0.04;
     final textfontSize = headerHeight * 0.3;
     final bntFontSize = headerHeight * 0.25;
-    final bntWidth = weight * 0.3;
+    final bntWidth = width * 0.3;
 
     return AppBar(
         backgroundColor: ColorPalette.headerFooterBackground,

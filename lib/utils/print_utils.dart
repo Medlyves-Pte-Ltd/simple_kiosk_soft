@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:simple_kiosk_software/utils/device_id_map.dart';
+import 'package:simple_kiosk_software/utils/print_map.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 
 // 注意事项:
@@ -160,7 +160,7 @@ class PrintUtils {
     UserInfo().toJson().forEach((key, value) {
       delta = drawText(
           canvas,
-          DeviceMap.codeToName(key, context),
+          PrintMap.codeToName(key, context),
           TextAlign.left,
           fontSize,
           const ui.Color(0xFF000000),

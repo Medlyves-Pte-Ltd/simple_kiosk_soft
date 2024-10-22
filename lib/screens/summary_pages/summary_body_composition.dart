@@ -89,6 +89,12 @@ class SummaryBodyComposition extends StatelessWidget {
               UserInfo().bodyWaterPercentage),
           buildItem(AppLocalizations.of(mainContext)!.bcm_protein_percentage,
               UserInfo().proteinPercentage),
+          buildItem(AppLocalizations.of(mainContext)!.bcm_muscle_mass,
+              UserInfo().muscleMass),
+          buildItem(
+              AppLocalizations.of(mainContext)!.body_age, UserInfo().bodyAge),
+          buildItem(AppLocalizations.of(mainContext)!.bcm_extrac_fluid,
+              UserInfo().extracellularFluid),
         ],
       ),
     );

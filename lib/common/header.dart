@@ -32,10 +32,10 @@ class _HeaderState extends State<Header> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image(
-              image: const AssetImage('assets/images/nhc_logo.png'),
-              width: imageWidth,
-            ),
+            // Image(
+            //   image: const AssetImage('assets/images/nhc_logo.png'),
+            //   width: imageWidth,
+            // ),
             SizedBox(
               width: boxWidth,
             ),
