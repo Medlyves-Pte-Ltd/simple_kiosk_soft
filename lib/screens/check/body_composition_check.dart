@@ -32,6 +32,16 @@ class BodyCompositionCheck extends BaseCheckWidget {
   late String bodyAge = "";
   // Extracellular Water Rate (细胞外液率) %
   late String extracellularFluid = ''; //
+  // Intracellular Water Rate (细胞内液率)
+  late String intracellularWaterPercentage = '';
+  // Total moisture (总水分)
+  late String totalMoisture = '';
+  // 蛋白质
+  late String protein = '';
+  // Skeletal Muscle Percentage 骨骼肌率
+  late String skeletalMusclePercentage = '';
+  // Body Fat Mass 脂肪量
+  late String bodyFatMass = '';
 
   BodyCompositionCheck() {
     iconFile = "assets/images/bodycomposition_logo.png";
@@ -60,6 +70,21 @@ class BodyCompositionCheck extends BaseCheckWidget {
         UserInfo().bodyAge.isNotEmpty ? UserInfo().bodyAge : dataDefaultValue;
     extracellularFluid = UserInfo().extracellularFluid.isNotEmpty
         ? UserInfo().extracellularFluid
+        : dataDefaultValue;
+    intracellularWaterPercentage =
+        UserInfo().intracellularWaterPercentage.isNotEmpty
+            ? UserInfo().intracellularWaterPercentage
+            : dataDefaultValue;
+    totalMoisture = UserInfo().totalMoisture.isNotEmpty
+        ? UserInfo().totalMoisture
+        : dataDefaultValue;
+    protein =
+        UserInfo().protein.isNotEmpty ? UserInfo().protein : dataDefaultValue;
+    skeletalMusclePercentage = UserInfo().skeletalMusclePercentage.isNotEmpty
+        ? UserInfo().skeletalMusclePercentage
+        : dataDefaultValue;
+    bodyFatMass = UserInfo().bodyFatMass.isNotEmpty
+        ? UserInfo().bodyFatMass
         : dataDefaultValue;
   }
 
@@ -135,9 +160,12 @@ class BodyCompositionCheck extends BaseCheckWidget {
 
       if (state is DeviceConnected) {
         measured = false;
-        muscleMass = bodyAge = extracellularFluid = bodyFatPercentage =
-            boneMass = basalMetabolism = boneMass = visceralFatLevel =
-                proteinPercentage = bodyWaterPercentage = dataDefaultValue;
+        intracellularWaterPercentage = totalMoisture = protein =
+            skeletalMusclePercentage = bodyFatMass = muscleMass = bodyAge =
+                extracellularFluid = bodyFatPercentage = boneMass =
+                    basalMetabolism = boneMass = visceralFatLevel =
+                        proteinPercentage =
+                            bodyWaterPercentage = dataDefaultValue;
 
         UserInfo().bodyFatPercentage = "";
         UserInfo().bodyFatMass = "";
@@ -150,56 +178,65 @@ class BodyCompositionCheck extends BaseCheckWidget {
         UserInfo().muscleMass = "";
         UserInfo().bodyAge = "";
         UserInfo().extracellularFluid = "";
+        UserInfo().intracellularWaterPercentage = "";
+        UserInfo().totalMoisture = "";
+        UserInfo().protein = "";
+        UserInfo().skeletalMusclePercentage = "";
+        UserInfo().bodyFatMass = "";
 
         update = true;
       } else if (state is DeviceDataLoading) {
-        muscleMass = bodyAge = extracellularFluid = bodyFatPercentage =
-            boneMass = basalMetabolism = boneMass = visceralFatLevel =
-                proteinPercentage = bodyWaterPercentage =
-                    AppLocalizations.of(mainContext)!.loading;
+        intracellularWaterPercentage = totalMoisture = protein =
+            skeletalMusclePercentage = bodyFatMass = muscleMass = bodyAge =
+                extracellularFluid = bodyFatPercentage = boneMass =
+                    basalMetabolism = boneMass = visceralFatLevel =
+                        proteinPercentage = bodyWaterPercentage =
+                            AppLocalizations.of(mainContext)!.loading;
         update = true;
       } else if (state is DeviceDataUpdated) {
         if (state.deviceData is BodyCompositionData) {
           BodyCompositionData bodyCompositionData =
               state.deviceData as BodyCompositionData;
-          bodyFatPercentage = bodyCompositionData.bodyFatPercentage ?? "";
-          basalMetabolism = bodyCompositionData.basalMetabolism ?? "";
-          boneMass = bodyCompositionData.boneMass ?? "";
-          visceralFatLevel = bodyCompositionData.visceralFatLevel ?? "";
-          proteinPercentage = bodyCompositionData.proteinPercentage ?? "";
-          bodyWaterPercentage = bodyCompositionData.bodyWaterPercentage ?? "";
-
-          muscleMass = bodyCompositionData.muscleMass ?? "";
-          bodyAge = bodyCompositionData.bodyAge ?? "";
-          extracellularFluid =
-              bodyCompositionData.extracellularWaterPercentage ?? "";
-
           UserInfo().bodyFatPercentage =
-              bodyCompositionData.bodyFatPercentage ?? "";
-          UserInfo().bodyFatMass = bodyCompositionData.bodyFatPercentage ?? "";
+              bodyFatPercentage = bodyCompositionData.bodyFatPercentage ?? "";
           UserInfo().basalMetabolism =
-              bodyCompositionData.basalMetabolism ?? "";
-          UserInfo().boneMass = bodyCompositionData.boneMass ?? "";
+              basalMetabolism = bodyCompositionData.basalMetabolism ?? "";
+          UserInfo().boneMass = boneMass = bodyCompositionData.boneMass ?? "";
           UserInfo().visceralFatLevel =
-              bodyCompositionData.visceralFatLevel ?? "";
+              visceralFatLevel = bodyCompositionData.visceralFatLevel ?? "";
           UserInfo().proteinPercentage =
-              bodyCompositionData.proteinPercentage ?? "";
-          UserInfo().mineral = bodyCompositionData.mineral ?? "";
-          UserInfo().bodyWaterPercentage =
+              proteinPercentage = bodyCompositionData.proteinPercentage ?? "";
+          UserInfo().bodyWaterPercentage = bodyWaterPercentage =
               bodyCompositionData.bodyWaterPercentage ?? "";
-          UserInfo().muscleMass = bodyCompositionData.muscleMass ?? "";
-          UserInfo().bodyAge = bodyCompositionData.bodyAge ?? "";
-          UserInfo().extracellularFluid =
+
+          UserInfo().muscleMass =
+              muscleMass = bodyCompositionData.muscleMass ?? "";
+          UserInfo().bodyAge = bodyAge = bodyCompositionData.bodyAge ?? "";
+          UserInfo().extracellularFluid = extracellularFluid =
               bodyCompositionData.extracellularWaterPercentage ?? "";
+
+          UserInfo().intracellularWaterPercentage =
+              intracellularWaterPercentage =
+                  bodyCompositionData.intracellularWaterPercentage ?? "";
+          UserInfo().totalMoisture =
+              totalMoisture = bodyCompositionData.totalMoisture ?? "";
+          UserInfo().protein = protein = bodyCompositionData.protein ?? "";
+          UserInfo().skeletalMusclePercentage = skeletalMusclePercentage =
+              bodyCompositionData.skeletalMusclePercentage ?? "";
+          UserInfo().bodyFatMass =
+              bodyFatMass = bodyCompositionData.bodyFatMass ?? "";
 
           measured = true;
           update = true;
         }
       } else if (state is DeviceDisconnected) {
         if (!measured) {
-          muscleMass = bodyAge = extracellularFluid = bodyFatPercentage =
-              boneMass = basalMetabolism = boneMass = visceralFatLevel =
-                  proteinPercentage = bodyWaterPercentage = dataDefaultValue;
+          intracellularWaterPercentage = totalMoisture = protein =
+              skeletalMusclePercentage = bodyFatMass = muscleMass = bodyAge =
+                  extracellularFluid = bodyFatPercentage = boneMass =
+                      basalMetabolism = boneMass = visceralFatLevel =
+                          proteinPercentage =
+                              bodyWaterPercentage = dataDefaultValue;
           update = true;
         }
       }
@@ -235,6 +272,13 @@ class BodyCompositionCheck extends BaseCheckWidget {
           buildItem(AppLocalizations.of(context)!.body_age, bodyAge),
           buildItem(AppLocalizations.of(context)!.bcm_extrac_fluid,
               extracellularFluid),
+          buildItem(AppLocalizations.of(context)!.bcm_intrac_fluid,
+              intracellularWaterPercentage),
+          buildItem(AppLocalizations.of(context)!.bcm_moisture, totalMoisture),
+          buildItem(AppLocalizations.of(context)!.bcm_protein, protein),
+          buildItem(AppLocalizations.of(context)!.bcm_skeletal,
+              skeletalMusclePercentage),
+          buildItem(AppLocalizations.of(context)!.bcm_fatmass, bodyFatMass),
         ],
       );
     });

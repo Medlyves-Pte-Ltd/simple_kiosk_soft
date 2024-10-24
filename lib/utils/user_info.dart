@@ -46,13 +46,17 @@ class UserInfo {
   String proteinPercentage = '';
   // Extracellular Water Rate (细胞外液率) %
   String extracellularFluid = ''; //
-
+  // Protein (蛋白质)
+  String protein = '';
+  // Intracellular Water Rate (细胞内液率)
+  String intracellularWaterPercentage = '';
+  // Total moisture (总水分)
+  String totalMoisture = '';
   // Body Fat Mass (脂肪量)
   String bodyFatMass = '';
   // Skeletal Muscle Rate (骨骼肌率)
   String skeletalMusclePercentage = '';
-  // Protein (蛋白质)
-  String protein = '';
+
   // Mineral (无机盐)
   String mineral = '';
 
@@ -97,6 +101,11 @@ class UserInfo {
     extracellularFluid = "";
     bodyAge = "";
     bodyFatPercentage = '';
+    intracellularWaterPercentage = "";
+    totalMoisture = "";
+    protein = "";
+    skeletalMusclePercentage = "";
+    bodyFatMass = "";
     muscleMass = '';
     ldl = '';
     trig = '';
@@ -107,9 +116,7 @@ class UserInfo {
     bloodOxygen = '';
     spo2HeartRate = "";
     mineral = '';
-    protein = '';
     visceralFatLevel = '';
-    skeletalMusclePercentage = '';
     basalMetabolism = '';
     bodyFatMass = '';
     heartRate = '';
@@ -159,6 +166,11 @@ class UserInfo {
       "muscleMass": muscleMass,
       "bodyAge": bodyAge,
       "extracellularFluid": extracellularFluid,
+      "protein": protein,
+      "intracellularWaterPercentage": intracellularWaterPercentage,
+      "totalMoisture": totalMoisture,
+      "bodyFatMass": bodyFatMass,
+      "skeletalMusclePercentage": skeletalMusclePercentage,
       "HR": HR,
       "P_Width": P_Width,
       "PR": PR,

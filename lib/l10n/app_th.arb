@@ -20,6 +20,8 @@
   "bcm_bone_mass": "มวลกระดูก (kg)",
   "bcm_muscle_mass": "กล้ามเนื้อ（kg）",
   "bcm_extrac_fluid":"ของเหลวนอกเซลล์（%）",
+  "bcm_intrac_fluid": "ของเหลวภายในเซลล์（%）",
+  "bcm_moisture": "ความชื้น（kg）",
   "blood_pressure": "ความดันโลหิต",
   "bp_bloodpressure": "ความดันโลหิต (mmHg)",
   "bp_pulse": "อัตราชีพจร (bpm)",

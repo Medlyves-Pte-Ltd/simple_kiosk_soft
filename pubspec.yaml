@@ -82,5 +82,5 @@ flutter:
     - assets/videos/ta/
     - assets/videos/ms/
     - assets/videos/th/
-    # device configs
+    - assets/configs/
     - assets/configs/devices/

@@ -12,6 +12,7 @@ import 'package:simple_kiosk_software/blocs/device/device_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/base_measure_layout_widget.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
+import 'package:simple_kiosk_software/utils/body_range.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 
@@ -152,6 +153,8 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
         if (state.deviceData is HeightData) {
           String h = (state.deviceData as HeightData).height;
           UserInfo().height = "${double.parse(h).toStringAsFixed(1)}";
+          // 计算标准体重
+          BodyRange().calculateStandWeight();
           heightMeasured = true;
           // 如果收到身高数据，先关闭身高设备，再打开体重设备
           Future.delayed(const Duration(milliseconds: 300), () {
@@ -215,12 +218,34 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
                       fontSize: titleFontSize, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: height * 0.02),
-                Text(
-                  bodyWeight,
-                  style: TextStyle(
-                      fontSize: dataFontSize,
-                      fontWeight: FontWeight.bold,
-                      color: ColorPalette.materialGreen),
+                ControlMeasurePageUtils().measured
+                    ? Text(
+                        bodyWeight,
+                        style: TextStyle(
+                            fontSize: dataFontSize,
+                            fontWeight: FontWeight.bold,
+                            color: (double.parse(bodyWeight) >
+                                        BodyRange().weightMax ||
+                                    double.parse(bodyWeight) <
+                                        BodyRange().weightMin)
+                                ? Colors.red
+                                : ColorPalette.materialGreen),
+                      )
+                    : Text(
+                        bodyWeight,
+                        style: TextStyle(
+                            fontSize: dataFontSize,
+                            fontWeight: FontWeight.bold,
+                            color: ColorPalette.materialGreen),
+                      ),
+                Visibility(
+                  child: Text(
+                    "(${BodyRange().weightMin.toStringAsFixed(1)} - ${BodyRange().weightMax.toStringAsFixed(1)})",
+                    style: TextStyle(
+                        fontSize: dataFontSize,
+                        color: ColorPalette.materialGreen),
+                  ),
+                  visible: ControlMeasurePageUtils().measured,
                 )
               ],
             )

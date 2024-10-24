@@ -10,6 +10,7 @@ import 'package:simple_kiosk_software/common/layouts/layout2.dart';
 import 'package:simple_kiosk_software/common/login_textfield.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:simple_kiosk_software/utils/body_range.dart';
 
 import 'package:simple_kiosk_software/utils/storage_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
@@ -146,6 +147,7 @@ class UserLoginState extends State<UserLogin> {
                               onTap: () async {
                                 if (context.mounted) {
                                   UserInfo().clearResult();
+                                  BodyRange().init();
                                   Navigator.pushNamedAndRemoveUntil(context,
                                       '/HeightWeightMeasure', (route) => false);
                                 }

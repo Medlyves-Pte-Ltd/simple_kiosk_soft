@@ -20,6 +20,8 @@
   "bcm_bone_mass": "Bone Mass (kg)",
   "bcm_muscle_mass": "Muscle Mass（kg）",
   "bcm_extrac_fluid":"Extrac Fluid（%）",
+  "bcm_intrac_fluid": "Intrac Fluid（%）",
+  "bcm_moisture": "Total Moisture（kg）",
   "blood_pressure": "Blood Pressure",
   "bp_bloodpressure": "Blood Pressure (mmHg)",
   "bp_pulse": "Heart Rate (bpm)",

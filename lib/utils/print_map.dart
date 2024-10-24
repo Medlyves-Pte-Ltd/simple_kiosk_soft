@@ -3,9 +3,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PrintMap {
   static String codeToName(String code, BuildContext context) {
-    if (context == null) {
-      return 'Unknown'; // Or any default text
-    }
     final loc = AppLocalizations.of(context)!;
     switch (code) {
       case 'height':
@@ -56,6 +53,14 @@ class PrintMap {
         return loc.body_age;
       case "extracellularFluid":
         return loc.bcm_extrac_fluid;
+      case "intracellularWaterPercentage":
+        return loc.bcm_intrac_fluid;
+      case "totalMoisture":
+        return loc.bcm_moisture;
+      case "bodyFatMass":
+        return loc.bcm_fatmass;
+      case "skeletalMusclePercentage":
+        return loc.bcm_skeletal;
 
       // 心电图
       case "HR":
@@ -77,66 +82,8 @@ class PrintMap {
       case "T_Axis":
         return loc.ecg_t_axis;
 
-      //   case 'bmi':
-      //     return loc.bmi;
-      //   case 'bodyFatPercentage':
-      //     return loc.fat_percent;
-      //   case 'bodyFatMass':
-      //     return loc.fat_mass;
-      //   case 'skeletalMusclePercentage':
-      //     return loc.muscle_percent;
-      //   case 'basalMetabolism':
-      //     return loc.basal_meta;
-      //   case 'visceralFatLevel':
-      //     return loc.fat_lvl;
-      //   case 'protein':
-      //     return loc.protein;
-      //   case 'bodyAge':
-      //     return loc.body_age;
-      //   case 'overall':
-      //     return loc.overall;
-      //   case 'mineral':
-      //     return loc.mineral;
-      //   case 'temperature':
-      //     return loc.body_temp;
-      //   case 'hr':
-      //     return loc.spo2_heart_rate;
-      //   case 'spo2':
-      //     return loc.spo2;
       case 'bo_heartrate':
         return loc.bo_heartrate;
-      //   case 'systolic':
-      //     return loc.systolic;
-      //   case 'diastolic':
-      //     return loc.diastolic;
-      //   case 'bpHeartRate':
-      //     return loc.bpHeartRate;
-      //   case 'ecg_hr':
-      //     return loc.ecg_heart_rate;
-      //   case 'ecg_rr':
-      //     return loc.ecg_resp_rate;
-      //   case 'ecg_p_width':
-      //     return loc.ecg_pwave_width;
-      //   case 'ecg_pr':
-      //     return loc.ecg_pr_int;
-      //   case 'ecg_qrs_dur':
-      //     return loc.ecg_qrs_comp_dur;
-      //   case 'ecg_qt':
-      //     return loc.ecg_qt_int;
-      //   case 'ecg_qtc':
-      //     return loc.ecg_qtc_int;
-      //   case 'ecg_p_axis':
-      //     return loc.ecg_pwave_amp;
-      //   case 'ecg_qrs_axis':
-      //     return loc.ecg_qrs_amp;
-      //   case 'ecg_t_axis':
-      //     return loc.ecg_twave_amp;
-      //   case 'ecg_cln':
-      //     return loc.ecg_concl;
-      //   case 'bp':
-      //     return loc.bp;
-      //   case 'ecg':
-      //     return loc.ecg;
       default:
         return 'Unknown';
     }

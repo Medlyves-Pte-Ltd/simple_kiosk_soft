@@ -20,6 +20,8 @@
   "bcm_bone_mass": "骨量（kg）",
   "bcm_muscle_mass": "肌肉量（kg）",
   "bcm_extrac_fluid":"细胞外液（%）",
+  "bcm_intrac_fluid": "细胞内液（%）",
+  "bcm_moisture": "总水分（kg）",
   "blood_pressure": "血压",
   "bp_bloodpressure": "血压（mmHg）",
   "bp_pulse": "脉搏（bpm）",

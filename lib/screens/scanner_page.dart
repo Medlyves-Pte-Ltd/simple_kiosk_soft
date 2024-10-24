@@ -15,6 +15,7 @@ import 'package:simple_kiosk_software/common/header.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
 import 'package:simple_kiosk_software/remote/config/settings.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
+import 'package:simple_kiosk_software/utils/body_range.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/scanner_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
@@ -91,6 +92,7 @@ class ScannerPageState extends State<ScannerPage> {
     ScannerUtils().listenData = null;
     ControlMeasurePageUtils().pageIndex = 0;
     ControlMeasurePageUtils().clearMeasure();
+    BodyRange().init();
     Navigator.pushNamedAndRemoveUntil(
         mainContext, "/HeightWeightMeasure", (route) => false);
   }

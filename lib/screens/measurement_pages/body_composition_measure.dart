@@ -36,6 +36,16 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
   late String bodyAge = "";
   // Extracellular Water Rate (细胞外液率) %
   late String extracellularFluid = ''; //
+  // Intracellular Water Rate (细胞内液率)
+  late String intracellularWaterPercentage = '';
+  // Total moisture (总水分)
+  late String totalMoisture = '';
+  // 蛋白质
+  late String protein = '';
+  // Skeletal Muscle Percentage 骨骼肌率
+  late String skeletalMusclePercentage = '';
+  // Body Fat Mass 脂肪量
+  late String bodyFatMass = '';
 
   BodyCompositionMeasure() {
     bodyFatPercentage = UserInfo().bodyFatPercentage.isNotEmpty
@@ -62,6 +72,21 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
         UserInfo().bodyAge.isNotEmpty ? UserInfo().bodyAge : dataDefaultValue;
     extracellularFluid = UserInfo().extracellularFluid.isNotEmpty
         ? UserInfo().extracellularFluid
+        : dataDefaultValue;
+    intracellularWaterPercentage =
+        UserInfo().intracellularWaterPercentage.isNotEmpty
+            ? UserInfo().intracellularWaterPercentage
+            : dataDefaultValue;
+    totalMoisture = UserInfo().totalMoisture.isNotEmpty
+        ? UserInfo().totalMoisture
+        : dataDefaultValue;
+    protein =
+        UserInfo().protein.isNotEmpty ? UserInfo().protein : dataDefaultValue;
+    skeletalMusclePercentage = UserInfo().skeletalMusclePercentage.isNotEmpty
+        ? UserInfo().skeletalMusclePercentage
+        : dataDefaultValue;
+    bodyFatMass = UserInfo().bodyFatMass.isNotEmpty
+        ? UserInfo().bodyFatMass
         : dataDefaultValue;
   }
 
@@ -144,9 +169,11 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
       if (state is DeviceConnected) {
         ControlMeasurePageUtils().measured = false;
         measured = false;
-        muscleMass = bodyAge = extracellularFluid = bodyFatPercentage =
-            boneMass = basalMetabolism = visceralFatLevel =
-                proteinPercentage = bodyWaterPercentage = dataDefaultValue;
+        intracellularWaterPercentage = totalMoisture = protein =
+            skeletalMusclePercentage = bodyFatMass = muscleMass = bodyAge =
+                extracellularFluid = bodyFatPercentage = boneMass =
+                    basalMetabolism = visceralFatLevel = proteinPercentage =
+                        bodyWaterPercentage = dataDefaultValue;
 
         UserInfo().bodyFatPercentage = "";
         UserInfo().bodyFatMass = "";
@@ -159,12 +186,21 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
         UserInfo().muscleMass = "";
         UserInfo().bodyAge = "";
         UserInfo().extracellularFluid = "";
+
+        UserInfo().intracellularWaterPercentage = "";
+        UserInfo().totalMoisture = "";
+        UserInfo().protein = "";
+        UserInfo().skeletalMusclePercentage = "";
+        UserInfo().bodyFatMass = "";
+
         update = true;
       } else if (state is DeviceDataLoading) {
-        muscleMass = bodyAge = extracellularFluid = bodyFatPercentage =
-            boneMass = basalMetabolism = boneMass = visceralFatLevel =
-                proteinPercentage = bodyWaterPercentage =
-                    AppLocalizations.of(mainContext)!.loading;
+        intracellularWaterPercentage = totalMoisture = protein =
+            skeletalMusclePercentage = bodyFatMass = muscleMass = bodyAge =
+                extracellularFluid = bodyFatPercentage = boneMass =
+                    basalMetabolism = boneMass = visceralFatLevel =
+                        proteinPercentage = bodyWaterPercentage =
+                            AppLocalizations.of(mainContext)!.loading;
         update = true;
       } else if (state is DeviceDataUpdated) {
         if (state.deviceData is BodyCompositionData) {
@@ -188,12 +224,23 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
           UserInfo().extracellularFluid = extracellularFluid =
               bodyCompositionData.extracellularWaterPercentage ?? "";
 
+          UserInfo().intracellularWaterPercentage =
+              intracellularWaterPercentage =
+                  bodyCompositionData.intracellularWaterPercentage ?? "";
+          UserInfo().totalMoisture =
+              totalMoisture = bodyCompositionData.totalMoisture ?? "";
+          UserInfo().protein = protein = bodyCompositionData.protein ?? "";
+          UserInfo().skeletalMusclePercentage = skeletalMusclePercentage =
+              bodyCompositionData.skeletalMusclePercentage ?? "";
+          UserInfo().bodyFatMass =
+              bodyFatMass = bodyCompositionData.bodyFatMass ?? "";
+
           if (AppConfig().enableTC) {
             BlocProvider.of<AppointmentBloc>(mainContext).processNewData({
               'bodyFatPercentage': UserInfo().bodyFatPercentage,
               'basalMetabolism': UserInfo().basalMetabolism,
               'visceralFatLevel': UserInfo().visceralFatLevel,
-              'protein': UserInfo().proteinPercentage,
+              'protein': UserInfo().protein,
               "bodyWaterPercentage": UserInfo().bodyWaterPercentage
             });
           }
@@ -204,9 +251,11 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
         }
       } else if (state is DeviceDisconnected) {
         if (!measured) {
-          muscleMass = bodyAge = extracellularFluid = bodyFatPercentage =
-              boneMass = basalMetabolism = visceralFatLevel =
-                  proteinPercentage = bodyWaterPercentage = dataDefaultValue;
+          intracellularWaterPercentage = totalMoisture = protein =
+              skeletalMusclePercentage = bodyFatMass = muscleMass = bodyAge =
+                  extracellularFluid = bodyFatPercentage = boneMass =
+                      basalMetabolism = visceralFatLevel = proteinPercentage =
+                          bodyWaterPercentage = dataDefaultValue;
           update = true;
         }
       }
@@ -252,6 +301,14 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
             buildItem(AppLocalizations.of(context)!.body_age, bodyAge),
             buildItem(AppLocalizations.of(context)!.bcm_extrac_fluid,
                 extracellularFluid),
+            buildItem(AppLocalizations.of(context)!.bcm_intrac_fluid,
+                intracellularWaterPercentage),
+            buildItem(
+                AppLocalizations.of(context)!.bcm_moisture, totalMoisture),
+            buildItem(AppLocalizations.of(context)!.bcm_protein, protein),
+            buildItem(AppLocalizations.of(context)!.bcm_skeletal,
+                skeletalMusclePercentage),
+            buildItem(AppLocalizations.of(context)!.bcm_fatmass, bodyFatMass),
           ],
         ),
       );

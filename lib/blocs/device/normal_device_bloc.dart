@@ -47,7 +47,7 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     } else if (deviceType == DeviceType.WEIGHT_DEVICE) {
       Future.delayed(const Duration(milliseconds: 1000), () {
         add(DeviceUpdateDataEvent(
-            deviceData: WeightData("90"), deviceType: deviceType));
+            deviceData: WeightData("81.5"), deviceType: deviceType));
       });
     } else if (deviceType == DeviceType.TEMP_DEVICE) {
       Future.delayed(const Duration(milliseconds: 1000), () {
