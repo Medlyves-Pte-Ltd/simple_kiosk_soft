@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:simple_kiosk_software/common/range_widget.dart';
+import 'package:simple_kiosk_software/utils/body_range.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 
 class SummaryBasicVitals extends StatelessWidget {
@@ -55,26 +57,27 @@ class SummaryBasicVitals extends StatelessWidget {
               ColorPalette.colorbodytemperature),
           Padding(
             padding: EdgeInsets.only(
-              left: width * 0.1,
-              right: width * 0.1,
               top: height * 0.01,
               bottom: height * 0.01,
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   AppLocalizations.of(mainContext)!.temp_temperature,
                   style: TextStyle(
                       fontSize: titleFontSize, fontWeight: FontWeight.bold),
                 ),
-                const Spacer(),
-                Text(
-                  UserInfo().temperature,
-                  style: TextStyle(
-                      fontSize: dataFontSize,
-                      fontWeight: FontWeight.bold,
-                      color: ColorPalette.materialGreen),
-                )
+                summaryValueChangeColor(
+                    UserInfo().temperature,
+                    BodyRange().temperatureMin.toStringAsFixed(1),
+                    BodyRange().temperatureMax.toStringAsFixed(1),
+                    dataFontSize,
+                    true),
+                rangeSummaryWidget(
+                    BodyRange().temperatureMin.toStringAsFixed(1),
+                    BodyRange().temperatureMax.toStringAsFixed(1),
+                    dataFontSize)
               ],
             ),
           )
@@ -96,51 +99,49 @@ class SummaryBasicVitals extends StatelessWidget {
               ColorPalette.colorbloodoxygen),
           Padding(
             padding: EdgeInsets.only(
-              left: width * 0.1,
-              right: width * 0.1,
               top: height * 0.01,
               bottom: height * 0.01,
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   AppLocalizations.of(mainContext)!.bo_oxygen_staturation,
                   style: TextStyle(
                       fontSize: titleFontSize, fontWeight: FontWeight.bold),
                 ),
-                const Spacer(),
-                Text(
-                  UserInfo().bloodOxygen,
-                  style: TextStyle(
-                      fontSize: dataFontSize,
-                      fontWeight: FontWeight.bold,
-                      color: ColorPalette.materialGreen),
-                )
+                summaryValueChangeColor(
+                    UserInfo().bloodOxygen,
+                    BodyRange().spo2Min.toString(),
+                    BodyRange().spo2Max.toString(),
+                    dataFontSize,
+                    true),
+                rangeSummaryWidget(BodyRange().spo2Min.toString(),
+                    BodyRange().spo2Max.toString(), dataFontSize)
               ],
             ),
           ),
           Padding(
             padding: EdgeInsets.only(
-              left: width * 0.1,
-              right: width * 0.1,
               top: height * 0.01,
               bottom: height * 0.01,
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   AppLocalizations.of(mainContext)!.bo_heartrate,
                   style: TextStyle(
                       fontSize: titleFontSize, fontWeight: FontWeight.bold),
                 ),
-                const Spacer(),
-                Text(
-                  UserInfo().spo2HeartRate,
-                  style: TextStyle(
-                      fontSize: dataFontSize,
-                      fontWeight: FontWeight.bold,
-                      color: ColorPalette.materialGreen),
-                )
+                summaryValueChangeColor(
+                    UserInfo().spo2HeartRate,
+                    BodyRange().heartRateMin.toString(),
+                    BodyRange().heartRateMax.toString(),
+                    dataFontSize,
+                    true),
+                rangeSummaryWidget(BodyRange().heartRateMin.toString(),
+                    BodyRange().heartRateMax.toString(), dataFontSize)
               ],
             ),
           )
@@ -162,12 +163,11 @@ class SummaryBasicVitals extends StatelessWidget {
               ColorPalette.colorbloodGlucose),
           Padding(
             padding: EdgeInsets.only(
-              left: width * 0.1,
-              right: width * 0.1,
               top: height * 0.01,
               bottom: height * 0.01,
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   AppLocalizations.of(mainContext)!.bg_ifcc,
@@ -187,12 +187,11 @@ class SummaryBasicVitals extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(
-              left: width * 0.1,
-              right: width * 0.1,
               top: height * 0.01,
               bottom: height * 0.01,
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   AppLocalizations.of(mainContext)!.bg_bloodglucose,
@@ -226,12 +225,11 @@ class SummaryBasicVitals extends StatelessWidget {
               AppLocalizations.of(mainContext)!.bf, ColorPalette.colorbloodFat),
           Padding(
             padding: EdgeInsets.only(
-              left: width * 0.1,
-              right: width * 0.1,
               top: height * 0.01,
               bottom: height * 0.01,
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   AppLocalizations.of(mainContext)!.bf_totalCholesterol,
@@ -251,12 +249,11 @@ class SummaryBasicVitals extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(
-              left: width * 0.1,
-              right: width * 0.1,
               top: height * 0.01,
               bottom: height * 0.01,
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   AppLocalizations.of(mainContext)!.bf_triglyceride,
@@ -276,12 +273,11 @@ class SummaryBasicVitals extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(
-              left: width * 0.1,
-              right: width * 0.1,
               top: height * 0.01,
               bottom: height * 0.01,
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   AppLocalizations.of(mainContext)!.bf_hgl,
@@ -301,12 +297,11 @@ class SummaryBasicVitals extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(
-              left: width * 0.1,
-              right: width * 0.1,
               top: height * 0.01,
               bottom: height * 0.01,
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   AppLocalizations.of(mainContext)!.bf_ldl,
@@ -342,24 +337,35 @@ class SummaryBasicVitals extends StatelessWidget {
               ColorPalette.colorbloodPressure),
           Padding(
             padding: EdgeInsets.only(
-              left: width * 0.1,
-              right: width * 0.1,
               top: height * 0.01,
               bottom: height * 0.01,
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   AppLocalizations.of(mainContext)!.bp_bloodpressure,
                   style: TextStyle(
                       fontSize: titleFontSize, fontWeight: FontWeight.bold),
                 ),
-                const Spacer(),
                 Text(
                   "${UserInfo().systolic}/${UserInfo().diastolic}",
                   style: TextStyle(
                       fontSize: dataFontSize,
                       fontWeight: FontWeight.bold,
+                      color: UserInfo().systolic.isNotEmpty &&
+                              UserInfo().diastolic.isNotEmpty &&
+                              ((double.parse(UserInfo().systolic) >
+                                      BodyRange().systolicMax ||
+                                  double.parse(UserInfo().diastolic) >
+                                      BodyRange().diastolicMax))
+                          ? Colors.red
+                          : ColorPalette.materialGreen),
+                ),
+                Text(
+                  "( < ${BodyRange().systolicMax})/( < ${BodyRange().diastolicMax})",
+                  style: TextStyle(
+                      fontSize: dataFontSize,
                       color: ColorPalette.materialGreen),
                 )
               ],
@@ -367,26 +373,25 @@ class SummaryBasicVitals extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(
-              left: width * 0.1,
-              right: width * 0.1,
               top: height * 0.01,
               bottom: height * 0.01,
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   AppLocalizations.of(mainContext)!.bp_pulse,
                   style: TextStyle(
                       fontSize: titleFontSize, fontWeight: FontWeight.bold),
                 ),
-                const Spacer(),
-                Text(
-                  UserInfo().heartRate,
-                  style: TextStyle(
-                      fontSize: dataFontSize,
-                      fontWeight: FontWeight.bold,
-                      color: ColorPalette.materialGreen),
-                )
+                summaryValueChangeColor(
+                    UserInfo().heartRate,
+                    BodyRange().heartRateMin.toString(),
+                    BodyRange().heartRateMax.toString(),
+                    dataFontSize,
+                    true),
+                rangeSummaryWidget(BodyRange().heartRateMin.toString(),
+                    BodyRange().heartRateMax.toString(), dataFontSize)
               ],
             ),
           )
@@ -408,50 +413,51 @@ class SummaryBasicVitals extends StatelessWidget {
               ColorPalette.colorheightWeight),
           Padding(
             padding: EdgeInsets.only(
-              left: width * 0.1,
-              right: width * 0.1,
               top: height * 0.01,
               bottom: height * 0.01,
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   AppLocalizations.of(mainContext)!.hw_height,
                   style: TextStyle(
                       fontSize: titleFontSize, fontWeight: FontWeight.bold),
                 ),
-                const Spacer(),
                 Text(
                   UserInfo().height,
                   style: TextStyle(
                       fontSize: dataFontSize,
                       fontWeight: FontWeight.bold,
                       color: ColorPalette.materialGreen),
-                )
+                ),
+                Text("")
               ],
             ),
           ),
           Padding(
             padding: EdgeInsets.only(
-              left: width * 0.1,
-              right: width * 0.1,
               top: height * 0.01,
               bottom: height * 0.01,
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   AppLocalizations.of(mainContext)!.hw_weight,
                   style: TextStyle(
                       fontSize: titleFontSize, fontWeight: FontWeight.bold),
                 ),
-                const Spacer(),
-                Text(
-                  UserInfo().weight,
-                  style: TextStyle(
-                      fontSize: dataFontSize,
-                      fontWeight: FontWeight.bold,
-                      color: ColorPalette.materialGreen),
+                summaryValueChangeColor(
+                    UserInfo().weight,
+                    BodyRange().weightMin.toStringAsFixed(1),
+                    BodyRange().weightMax.toStringAsFixed(1),
+                    dataFontSize,
+                    true),
+                rangeSummaryWidget(
+                  BodyRange().weightMin.toStringAsFixed(1),
+                  BodyRange().weightMax.toStringAsFixed(1),
+                  dataFontSize,
                 )
               ],
             ),

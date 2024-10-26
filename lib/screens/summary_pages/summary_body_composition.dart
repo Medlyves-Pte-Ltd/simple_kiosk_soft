@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
+import 'package:simple_kiosk_software/common/range_widget.dart';
+import 'package:simple_kiosk_software/utils/body_range.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 
@@ -37,31 +39,25 @@ class SummaryBodyComposition extends StatelessWidget {
         ));
   }
 
-  Widget buildItem(String title, String? data) {
+  Widget buildItem(
+      String title, String? data, String min, String max, bool compare) {
     double titleFontSize = height * 0.02;
     double dataFontSize = height * 0.02;
     return Padding(
       padding: EdgeInsets.only(
-        left: width * 0.1,
-        right: width * 0.1,
         top: height * 0.01,
         bottom: height * 0.01,
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             title,
             style:
                 TextStyle(fontSize: titleFontSize, fontWeight: FontWeight.bold),
           ),
-          const Spacer(),
-          Text(
-            data ?? "",
-            style: TextStyle(
-                fontSize: dataFontSize,
-                fontWeight: FontWeight.bold,
-                color: ColorPalette.materialGreen),
-          )
+          summaryValueChangeColor(data!, min, max, dataFontSize, compare),
+          rangeSummaryWidget(min, max, dataFontSize),
         ],
       ),
     );
@@ -77,34 +73,86 @@ class SummaryBodyComposition extends StatelessWidget {
               "assets/images/bodycomposition_logo.png",
               AppLocalizations.of(mainContext)!.bcm,
               ColorPalette.colorbodyComposition),
-          buildItem(AppLocalizations.of(mainContext)!.bcm_fat,
-              UserInfo().bodyFatPercentage),
-          buildItem(AppLocalizations.of(mainContext)!.bcm_bone_mass,
-              UserInfo().boneMass),
-          buildItem(AppLocalizations.of(mainContext)!.bcm_metabolism,
-              UserInfo().basalMetabolism),
-          buildItem(AppLocalizations.of(mainContext)!.bcm_visceralfat,
-              UserInfo().visceralFatLevel),
-          buildItem(AppLocalizations.of(mainContext)!.bcm_water,
-              UserInfo().bodyWaterPercentage),
-          buildItem(AppLocalizations.of(mainContext)!.bcm_protein_percentage,
-              UserInfo().proteinPercentage),
-          buildItem(AppLocalizations.of(mainContext)!.bcm_muscle_mass,
-              UserInfo().muscleMass),
           buildItem(
-              AppLocalizations.of(mainContext)!.body_age, UserInfo().bodyAge),
-          buildItem(AppLocalizations.of(mainContext)!.bcm_extrac_fluid,
-              UserInfo().extracellularFluid),
-          buildItem(AppLocalizations.of(mainContext)!.bcm_intrac_fluid,
-              UserInfo().intracellularWaterPercentage),
-          buildItem(AppLocalizations.of(mainContext)!.bcm_moisture,
-              UserInfo().totalMoisture),
-          buildItem(AppLocalizations.of(mainContext)!.bcm_protein,
-              UserInfo().protein),
-          buildItem(AppLocalizations.of(mainContext)!.bcm_skeletal,
-              UserInfo().skeletalMusclePercentage),
-          buildItem(AppLocalizations.of(mainContext)!.bcm_fatmass,
-              UserInfo().bodyFatMass),
+              AppLocalizations.of(mainContext)!.bcm_fat,
+              UserInfo().bodyFatPercentage,
+              BodyRange().fatRateMin.toString(),
+              BodyRange().fatRateMax.toString(),
+              true),
+          buildItem(
+              AppLocalizations.of(mainContext)!.bcm_metabolism,
+              UserInfo().basalMetabolism,
+              BodyRange().basalMetabolismMin.toString(),
+              BodyRange().basalMetabolismMax.toString(),
+              true),
+          buildItem(
+              AppLocalizations.of(mainContext)!.bcm_visceralfat,
+              UserInfo().visceralFatLevel,
+              BodyRange().visceralFatLevelMin.toString(),
+              BodyRange().visceralFatLevelMax.toString(),
+              true),
+          buildItem(
+              AppLocalizations.of(mainContext)!.bcm_bone_mass,
+              UserInfo().boneMass,
+              BodyRange().boneMassMin.toStringAsFixed(1),
+              BodyRange().boneMassMax.toStringAsFixed(1),
+              true),
+          buildItem(
+              AppLocalizations.of(mainContext)!.bcm_water,
+              UserInfo().bodyWaterPercentage,
+              BodyRange().waterRateMin.toStringAsFixed(1),
+              BodyRange().waterRateMax.toStringAsFixed(1),
+              true),
+          buildItem(
+              AppLocalizations.of(mainContext)!.bcm_protein_percentage,
+              UserInfo().proteinPercentage,
+              BodyRange().proteinRateMin.toStringAsFixed(1),
+              BodyRange().proteinRateMax.toStringAsFixed(1),
+              true),
+          buildItem(
+              AppLocalizations.of(mainContext)!.bcm_muscle_mass,
+              UserInfo().muscleMass,
+              BodyRange().muscleMassMin.toStringAsFixed(1),
+              BodyRange().muscleMassMax.toStringAsFixed(1),
+              true),
+          buildItem(AppLocalizations.of(mainContext)!.body_age,
+              UserInfo().bodyAge, "", "", false),
+          buildItem(
+              AppLocalizations.of(mainContext)!.bcm_extrac_fluid,
+              UserInfo().extracellularFluid,
+              BodyRange().extracellularWaterRateMin.toStringAsFixed(1),
+              BodyRange().extracellularWaterRateMax.toStringAsFixed(1),
+              true),
+          buildItem(
+              AppLocalizations.of(mainContext)!.bcm_intrac_fluid,
+              UserInfo().intracellularWaterPercentage,
+              BodyRange().intracellularWaterRateMin.toStringAsFixed(1),
+              BodyRange().intracellularWaterRateMax.toStringAsFixed(1),
+              true),
+          buildItem(
+              AppLocalizations.of(mainContext)!.bcm_moisture,
+              UserInfo().totalMoisture,
+              BodyRange().totalMoistureMin.toStringAsFixed(1),
+              BodyRange().totalMoistureMax.toStringAsFixed(1),
+              true),
+          buildItem(
+              AppLocalizations.of(mainContext)!.bcm_protein,
+              UserInfo().protein,
+              BodyRange().proteinMin.toStringAsFixed(1),
+              BodyRange().proteinMax.toStringAsFixed(1),
+              true),
+          buildItem(
+              AppLocalizations.of(mainContext)!.bcm_skeletal,
+              UserInfo().skeletalMusclePercentage,
+              BodyRange().skeletalRateMin.toStringAsFixed(1),
+              BodyRange().skeletalRageMax.toStringAsFixed(1),
+              true),
+          buildItem(
+              AppLocalizations.of(mainContext)!.bcm_fatmass,
+              UserInfo().bodyFatMass,
+              BodyRange().bodyFatMassMin.toStringAsFixed(1),
+              BodyRange().bodyFatMassMax.toStringAsFixed(1),
+              true),
         ],
       ),
     );

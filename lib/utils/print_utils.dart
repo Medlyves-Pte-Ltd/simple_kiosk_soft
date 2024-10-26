@@ -172,8 +172,8 @@ class PrintUtils {
 
       delta = drawText(
           canvas,
-          "${value.toString().isEmpty ? "N.A." : value}",
-          TextAlign.right,
+          "${value.toString().isEmpty ? "N.A." : value} ${PrintMap.codeToRange(key)}",
+          TextAlign.left,
           fontSize,
           const ui.Color(0xFF000000),
           ui.Offset(0, yOffset),

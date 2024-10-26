@@ -118,7 +118,6 @@ class UserInfo {
     mineral = '';
     visceralFatLevel = '';
     basalMetabolism = '';
-    bodyFatMass = '';
     heartRate = '';
     height = '';
     weight = '';

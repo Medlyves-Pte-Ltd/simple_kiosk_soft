@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/device_data/height_data.dart';
 import 'package:flutter_devices_sdk/device_data/weight_data.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
+import 'package:simple_kiosk_software/common/range_widget.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
@@ -218,35 +219,17 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
                       fontSize: titleFontSize, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: height * 0.02),
-                ControlMeasurePageUtils().measured
-                    ? Text(
-                        bodyWeight,
-                        style: TextStyle(
-                            fontSize: dataFontSize,
-                            fontWeight: FontWeight.bold,
-                            color: (double.parse(bodyWeight) >
-                                        BodyRange().weightMax ||
-                                    double.parse(bodyWeight) <
-                                        BodyRange().weightMin)
-                                ? Colors.red
-                                : ColorPalette.materialGreen),
-                      )
-                    : Text(
-                        bodyWeight,
-                        style: TextStyle(
-                            fontSize: dataFontSize,
-                            fontWeight: FontWeight.bold,
-                            color: ColorPalette.materialGreen),
-                      ),
-                Visibility(
-                  child: Text(
-                    "(${BodyRange().weightMin.toStringAsFixed(1)} - ${BodyRange().weightMax.toStringAsFixed(1)})",
-                    style: TextStyle(
-                        fontSize: dataFontSize,
-                        color: ColorPalette.materialGreen),
-                  ),
-                  visible: ControlMeasurePageUtils().measured,
-                )
+                measureValueChangeColor(
+                    bodyWeight,
+                    BodyRange().weightMin.toStringAsFixed(1),
+                    BodyRange().weightMax.toStringAsFixed(1),
+                    dataFontSize,
+                    true),
+                rangeMeasureWidget(
+                    BodyRange().weightMin.toStringAsFixed(1),
+                    BodyRange().weightMax.toStringAsFixed(1),
+                    dataFontSize,
+                    true)
               ],
             )
           ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_devices_sdk/device_data/blood_oxygen_data.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
+import 'package:simple_kiosk_software/common/range_widget.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/base_measure_layout_widget.dart';
@@ -9,6 +10,7 @@ import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
 import 'package:simple_kiosk_software/blocs/device/device_event.dart';
 import 'package:simple_kiosk_software/blocs/device/device_state.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
+import 'package:simple_kiosk_software/utils/body_range.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -109,13 +111,10 @@ class BloodOxygenMeasure extends BaseMeasureLayoutWidget {
                       fontSize: titleFontSize, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: height * 0.02),
-                Text(
-                  _bloodOxygen,
-                  style: TextStyle(
-                      fontSize: dataFontSize,
-                      fontWeight: FontWeight.bold,
-                      color: ColorPalette.materialGreen),
-                )
+                measureValueChangeColor(_bloodOxygen, BodyRange().spo2Min.toString(),
+                    BodyRange().spo2Max.toString(), dataFontSize, true),
+                rangeMeasureWidget(BodyRange().spo2Min.toString(),
+                    BodyRange().spo2Max.toString(), dataFontSize, true)
               ],
             ),
             SizedBox(height: height * 0.02),
@@ -129,13 +128,14 @@ class BloodOxygenMeasure extends BaseMeasureLayoutWidget {
                       fontSize: titleFontSize, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: height * 0.02),
-                Text(
-                  spo2HeartRate,
-                  style: TextStyle(
-                      fontSize: dataFontSize,
-                      fontWeight: FontWeight.bold,
-                      color: ColorPalette.materialGreen),
-                )
+                measureValueChangeColor(
+                    spo2HeartRate,
+                    BodyRange().heartRateMin.toString(),
+                    BodyRange().heartRateMax.toString(),
+                    dataFontSize,
+                    true),
+                rangeMeasureWidget(BodyRange().heartRateMin.toString(),
+                    BodyRange().heartRateMax.toString(), dataFontSize, true)
               ],
             )
           ],

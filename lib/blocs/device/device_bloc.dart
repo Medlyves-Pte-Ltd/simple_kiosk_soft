@@ -47,7 +47,7 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     } else if (deviceType == DeviceType.WEIGHT_DEVICE) {
       Future.delayed(const Duration(milliseconds: 1000), () {
         add(DeviceUpdateDataEvent(
-            deviceData: WeightData("90"), deviceType: deviceType));
+            deviceData: WeightData("81"), deviceType: deviceType));
       });
     } else if (deviceType == DeviceType.TEMP_DEVICE) {
       Future.delayed(const Duration(milliseconds: 1000), () {
@@ -57,7 +57,7 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     } else if (deviceType == DeviceType.BP_DEVICE) {
       Future.delayed(const Duration(milliseconds: 1000), () {
         add(DeviceUpdateDataEvent(
-            deviceData: BloodPrssureData("140", "80", "107"),
+            deviceData: BloodPrssureData("141", "95", "107"),
             deviceType: deviceType));
       });
     } else if (deviceType == DeviceType.BO_DEVICE) {
@@ -69,12 +69,23 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
       Future.delayed(const Duration(milliseconds: 1000), () {
         add(DeviceUpdateDataEvent(
             deviceData: BodyCompositionData(
-                bodyFatPercentage: "95",
-                basalMetabolism: "1120",
-                bodyWaterPercentage: "70",
-                proteinPercentage: "80",
-                visceralFatLevel: "1",
-                boneMass: "40"),
+              bodyFatPercentage: "44",
+              bodyFatMass: "24",
+              basalMetabolism: "1660",
+              bodyWaterPercentage: "30",
+              skeletalMusclePercentage: "20",
+              visceralFatLevel: "8",
+              extracellularWaterPercentage: "15",
+              intracellularWaterPercentage: "30",
+              totalMoisture: "50",
+              protein: "15",
+              bodyAge: "35",
+              muscleMass: "30",
+              boneMass: "10",
+              proteinPercentage: "22",
+              mineral: "20",
+              overall: "18",
+            ),
             deviceType: deviceType));
       });
     } else if (deviceType == DeviceType.BO_DEVICE) {

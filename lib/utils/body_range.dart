@@ -12,11 +12,15 @@ class BodyRange {
         : jsonDecode(json)["female"];
   }
 
+  // 标准体重
   double standWeight = 0;
+  // 实际体重
+  double actualWeight = 0;
   // 计算标准体重
   void calculateStandWeight() {
-    double height = double.parse(UserInfo().height) / 100.0;
-    standWeight = (rangeMap["stand_weight"] as int) * height * height;
+    actualWeight = double.parse(UserInfo().height) / 100.0;
+    standWeight =
+        (rangeMap["stand_weight"] as int) * actualWeight * actualWeight;
   }
 
   double get weightMin {
@@ -35,6 +39,14 @@ class BodyRange {
     return (rangeMap["weight_max"] as double) * height * height;
   }
 
+  double get temperatureMin {
+    return (rangeMap["temperature_min"] as double);
+  }
+
+  double get temperatureMax {
+    return (rangeMap["temperature_max"] as double);
+  }
+
   double get muscleMassMin {
     return (rangeMap["muscle_mass_min"] as double) * standWeight;
   }
@@ -43,12 +55,12 @@ class BodyRange {
     return (rangeMap["muscle_mass_max"] as double) * standWeight;
   }
 
-  int get waterRateMin {
-    return (rangeMap["water_rate_min"] as int);
+  double get waterRateMin {
+    return (rangeMap["water_rate_min"] as double);
   }
 
-  int get waterRateMax {
-    return (rangeMap["water_rate_max"] as int);
+  double get waterRateMax {
+    return (rangeMap["water_rate_max"] as double);
   }
 
   double get boneMassMin {
@@ -76,11 +88,15 @@ class BodyRange {
   }
 
   double get proteinRateMin {
-    return (rangeMap["protein_rate_min"] as double);
+    return (rangeMap["protein_rate_min"] as double) *
+        standWeight /
+        actualWeight;
   }
 
   double get proteinRateMax {
-    return (rangeMap["protein_rate_max"] as double);
+    return (rangeMap["protein_rate_max"] as double) *
+        standWeight /
+        actualWeight;
   }
 
   int get visceralFatLevelMin {
@@ -99,16 +115,20 @@ class BodyRange {
     return (rangeMap["basal_metabolism_max"] as int);
   }
 
-  int get skeletalRateMin {
-    return (rangeMap["skeletal_rate_min"] as int);
+  double get skeletalRateMin {
+    return (rangeMap["skeletal_rate_min"] as double);
   }
 
-  int get skeletalRageMax {
-    return (rangeMap["skeletal_rage_max"] as int);
+  double get skeletalRageMax {
+    return (rangeMap["skeletal_rage_max"] as double);
   }
 
   double get bodyFatMassMin {
     return (rangeMap["body_fat_mass_min"] as double) * standWeight;
+  }
+
+  double get bodyFatMassMax {
+    return (rangeMap["body_fat_mass_max"] as double) * standWeight;
   }
 
   double get totalMoistureMin {
@@ -132,7 +152,7 @@ class BodyRange {
   }
 
   double get intracellularWaterRateMax {
-    return (rangeMap["intracellular_water_rate_min"] as double) * standWeight;
+    return (rangeMap["intracellular_water_rate_max"] as double) * standWeight;
   }
 
   int get spo2Min {
