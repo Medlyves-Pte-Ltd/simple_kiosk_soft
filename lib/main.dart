@@ -28,13 +28,14 @@ import 'package:simple_kiosk_software/utils/permission_utils.dart';
 import 'package:simple_kiosk_software/remote/utils/shared_prefs.dart';
 import 'package:simple_kiosk_software/utils/shared_preferences.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  DeviceSetting().init(ProjectType.simple_kiosk_software_v2);
-  UserInfo().gender = 1;
-  UserInfo().height = "175";
-  BodyRange().init();
+  DeviceSetting().init(ProjectType.simple_kiosk_software);
+  // 包版本
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  AppConfig().appVersion = packageInfo.version;
 
   await SharedPreferencesUtil.init();
   SharedPrefs.setData('appointmentId', "");
