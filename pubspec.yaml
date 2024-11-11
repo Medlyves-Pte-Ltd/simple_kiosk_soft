@@ -43,6 +43,7 @@ dependencies:
   hmssdk_flutter: ^1.10.3
   easy_image_viewer: ^1.4.0
   connectivity_plus: ^5.0.2
+  package_info_plus: ^8.1.1
   flutter_devices_sdk: # 包名
       git:
         #url: https://github.com/Medlyves-Pte-Ltd/flutter_devices_sdk.git
