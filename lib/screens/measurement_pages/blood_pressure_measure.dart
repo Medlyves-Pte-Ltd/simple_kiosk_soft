@@ -31,8 +31,8 @@ class BloodPressureMeasure extends BaseMeasureLayoutWidget {
     diastolic = UserInfo().diastolic.isNotEmpty
         ? UserInfo().diastolic
         : dataDefaultValue;
-    heartRate = UserInfo().heartRate.isNotEmpty
-        ? UserInfo().heartRate
+    heartRate = UserInfo().bpHeartRate.isNotEmpty
+        ? UserInfo().bpHeartRate
         : dataDefaultValue;
   }
 
@@ -75,7 +75,7 @@ class BloodPressureMeasure extends BaseMeasureLayoutWidget {
         systolic = diastolic = heartRate = dataDefaultValue;
         UserInfo().systolic = "";
         UserInfo().diastolic = "";
-        UserInfo().heartRate = "";
+        UserInfo().bpHeartRate = "";
         update = true;
       } else if (state is DeviceDataLoading) {
         systolic =
@@ -87,7 +87,7 @@ class BloodPressureMeasure extends BaseMeasureLayoutWidget {
             (state.deviceData as BloodPrssureData).systolic;
         diastolic = UserInfo().diastolic =
             (state.deviceData as BloodPrssureData).diastolic;
-        heartRate = UserInfo().heartRate =
+        heartRate = UserInfo().bpHeartRate =
             (state.deviceData as BloodPrssureData).heartRate;
 
         if (AppConfig().enableTC) {
@@ -123,7 +123,7 @@ class BloodPressureMeasure extends BaseMeasureLayoutWidget {
                 SizedBox(height: height * 0.02),
                 ControlMeasurePageUtils().measured
                     ? Text(
-                        "$systolic/$diastolic",
+                        "$systolic / $diastolic",
                         style: TextStyle(
                             fontSize: dataFontSize,
                             fontWeight: FontWeight.bold,
@@ -135,7 +135,7 @@ class BloodPressureMeasure extends BaseMeasureLayoutWidget {
                                 : ColorPalette.materialGreen),
                       )
                     : Text(
-                        "$systolic/$diastolic",
+                        "$systolic / $diastolic",
                         style: TextStyle(
                             fontSize: dataFontSize,
                             fontWeight: FontWeight.bold,
@@ -143,7 +143,7 @@ class BloodPressureMeasure extends BaseMeasureLayoutWidget {
                       ),
                 Visibility(
                   child: Text(
-                    "( < ${BodyRange().systolicMax})/( < ${BodyRange().diastolicMax})",
+                    "( < ${BodyRange().systolicMax}) / ( < ${BodyRange().diastolicMax})",
                     style: TextStyle(
                         fontSize: dataFontSize,
                         color: ColorPalette.materialGreen),

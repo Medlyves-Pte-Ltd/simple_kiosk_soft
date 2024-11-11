@@ -126,5 +126,9 @@
   "protein": "Protein",
   "mineral": "Mineral",
   "body_age": "Body Age",
-  "overall": "Overall"
+  "overall": "Overall",
+  "error": "Error",
+  "powered_by": "Powered by: ",
+  "version": "Version",
+  "id_card": "Id card"
 }

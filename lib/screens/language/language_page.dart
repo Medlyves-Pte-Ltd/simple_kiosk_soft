@@ -14,6 +14,10 @@ class LanguagePage extends StatefulWidget {
 }
 
 class LanguagePageState extends State<LanguagePage> {
+  // 屏幕宽度
+  double width = 0;
+  // 屏幕高度
+  double height = 0;
   final double spaceBetweenButtons = 15.0;
   late Locale locale;
   final List<Map<String, String>> languages = [
@@ -32,7 +36,9 @@ class LanguagePageState extends State<LanguagePage> {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
@@ -47,7 +53,7 @@ class LanguagePageState extends State<LanguagePage> {
               setLooping: true,
             ),
             // const Footer(),
-            SizedBox(height: screenHeight * 0.03),
+            SizedBox(height: height * 0.03),
             Expanded(
                 child: SingleChildScrollView(
               child: Column(
@@ -60,13 +66,7 @@ class LanguagePageState extends State<LanguagePage> {
                     .toList(),
               ),
             )),
-            IconButton(
-                onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, '/KioskManager', ((route) => false));
-                },
-                icon: Icon(Icons.settings)),
-            const Footer(),
+            Footer(),
           ],
         ),
       ),

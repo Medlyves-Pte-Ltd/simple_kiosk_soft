@@ -89,7 +89,7 @@ class _DevicePageState extends State<DevicePage> {
             children: deviceList,
           )),
           //const Spacer(),
-          const Footer()
+          Footer()
         ],
       ),
     );

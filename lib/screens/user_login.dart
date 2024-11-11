@@ -1,172 +1,216 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
-import 'package:simple_kiosk_software/common/buttons.dart';
-import 'package:simple_kiosk_software/common/dropdown_field.dart';
-import 'package:simple_kiosk_software/common/header_text.dart';
-import 'package:simple_kiosk_software/common/layouts/layout1.dart';
-import 'package:simple_kiosk_software/common/layouts/layout2.dart';
-import 'package:simple_kiosk_software/common/login_textfield.dart';
+import 'package:flutter/material.dart';
+import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple_kiosk_software/screens/language/date_time_section.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_kiosk_software/utils/body_range.dart';
-
-import 'package:simple_kiosk_software/utils/storage_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 
 class UserLogin extends StatefulWidget {
-  const UserLogin({super.key});
+  const UserLogin({Key? key}) : super(key: key);
 
   @override
   State<UserLogin> createState() => UserLoginState();
 }
 
 class UserLoginState extends State<UserLogin> {
-  Map<String, String> userDetails = {
-    'name': "",
-    'gender': "", // Assuming gender is selected from the drop-down
-    'age': "", // Assuming age is entered in the text field
-  };
+  final double spaceBetweenButtons = 15.0;
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+  String selectedGender = '';
+  // 屏幕宽度
+  double width = 0;
+  // 屏幕高度
+  double height = 0;
 
-  String getVideoFileName() {
-    String localeCode =
-        BlocProvider.of<LocaleCubit>(context).locale.languageCode;
-    return 'assets/videos/$localeCode/welcome_${localeCode.toUpperCase()}.mp4';
-  }
-
-  bool _buttonEnabled = false;
-  void backButtonEnabled(bool isInitialised) {
-    setState(() {
-      _buttonEnabled = isInitialised;
-    });
+  @override
+  void dispose() {
+    super.dispose();
+    _nameController.dispose();
+    _ageController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.sizeOf(context).height;
-    double screenWidth = MediaQuery.sizeOf(context).width;
-    double boxHeight = screenHeight * 0.0365;
-    double topPadding = screenHeight * 0.033;
-    double boxHeight1 = screenHeight * 0.0465;
-    Locale currentLocale = Localizations.localeOf(context);
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Layout1(
-            content1: Content1Body(
-          stage: StageType.measurement,
-          videoSpace: VideoWidget(
-            key: ValueKey(getVideoFileName()),
-            videoName: getVideoFileName(),
-            setLooping: true,
-            //onVideoInitialised: backButtonEnabled,
-          ),
-          content2Builder: (context) {
-            return SingleChildScrollView(
-              physics: const NeverScrollableScrollPhysics(),
+      backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        color: Colors.white,
+        child: Column(
+          children: [
+            const DateTimeSection(),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
               child: SizedBox(
-                width: screenWidth * 0.95,
-                height: screenHeight,
+                width: width * 0.7,
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(top: topPadding),
-                          child: HeaderText(
-                              text: AppLocalizations.of(context)!.welcome),
-                        )
-                      ],
+                    // Text Field for Name
+                    TextField(
+                      keyboardType: TextInputType.text,
+                      autocorrect: false,
+                      controller: _nameController,
+                      textCapitalization: TextCapitalization.words,
+                      cursorColor: const Color.fromRGBO(103, 155, 206, 1),
+                      decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!.print_name,
+                          labelStyle: const TextStyle(
+                              color: Color.fromRGBO(103, 155, 206, 1)),
+                          prefixIcon: const Icon(Icons.person),
+                          focusedBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(
+                            color: Color.fromRGBO(103, 155, 206, 1),
+                            width: 2.0,
+                          ))),
+                      style: TextStyle(
+                          fontSize: height * 0.02, fontWeight: FontWeight.bold),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          right: currentLocale.languageCode == 'ta'
-                              ? screenWidth * 0.12
-                              : screenWidth * 0.14),
-                      child: Column(
-                        children: [
-                          SizedBox(height: topPadding),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                LoginTextField(
-                                    textfieldType: TextFieldLabel.patientId,
-                                    onChanged: (value) {
-                                      userDetails['name'] = value;
-                                      UserInfo().name = value;
-                                    })
-                              ]),
-                          SizedBox(height: boxHeight),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                LoginTextField(
-                                    textfieldType: TextFieldLabel.age,
-                                    onChanged: (value) {
-                                      userDetails['age'] = value;
-                                      UserInfo().age = value!;
-                                    })
-                              ]),
-                          SizedBox(height: topPadding),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                DropDownField(
-                                  label: GenderLabel.gender,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      userDetails['gender'] = value!;
-                                      UserInfo().gender =
-                                          value.contains('男性') ||
-                                                  value.contains('Male') ||
-                                                  value.contains('Lelaki') ||
-                                                  value.contains('ஆண்') ||
-                                                  value.contains('ชาย')
-                                              ? 1
-                                              : 0;
+                    SizedBox(height: height * 0.02),
 
-                                      SystemChrome.setEnabledSystemUIMode(
-                                          SystemUiMode.manual,
-                                          overlays: []);
-                                    });
-                                  },
-                                )
-                              ]),
-                        ],
-                      ),
+                    // Dropdown for Gender
+                    DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!.gender,
+                          labelStyle: TextStyle(
+                              color: Color.fromRGBO(103, 155, 206, 1),
+                              fontSize: height * 0.02),
+                          hintText: 'Select Gender',
+                          prefixIcon: const Icon(Icons.wc),
+                          focusedBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(
+                            color: Color.fromRGBO(103, 155, 206, 1),
+                            width: 2.0,
+                          ))),
+                      value: selectedGender,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedGender = value!;
+                        });
+                      },
+                      items: [
+                        "",
+                        AppLocalizations.of(context)!.male,
+                        AppLocalizations.of(context)!.female
+                      ].map((gender) {
+                        return DropdownMenuItem<String>(
+                          value: gender,
+                          child: Text(gender,
+                              style: TextStyle(fontSize: height * 0.02)),
+                        );
+                      }).toList(),
                     ),
-                    SizedBox(height: boxHeight1),
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GreenButton(
-                              buttonText:
-                                  AppLocalizations.of(context)!.getstarted,
-                              onTap: () async {
-                                if (context.mounted) {
-                                  UserInfo().clearResult();
-                                  BodyRange().init();
-                                  Navigator.pushNamedAndRemoveUntil(context,
-                                      '/HeightWeightMeasure', (route) => false);
-                                }
-                              },
-                              disabled:
-                                  handleDisableGetStartedButton(userDetails),
-                              buttontype: ButtonType.getstarted),
-                        ])
+                    SizedBox(height: height * 0.02),
+
+                    // Text Field for Age
+                    TextField(
+                      autocorrect: false,
+                      controller: _ageController,
+                      cursorColor: const Color.fromRGBO(103, 155, 206, 1),
+                      decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!.print_age,
+                          labelStyle: const TextStyle(
+                              color: Color.fromRGBO(103, 155, 206, 1)),
+                          prefixIcon: const Icon(Icons.escalator_warning),
+                          focusedBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(
+                            color: Color.fromRGBO(103, 155, 206, 1),
+                            width: 2.0,
+                          ))),
+                      style: TextStyle(
+                          fontSize: height * 0.02, fontWeight: FontWeight.bold),
+                      keyboardType: TextInputType.number,
+                    ),
+
+                    SizedBox(height: height * 0.04),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                            style: ButtonStyle(
+                              fixedSize: MaterialStateProperty.all<Size>(
+                                Size(width * 0.3, height * 0.06),
+                              ),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                ColorPalette.materialGreen,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.pushNamedAndRemoveUntil(
+                                  context, "/", (route) => false);
+                            },
+                            child: Text(AppLocalizations.of(context)!.back,
+                                style: const TextStyle(color: Colors.white))),
+                        SizedBox(width: width * 0.08),
+                        ElevatedButton(
+                            style: ButtonStyle(
+                              fixedSize: MaterialStateProperty.all<Size>(
+                                Size(width * 0.3, height * 0.06),
+                              ),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                ColorPalette.materialGreen,
+                              ),
+                            ),
+                            child: Text(AppLocalizations.of(context)!.next,
+                                style: const TextStyle(color: Colors.white)),
+                            onPressed: () {
+                              String name = _nameController.text.trim();
+                              String gender = selectedGender ?? '';
+                              String age = _ageController.text.trim();
+                              if (name.isNotEmpty &&
+                                  gender.isNotEmpty &&
+                                  age.isNotEmpty) {
+                                UserInfo().name = name;
+                                UserInfo().gender = gender.contains('男性') ||
+                                        gender.contains('Male') ||
+                                        gender.contains('Lelaki') ||
+                                        gender.contains('ஆண்') ||
+                                        gender.contains('ชาย')
+                                    ? 1
+                                    : 0;
+                                UserInfo().age = age;
+                                UserInfo().clearResult();
+                                BodyRange().init();
+                                Navigator.pushNamedAndRemoveUntil(context,
+                                    '/HeightWeightMeasure', (route) => false);
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: Text(
+                                        AppLocalizations.of(context)!.error),
+                                    content: const Text(
+                                        'Please fill in all required fields.'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                            }),
+                      ],
+                    )
                   ],
                 ),
               ),
-            );
-          },
-        )));
-  }
-
-  bool handleDisableGetStartedButton(Map<String, String> userDetails) {
-    bool anyFieldEmpty =
-        userDetails.values.any((value) => value.toString().isEmpty);
-    return anyFieldEmpty;
+            ),
+            const Spacer(),
+            Footer(),
+          ],
+        ),
+      ),
+    );
   }
 }

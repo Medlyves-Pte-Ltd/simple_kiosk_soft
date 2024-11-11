@@ -25,23 +25,28 @@ class SummaryEcg extends StatelessWidget {
     height = MediaQuery.of(context).size.height;
     titleFontSize = height * 0.02;
     dataFontSize = height * 0.02;
-
-    return Column(
-      children: [
-        buildCardTopArea("assets/images/ecg.png",
-            AppLocalizations.of(mainContext)!.ecg, ColorPalette.colorEcg),
-        // buildTableWidget(),
-        const SizedBox(
-          height: 0.02,
-        ),
-        SizedBox(
-          height: height * 0.3,
-          width: width * 0.9,
-          child: buildEcgImage(),
-        )
-      ],
-    );
-    // return buildBodyCompositionArea();
+    return RawScrollbar(
+        thumbColor: ColorPalette.darkGrey,
+        // 一直显示滑动条
+        thumbVisibility: true,
+        // 滑动条的宽度
+        thickness: 6,
+        radius: const Radius.circular(10),
+        // 滑动条为true 可拖动
+        interactive: true,
+        child: ListView(
+          children: [
+            //buildTableWidget(),
+            const SizedBox(
+              height: 0.02,
+            ),
+            SizedBox(
+              height: height * 0.3,
+              width: width * 0.9,
+              child: buildEcgImage(),
+            )
+          ],
+        ));
   }
 
   Widget buildItem(String title, String? data) {

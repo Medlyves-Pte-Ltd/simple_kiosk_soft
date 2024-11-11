@@ -352,12 +352,13 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
                 BodyRange().proteinMin.toStringAsFixed(1),
                 BodyRange().proteinMax.toStringAsFixed(1),
                 true),
-            buildItem(
-                AppLocalizations.of(context)!.bcm_skeletal,
-                skeletalMusclePercentage,
-                BodyRange().skeletalRateMin.toStringAsFixed(1),
-                BodyRange().skeletalRageMax.toStringAsFixed(1),
-                true),
+            // 骨骼肌率暂无
+            // buildItem(
+            //     AppLocalizations.of(context)!.bcm_skeletal,
+            //     skeletalMusclePercentage,
+            //     BodyRange().skeletalRateMin.toStringAsFixed(1),
+            //     BodyRange().skeletalRageMax.toStringAsFixed(1),
+            //     true),
             buildItem(
                 AppLocalizations.of(context)!.bcm_fatmass,
                 bodyFatMass,

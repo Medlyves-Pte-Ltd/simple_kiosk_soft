@@ -32,121 +32,187 @@ class SummaryBasicVitals extends StatelessWidget {
         radius: const Radius.circular(10),
         // 滑动条为true 可拖动
         interactive: true,
-        child: ListView(
-          children: [
-            buildHeightWeightArea(),
-            buildTemperatureArea(),
-            buildBloodPressureArea(),
-            buildBloodOxygenArea(),
-            // buildBloodGlucoseArea(),
-            // buildBloodFitArea(),
-          ],
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: width * 0.04),
+          child: ListView(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    AppLocalizations.of(mainContext)!.hw_height,
+                    style: TextStyle(
+                        fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    UserInfo().height,
+                    style: TextStyle(
+                        fontSize: dataFontSize,
+                        fontWeight: FontWeight.bold,
+                        color: ColorPalette.materialGreen),
+                  ),
+                ],
+              ),
+              SizedBox(height: height * 0.008),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    AppLocalizations.of(mainContext)!.hw_weight,
+                    style: TextStyle(
+                        fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  rangeSummaryWidget(
+                    BodyRange().weightMin.toStringAsFixed(1),
+                    BodyRange().weightMax.toStringAsFixed(1),
+                    dataFontSize,
+                  ),
+                  summaryValueChangeColor(
+                      UserInfo().weight,
+                      BodyRange().weightMin.toStringAsFixed(1),
+                      BodyRange().weightMax.toStringAsFixed(1),
+                      dataFontSize,
+                      true),
+                ],
+              ),
+              SizedBox(height: height * 0.008),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    AppLocalizations.of(mainContext)!.temp_temperature,
+                    style: TextStyle(
+                        fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  rangeSummaryWidget(
+                      BodyRange().temperatureMin.toStringAsFixed(1),
+                      BodyRange().temperatureMax.toStringAsFixed(1),
+                      dataFontSize),
+                  summaryValueChangeColor(
+                      UserInfo().temperature,
+                      BodyRange().temperatureMin.toStringAsFixed(1),
+                      BodyRange().temperatureMax.toStringAsFixed(1),
+                      dataFontSize,
+                      true),
+                ],
+              ),
+              SizedBox(height: height * 0.008),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    AppLocalizations.of(mainContext)!.bp_bloodpressure,
+                    style: TextStyle(
+                        fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "( < ${BodyRange().systolicMax}) / ( < ${BodyRange().diastolicMax})",
+                    style: TextStyle(
+                        fontSize: dataFontSize,
+                        color: ColorPalette.materialGreen),
+                  ),
+                  Text(
+                    "${UserInfo().systolic}/${UserInfo().diastolic}",
+                    style: TextStyle(
+                        fontSize: dataFontSize,
+                        fontWeight: FontWeight.bold,
+                        color: UserInfo().systolic.isNotEmpty &&
+                                UserInfo().diastolic.isNotEmpty &&
+                                ((double.parse(UserInfo().systolic) >
+                                        BodyRange().systolicMax ||
+                                    double.parse(UserInfo().diastolic) >
+                                        BodyRange().diastolicMax))
+                            ? Colors.red
+                            : ColorPalette.materialGreen),
+                  ),
+                ],
+              ),
+              SizedBox(height: height * 0.008),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    AppLocalizations.of(mainContext)!.bp_pulse,
+                    style: TextStyle(
+                        fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              buildPulse(),
+              SizedBox(height: height * 0.008),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    AppLocalizations.of(mainContext)!.bo_oxygen_staturation,
+                    style: TextStyle(
+                        fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  rangeSummaryWidget(BodyRange().spo2Min.toString(),
+                      BodyRange().spo2Max.toString(), dataFontSize),
+                  summaryValueChangeColor(
+                      UserInfo().bloodOxygen,
+                      BodyRange().spo2Min.toString(),
+                      BodyRange().spo2Max.toString(),
+                      dataFontSize,
+                      true),
+                ],
+              ),
+
+              // buildBloodGlucoseArea(),
+              // buildBloodFitArea(),
+            ],
+          ),
         ));
   }
 
-  Widget buildTemperatureArea() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: width * 0.04),
-      height: height * 0.13,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          buildCardTopArea(
-              "assets/images/temperature_icon.png",
-              AppLocalizations.of(mainContext)!.temperature,
-              ColorPalette.colorbodytemperature),
-          Padding(
-            padding: EdgeInsets.only(
-              top: height * 0.01,
-              bottom: height * 0.01,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  AppLocalizations.of(mainContext)!.temp_temperature,
-                  style: TextStyle(
-                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                ),
-                summaryValueChangeColor(
-                    UserInfo().temperature,
-                    BodyRange().temperatureMin.toStringAsFixed(1),
-                    BodyRange().temperatureMax.toStringAsFixed(1),
-                    dataFontSize,
-                    true),
-                rangeSummaryWidget(
-                    BodyRange().temperatureMin.toStringAsFixed(1),
-                    BodyRange().temperatureMax.toStringAsFixed(1),
-                    dataFontSize)
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget buildBloodOxygenArea() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: width * 0.04),
-      height: height * 0.17,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          buildCardTopArea(
-              "assets/images/spo2_icon.png",
-              AppLocalizations.of(mainContext)!.bo,
-              ColorPalette.colorbloodoxygen),
-          Padding(
-            padding: EdgeInsets.only(
-              top: height * 0.01,
-              bottom: height * 0.01,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  AppLocalizations.of(mainContext)!.bo_oxygen_staturation,
-                  style: TextStyle(
-                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                ),
-                summaryValueChangeColor(
-                    UserInfo().bloodOxygen,
-                    BodyRange().spo2Min.toString(),
-                    BodyRange().spo2Max.toString(),
-                    dataFontSize,
-                    true),
-                rangeSummaryWidget(BodyRange().spo2Min.toString(),
-                    BodyRange().spo2Max.toString(), dataFontSize)
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              top: height * 0.01,
-              bottom: height * 0.01,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  AppLocalizations.of(mainContext)!.bo_heartrate,
-                  style: TextStyle(
-                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                ),
-                summaryValueChangeColor(
-                    UserInfo().spo2HeartRate,
-                    BodyRange().heartRateMin.toString(),
-                    BodyRange().heartRateMax.toString(),
-                    dataFontSize,
-                    true),
-                rangeSummaryWidget(BodyRange().heartRateMin.toString(),
-                    BodyRange().heartRateMax.toString(), dataFontSize)
-              ],
-            ),
-          )
-        ],
-      ),
+  Widget buildPulse() {
+    String pulse = "";
+    if (UserInfo().HR.isNotEmpty) {
+      pulse = UserInfo().HR;
+    } else if (UserInfo().bpHeartRate.isNotEmpty) {
+      pulse = UserInfo().bpHeartRate;
+    } else if (UserInfo().bpHeartRate.isNotEmpty) {
+      pulse = UserInfo().spo2HeartRate;
+    }
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            rangeSummaryWidget(BodyRange().heartRateMin.toString(),
+                BodyRange().heartRateMax.toString(), dataFontSize)
+          ],
+        ),
+        summaryValueChangeColor(pulse, BodyRange().heartRateMin.toString(),
+            BodyRange().heartRateMax.toString(), dataFontSize, true),
+      ],
     );
   }
 
@@ -315,149 +381,6 @@ class SummaryBasicVitals extends StatelessWidget {
                       fontSize: dataFontSize,
                       fontWeight: FontWeight.bold,
                       color: ColorPalette.materialGreen),
-                )
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget buildBloodPressureArea() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: width * 0.04),
-      height: height * 0.17,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          buildCardTopArea(
-              "assets/images/bloodpressure_logo.png",
-              AppLocalizations.of(mainContext)!.blood_pressure,
-              ColorPalette.colorbloodPressure),
-          Padding(
-            padding: EdgeInsets.only(
-              top: height * 0.01,
-              bottom: height * 0.01,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  AppLocalizations.of(mainContext)!.bp_bloodpressure,
-                  style: TextStyle(
-                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  "${UserInfo().systolic}/${UserInfo().diastolic}",
-                  style: TextStyle(
-                      fontSize: dataFontSize,
-                      fontWeight: FontWeight.bold,
-                      color: UserInfo().systolic.isNotEmpty &&
-                              UserInfo().diastolic.isNotEmpty &&
-                              ((double.parse(UserInfo().systolic) >
-                                      BodyRange().systolicMax ||
-                                  double.parse(UserInfo().diastolic) >
-                                      BodyRange().diastolicMax))
-                          ? Colors.red
-                          : ColorPalette.materialGreen),
-                ),
-                Text(
-                  "( < ${BodyRange().systolicMax})/( < ${BodyRange().diastolicMax})",
-                  style: TextStyle(
-                      fontSize: dataFontSize,
-                      color: ColorPalette.materialGreen),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              top: height * 0.01,
-              bottom: height * 0.01,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  AppLocalizations.of(mainContext)!.bp_pulse,
-                  style: TextStyle(
-                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                ),
-                summaryValueChangeColor(
-                    UserInfo().heartRate,
-                    BodyRange().heartRateMin.toString(),
-                    BodyRange().heartRateMax.toString(),
-                    dataFontSize,
-                    true),
-                rangeSummaryWidget(BodyRange().heartRateMin.toString(),
-                    BodyRange().heartRateMax.toString(), dataFontSize)
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget buildHeightWeightArea() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: width * 0.04),
-      height: height * 0.17,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          buildCardTopArea(
-              "assets/images/heightweight_logo.png",
-              AppLocalizations.of(mainContext)!.hw,
-              ColorPalette.colorheightWeight),
-          Padding(
-            padding: EdgeInsets.only(
-              top: height * 0.01,
-              bottom: height * 0.01,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  AppLocalizations.of(mainContext)!.hw_height,
-                  style: TextStyle(
-                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  UserInfo().height,
-                  style: TextStyle(
-                      fontSize: dataFontSize,
-                      fontWeight: FontWeight.bold,
-                      color: ColorPalette.materialGreen),
-                ),
-                Text("")
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              top: height * 0.01,
-              bottom: height * 0.01,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  AppLocalizations.of(mainContext)!.hw_weight,
-                  style: TextStyle(
-                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                ),
-                summaryValueChangeColor(
-                    UserInfo().weight,
-                    BodyRange().weightMin.toStringAsFixed(1),
-                    BodyRange().weightMax.toStringAsFixed(1),
-                    dataFontSize,
-                    true),
-                rangeSummaryWidget(
-                  BodyRange().weightMin.toStringAsFixed(1),
-                  BodyRange().weightMax.toStringAsFixed(1),
-                  dataFontSize,
                 )
               ],
             ),

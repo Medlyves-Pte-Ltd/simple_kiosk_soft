@@ -64,7 +64,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
           _buildStepArea(),
           buildCardArea(),
           buildBackNextControlBtn(),
-          const Footer()
+          Footer()
         ],
       ),
     );

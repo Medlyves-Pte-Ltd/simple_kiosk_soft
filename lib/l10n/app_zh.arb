@@ -127,5 +127,9 @@
   "protein": "蛋白质",
   "mineral": "矿物质",
   "body_age": "身体年龄",
-  "overall": "整体得分"
+  "overall": "整体得分",
+  "error": "错误",
+  "powered_by": "技术支持：",
+  "version": "版本",
+  "id_card": "身份证"
 }

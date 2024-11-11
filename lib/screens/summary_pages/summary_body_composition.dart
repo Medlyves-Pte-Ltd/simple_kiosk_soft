@@ -43,36 +43,36 @@ class SummaryBodyComposition extends StatelessWidget {
       String title, String? data, String min, String max, bool compare) {
     double titleFontSize = height * 0.02;
     double dataFontSize = height * 0.02;
-    return Padding(
-      padding: EdgeInsets.only(
-        top: height * 0.01,
-        bottom: height * 0.01,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style:
-                TextStyle(fontSize: titleFontSize, fontWeight: FontWeight.bold),
-          ),
-          summaryValueChangeColor(data!, min, max, dataFontSize, compare),
-          rangeSummaryWidget(min, max, dataFontSize),
-        ],
-      ),
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                  fontSize: titleFontSize, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            rangeSummaryWidget(min, max, dataFontSize),
+            summaryValueChangeColor(data!, min, max, dataFontSize, compare),
+          ],
+        ),
+        SizedBox(height: height * 0.008),
+      ],
     );
   }
 
   Widget buildBodyCompositionArea() {
-    return Container(
+    return Padding(
       padding: EdgeInsets.symmetric(horizontal: width * 0.04),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          buildCardTopArea(
-              "assets/images/bodycomposition_logo.png",
-              AppLocalizations.of(mainContext)!.bcm,
-              ColorPalette.colorbodyComposition),
           buildItem(
               AppLocalizations.of(mainContext)!.bcm_fat,
               UserInfo().bodyFatPercentage,
@@ -141,12 +141,13 @@ class SummaryBodyComposition extends StatelessWidget {
               BodyRange().proteinMin.toStringAsFixed(1),
               BodyRange().proteinMax.toStringAsFixed(1),
               true),
-          buildItem(
-              AppLocalizations.of(mainContext)!.bcm_skeletal,
-              UserInfo().skeletalMusclePercentage,
-              BodyRange().skeletalRateMin.toStringAsFixed(1),
-              BodyRange().skeletalRageMax.toStringAsFixed(1),
-              true),
+          // 骨骼肌率暂无
+          // buildItem(
+          //     AppLocalizations.of(mainContext)!.bcm_skeletal,
+          //     UserInfo().skeletalMusclePercentage,
+          //     BodyRange().skeletalRateMin.toStringAsFixed(1),
+          //     BodyRange().skeletalRageMax.toStringAsFixed(1),
+          //     true),
           buildItem(
               AppLocalizations.of(mainContext)!.bcm_fatmass,
               UserInfo().bodyFatMass,

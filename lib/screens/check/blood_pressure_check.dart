@@ -27,8 +27,8 @@ class BloodPressureCheck extends BaseCheckWidget {
     diastolic = UserInfo().diastolic.isNotEmpty
         ? UserInfo().diastolic
         : dataDefaultValue;
-    heartRate = UserInfo().heartRate.isNotEmpty
-        ? UserInfo().heartRate
+    heartRate = UserInfo().bpHeartRate.isNotEmpty
+        ? UserInfo().bpHeartRate
         : dataDefaultValue;
   }
 
@@ -73,7 +73,7 @@ class BloodPressureCheck extends BaseCheckWidget {
         systolic = diastolic = heartRate = dataDefaultValue;
         UserInfo().systolic = "";
         UserInfo().diastolic = "";
-        UserInfo().heartRate = "";
+        UserInfo().bpHeartRate = "";
         update = true;
       } else if (state is DeviceDataLoading) {
         systolic =
@@ -85,7 +85,7 @@ class BloodPressureCheck extends BaseCheckWidget {
             (state.deviceData as BloodPrssureData).systolic;
         diastolic = UserInfo().diastolic =
             (state.deviceData as BloodPrssureData).diastolic;
-        heartRate = UserInfo().heartRate =
+        heartRate = UserInfo().bpHeartRate =
             (state.deviceData as BloodPrssureData).heartRate;
 
         measured = true;

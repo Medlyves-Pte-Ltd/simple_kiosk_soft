@@ -76,7 +76,7 @@
     "deviceType": "SCANNER_DEVICE",
     "deviceIndex": 0,
     "deviceList": ["YouKuEP8280CodeScanner"],
-    "enable": true,,
+    "enable": true,
     "vid":"1a86",
     "pid":"7523"
   },

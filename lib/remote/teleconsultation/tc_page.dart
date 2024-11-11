@@ -371,7 +371,7 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
                 },
               ),
             ),
-            const Footer()
+            Footer()
           ],
         ),
       ),

@@ -127,7 +127,7 @@ class SummaryLayoutWidget extends StatelessWidget {
                 buildVideoArea(),
                 buildCardArea(),
                 buildBottomBtn(),
-                const Footer()
+                Footer()
               ],
             ),
           );

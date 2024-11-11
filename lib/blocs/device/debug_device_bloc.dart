@@ -47,7 +47,7 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     } else if (deviceType == DeviceType.WEIGHT_DEVICE) {
       Future.delayed(const Duration(milliseconds: 1000), () {
         add(DeviceUpdateDataEvent(
-            deviceData: WeightData("81.5"), deviceType: deviceType));
+            deviceData: WeightData("81"), deviceType: deviceType));
       });
     } else if (deviceType == DeviceType.TEMP_DEVICE) {
       Future.delayed(const Duration(milliseconds: 1000), () {
@@ -57,7 +57,7 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     } else if (deviceType == DeviceType.BP_DEVICE) {
       Future.delayed(const Duration(milliseconds: 1000), () {
         add(DeviceUpdateDataEvent(
-            deviceData: BloodPrssureData("140", "80", "107"),
+            deviceData: BloodPrssureData("141", "95", "107"),
             deviceType: deviceType));
       });
     } else if (deviceType == DeviceType.BO_DEVICE) {
@@ -69,20 +69,20 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
       Future.delayed(const Duration(milliseconds: 1000), () {
         add(DeviceUpdateDataEvent(
             deviceData: BodyCompositionData(
-              bodyFatPercentage: "44",
-              bodyFatMass: "24",
-              basalMetabolism: "1660",
-              bodyWaterPercentage: "30",
+              bodyFatPercentage: "18.2",
+              bodyFatMass: "13.65",
+              basalMetabolism: "1511",
+              bodyWaterPercentage: "56.1",
               skeletalMusclePercentage: "20",
               visceralFatLevel: "8",
-              extracellularWaterPercentage: "15",
-              intracellularWaterPercentage: "30",
+              extracellularWaterPercentage: "17",
+              intracellularWaterPercentage: "36.6",
               totalMoisture: "50",
-              protein: "15",
-              bodyAge: "35",
-              muscleMass: "30",
-              boneMass: "10",
-              proteinPercentage: "22",
+              protein: "12.5",
+              bodyAge: "33",
+              muscleMass: "53.6",
+              boneMass: "2.9",
+              proteinPercentage: "17.1",
               mineral: "20",
               overall: "18",
             ),

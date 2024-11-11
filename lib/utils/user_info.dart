@@ -22,7 +22,7 @@ class UserInfo {
   // 舒张压
   String diastolic = '';
   // 心率
-  String heartRate = '';
+  String bpHeartRate = '';
 
   // 血氧
   String bloodOxygen = '';
@@ -118,7 +118,7 @@ class UserInfo {
     mineral = '';
     visceralFatLevel = '';
     basalMetabolism = '';
-    heartRate = '';
+    bpHeartRate = '';
     height = '';
     weight = '';
     systolic = '';
@@ -142,44 +142,116 @@ class UserInfo {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      "height": height,
-      "weight": weight,
-      "temperature": temperature,
-      "bloodPressure": "$systolic/$diastolic",
-      "bp_pulse": heartRate,
-      "bloodOxygen": bloodOxygen,
-      "bo_heartrate": spo2HeartRate,
-      // "IFCC": IFCC,
-      // "eAG": eAG,
-      // "chol": chol,
-      // "trig": trig,
-      // "hdl": hdl,
-      // "ldl": ldl,
-      "bodyFatPercentage": bodyFatPercentage,
-      "boneMass": boneMass,
-      "basalMetabolism": basalMetabolism,
-      "visceralFatLevel": visceralFatLevel,
-      "bodyWaterPercentage": bodyWaterPercentage,
-      "proteinPercentage": proteinPercentage,
-      "muscleMass": muscleMass,
-      "bodyAge": bodyAge,
-      "extracellularFluid": extracellularFluid,
-      "protein": protein,
-      "intracellularWaterPercentage": intracellularWaterPercentage,
-      "totalMoisture": totalMoisture,
-      "bodyFatMass": bodyFatMass,
-      "skeletalMusclePercentage": skeletalMusclePercentage,
-      "HR": HR,
-      "P_Width": P_Width,
-      "PR": PR,
-      "QRS_Dur": QRS_Dur,
-      "QT": QT,
-      "QTc": QTc,
-      "QRS_Axis": QRS_Axis,
-      "P_Axis": P_Axis,
-      "T_Axis": T_Axis,
-    };
+    Map<String, dynamic> map = {};
+    if (height.isNotEmpty) {
+      map["height"] = height;
+    }
+    if (weight.isNotEmpty) {
+      map["weight"] = weight;
+    }
+    if (temperature.isNotEmpty) {
+      map["temperature"] = temperature;
+    }
+    if (systolic.isNotEmpty && diastolic.isNotEmpty) {
+      map["bloodPressure"] = "$systolic / $diastolic";
+    }
+    if (bloodOxygen.isNotEmpty) {
+      map["bloodOxygen"] = bloodOxygen;
+    }
+    if (IFCC.isNotEmpty) {
+      map["IFCC"] = IFCC;
+    }
+    if (eAG.isNotEmpty) {
+      map["eAG"] = eAG;
+    }
+    if (chol.isNotEmpty) {
+      map["chol"] = chol;
+    }
+    if (trig.isNotEmpty) {
+      map["trig"] = trig;
+    }
+    if (hdl.isNotEmpty) {
+      map["hdl"] = hdl;
+    }
+    if (ldl.isNotEmpty) {
+      map["ldl"] = ldl;
+    }
+    if (bodyFatPercentage.isNotEmpty) {
+      map["bodyFatPercentage"] = bodyFatPercentage;
+    }
+    if (boneMass.isNotEmpty) {
+      map["boneMass"] = boneMass;
+    }
+    if (basalMetabolism.isNotEmpty) {
+      map["basalMetabolism"] = basalMetabolism;
+    }
+    if (visceralFatLevel.isNotEmpty) {
+      map["visceralFatLevel"] = visceralFatLevel;
+    }
+    if (bodyWaterPercentage.isNotEmpty) {
+      map["bodyWaterPercentage"] = bodyWaterPercentage;
+    }
+    if (proteinPercentage.isNotEmpty) {
+      map["proteinPercentage"] = proteinPercentage;
+    }
+    if (muscleMass.isNotEmpty) {
+      map["muscleMass"] = muscleMass;
+    }
+    if (bodyAge.isNotEmpty) {
+      map["bodyAge"] = bodyAge;
+    }
+    if (extracellularFluid.isNotEmpty) {
+      map["extracellularFluid"] = extracellularFluid;
+    }
+    if (protein.isNotEmpty) {
+      map["protein"] = protein;
+    }
+    if (intracellularWaterPercentage.isNotEmpty) {
+      map["intracellularWaterPercentage"] = intracellularWaterPercentage;
+    }
+    if (totalMoisture.isNotEmpty) {
+      map["totalMoisture"] = totalMoisture;
+    }
+    if (bodyFatMass.isNotEmpty) {
+      map["bodyFatMass"] = bodyFatMass;
+    }
+    if (skeletalMusclePercentage.isNotEmpty) {
+      map["skeletalMusclePercentage"] = skeletalMusclePercentage;
+    }
+
+    if (HR.isNotEmpty) {
+      map["bp_pulse"] = HR;
+    } else if (bpHeartRate.isNotEmpty) {
+      map["bp_pulse"] = bpHeartRate;
+    } else if (spo2HeartRate.isNotEmpty) {
+      map["bp_pulse"] = spo2HeartRate;
+    }
+
+    if (P_Width.isNotEmpty) {
+      map["P_Width"] = P_Width;
+    }
+    if (PR.isNotEmpty) {
+      map["PR"] = PR;
+    }
+    if (QRS_Dur.isNotEmpty) {
+      map["QRS_Dur"] = QRS_Dur;
+    }
+    if (QT.isNotEmpty) {
+      map["QT"] = QT;
+    }
+    if (QTc.isNotEmpty) {
+      map["QTc"] = QTc;
+    }
+    if (QRS_Axis.isNotEmpty) {
+      map["QRS_Axis"] = QRS_Axis;
+    }
+    if (P_Axis.isNotEmpty) {
+      map["P_Axis"] = P_Axis;
+    }
+    if (T_Axis.isNotEmpty) {
+      map["T_Axis"] = T_Axis;
+    }
+    return map;
   }
 
   // 私有构造函数

@@ -55,6 +55,7 @@ class BaseCheckWidget extends StatelessWidget {
         child: Column(
           children: [
             buildCardTopArea(),
+            startButton(),
             Expanded(child: buildCardDataShowArea()),
           ],
         ),
@@ -65,7 +66,7 @@ class BaseCheckWidget extends StatelessWidget {
   // 卡片顶部区域
   Widget buildCardTopArea() {
     double imageSize = height * 0.03;
-    double titleFontSize = height * 0.015;
+    double titleFontSize = height * 0.014;
     return Row(
       children: [
         Image.asset(
@@ -114,7 +115,6 @@ class BaseCheckWidget extends StatelessWidget {
         //     ),
         //   ),
         // ),
-        startButton(),
       ],
     );
   }

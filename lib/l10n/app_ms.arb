@@ -107,5 +107,9 @@
   "record": "rekod",
   "vital": "Penting",
   "basic_vitals": "Keperluan Asas",
-  "ecg_img_unavail": "Imej ECG tidak tersedia."
+  "ecg_img_unavail": "Imej ECG tidak tersedia.",
+  "error": "Ralat",
+  "powered_by": "Dijanakan oleh:",
+  "version": "Versi",
+  "id_card": "kad id"
 }

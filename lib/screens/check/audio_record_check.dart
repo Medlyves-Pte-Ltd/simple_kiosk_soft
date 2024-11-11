@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/screens/check/base_check_widget.dart';
-import 'package:record/record.dart';
+//import 'package:record/record.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AudioRecordCheck extends BaseCheckWidget {
-  final record = AudioRecorder();
+  // final record = AudioRecorder();
   final player = AudioPlayer();
   late String filePath;
   ValueNotifier<String> btnText = ValueNotifier<String>("");
@@ -60,21 +60,21 @@ class AudioRecordCheck extends BaseCheckWidget {
   @override
   Future<void> onStart() async {
     // Check and request permission if needed
-    if (await record.hasPermission()) {
-      final Directory tempDir = await getTemporaryDirectory();
-      filePath = "${tempDir.path}/record.m4a";
-      // Start recording to file
-      await record.start(const RecordConfig(), path: filePath);
-      // ... or to stream
-      final stream = await record
-          .startStream(const RecordConfig(encoder: AudioEncoder.pcm16bits));
-    }
+    // if (await record.hasPermission()) {
+    //   final Directory tempDir = await getTemporaryDirectory();
+    //   filePath = "${tempDir.path}/record.m4a";
+    //   // Start recording to file
+    //   await record.start(const RecordConfig(), path: filePath);
+    //   // ... or to stream
+    //   final stream = await record
+    //       .startStream(const RecordConfig(encoder: AudioEncoder.pcm16bits));
+    // }
   }
 
   @override
   Future<void> onStop() async {
     // Stop recording...
-    await record.stop();
+    //  await record.stop();
     await player.play(DeviceFileSource(filePath));
   }
 

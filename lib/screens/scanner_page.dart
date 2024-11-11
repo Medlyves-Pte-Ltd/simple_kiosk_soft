@@ -121,7 +121,7 @@ class ScannerPageState extends State<ScannerPage> {
           SizedBox(
             height: height * 0.02,
           ),
-          const Footer()
+          Footer()
         ],
       ),
     );
