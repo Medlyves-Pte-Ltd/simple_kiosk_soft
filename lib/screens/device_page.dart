@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_devices_sdk/device_setting.dart';
+import 'package:flutter_devices_sdk/run_param_setting.dart';
 import 'package:flutter_devices_sdk/devices/device_config.dart';
 import 'package:flutter_devices_sdk/devices/device_order_check.dart';
 import 'package:flutter_devices_sdk/devices/usb_relay_control.dart';
@@ -126,7 +126,7 @@ class _DevicePageState extends State<DevicePage> {
           valueListenable: _curIndex,
           builder: (context, value, child) {
             return Text(
-              "Starting device, $value  / ${DeviceSetting().replayIoCount}",
+              "Starting device, $value  / ${RunParamSetting().replayIoCount}",
               softWrap: true,
               maxLines: 5,
               style: TextStyle(

@@ -21,7 +21,6 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     on<DeviceUpdateDataEvent>(_onDeviceDataUpdatedEvent);
     on<DeviceStopEvent>(_onDeviceStopEvent);
     on<DeviceDisconnectEvent>(_onDeviceDisconnectEvent);
-    on<TestUpdateDataEvent>(_onTestDataUpdatedEvent);
   }
 
   Future<void> _onDeviceConnectEvent(
@@ -69,22 +68,19 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
       Future.delayed(const Duration(milliseconds: 1000), () {
         add(DeviceUpdateDataEvent(
             deviceData: BodyCompositionData(
-              bodyFatPercentage: "18.2",
-              bodyFatMass: "13.65",
-              basalMetabolism: "1511",
-              bodyWaterPercentage: "56.1",
-              skeletalMusclePercentage: "20",
+              bodyFatPercentage: "18.4",
+              bodyFatMass: "13.8",
+              basalMetabolism: "1497",
+              bodyWaterPercentage: "56.0",
               visceralFatLevel: "8",
               extracellularWaterPercentage: "17",
-              intracellularWaterPercentage: "36.6",
-              totalMoisture: "50",
-              protein: "12.5",
+              intracellularWaterPercentage: "39.0",
+              totalMoisture: "42",
+              protein: "12.8",
               bodyAge: "33",
-              muscleMass: "53.6",
-              boneMass: "2.9",
+              muscleMass: "52.7",
+              boneMass: "2.8",
               proteinPercentage: "17.1",
-              mineral: "20",
-              overall: "18",
             ),
             deviceType: deviceType));
       });
@@ -122,13 +118,5 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     LogPrinter.log(deviceType.toString());
     LogPrinter.log('Disconnected.');
     emit(DeviceDisconnected(deviceType: deviceType));
-  }
-
-  Future<void> _onTestDataUpdatedEvent(
-      TestUpdateDataEvent event, Emitter<DeviceState> emit) async {
-    DeviceType deviceType = event.deviceType;
-    DeviceData deviceData = event.deviceData;
-    LogPrinter.log(deviceData.toString());
-    emit(DeviceDataUpdated(deviceType: deviceType, deviceData: deviceData));
   }
 }

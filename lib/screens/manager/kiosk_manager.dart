@@ -1,9 +1,11 @@
+import 'package:flutter_devices_sdk/run_param_setting.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
+import 'package:tdesign_flutter/tdesign_flutter.dart';
 import 'package:flutter_devices_sdk/view/device_config_login_page.dart';
 
 class KioskManager extends StatefulWidget {
@@ -44,7 +46,7 @@ class _KioskManagerState extends State<KioskManager> {
       ),
       backgroundColor: Colors.white,
       body: Column(
-        children: [deviceInfoArea(), Expanded(child: settingArea()), Footer()],
+        children: [Expanded(child: settingArea()), Footer()],
       ),
     );
   }
@@ -52,6 +54,62 @@ class _KioskManagerState extends State<KioskManager> {
   Widget settingArea() {
     return SingleChildScrollView(
       child: Column(children: [
+        TDInput(
+          inputType: TextInputType.text,
+          needClear: false,
+          leftLabel: 'Kiosk ID',
+          controller: TextEditingController(text: AppConfig().kioskId),
+          backgroundColor: Colors.white,
+          contentAlignment: TextAlign.end,
+          hintText: 'Input Text',
+          rightWidget: TDText('', textColor: TDTheme.of(context).fontGyColor1),
+          onChanged: (text) {
+            AppConfig().kioskId = text;
+            setState(() {});
+          },
+        ),
+        TDInput(
+          inputType: TextInputType.text,
+          needClear: false,
+          leftLabel: 'Device Model',
+          controller: TextEditingController(text: AppConfig().deviceModel),
+          backgroundColor: Colors.white,
+          contentAlignment: TextAlign.end,
+          hintText: 'Input Text',
+          rightWidget: TDText('', textColor: TDTheme.of(context).fontGyColor1),
+          onChanged: (text) {
+            AppConfig().deviceModel = text;
+            setState(() {});
+          },
+        ),
+        TDInput(
+          inputType: TextInputType.text,
+          needClear: false,
+          leftLabel: 'Device Address',
+          controller: TextEditingController(text: AppConfig().deviceAddress),
+          backgroundColor: Colors.white,
+          contentAlignment: TextAlign.end,
+          hintText: 'Input Text',
+          rightWidget: TDText('', textColor: TDTheme.of(context).fontGyColor1),
+          onChanged: (text) {
+            AppConfig().deviceAddress = text;
+            setState(() {});
+          },
+        ),
+        TDInput(
+          inputType: TextInputType.text,
+          needClear: false,
+          leftLabel: 'Client Name',
+          controller: TextEditingController(text: AppConfig().clientName),
+          backgroundColor: Colors.white,
+          contentAlignment: TextAlign.end,
+          hintText: 'Input Text',
+          rightWidget: TDText('', textColor: TDTheme.of(context).fontGyColor1),
+          onChanged: (text) {
+            AppConfig().clientName = text;
+            setState(() {});
+          },
+        ),
         // 远程医疗功能
         SwitchListTile(
           title: Text('Enable TC'),
@@ -61,330 +119,29 @@ class _KioskManagerState extends State<KioskManager> {
             setState(() {});
           },
         ),
+        TDInput(
+          inputType: TextInputType.number,
+          type: TDInputType.special,
+          controller: TextEditingController(
+              text: AppConfig().totalHeight.toStringAsFixed(2)),
+          leftLabel: 'Total Height',
+          hintText: '0.00',
+          backgroundColor: Colors.white,
+          textAlign: TextAlign.end,
+          rightWidget: TDText('m', textColor: TDTheme.of(context).fontGyColor1),
+          onChanged: (text) {
+            setState(() {});
+            if (text.isEmpty) {
+              return;
+            }
+            RunParamSetting().totalHeight = double.parse(text);
+            AppConfig().totalHeight = double.parse(text);
+          },
+        ),
+        const SizedBox(
+          height: 16,
+        )
       ]),
     );
-  }
-
-  // 设置编辑状态
-  // set edit status
-  void setEditStatus(bool allow) {
-    _allowEdit = !allow;
-    setState(() {});
-  }
-
-  // 保存配置
-  // save config
-  void saveConfig() async {
-    _allowEdit = false;
-    setState(() {});
-  }
-
-  // 取消保存
-  // cancel save
-  void cancelSave() {
-    _allowEdit = false;
-    setState(() {});
-  }
-
-  void onLogin() {
-    _isLogin = true;
-    setState(() {});
-  }
-
-  // 输入框控件
-  // input edit
-  Widget inputEdit({required String text, ValueChanged<String>? onChanged}) {
-    return SizedBox(
-      height: height * 0.06,
-      child: TextField(
-          readOnly: !_allowEdit,
-          textAlignVertical: TextAlignVertical.center,
-          controller: TextEditingController(text: text),
-          obscureText: false,
-          maxLength: 20,
-          keyboardType: TextInputType.text,
-          inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
-          onChanged: onChanged,
-          decoration: InputDecoration(
-            hintText: "Sample Text",
-            counterText: "",
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-              borderSide: BorderSide(
-                color: _allowEdit
-                    ? ColorPalette.materialGreen
-                    : ColorPalette.darkGrey,
-                width: 1.0,
-              ),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-              borderSide: const BorderSide(
-                color: ColorPalette.darkGrey,
-                width: 1.0,
-              ),
-            ),
-          )),
-    );
-  }
-
-  // 设备信息区域
-  // device info area
-  Widget deviceInfoArea() {
-    double fontSize = height * 0.02;
-    return Padding(
-        padding: const EdgeInsets.all(20),
-        child: Table(
-          columnWidths: const {
-            0: FlexColumnWidth(1),
-            1: FlexColumnWidth(2),
-          },
-          children: [
-            // kiosk id row
-            TableRow(children: [
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.all(8),
-                child: Text(
-                  textAlign: TextAlign.right,
-                  "Kiosk ID",
-                  style: TextStyle(
-                      color: ColorPalette.blackColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: fontSize),
-                ),
-              ),
-              inputEdit(
-                  text: AppConfig().kioskId,
-                  onChanged: (value) {
-                    AppConfig().kioskId = value;
-                  }),
-            ]),
-
-            // device model row
-            TableRow(children: [
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.all(8),
-                child: Text(
-                  "Device Model",
-                  style: TextStyle(
-                      color: ColorPalette.blackColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: fontSize),
-                ),
-              ),
-              inputEdit(
-                  text: AppConfig().deviceModel,
-                  onChanged: (value) {
-                    AppConfig().deviceModel = value;
-                  }),
-            ]),
-
-            // device address row
-            TableRow(children: [
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.all(8),
-                child: Text(
-                  "Device Address",
-                  style: TextStyle(
-                      color: ColorPalette.blackColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: fontSize),
-                ),
-              ),
-              inputEdit(
-                  text: AppConfig().deviceAddress,
-                  onChanged: (value) {
-                    AppConfig().deviceAddress = value;
-                  }),
-            ]),
-
-            // client name row
-            TableRow(children: [
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.all(8),
-                child: Text(
-                  "Client Name",
-                  style: TextStyle(
-                      color: ColorPalette.blackColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: fontSize),
-                ),
-              ),
-              inputEdit(
-                  text: AppConfig().clientName,
-                  onChanged: (value) {
-                    AppConfig().clientName = value;
-                  }),
-            ]),
-          ],
-        ));
-  }
-
-  // 保存取消按钮
-  // Save Cancel button
-  Widget saveCancelButton() {
-    double buttonWidth = width * 0.25;
-    double buttonHeight = height * 0.04;
-    double fontSize = buttonHeight * 0.55;
-
-    return Padding(
-        padding: const EdgeInsets.only(top: 10, right: 10),
-        child: Visibility(
-          visible: _allowEdit,
-          maintainAnimation: true,
-          maintainSize: true,
-          maintainState: true,
-          child: Row(
-            children: [
-              const Spacer(),
-
-              // 保存按钮
-              // save button
-              GestureDetector(
-                onTap: saveConfig,
-                child: Container(
-                  width: buttonWidth,
-                  height: buttonHeight,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    color: ColorPalette.materialGreen,
-                    border:
-                        Border.all(color: ColorPalette.materialGreen, width: 2),
-                  ),
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    "Save",
-                    style: TextStyle(
-                        color: ColorPalette.colorAppBackground,
-                        fontWeight: FontWeight.w400,
-                        fontSize: fontSize),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 10),
-
-              // 取消按钮
-              // cancel button
-              GestureDetector(
-                onTap: cancelSave,
-                child: Container(
-                  width: buttonWidth,
-                  height: buttonHeight,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    color: ColorPalette.colorAppBackground,
-                    border: Border.all(
-                        color: ColorPalette.headerFooterBackground, width: 2),
-                  ),
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    "Cancel",
-                    style: TextStyle(
-                        color: ColorPalette.headerFooterBackground,
-                        fontWeight: FontWeight.w400,
-                        fontSize: fontSize),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ));
-  }
-
-  // 切换编辑状态按钮
-  // switch edit status button
-  Widget switchEditStatusButton(double fontSize, double width) {
-    return GestureDetector(
-      child: Container(
-        width: width,
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(15.0)),
-          border: Border.all(color: ColorPalette.colorAppBackground, width: 2),
-          color:
-              _allowEdit ? ColorPalette.colorAppBackground : Colors.transparent,
-        ),
-        margin: const EdgeInsets.only(top: 20, bottom: 20),
-        padding: const EdgeInsets.all(10),
-        child: Text(
-          _allowEdit ? "Editing" : "Edit Details",
-          maxLines: 1,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              color: _allowEdit
-                  ? ColorPalette.headerFooterBackground
-                  : ColorPalette.colorAppBackground,
-              fontSize: fontSize,
-              fontWeight: FontWeight.w300),
-        ),
-      ),
-      onTap: () {
-        setEditStatus(_allowEdit);
-      },
-    );
-  }
-
-  // 定义标题栏
-  // define title bar
-  Widget customAppBar() {
-    final headerHeight = height * 0.08;
-    final boxWidth = width * 0.04;
-    final textfontSize = headerHeight * 0.3;
-    final bntFontSize = headerHeight * 0.25;
-    final bntWidth = width * 0.3;
-
-    return AppBar(
-        backgroundColor: ColorPalette.headerFooterBackground,
-        automaticallyImplyLeading: false,
-        toolbarHeight: headerHeight,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // switchEditStatusButton(bntFontSize, bntWidth),
-            SizedBox(
-              width: boxWidth,
-            ),
-            Expanded(
-              child: Text(
-                "Kiosk Configuration Page",
-                maxLines: 2,
-                textAlign: TextAlign.end,
-                style: TextStyle(
-                    color: ColorPalette.colorAppBackground,
-                    fontSize: textfontSize,
-                    fontWeight: FontWeight.w600),
-              ),
-            )
-          ],
-        ));
-  }
-}
-
-// 设备管理信息
-// device manager info
-class DeviceManagerInfo {
-  String kioskId = '';
-  String deviceModel = '';
-  String deviceAddress = '';
-  String clientName = '';
-
-  Map<String, String> toMap() {
-    return {
-      "kioskId": kioskId,
-      "deviceModel": deviceModel,
-      "deviceAddress": deviceAddress,
-      "clientName": clientName,
-    };
-  }
-
-  void fromMap(Map<String, String> info) {
-    kioskId = info['kioskId']!;
-    deviceModel = info['deviceModel']!;
-    deviceAddress = info['deviceAddress']!;
-    clientName = info['clientName']!;
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_devices_sdk/devices/device_config.dart';
 import 'package:flutter_devices_sdk/project_type.dart';
-import 'package:flutter_devices_sdk/device_setting.dart';
+import 'package:flutter_devices_sdk/run_param_setting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,12 +32,14 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  DeviceSetting().init(ProjectType.simple_kiosk_software);
+  await SharedPreferencesUtil.init();
+
+  RunParamSetting().init(ProjectType.simple_kiosk_software);
+  RunParamSetting().totalHeight = AppConfig().totalHeight;
   // 包版本
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   AppConfig().appVersion = packageInfo.version;
 
-  await SharedPreferencesUtil.init();
   SharedPrefs.setData('appointmentId', "");
   // 检查权限
   await PermissionUtils().getStoragePermission();
@@ -123,8 +125,8 @@ class MyApp extends StatelessWidget {
               return onCustomGenerateRoute(settings);
             }
           },
-          initialRoute: "/",
-          //initialRoute: "/DevicePage",
+          //initialRoute: "/",
+          initialRoute: "/DevicePage",
           //initialRoute: "/TCMeetingScreen",
           //initialRoute: "/Summary",
           //initialRoute: "/KioskManager",

@@ -1,3 +1,4 @@
+import 'package:flutter_devices_sdk/run_param_setting.dart';
 import 'package:simple_kiosk_software/utils/shared_preferences.dart';
 
 class AppConfig {
@@ -43,6 +44,14 @@ class AppConfig {
 
   set enableTC(bool value) {
     SharedPreferencesUtil.setBool("tc", value);
+  }
+
+  double get totalHeight {
+    return SharedPreferencesUtil.getDouble("totalHeight", defaultValue: 2.14);
+  }
+
+  set totalHeight(double value) {
+    SharedPreferencesUtil.setDouble("totalHeight", value);
   }
 
   // 私有构造函数

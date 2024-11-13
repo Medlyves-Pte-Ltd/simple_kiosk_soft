@@ -87,32 +87,32 @@ class AdminLoginPageState extends State<AdminLoginPage> {
   }
 
   void onLogin() async {
-    // _password = _password.trim();
-    // _account = _account.trim();
-    //
-    // if (_account.isEmpty) {
-    //   Fluttertoast.showToast(msg: "The account cannot be empty");
-    //   return;
-    // }
-    //
-    // if (_password.isEmpty) {
-    //   Fluttertoast.showToast(msg: "Password cannot be empty");
-    //   return;
-    // }
-    //
-    // if (_defaultAccount != _account) {
-    //   Fluttertoast.showToast(
-    //     msg: "The administrator account is incorrect",
-    //   );
-    //   return;
-    // }
-    //
-    // if (_defaultPassword != _password) {
-    //   Fluttertoast.showToast(
-    //     msg: "The administrator password is incorrect",
-    //   );
-    //   return;
-    // }
+    _password = _password.trim();
+    _account = _account.trim();
+
+    if (_account.isEmpty) {
+      Fluttertoast.showToast(msg: "The account cannot be empty");
+      return;
+    }
+
+    if (_password.isEmpty) {
+      Fluttertoast.showToast(msg: "Password cannot be empty");
+      return;
+    }
+
+    if (_defaultAccount != _account) {
+      Fluttertoast.showToast(
+        msg: "The administrator account is incorrect",
+      );
+      return;
+    }
+
+    if (_defaultPassword != _password) {
+      Fluttertoast.showToast(
+        msg: "The administrator password is incorrect",
+      );
+      return;
+    }
 
     Navigator.pushNamedAndRemoveUntil(
         context, '/SettingListPage', ((route) => false));

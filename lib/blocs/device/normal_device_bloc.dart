@@ -21,7 +21,6 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     on<DeviceUpdateDataEvent>(_onDeviceDataUpdatedEvent);
     on<DeviceStopEvent>(_onDeviceStopEvent);
     on<DeviceDisconnectEvent>(_onDeviceDisconnectEvent);
-    on<TestUpdateDataEvent>(_onTestDataUpdatedEvent);
   }
 
   Future<void> _onDeviceConnectEvent(
@@ -88,13 +87,5 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     await device?.disconnect();
     LogPrinter.log('Disconnected.');
     emit(DeviceDisconnected(deviceType: deviceType));
-  }
-
-  Future<void> _onTestDataUpdatedEvent(
-      TestUpdateDataEvent event, Emitter<DeviceState> emit) async {
-    DeviceType deviceType = event.deviceType;
-    DeviceData deviceData = event.deviceData;
-    LogPrinter.log(deviceData.toString());
-    emit(DeviceDataUpdated(deviceType: deviceType, deviceData: deviceData));
   }
 }

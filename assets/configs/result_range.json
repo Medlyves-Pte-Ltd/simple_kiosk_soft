@@ -19,7 +19,7 @@
     "protein_rate_max": 0.176,
     "visceral_fat_level_min": 1,
     "visceral_fat_level_max": 9,
-    "basal_metabolism_min": 1500,
+    "basal_metabolism_min": 1400,
     "basal_metabolism_max": 2000,
     "skeletal_rate_min": 31.0,
     "skeletal_rage_max": 34.0,
