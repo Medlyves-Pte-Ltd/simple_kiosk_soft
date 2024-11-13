@@ -39,34 +39,38 @@ class AdminLoginPageState extends State<AdminLoginPage> {
 
   Widget renderBody() {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Padding(
-      padding: EdgeInsets.all(10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          CircleAvatar(
-            backgroundImage: AssetImage('assets/images/admin_head.png'),
-            radius: height * 0.05,
+          padding: EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              CircleAvatar(
+                backgroundImage: AssetImage('assets/images/admin_head.png'),
+                radius: height * 0.05,
+              ),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              SizedBox(
+                height: height * 0.06,
+                child: _getAccountInput(width),
+              ),
+              SizedBox(
+                height: height * 0.06,
+                child: _getPasswordInput(width),
+              ),
+              _getLoginButton(width)
+            ],
           ),
-          SizedBox(
-            height: height * 0.02,
-          ),
-          _getAccountInput(width),
-          _getPasswordInput(width),
-          SizedBox(
-            height: height * 0.02,
-          ),
-          _getLoginButton(width),
-        ],
-      ),
-    ));
+        ));
   }
 
   Widget _getLoginButton(double width) {
     return Container(
-      height: height * 0.06,
-      width: width * 0.6,
+      height: height * 0.04,
+      width: width * 0.3,
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: ColorPalette.materialGreen,
@@ -79,8 +83,9 @@ class AdminLoginPageState extends State<AdminLoginPage> {
               MaterialStateProperty.all<Color>(ColorPalette.materialGreen),
         ),
         onPressed: onLogin,
-        child: const Text(
+        child: Text(
           'Login',
+          style: TextStyle(fontSize: height * 0.018),
         ),
       ),
     );
@@ -171,7 +176,7 @@ class AdminLoginPageState extends State<AdminLoginPage> {
       controller: _accountController,
       decoration: InputDecoration(
         hintText: "Administrator account",
-        hintStyle: TextStyle(fontSize: height * 0.018),
+        hintStyle: TextStyle(fontSize: height * 0.015),
         icon: Icon(
           Icons.person,
           size: height * 0.03,
@@ -216,7 +221,7 @@ class AdminLoginPageState extends State<AdminLoginPage> {
       controller: _passwordController,
       decoration: InputDecoration(
         hintText: "Password (6-20 letters, numbers)",
-        hintStyle: TextStyle(fontSize: height * 0.018),
+        hintStyle: TextStyle(fontSize: height * 0.015),
         icon: Icon(
           Icons.lock,
           size: height * 0.03,

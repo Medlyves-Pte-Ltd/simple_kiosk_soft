@@ -62,16 +62,19 @@ class UserLoginState extends State<UserLogin> {
                       cursorColor: const Color.fromRGBO(103, 155, 206, 1),
                       decoration: InputDecoration(
                           labelText: AppLocalizations.of(context)!.print_name,
-                          labelStyle: const TextStyle(
-                              color: Color.fromRGBO(103, 155, 206, 1)),
-                          prefixIcon: const Icon(Icons.person),
+                          labelStyle: TextStyle(
+                              color: Color.fromRGBO(103, 155, 206, 1),
+                              fontSize: height * 0.016),
+                          prefixIcon: Icon(
+                            Icons.person,
+                            size: height * 0.018,
+                          ),
                           focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
                             color: Color.fromRGBO(103, 155, 206, 1),
                             width: 2.0,
                           ))),
-                      style: TextStyle(
-                          fontSize: height * 0.02, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: height * 0.016),
                     ),
                     SizedBox(height: height * 0.02),
 
@@ -81,9 +84,12 @@ class UserLoginState extends State<UserLogin> {
                           labelText: AppLocalizations.of(context)!.gender,
                           labelStyle: TextStyle(
                               color: Color.fromRGBO(103, 155, 206, 1),
-                              fontSize: height * 0.02),
+                              fontSize: height * 0.016),
                           hintText: 'Select Gender',
-                          prefixIcon: const Icon(Icons.wc),
+                          prefixIcon: Icon(
+                            Icons.wc,
+                            size: height * 0.018,
+                          ),
                           focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
                             color: Color.fromRGBO(103, 155, 206, 1),
@@ -103,7 +109,7 @@ class UserLoginState extends State<UserLogin> {
                         return DropdownMenuItem<String>(
                           value: gender,
                           child: Text(gender,
-                              style: TextStyle(fontSize: height * 0.02)),
+                              style: TextStyle(fontSize: height * 0.01)),
                         );
                       }).toList(),
                     ),
@@ -116,16 +122,18 @@ class UserLoginState extends State<UserLogin> {
                       cursorColor: const Color.fromRGBO(103, 155, 206, 1),
                       decoration: InputDecoration(
                           labelText: AppLocalizations.of(context)!.print_age,
-                          labelStyle: const TextStyle(
-                              color: Color.fromRGBO(103, 155, 206, 1)),
-                          prefixIcon: const Icon(Icons.escalator_warning),
+                          labelStyle: TextStyle(
+                            color: Color.fromRGBO(103, 155, 206, 1),
+                            fontSize: height * 0.016,
+                          ),
+                          prefixIcon: Icon(Icons.escalator_warning,
+                              size: height * 0.018),
                           focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
                             color: Color.fromRGBO(103, 155, 206, 1),
                             width: 2.0,
                           ))),
-                      style: TextStyle(
-                          fontSize: height * 0.02, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: height * 0.016),
                       keyboardType: TextInputType.number,
                     ),
 
@@ -136,7 +144,7 @@ class UserLoginState extends State<UserLogin> {
                         ElevatedButton(
                             style: ButtonStyle(
                               fixedSize: MaterialStateProperty.all<Size>(
-                                Size(width * 0.3, height * 0.06),
+                                Size(width * 0.25, height * 0.04),
                               ),
                               backgroundColor: MaterialStateProperty.all<Color>(
                                 ColorPalette.materialGreen,
@@ -147,19 +155,23 @@ class UserLoginState extends State<UserLogin> {
                                   context, "/", (route) => false);
                             },
                             child: Text(AppLocalizations.of(context)!.back,
-                                style: const TextStyle(color: Colors.white))),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: height * 0.016))),
                         SizedBox(width: width * 0.08),
                         ElevatedButton(
                             style: ButtonStyle(
                               fixedSize: MaterialStateProperty.all<Size>(
-                                Size(width * 0.3, height * 0.06),
+                                Size(width * 0.25, height * 0.04),
                               ),
                               backgroundColor: MaterialStateProperty.all<Color>(
                                 ColorPalette.materialGreen,
                               ),
                             ),
                             child: Text(AppLocalizations.of(context)!.next,
-                                style: const TextStyle(color: Colors.white)),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: height * 0.016)),
                             onPressed: () {
                               String name = _nameController.text.trim();
                               String gender = selectedGender ?? '';

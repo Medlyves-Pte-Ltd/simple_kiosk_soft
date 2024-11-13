@@ -33,7 +33,7 @@ class Footer extends StatelessWidget {
                 child: Align(
                     alignment: Alignment.centerLeft,
                     child: IconButton(
-                        iconSize: height * 0.03,
+                        iconSize: height * 0.025,
                         onPressed: () {
                           Navigator.of(context).push(TDSlidePopupRoute(
                               modalBarrierColor:
@@ -46,8 +46,8 @@ class Footer extends StatelessWidget {
                                     Navigator.maybePop(context);
                                   },
                                   child: SizedBox(
-                                    height: height * 0.5,
-                                    width: width * 0.8,
+                                    height: height * 0.35,
+                                    width: width * 0.6,
                                     child: AdminLoginPage(),
                                   ),
                                 );
@@ -81,7 +81,7 @@ class Footer extends StatelessWidget {
                 child: Text(
                   '${AppLocalizations.of(context)!.version} ${AppConfig().appVersion}',
                   style:
-                      TextStyle(fontSize: height * 0.016, color: Colors.black),
+                      TextStyle(fontSize: height * 0.008, color: Colors.black),
                 ),
               ),
             ),
