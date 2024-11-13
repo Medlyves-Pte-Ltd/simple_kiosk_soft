@@ -131,5 +131,17 @@
   "error": "错误",
   "powered_by": "技术支持：",
   "version": "版本",
-  "id_card": "身份证"
+  "id_card": "身份证",
+  "errorcode_01": "传感器震荡异常",
+  "errorcode_02": "检测不到足够的心跳或算不出血压",
+  "errorcode_03": "测量结果异常",
+  "errorcode_04": "袖带过松或漏气(10秒内加压不到30mmHg)",
+  "errorcode_05": "气管被堵住",
+  "errorcode_06": "测量时压力波动大",
+  "errorcode_07": "压力超过上限",
+  "errorcode_08": "传感器未标定",
+  "errorcode_09": "心率值大于199",
+  "errorcode_010": "心率值小于40",
+  "errorcode_030": "肘部开关未按下",
+  "errorcode_031": "测量过程中开关机按键被按下"
 }

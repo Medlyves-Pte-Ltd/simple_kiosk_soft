@@ -130,5 +130,17 @@
   "error": "Error",
   "powered_by": "Powered by: ",
   "version": "Version",
-  "id_card": "Id card"
+  "id_card": "Id card",
+  "errorcode_01": "The sensor oscillates abnormally",
+  "errorcode_02": "Doesn't detect enough heartbeat or doesn't count blood pressure",
+  "errorcode_03": "The measurement results are abnormal",
+  "errorcode_04": "The cuff is too loose or leaking(Less than 30 mmHg is pressurized in 10 seconds)",
+  "errorcode_05": "The trachea is blocked",
+  "errorcode_06": "The pressure fluctuates greatly during measurement",
+  "errorcode_07": "The pressure exceeds the upper limit",
+  "errorcode_08": "The sensor is not calibrated",
+  "errorcode_09": "Heart rate values greater than 199",
+  "errorcode_010": "Heart rate values less than 40",
+  "errorcode_030": "The elbow switch is not pressed",
+  "errorcode_031": "The power on and off button is pressed during the measurement"
 }

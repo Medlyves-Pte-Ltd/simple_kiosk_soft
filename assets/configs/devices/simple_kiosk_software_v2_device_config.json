@@ -20,8 +20,8 @@
   {
     "deviceName": "Blood Pressure",
     "deviceType": "BP_DEVICE",
-    "deviceIndex": 0,
-    "deviceList": ["RaycomeBloodPressure", "PanasonicBloodPressure"],
+    "deviceIndex": 2,
+    "deviceList": ["RaycomeBloodPressure", "PanasonicBloodPressure","CemhoBloodPressure"],
     "enable": true,
     "vid":"67b",
     "pid":"23a3"

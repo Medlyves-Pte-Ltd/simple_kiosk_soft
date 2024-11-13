@@ -111,5 +111,17 @@
   "error": "Ralat",
   "powered_by": "Dijanakan oleh:",
   "version": "Versi",
-  "id_card": "kad id"
+  "id_card": "kad id",
+  "errorcode_01": "Sensor berayun secara tidak normal",
+  "errorcode_02": "Tidak mengesan degupan jantung yang mencukupi atau tidak mengira tekanan darah",
+  "errorcode_03": "Keputusan pengukuran tidak normal",
+  "errorcode_04": "Manset terlalu longgar atau bocor(Kurang daripada 30 mmHg bertekanan dalam 10 saat)",
+  "errorcode_05": "Trakea disekat",
+  "errorcode_06": "Tekanan turun naik dengan ketara semasa pengukuran",
+  "errorcode_07": "Tekanan melebihi had atas",
+  "errorcode_08": "Sensor tidak ditentukur",
+  "errorcode_09": "Nilai kadar denyutan jantung lebih daripada 199",
+  "errorcode_010": "Nilai kadar denyutan jantung kurang daripada 40",
+  "errorcode_030": "Suis siku tidak ditekan",
+  "errorcode_031": "Butang hidup dan mati kuasa ditekan semasa pengukuran"
 }
