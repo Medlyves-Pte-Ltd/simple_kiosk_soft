@@ -34,8 +34,8 @@
   {
     "deviceName": "Blood Pressure",
     "deviceType": "BP_DEVICE",
-    "deviceIndex": 2,
-    "deviceList": ["RaycomeBloodPressure", "PanasonicBloodPressure","CemhoBloodPressure"],
+    "deviceIndex": 1,
+    "deviceList": ["RaycomeBloodPressure", "PanasonicBloodPressure", "CemhoBloodPressure"],
     "identificationCodeList": ["BZAOb11CN11","cpt6000"],
     "enable": true
   },
