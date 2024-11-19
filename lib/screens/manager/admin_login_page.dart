@@ -41,7 +41,7 @@ class AdminLoginPageState extends State<AdminLoginPage> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Padding(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -51,14 +51,14 @@ class AdminLoginPageState extends State<AdminLoginPage> {
                 radius: height * 0.05,
               ),
               SizedBox(
-                height: height * 0.02,
+                height: height * 0.01,
               ),
               SizedBox(
-                height: height * 0.06,
+                height: height * 0.1,
                 child: _getAccountInput(width),
               ),
               SizedBox(
-                height: height * 0.06,
+                height: height * 0.1,
                 child: _getPasswordInput(width),
               ),
               _getLoginButton(width)
