@@ -46,8 +46,8 @@ class Footer extends StatelessWidget {
                                     Navigator.maybePop(context);
                                   },
                                   child: SizedBox(
-                                    height: height * 0.35,
-                                    width: width * 0.6,
+                                    height: height * 0.45,
+                                    width: width * 0.8,
                                     child: AdminLoginPage(),
                                   ),
                                 );
