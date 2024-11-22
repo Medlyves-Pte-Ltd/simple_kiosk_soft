@@ -38,17 +38,19 @@ dependencies:
   camera: ^0.11.0+2
   audioplayers: ^6.1.0
   #record: ^5.2.0
-  path_provider: ^2.1.4
+  path_provider: ^2.1.5
   web_socket_channel: ^2.4.0
   hmssdk_flutter: ^1.10.3
   easy_image_viewer: ^1.4.0
   connectivity_plus: ^5.0.2
   package_info_plus: ^8.1.1
-  flutter_devices_sdk: # 包名
-      git:
-        #url: https://github.com/Medlyves-Pte-Ltd/flutter_devices_sdk.git
-        url: https://gitee.com/caipingan456/flutter_devices_sdk.git
-        ref: docking_station # 分支
+  re_editor: ^0.6.0
+  re_highlight: ^0.0.3
+#  flutter_devices_sdk: # 包名
+#      git:
+#        #url: https://github.com/Medlyves-Pte-Ltd/flutter_devices_sdk.git
+#        url: https://gitee.com/caipingan456/flutter_devices_sdk.git
+#        ref: docking_station # 分支
   medlyves_mobile_components:
           git:
             url: https://gitee.com/caipingan456/medlyves_mobile_components.git
@@ -56,8 +58,8 @@ dependencies:
 #            url: git@github.com:Medlyves-Pte-Ltd/medlyves_mobile_components.git
 #            ref: 9adfd05
 
-#  flutter_devices_sdk:
-#    path: D:\Android\Projects\flutter\flutter_devices_sdk
+  flutter_devices_sdk:
+    path: D:\Android\Projects\flutter\flutter_devices_sdk
 
 ## 运行生成图标命令
 ## flutter pub run flutter_launcher_icons
@@ -79,9 +81,9 @@ flutter:
     - assets/images/
     - assets/videos/
     - assets/videos/en/
-    - assets/videos/zh/
-    - assets/videos/ta/
-    - assets/videos/ms/
+#    - assets/videos/zh/
+#    - assets/videos/ta/
+#    - assets/videos/ms/
     - assets/videos/th/
     - assets/configs/
     - assets/configs/devices/

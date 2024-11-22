@@ -18,7 +18,13 @@ class _KioskManagerState extends State<KioskManager> {
   bool _isLogin = false;
   double height = 0;
   double width = 0;
-
+  var kioskidControl = TextEditingController(text: AppConfig().kioskId);
+  var deviceModelControl = TextEditingController(text: AppConfig().deviceModel);
+  var deviceAddressControl =
+      TextEditingController(text: AppConfig().deviceAddress);
+  var clientNameControl = TextEditingController(text: AppConfig().clientName);
+  var totalHeightControl =
+      TextEditingController(text: AppConfig().totalHeight.toStringAsFixed(2));
   @override
   void initState() {
     super.initState();
@@ -35,6 +41,7 @@ class _KioskManagerState extends State<KioskManager> {
     width = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -58,7 +65,7 @@ class _KioskManagerState extends State<KioskManager> {
           inputType: TextInputType.text,
           needClear: false,
           leftLabel: 'Kiosk ID',
-          controller: TextEditingController(text: AppConfig().kioskId),
+          controller: kioskidControl,
           backgroundColor: Colors.white,
           contentAlignment: TextAlign.end,
           hintText: 'Input Text',
@@ -72,7 +79,7 @@ class _KioskManagerState extends State<KioskManager> {
           inputType: TextInputType.text,
           needClear: false,
           leftLabel: 'Device Model',
-          controller: TextEditingController(text: AppConfig().deviceModel),
+          controller: deviceModelControl,
           backgroundColor: Colors.white,
           contentAlignment: TextAlign.end,
           hintText: 'Input Text',
@@ -86,7 +93,7 @@ class _KioskManagerState extends State<KioskManager> {
           inputType: TextInputType.text,
           needClear: false,
           leftLabel: 'Device Address',
-          controller: TextEditingController(text: AppConfig().deviceAddress),
+          controller: deviceAddressControl,
           backgroundColor: Colors.white,
           contentAlignment: TextAlign.end,
           hintText: 'Input Text',
@@ -100,7 +107,7 @@ class _KioskManagerState extends State<KioskManager> {
           inputType: TextInputType.text,
           needClear: false,
           leftLabel: 'Client Name',
-          controller: TextEditingController(text: AppConfig().clientName),
+          controller: clientNameControl,
           backgroundColor: Colors.white,
           contentAlignment: TextAlign.end,
           hintText: 'Input Text',
@@ -122,8 +129,7 @@ class _KioskManagerState extends State<KioskManager> {
         TDInput(
           inputType: TextInputType.number,
           type: TDInputType.special,
-          controller: TextEditingController(
-              text: AppConfig().totalHeight.toStringAsFixed(2)),
+          controller: totalHeightControl,
           leftLabel: 'Total Height',
           hintText: '0.00',
           backgroundColor: Colors.white,

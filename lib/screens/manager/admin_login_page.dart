@@ -69,7 +69,7 @@ class AdminLoginPageState extends State<AdminLoginPage> {
 
   Widget _getLoginButton(double width) {
     return Container(
-      height: height * 0.04,
+      height: height * 0.05,
       width: width * 0.3,
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(

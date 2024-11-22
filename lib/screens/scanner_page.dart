@@ -116,12 +116,10 @@ class ScannerPageState extends State<ScannerPage> {
             height: height * 0.3,
             child: buildTipInfoArea(),
           ),
-          const Spacer(),
           buildQrCode(),
-          SizedBox(
-            height: height * 0.02,
-          ),
-          Footer()
+          const Spacer(),
+          buildBackBtn(),
+          Footer(),
         ],
       ),
     );
@@ -134,8 +132,10 @@ class ScannerPageState extends State<ScannerPage> {
       children: [
         GestureDetector(
           onDoubleTap: () {
+            // 测试
             listenScannerData("ZGVtbzFAbWVkbHl2ZXMuY29t_walkin_TC");
-
+            // David信息
+            //listenScannerData("ZGF2aWQud29uZ0BtZWRseXZlcy5jb20=_walkin_TC");
             // // 测试id
             // UserInfo().name = "User";
             // UserInfo().age = "25";
@@ -146,8 +146,8 @@ class ScannerPageState extends State<ScannerPage> {
           },
           child: Image.asset(
             "assets/images/qr-code.png",
-            height: width * 0.3,
-            width: width * 0.3,
+            height: width * 0.2,
+            width: width * 0.2,
           ),
         ),
         Image.asset(
@@ -232,6 +232,42 @@ class ScannerPageState extends State<ScannerPage> {
             )),
         SizedBox(width: width * 0.05),
       ],
+    );
+  }
+
+  // 返回按钮
+  Widget buildBackBtn() {
+    return Container(
+      height: height * 0.08,
+      padding: EdgeInsets.only(
+          top: height * 0.01, bottom: height * 0.01, right: width * 0.05),
+      child: Row(
+        children: [
+          const Spacer(),
+          InkWell(
+            onTap: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  mainContext, "/", (route) => false);
+            },
+            child: Container(
+                height: height * 0.03,
+                width: width * 0.15,
+                decoration: BoxDecoration(
+                  color: ColorPalette.materialGreen,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(
+                  child: Text(
+                    AppLocalizations.of(mainContext)!.back,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: height * 0.015,
+                        fontWeight: FontWeight.w600),
+                  ),
+                )),
+          ),
+        ],
+      ),
     );
   }
 

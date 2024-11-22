@@ -244,10 +244,16 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
       DeviceType.TEMP_DEVICE: "temperature",
       DeviceType.ECG_DEVICE: "ecg"
     };
-
-    String strCompleted = completed ? "completed_" : "";
-    String videoFileName =
-        '${directoryNames[type]}_$strCompleted${localeCode.toUpperCase()}.mp4';
+    String videoFileName = "";
+    if (completed) {
+      if (type == DeviceType.ECG_DEVICE) {
+        videoFileName = 'completed_results_${localeCode.toUpperCase()}.mp4';
+      } else {
+        videoFileName = 'completed_next_${localeCode.toUpperCase()}.mp4';
+      }
+    } else {
+      videoFileName = '${directoryNames[type]}_${localeCode.toUpperCase()}.mp4';
+    }
 
     return 'assets/videos/$localeCode/$videoFileName';
   }

@@ -105,6 +105,20 @@ class SettingListPageState extends State<SettingListPage> {
                         },
                       ),
                       buildDivider(),
+                      ListTile(
+                        selectedColor: ColorPalette.materialGreen,
+                        title: Text('Range Setting'),
+                        subtitle: Text(''),
+                        leading: CircleAvatar(
+                          child: Icon(Icons.date_range_rounded),
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios_rounded),
+                        onTap: () {
+                          // 处理点击事件
+                          Navigator.pushNamed(context, "/RangeEditPage");
+                        },
+                      ),
+                      buildDivider(),
                     ],
                   ))),
           Footer(),

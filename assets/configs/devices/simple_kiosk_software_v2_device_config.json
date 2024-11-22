@@ -41,8 +41,8 @@
     "deviceIndex": 0,
     "deviceList": ["YouKuEP8280CodeScanner"],
     "enable": true,
-    "vid":"1a86",
-    "pid":"7523"
+    "vid":"525",
+    "pid":"a4a7"
   },
   {
     "deviceName": "Height",
@@ -76,7 +76,7 @@
     "deviceType": "ECG_DEVICE",
     "deviceIndex": 0,
     "deviceList": ["HuaQingXinYiEcg"],
-    "enable": true,
+    "enable": false,
     "vid":"1a86",
     "pid":"55d4"
   },

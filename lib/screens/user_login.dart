@@ -2,6 +2,7 @@ import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
+import 'package:simple_kiosk_software/common/header.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_kiosk_software/screens/language/date_time_section.dart';
@@ -27,6 +28,12 @@ class UserLoginState extends State<UserLogin> {
   // 屏幕高度
   double height = 0;
 
+  String getVideoFileName() {
+    String localeCode =
+        BlocProvider.of<LocaleCubit>(context).locale.languageCode;
+    return 'assets/videos/$localeCode/login_manual_entry_${localeCode.toUpperCase()}.mp4';
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -46,7 +53,13 @@ class UserLoginState extends State<UserLogin> {
         color: Colors.white,
         child: Column(
           children: [
-            const DateTimeSection(),
+            //const DateTimeSection(),
+            const Header(),
+            VideoWidget(
+              videoName: getVideoFileName(),
+              setLooping: true,
+            ),
+            // const Footer(),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: SizedBox(

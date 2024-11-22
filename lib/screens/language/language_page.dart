@@ -22,7 +22,7 @@ class LanguagePageState extends State<LanguagePage> {
   late Locale locale;
   final List<Map<String, String>> languages = [
     {"name": "English", "code": "en"},
-    {"name": "中文", "code": "zh"},
+    //{"name": "中文", "code": "zh"},
     {"name": "ภาษาไทย", "code": "th"},
     // {"name": "Bahasa Melayu", "code": "ms"},
     // {"name": "தமிழ்", "code": "ta"},

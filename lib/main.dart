@@ -34,7 +34,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPreferencesUtil.init();
 
-  RunParamSetting().init(ProjectType.simple_kiosk_software);
+  RunParamSetting().init(ProjectType.simple_kiosk_software_v2);
   RunParamSetting().totalHeight = AppConfig().totalHeight;
   // 包版本
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -127,6 +127,7 @@ class MyApp extends StatelessWidget {
           },
           //initialRoute: "/",
           initialRoute: "/DevicePage",
+          //initialRoute: "/RangeEditPage",
           //initialRoute: "/TCMeetingScreen",
           //initialRoute: "/Summary",
           //initialRoute: "/KioskManager",

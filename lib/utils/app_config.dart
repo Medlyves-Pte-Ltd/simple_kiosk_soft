@@ -6,7 +6,7 @@ class AppConfig {
 
   String get kioskId {
     return SharedPreferencesUtil.getString("kioskId",
-        defaultValue: "CN-ICD-DEV-1");
+        defaultValue: "TH-BC-010");
   }
 
   set kioskId(String value) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_kiosk_software/screens/manager/range_edit_page.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/blood_fit_measure.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/blood_glucose_measure.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/blood_oxygen_measure.dart';
@@ -43,6 +44,7 @@ final Map<String, Function> routes = {
   '/QuickTestDevicePage': (context, {arguments}) => QuickTestDevicePage(),
   '/SettingListPage': (context, {arguments}) => SettingListPage(),
   '/UsbInfoPage': (context, {arguments}) => UsbInfoPage(),
+  '/RangeEditPage': (context, {arguments}) => RangeEditPage(),
 };
 
 // 定义通用的onGenerateRoute
