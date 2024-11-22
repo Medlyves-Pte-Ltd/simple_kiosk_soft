@@ -1,0 +1,22 @@
+{
+  "admin":[
+    {
+      "name": "admin",
+      "passwd": "666666"
+    },
+    {
+      "name": "admin2",
+      "passwd": "123123"
+    }
+  ],
+  "oss": [
+    {
+      "name": "oss",
+      "passwd": "888888"
+    },
+    {
+      "name": "oss2",
+      "passwd": "999999"
+    }
+  ]
+}

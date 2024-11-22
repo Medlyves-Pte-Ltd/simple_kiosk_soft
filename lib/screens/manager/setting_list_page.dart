@@ -170,6 +170,21 @@ class SettingListPageState extends State<SettingListPage> {
                         },
                       ),
                       buildDivider(),
+                      ListTile(
+                        selectedColor: ColorPalette.materialGreen,
+                        title: Text('Weight Calibration'),
+                        subtitle: Text(''),
+                        leading: CircleAvatar(
+                          child: Icon(Icons.accessibility_rounded),
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios_rounded),
+                        onTap: () {
+                          // 处理点击事件
+                          Navigator.pushNamed(
+                              context, "/WeightCalibrationPage");
+                        },
+                      ),
+                      buildDivider(),
                     ],
                   ))),
           Footer(),

@@ -5,6 +5,10 @@
   "female": "Female",
   "male": "Male",
   "gender": "Gender: ",
+  "admin": "Admin",
+  "repairman": "Repairman",
+  "user": "User",
+  "role": "Role",
   "getstarted": "Get Started",
   "back_to_mode": "Back to Mode",
   "bcm": "Body Composition",
@@ -142,5 +146,10 @@
   "errorcode_09": "Heart rate values greater than 199",
   "errorcode_010": "Heart rate values less than 40",
   "errorcode_030": "The elbow switch is not pressed",
-  "errorcode_031": "The power on and off button is pressed during the measurement"
+  "errorcode_031": "The power on and off button is pressed during the measurement",
+  "empty_the_pan": "1.Empty the pan",
+  "enter_the_weight": "2.Enter the weight:",
+  "put_the_weight": "3.Put the weight,Weight must be greater than 25 KG",
+  "click_the_Calibration_command_button": "4.Click the Calibration command button",
+  "weight_check": "5.Measure the weight and compare the results to see if the calibrated weight results are correct"
 }
