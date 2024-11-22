@@ -143,5 +143,10 @@
   "errorcode_09": "心率值大于199",
   "errorcode_010": "心率值小于40",
   "errorcode_030": "肘部开关未按下",
-  "errorcode_031": "测量过程中开关机按键被按下"
+  "errorcode_031": "测量过程中开关机按键被按下",
+  "Empty_the_pan": "清空秤盘",
+  "Click_the_Calibration_command_button": "点击校准命令按钮",
+  "Put_the_weight": "放上砝码，砝码一定大于25KG（公斤）",
+  "Enter_the_weight": "输入砝码的重量：",
+  "counterweight": "砝码重量"
 }
