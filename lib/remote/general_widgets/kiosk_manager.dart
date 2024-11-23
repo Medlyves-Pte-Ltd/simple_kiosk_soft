@@ -45,7 +45,7 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
       {
         'English': VideoClip("assets/videos/en/heightweight_EN.mp4",
             "assets/videos/en/completed_next_EN.mp4"),
-        'Thai': VideoClip("assets/videos/th/Height_Weight_measure_TH.mp4",
+        'Thai': VideoClip("assets/videos/th/heightweight_TH.mp4",
             "assets/videos/th/completed_next_TH.mp4"),
         'Chinese': VideoClip("assets/videos/zh/heightweight_ZH.mp4",
             "assets/videos/zh/heightweight_completed_ZH.mp4"),
@@ -58,7 +58,7 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
       {
         'English': VideoClip("assets/videos/en/temperature_EN.mp4",
             "assets/videos/en/completed_next_EN.mp4"),
-        'Thai': VideoClip("assets/videos/th/Temp_measure_TH.mp4",
+        'Thai': VideoClip("assets/videos/th/temperature_TH.mp4",
             "assets/videos/th/completed_next_TH.mp4"),
         'Chinese': VideoClip("assets/videos/zh/temperature_ZH.mp4",
             "assets/videos/zh/temperature_completed_ZH.mp4"),
@@ -71,7 +71,7 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
       {
         'English': VideoClip("assets/videos/en/bloodpressure_EN.mp4",
             "assets/videos/en/completed_next_EN.mp4"),
-        'Thai': VideoClip("assets/videos/th/BloodPressure_measure_TH.mp4",
+        'Thai': VideoClip("assets/videos/th/bloodpressure_TH.mp4",
             "assets/videos/th/completed_next_TH.mp4"),
         'Chinese': VideoClip("assets/videos/zh/bloodpressure_ZH.mp4",
             "assets/videos/zh/bloodpressure_completed_ZH.mp4"),
@@ -84,7 +84,7 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
       {
         'English': VideoClip("assets/videos/en/bodycomposition_EN.mp4",
             "assets/videos/en/completed_next_EN.mp4"),
-        'Thai': VideoClip("assets/videos/th/BodyComp_measure_TH.mp4",
+        'Thai': VideoClip("assets/videos/th/bodycomposition_TH.mp4",
             "assets/videos/th/completed_next_TH.mp4"),
         'Chinese': VideoClip("assets/videos/zh/bodycomposition_ZH.mp4",
             "assets/videos/zh/bodycomposition_completed_ZH.mp4"),
@@ -97,7 +97,7 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
       {
         'English': VideoClip("assets/videos/en/spo2_EN.mp4",
             "assets/videos/en/completed_next_EN.mp4"),
-        'Thai': VideoClip("assets/videos/th/SPo2_measure_TH.mp4",
+        'Thai': VideoClip("assets/videos/th/spo2_TH.mp4",
             "assets/videos/th/completed_next_TH.mp4"),
         'Chinese': VideoClip("assets/videos/zh/spo2_ZH.mp4",
             "assets/videos/zh/spo2_completed_ZH.mp4"),
@@ -110,7 +110,7 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
       {
         'English': VideoClip("aassets/videos/en/ecg_EN.mp4",
             "assets/videos/en/completed_next_EN.mp4"),
-        'Thai': VideoClip("assets/videos/th/ecg_measure_TH.mp4",
+        'Thai': VideoClip("assets/videos/th/ecg_TH.mp4",
             "assets/videos/th/completed_next_TH.mp4"),
         'Chinese': VideoClip("assets/videos/zh/ecg_ZH.mp4",
             "assets/videos/zh/ecg_completed_ZH.mp4"),

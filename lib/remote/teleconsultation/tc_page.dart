@@ -5,9 +5,11 @@ import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/common/header.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
+import 'package:simple_kiosk_software/remote/blocs/realtime_db/realtime_db_bloc.dart';
 import 'package:simple_kiosk_software/remote/blocs/teleconsultation/teleconsultation_bloc.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/remote/general_widgets/kiosk_manager.dart';
+import 'package:simple_kiosk_software/remote/models/notifications/appointment_notification.dart';
 import 'package:simple_kiosk_software/remote/results/result_list.dart';
 import 'package:simple_kiosk_software/remote/teleconsultation/meeting_room.dart';
 import 'package:simple_kiosk_software/remote/teleconsultation/tc_navigation.dart';
@@ -69,7 +71,7 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
       VideoPlayerController.asset('assets/videos/en/welcome_EN.mp4');
   late String videoUrl;
   int selectedDevice = 3;
-  final WebSocketService _webSocketService = WebSocketService();
+  // final WebSocketService _webSocketService = WebSocketService();
   String authToken = '';
   String header = '';
   String videoName = '';
@@ -88,7 +90,7 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
         isUIRendered = true;
       });
       getPermissions();
-      _connectToWebSocket();
+      //_connectToWebSocket();
     });
   }
 
@@ -103,74 +105,107 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
   @override
   void dispose() {
     _controller.dispose();
-    _webSocketService.close();
+    //_webSocketService.close();
     super.dispose();
   }
 
-  Future<void> _connectToWebSocket() async {
-    const wsPrefix = 'wss://';
-    final decodedApptID = widget.appointmentId!;
-    final url = '$wsPrefix$host/ws/$decodedApptID/kiosk';
+  // Future<void> _connectToWebSocket() async {
+  //   const wsPrefix = 'wss://';
+  //   final decodedApptID = widget.appointmentId!;
+  //   final url = '$wsPrefix$host/ws/$decodedApptID/kiosk';
+  //
+  //   await _webSocketService.connect(
+  //     url,
+  //     _handleWebSocketData,
+  //     _handleWebSocketError,
+  //     _handleWebSocketDone,
+  //   );
+  // }
 
-    await _webSocketService.connect(
-      url,
-      _handleWebSocketData,
-      _handleWebSocketError,
-      _handleWebSocketDone,
-    );
-  }
+  // void _handleWebSocketData(dynamic data) {
+  //   print("websocket Data received......$data");
+  //   final jsonString = data.toString();
+  //   if (jsonString.contains('"command":"end"')) {
+  //     print("websocket Data ended......$data");
+  //     _handleWebSocketEnd();
+  //   } else if (jsonString.contains('"command":"connect_ack"')) {
+  //     log('Websocket connected-----------');
+  //   } else if (jsonString.contains('"command":"device"')) {
+  //     _handleDeviceCommand(jsonString);
+  //   } else if (jsonString.contains('"command":"stop_device"')) {
+  //     _handleStopDeviceCommand();
+  //   }
+  // }
 
-  void _handleWebSocketData(dynamic data) {
-    print("websocket Data received......$data");
-    final jsonString = data.toString();
-    if (jsonString.contains('"command":"end"')) {
-      print("websocket Data ended......$data");
-      _handleWebSocketEnd();
-    } else if (jsonString.contains('"command":"connect_ack"')) {
-      log('Websocket connected-----------');
-    } else if (jsonString.contains('"command":"device"')) {
-      _handleDeviceCommand(jsonString);
-    } else if (jsonString.contains('"command":"stop_device"')) {
-      _handleStopDeviceCommand();
+  // void _handleWebSocketEnd() {
+  //   print("websocket ended by doctor");
+  //   context.read<RoomOverviewBloc>().add(const RoomOverviewLeaveRequested());
+  //   context
+  //       .read<AppointmentBloc>()
+  //       .add(SendStopEvent(kioskId: AppConfig().kioskId));
+  //   Navigator.of(context).pop();
+  // }
+
+  // Future<void> _handleDeviceCommand(String jsonString) async {
+  //   final deviceGroup = _extractDeviceGroup(jsonString);
+  //
+  //   if (deviceGroup != null) {
+  //     if (isUIRendered) {
+  //       selectedDevice = deviceGroup;
+  //       await updateVideoName();
+  //
+  //       setState(() {
+  //         deviceStart = true;
+  //         startButtonPressed = true;
+  //       });
+  //       BlocProvider.of<TeleconsultationBloc>(context)
+  //           .add(StartDeviceEvent(handleDeviceType(selectedDevice)));
+  //     }
+  //   } else {
+  //     log("Device group not found in JSON string: $jsonString");
+  //   }
+  // }
+  //
+  // void _handleStopDeviceCommand() {
+  //   setState(() {
+  //     deviceStart = false;
+  //     startButtonPressed = false;
+  //   });
+  //   BlocProvider.of<TeleconsultationBloc>(context)
+  //       .add(StopDeviceEvent(handleDeviceType(selectedDevice)));
+  // }
+
+  Future<void> handleDeviceUpdate(BuildContext context, int? device) async {
+    if (device == null) {
+      await _controller.dispose();
+      setState(() {
+        deviceStart = false;
+        startButtonPressed = false;
+      });
+      BlocProvider.of<TeleconsultationBloc>(context)
+          .add(StopDeviceEvent(handleDeviceType(selectedDevice)));
+    } else if (!deviceStart) {
+      if (isUIRendered) {
+        setState(() {
+          selectedDevice = device;
+          deviceStart = true;
+          startButtonPressed = true;
+        });
+        await updateVideoName();
+        if (context.mounted) {
+          BlocProvider.of<TeleconsultationBloc>(context)
+              .add(StartDeviceEvent(handleDeviceType(selectedDevice)));
+        }
+      }
     }
   }
 
-  void _handleWebSocketEnd() {
-    print("websocket ended by doctor");
+  handleAppointmentCompleted(BuildContext context) {
     context.read<RoomOverviewBloc>().add(const RoomOverviewLeaveRequested());
     context
         .read<AppointmentBloc>()
         .add(SendStopEvent(kioskId: AppConfig().kioskId));
     Navigator.of(context).pop();
-  }
-
-  Future<void> _handleDeviceCommand(String jsonString) async {
-    final deviceGroup = _extractDeviceGroup(jsonString);
-
-    if (deviceGroup != null) {
-      if (isUIRendered) {
-        selectedDevice = deviceGroup;
-        await updateVideoName();
-
-        setState(() {
-          deviceStart = true;
-          startButtonPressed = true;
-        });
-        BlocProvider.of<TeleconsultationBloc>(context)
-            .add(StartDeviceEvent(handleDeviceType(selectedDevice)));
-      }
-    } else {
-      log("Device group not found in JSON string: $jsonString");
-    }
-  }
-
-  void _handleStopDeviceCommand() {
-    setState(() {
-      deviceStart = false;
-      startButtonPressed = false;
-    });
-    BlocProvider.of<TeleconsultationBloc>(context)
-        .add(StopDeviceEvent(handleDeviceType(selectedDevice)));
   }
 
   DeviceType handleDeviceType(int selectedDevice) {
@@ -192,29 +227,29 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
     }
   }
 
-  int? _extractDeviceGroup(String jsonString) {
-    try {
-      final Map<String, dynamic> json = jsonDecode(jsonString);
-      return json['device_group'];
-    } catch (e) {
-      log('Error parsing JSON: $e');
-      return null;
-    }
-  }
-
-  void _handleWebSocketError(dynamic error) {
-    print("websocket error......$error");
-  }
-
-  void _handleWebSocketDone() {
-    if (!_webSocketService.isManuallyClosed) {
-      print("websocket reconnect......");
-      _connectToWebSocket();
-    } else {
-      print("websocket done......");
-      _webSocketService.close();
-    }
-  }
+  // int? _extractDeviceGroup(String jsonString) {
+  //   try {
+  //     final Map<String, dynamic> json = jsonDecode(jsonString);
+  //     return json['device_group'];
+  //   } catch (e) {
+  //     log('Error parsing JSON: $e');
+  //     return null;
+  //   }
+  // }
+  //
+  // void _handleWebSocketError(dynamic error) {
+  //   print("websocket error......$error");
+  // }
+  //
+  // void _handleWebSocketDone() {
+  //   if (!_webSocketService.isManuallyClosed) {
+  //     print("websocket reconnect......");
+  //     _connectToWebSocket();
+  //   } else {
+  //     print("websocket done......");
+  //     _webSocketService.close();
+  //   }
+  // }
 
   Future<void> updateVideoName() async {
     videoName = getVideoUrlByStep(deviceToStep(selectedDevice));
@@ -291,90 +326,114 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
 
     return WillPopScope(
       onWillPop: _onWillPop,
-      child: Scaffold(
-        body: Column(
-          children: [
-            const Header(),
-            SizedBox(
-              height: height * 0.33,
-              child: deviceStart
-                  ? Center(
-                      child: _controller.value.isInitialized
-                          ? AspectRatio(
-                              aspectRatio: _controller.value.aspectRatio,
-                              child: VideoPlayer(_controller),
-                            )
-                          : SizedBox(
-                              height: height * 0.33,
-                              child: const Center(
-                                  child: CircularProgressIndicator()),
+      child: BlocProvider(
+          create: (context) {
+            String? apptId = widget.appointmentId;
+            String? newDocPath = apptId == null ? null : 'appointments/$apptId';
+            return RealtimeDbBloc(newDocPath);
+          },
+          child: Scaffold(
+            body: Column(
+              children: [
+                BlocListener<RealtimeDbBloc, RealtimeDbState>(
+                    child: Container(),
+                    listener: (context, state) async {
+                      try {
+                        AppointmentNotification notification =
+                            AppointmentNotification.fromJson(state.payload);
+                        if (notification.status == 'COMPLETED') {
+                          handleAppointmentCompleted(context);
+                          return;
+                        }
+                        handleDeviceUpdate(context, notification.device);
+                      } catch (e) {
+                        debugPrint(
+                            'Failed to handle appointment notification: $e');
+                      }
+                    }),
+                //const Header(),
+                SizedBox(
+                  height: height * 0.33,
+                  child: deviceStart
+                      ? Center(
+                          child: _controller.value.isInitialized
+                              ? AspectRatio(
+                                  aspectRatio: _controller.value.aspectRatio,
+                                  child: VideoPlayer(_controller),
+                                )
+                              : SizedBox(
+                                  height: height * 0.33,
+                                  child: const Center(
+                                      child: CircularProgressIndicator()),
+                                ),
+                        )
+                      : Center(
+                          child:
+                              BlocListener<AppointmentBloc, AppointmentState>(
+                            listener: (context, state) {},
+                            child:
+                                BlocConsumer<AppointmentBloc, AppointmentState>(
+                              listener: (context, state) {
+                                if (state is AppointmentLoading) {
+                                  const CircularProgressIndicator();
+                                }
+                                if (state is AppointmentEnd) {
+                                  const CircularProgressIndicator();
+                                }
+                                if (state is TeleconsultTokenReceived) {
+                                  context.read<RoomOverviewBloc>().add(
+                                      RoomOverviewJoinRequested(
+                                          'P', state.tcDetails.token));
+                                }
+                              },
+                              builder: (context, state) {
+                                if (state is TeleconsultTokenReceived) {
+                                  authToken = state.tcDetails.token;
+                                  return MeetingPage(
+                                    onLeaveButtonPress: hangUp,
+                                    showOnlyRemotePeer: false,
+                                    meetingWidgetHeight: height * 0.33,
+                                  );
+                                }
+                                return Container(
+                                  color: Colors.black,
+                                );
+                              },
                             ),
-                    )
-                  : Center(
-                      child: BlocListener<AppointmentBloc, AppointmentState>(
-                        listener: (context, state) {},
-                        child: BlocConsumer<AppointmentBloc, AppointmentState>(
-                          listener: (context, state) {
-                            if (state is AppointmentLoading) {
-                              const CircularProgressIndicator();
-                            }
-                            if (state is AppointmentEnd) {
-                              const CircularProgressIndicator();
-                            }
-                            if (state is TeleconsultTokenReceived) {
-                              context.read<RoomOverviewBloc>().add(
-                                  RoomOverviewJoinRequested(
-                                      'P', state.tcDetails.token));
-                            }
-                          },
-                          builder: (context, state) {
-                            if (state is TeleconsultTokenReceived) {
-                              authToken = state.tcDetails.token;
-                              return MeetingPage(
-                                onLeaveButtonPress: hangUp,
-                                showOnlyRemotePeer: false,
-                                meetingWidgetHeight: height * 0.33,
-                              );
-                            }
-                            return Container(
-                              color: Colors.black,
-                            );
-                          },
+                          ),
                         ),
-                      ),
-                    ),
-            ),
-            Expanded(child: Builder(builder: (context) {
-              //return const ResultList();
-              return deviceStart
-                  ? selectDeviceMeasurement()
-                  : const ResultList();
-            })),
-            SizedBox(
-              height: height * 0.05,
-              child: BlocBuilder<RoomOverviewBloc, RoomOverviewState>(
-                builder: (context, state) {
-                  return TCNavigation(
-                    displayName: widget.displayName ?? 'Default Name',
-                    onExit: () {
-                      log('Exit pressed');
-                      log("exit 100ms video call");
-                      context
-                          .read<RoomOverviewBloc>()
-                          .add(const RoomOverviewLeaveRequested());
-                      context
-                          .read<AppointmentBloc>()
-                          .add(SendStopEvent(kioskId: AppConfig().kioskId));
+                ),
+                Expanded(child: Builder(builder: (context) {
+                  //return const ResultList();
+                  return deviceStart
+                      ? selectDeviceMeasurement()
+                      : const ResultList();
+                })),
+                SizedBox(
+                  height: height * 0.05,
+                  child: BlocBuilder<RoomOverviewBloc, RoomOverviewState>(
+                    builder: (context, state) {
+                      return TCNavigation(
+                        displayName: widget.displayName ?? '',
+                        onExit: () {
+                          log('Exit pressed');
+                          log("exit 100ms video call");
+                          context
+                              .read<RoomOverviewBloc>()
+                              .add(const RoomOverviewLeaveRequested());
+                          context
+                              .read<AppointmentBloc>()
+                              .add(SendStopEvent(kioskId: AppConfig().kioskId));
+                        },
+                        isEndbuttonVisible: !deviceStart,
+                      );
                     },
-                    isEndbuttonVisible: !deviceStart,
-                  );
-                },
-              ),
+                  ),
+                ),
+                Footer()
+              ],
             ),
-            Footer()
-          ],
-        ),
-      ),
+          )),
     );
   }
 

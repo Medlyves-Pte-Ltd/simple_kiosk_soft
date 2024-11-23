@@ -43,7 +43,9 @@ class AppointmentApi {
     );
     mobile_components.Result result =
         mobile_components.MedlyvesService.parseJSONResponse(response);
-    if (result is mobile_components.Failure && result.errorCode != 'APT327') {
+    if (result is mobile_components.Failure &&
+        result.errorCode != 'APT327' &&
+        result.errorCode != 'OTH602') {
       // TODO: Temporary fix for ending ended appointment
       throw MedlyvesException(result.errorCode,
           errorMessage: result.errorMessage);
@@ -154,7 +156,6 @@ class AppointmentApi {
         body: jsonEncode(body));
 
     if (response.statusCode == 200) {
-      LogPrinter.log(jsonEncode(response.body));
       return jsonDecode(response.body);
     } else {
       throw Exception('Error uploading device data');

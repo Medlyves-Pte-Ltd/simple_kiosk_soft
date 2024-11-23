@@ -15,11 +15,7 @@ class BodyCompositionWidget extends StatelessWidget {
     final bodyCompositionData =
         vitalMeasurementsController.vitalData.where((reading) {
       int deviceId = reading.deviceId;
-      return deviceId >= 4 &&
-          deviceId <= 16 &&
-          deviceId != 5 &&
-          deviceId != 6 &&
-          deviceId != 14;
+      return deviceId >= 4 && deviceId <= 16;
     }).toList();
 
     // sort based on device ID, in ascending order

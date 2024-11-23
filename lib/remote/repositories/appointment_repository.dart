@@ -112,7 +112,7 @@ class AppointmentRepository {
       if (key != 'ecg_cln' && key != 'ecg_img') {
         readings.add({
           'device_id': DeviceMap.CODETOID[key],
-          'value': value == "" ? 0.0 : double.parse(value),
+          'value': double.parse(value),
           'units': DeviceMap.CODETOUNIT[key]
         });
       }

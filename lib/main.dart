@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_devices_sdk/devices/device_config.dart';
 import 'package:flutter_devices_sdk/project_type.dart';
@@ -17,6 +18,7 @@ import 'package:simple_kiosk_software/blocs/locale/locale_state.dart';
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
 import 'package:simple_kiosk_software/remote/blocs/liveness/liveness_bloc.dart';
 import 'package:simple_kiosk_software/remote/blocs/teleconsultation/teleconsultation_bloc.dart';
+import 'package:simple_kiosk_software/remote/config/firebase_options.dart';
 import 'package:simple_kiosk_software/remote/repositories/appointment_repository.dart';
 import 'package:simple_kiosk_software/remote/teleconsultation/tc_page.dart';
 import 'package:simple_kiosk_software/remote/vitals/viewmodels/vital_measurement_controller.dart';
@@ -53,6 +55,10 @@ void main() async {
   final TeleconsultationBloc teleconsultationBloc =
       TeleconsultationBloc(deviceBloc, appointmentRepository);
   final LivenessBloc livenessBloc = LivenessBloc();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(
     MultiProvider(

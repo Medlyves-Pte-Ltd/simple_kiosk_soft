@@ -11,6 +11,7 @@ class WebSocketService {
 
   Future<void> connect(String url, void Function(dynamic) onData,
       void Function(dynamic)? onError, void Function()? onDone) async {
+    isManuallyClosed = false;
     channel = IOWebSocketChannel.connect(Uri.parse(url));
     await channel.ready;
     completer = Completer<void>();

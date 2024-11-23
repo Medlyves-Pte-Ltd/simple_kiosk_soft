@@ -1,6 +1,4 @@
 import 'dart:async';
-
-import 'package:simple_kiosk_software/remote/config/settings.dart';
 import 'package:simple_kiosk_software/remote/services/api_methods.dart';
 import 'package:simple_kiosk_software/remote/services/kiosk_api.dart';
 import 'package:simple_kiosk_software/remote/utils/app_constants.dart';

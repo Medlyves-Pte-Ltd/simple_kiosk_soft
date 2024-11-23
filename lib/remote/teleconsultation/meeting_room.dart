@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hmssdk_flutter/hmssdk_flutter.dart';
@@ -119,8 +118,8 @@ class _MeetingPageState extends State<MeetingPage> {
                   alignment: Alignment.bottomCenter,
                   child: BottomMeetingControls(
                     isKioskMode: true,
-                    isVideoMuted: localPeerVideoTrack?.isMute ?? false,
-                    isAudioMuted: localPeer?.audioTrack?.isMute ?? false,
+                    isVideoMuted: state.isCameraMute,
+                    isAudioMuted: state.isMicMute,
                     onVideoButtonPress: () => {
                       context
                           .read<RoomOverviewBloc>()

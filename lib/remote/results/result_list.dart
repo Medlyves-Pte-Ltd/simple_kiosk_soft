@@ -95,22 +95,25 @@ class _ResultListState extends State<ResultList>
       //       const Center(
       //           child: CircularProgressIndicator(
       //               color: ColorPalette.colorAppTheme)),
-      Expanded(
-          child: Stack(
-        children: [
-          TabBarView(
-            controller: _tabController,
-            clipBehavior: Clip.antiAlias,
-            children: <Widget>[
-              VitalList(
-                  vitalMeasurementsController: vitalMeasurementsController),
-              BodyCompositionWidget(
-                  vitalMeasurementsController: vitalMeasurementsController),
-              const ECGImage(),
-            ],
-          ),
-        ],
-      ))
+
+      SizedBox(
+        height: 40.h,
+        child: Stack(
+          children: [
+            TabBarView(
+              controller: _tabController,
+              clipBehavior: Clip.antiAlias,
+              children: <Widget>[
+                VitalList(
+                    vitalMeasurementsController: vitalMeasurementsController),
+                BodyCompositionWidget(
+                    vitalMeasurementsController: vitalMeasurementsController),
+                const ECGImage(),
+              ],
+            ),
+          ],
+        ),
+      ),
     ]);
   }
 }

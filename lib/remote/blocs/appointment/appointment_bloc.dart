@@ -44,7 +44,7 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
       await appointmentRepository.endKioskApptEvent(event.kioskId);
     } catch (e) {
       if (e is MedlyvesException) {
-        if (e.errorCode == 'APT327') {
+        if (e.errorCode == 'APT327' || e.errorCode == 'OTH602') {
           // Appointment not in progress, cannot end.
         } else {
           emit(AppointmentStartFailure(
