@@ -6,8 +6,8 @@ import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:re_editor/re_editor.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/json_highlight.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:simple_kiosk_software/utils/app_config.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:simple_kiosk_software/utils/body_range.dart';
 
 class RangeEditPage extends StatefulWidget {
   @override
@@ -25,6 +25,7 @@ class RangeEditPageState extends State<RangeEditPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _controller = CodeLineEditingController.fromText(BodyRange().jsonRange);
   }
 
   @override
@@ -51,50 +52,39 @@ class RangeEditPageState extends State<RangeEditPage> {
       backgroundColor: Colors.white,
       //resizeToAvoidBottomInset: false,
       body: Center(
-        child: FutureBuilder(
-            future: rootBundle.loadString('assets/configs/result_range.json'),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                _controller = CodeLineEditingController.fromText(snapshot.data);
-                return Column(
+        child: Column(
+          children: [
+            Expanded(
+                child: CodeEditor(
+              //readOnly: true,
+              controller: _controller,
+              style: CodeEditorStyle(
+                codeTheme: CodeHighlightTheme(
+                    languages: {'json': CodeHighlightThemeMode(mode: langJson)},
+                    theme: atomOneLightTheme),
+              ),
+              wordWrap: false,
+              indicatorBuilder:
+                  (context, editingController, chunkController, notifier) {
+                return Row(
                   children: [
-                    Expanded(
-                        child: CodeEditor(
-                      //readOnly: true,
-                      controller: _controller,
-                      style: CodeEditorStyle(
-                        codeTheme: CodeHighlightTheme(languages: {
-                          'json': CodeHighlightThemeMode(mode: langJson)
-                        }, theme: atomOneLightTheme),
-                      ),
-                      wordWrap: false,
-                      indicatorBuilder: (context, editingController,
-                          chunkController, notifier) {
-                        return Row(
-                          children: [
-                            DefaultCodeLineNumber(
-                              controller: editingController,
-                              notifier: notifier,
-                            ),
-                            DefaultCodeChunkIndicator(
-                                width: 20,
-                                controller: chunkController,
-                                notifier: notifier)
-                          ],
-                        );
-                      },
-                      sperator: Container(width: 1, color: Colors.blue),
-                    )),
-                    buildSaveBtn(),
-                    Footer(),
+                    DefaultCodeLineNumber(
+                      controller: editingController,
+                      notifier: notifier,
+                    ),
+                    DefaultCodeChunkIndicator(
+                        width: 20,
+                        controller: chunkController,
+                        notifier: notifier)
                   ],
                 );
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }),
+              },
+              sperator: Container(width: 1, color: Colors.blue),
+            )),
+            buildSaveBtn(),
+            Footer(),
+          ],
+        ),
       ),
     );
   }
@@ -113,17 +103,11 @@ class RangeEditPageState extends State<RangeEditPage> {
               if (_controller == null) {
                 return;
               }
-              // /storage/emulated/0/Android/data/com.medlyves.simple_kiosk_software/files/downloads/test.json
-              final Directory? downloadsDir =
-                  await getApplicationDocumentsDirectory();
-              var file = File('${AppConfig().configDir}/test.json');
-              // var file = File(
-              //     '/storage/emulated/0/Android/data/com.medlyves.simple_kiosk_software/files/test.json');
-              File? fileCached;
-              try {
-                fileCached = await file.writeAsString(_controller!.text);
-              } catch (e) {
-                print(e);
+              String error = await BodyRange().writeFile(_controller!.text);
+              if (error.isNotEmpty) {
+                Fluttertoast.showToast(msg: error);
+              } else {
+                Fluttertoast.showToast(msg: "save success");
               }
             },
             child: Container(

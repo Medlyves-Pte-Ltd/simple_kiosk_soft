@@ -1,15 +1,51 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 
 class BodyRange {
   Map<String, dynamic> rangeMap = {};
-  void init() async {
-    String? json =
-        await rootBundle.loadString("assets/configs/result_range.json");
+  String jsonRange = "";
+
+  // 读文件
+  Future<String> loadFile() async {
+    var file = File('${AppConfig().configDir}/result_range.txt');
+    try {
+      jsonRange = await file.readAsString();
+    } catch (e) {
+      LogPrinter.log('Error: $e');
+      return 'Error: $e';
+    }
+    return "";
+  }
+
+  // 写文件
+  Future<String> writeFile(String text) async {
+    try {
+      jsonDecode(text);
+    } catch (e) {
+      LogPrinter.log('Error: $e');
+      return "Error: $e";
+    }
+
+    jsonRange = text;
+    var file = File('${AppConfig().configDir}/result_range.txt');
+    try {
+      await file.writeAsString(text);
+    } catch (e) {
+      LogPrinter.log('Error: $e');
+      return "Error: $e";
+    }
+
+    return "";
+  }
+
+  void init() {
     rangeMap = UserInfo().gender == 1
-        ? jsonDecode(json)["male"]
-        : jsonDecode(json)["female"];
+        ? jsonDecode(jsonRange)["male"]
+        : jsonDecode(jsonRange)["female"];
   }
 
   // 标准体重

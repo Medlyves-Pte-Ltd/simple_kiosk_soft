@@ -2,7 +2,7 @@ import 'package:flutter_devices_sdk/device_data/code_scanner_data.dart';
 import 'package:flutter_devices_sdk/device_manager.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:flutter_devices_sdk/devices/device_base_model.dart';
-import 'package:flutter_devices_sdk/utils/app_constants.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
 
 class ScannerUtils {
   // 扫码器设备

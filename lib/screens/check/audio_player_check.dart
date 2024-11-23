@@ -3,6 +3,7 @@ import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/screens/check/base_check_widget.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 
 class AudioPlayerCheck extends BaseCheckWidget {
   final player = AudioPlayer();
@@ -53,7 +54,8 @@ class AudioPlayerCheck extends BaseCheckWidget {
 
   @override
   Future<void> onStart() async {
-    await player.play(AssetSource('audios/tong_hua_zheng.wav'));
+    await player
+        .play(DeviceFileSource("${AppConfig().audiosDir}/player_test.wav"));
   }
 
   @override

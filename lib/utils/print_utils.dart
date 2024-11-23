@@ -3,7 +3,7 @@ import 'dart:ui' as ui;
 import 'package:flutter_devices_sdk/device_manager.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:flutter_devices_sdk/devices/device_base_model.dart';
-import 'package:flutter_devices_sdk/utils/app_constants.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:flutter_esc_pos_utils/flutter_esc_pos_utils.dart';
 import 'package:image/image.dart' as img;
 import 'package:flutter/material.dart';

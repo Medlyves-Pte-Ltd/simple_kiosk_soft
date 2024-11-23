@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_devices_sdk/devices/device_config.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:flutter_devices_sdk/project_type.dart';
 import 'package:flutter_devices_sdk/run_param_setting.dart';
 import 'package:flutter/services.dart';
@@ -35,18 +36,21 @@ import 'package:package_info_plus/package_info_plus.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPreferencesUtil.init();
+  // 检查权限
+  await PermissionUtils().getStoragePermission();
+  await PermissionUtils().getManageExternalStoragePermission();
+  await PermissionUtils().getCameraPermission();
+  await PermissionUtils().getMicroPhonePermission();
 
   RunParamSetting().init(ProjectType.simple_kiosk_software_v2);
   RunParamSetting().totalHeight = AppConfig().totalHeight;
   // 包版本
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   AppConfig().appVersion = packageInfo.version;
+  await AppConfig().createDir();
+  await BodyRange().loadFile();
 
   SharedPrefs.setData('appointmentId', "");
-  // 检查权限
-  await PermissionUtils().getStoragePermission();
-  await PermissionUtils().getCameraPermission();
-  await PermissionUtils().getMicroPhonePermission();
 
   final appointmentRepository = AppointmentRepository(AppointmentApi());
   final AppointmentBloc appointmentBloc =
@@ -132,8 +136,8 @@ class MyApp extends StatelessWidget {
             }
           },
           //initialRoute: "/",
-          initialRoute: "/DevicePage",
-          //initialRoute: "/RangeEditPage",
+          //initialRoute: "/DevicePage",
+          initialRoute: "/RangeEditPage",
           //initialRoute: "/TCMeetingScreen",
           //initialRoute: "/Summary",
           //initialRoute: "/KioskManager",

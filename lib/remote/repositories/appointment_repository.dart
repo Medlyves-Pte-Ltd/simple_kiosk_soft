@@ -1,6 +1,5 @@
 import 'dart:io';
-
-import 'package:simple_kiosk_software/remote/utils/app_constants.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:simple_kiosk_software/remote/utils/shared_prefs.dart';
 
 import '../services/appointment_api.dart';

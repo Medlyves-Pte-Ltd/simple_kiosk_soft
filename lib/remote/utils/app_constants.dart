@@ -34,22 +34,6 @@ class FontSize {
   static double fontSizeExtraLarge = 30.dp;
 }
 
-class LogPrinter {
-  //TODO: PDPA for logger
-  static Function log = (String value) => {logger.d(value)};
-  static Function err = (String value) => {logger.e(value)};
-
-  static Logger logger = Logger(
-    printer: PrettyPrinter(
-      methodCount: 0,
-      errorMethodCount: 5,
-      lineLength: 50,
-      colors: true,
-      printTime: true,
-    ),
-  );
-}
-
 class HttpStatus {
   static const String success = "Success";
   static const String noData = "No Data";

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:simple_kiosk_software/remote/models/tc_room_details.dart';
 import 'package:simple_kiosk_software/remote/utils/exceptions/medlyves_exception.dart';
 import 'package:simple_kiosk_software/remote/utils/shared_prefs.dart';

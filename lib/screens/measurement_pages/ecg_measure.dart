@@ -7,7 +7,7 @@ import 'package:flutter_devices_sdk/device_data/ecg_data.dart';
 import 'package:flutter_devices_sdk/device_manager.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:flutter_devices_sdk/devices/device_base_model.dart';
-import 'package:flutter_devices_sdk/utils/app_constants.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/base_measure_layout_widget.dart';

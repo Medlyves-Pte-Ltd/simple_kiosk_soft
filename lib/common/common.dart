@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter_devices_sdk/utils/app_constants.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
 
 Future<void> createDirectory(String path) async {
   try {

@@ -15,6 +15,20 @@ class PermissionUtils {
     return status.isGranted;
   }
 
+  // 允许管理所有文件的权限
+  Future<bool> getManageExternalStoragePermission() async {
+    PermissionStatus status = await Permission.manageExternalStorage.status;
+    if (status.isRestricted || status.isDenied) {
+      PermissionStatus requestStatus =
+          await Permission.manageExternalStorage.request();
+      // 返回用户是否授权成功
+      return requestStatus.isGranted;
+    }
+
+    // 用户已授权或未询问
+    return status.isGranted;
+  }
+
   // 存储权限
   Future<void> getStoragePermission() async {
     DeviceInfoPlugin plugin = DeviceInfoPlugin();

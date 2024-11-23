@@ -79,9 +79,9 @@ flutter:
   uses-material-design: true
   generate: true
   assets:
-    - assets/audios/
+#    - assets/audios/
     - assets/images/
-    - assets/videos/
+#    - assets/videos/
 #    - assets/videos/en/
 #    - assets/videos/zh/
 #    - assets/videos/ta/

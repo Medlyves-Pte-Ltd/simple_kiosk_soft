@@ -4,7 +4,7 @@ import 'package:simple_kiosk_software/utils/shared_preferences.dart';
 
 class AppConfig {
   String appVersion = '1.0.0';
-  static String mainDir = "/storage/emulated/0/Documents/kiosk";
+  static String mainDir = "/storage/emulated/0/kiosk";
   String configDir = "$mainDir/configs";
   String imagesDir = "$mainDir/images";
   String videosDir = "$mainDir/videos";
