@@ -49,8 +49,10 @@ class LanguagePageState extends State<LanguagePage> {
             // const Footer(),
             const DateTimeSection(),
             VideoWidget(
-              videoName: 'assets/videos/th/welcome_TH.mp4',
+              videoName: "${AppConfig().videosDir}/th/welcome_TH.mp4",
+              // videoName: 'assets/videos/th/welcome_TH.mp4',
               setLooping: true,
+              fromFile: true,
             ),
             // const Footer(),
             SizedBox(height: height * 0.03),

@@ -1,8 +1,24 @@
 import 'package:flutter_devices_sdk/run_param_setting.dart';
+import 'package:simple_kiosk_software/common/common.dart';
 import 'package:simple_kiosk_software/utils/shared_preferences.dart';
 
 class AppConfig {
   String appVersion = '1.0.0';
+  static String mainDir = "/storage/emulated/0/Documents/kiosk";
+  String configDir = "$mainDir/configs";
+  String imagesDir = "$mainDir/images";
+  String videosDir = "$mainDir/videos";
+  String audiosDir = "$mainDir/audios";
+  String logsDir = "$mainDir/logs";
+
+  Future<void> createDir() async {
+    // 创建目录
+    await createDirectory(AppConfig().configDir);
+    await createDirectory(AppConfig().imagesDir);
+    await createDirectory(AppConfig().videosDir);
+    await createDirectory(AppConfig().audiosDir);
+    await createDirectory(AppConfig().logsDir);
+  }
 
   String get kioskId {
     return SharedPreferencesUtil.getString("kioskId",

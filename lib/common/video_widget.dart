@@ -1,14 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoWidget extends StatefulWidget {
   final String videoName;
   final bool setLooping;
+  bool fromFile = false;
 
   VideoWidget({
     Key? key,
     required this.videoName,
     required this.setLooping,
+    this.fromFile = false,
   }) : super(key: key);
 
   @override
@@ -22,12 +26,21 @@ class _VideoWidgetState extends State<VideoWidget> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset(widget.videoName)
-      ..setLooping(widget.setLooping)
-      ..initialize().then((_) {
-        setState(() {});
-      })
-      ..play();
+    if (widget.fromFile) {
+      _controller = VideoPlayerController.file(File(widget.videoName))
+        ..setLooping(widget.setLooping)
+        ..initialize().then((_) {
+          setState(() {});
+        })
+        ..play();
+    } else {
+      _controller = VideoPlayerController.asset(widget.videoName)
+        ..setLooping(widget.setLooping)
+        ..initialize().then((_) {
+          setState(() {});
+        })
+        ..play();
+    }
   }
 
   @override

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -182,6 +183,7 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
         deviceStart = false;
         startButtonPressed = false;
       });
+      videoName = "";
       BlocProvider.of<TeleconsultationBloc>(context)
           .add(StopDeviceEvent(handleDeviceType(selectedDevice)));
     } else if (!deviceStart) {
@@ -259,7 +261,7 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
 
   Future<void> updateVideoUrl() async {
     await _controller.dispose();
-    _controller = VideoPlayerController.asset(videoUrl)
+    _controller = VideoPlayerController.file(File(videoName))
       ..initialize().then((_) => setState(() {}))
       ..setLooping(false)
       ..play();

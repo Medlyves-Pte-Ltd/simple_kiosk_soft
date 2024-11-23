@@ -7,6 +7,7 @@ import 'package:re_editor/re_editor.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/json_highlight.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 
 class RangeEditPage extends StatefulWidget {
   @override
@@ -113,8 +114,9 @@ class RangeEditPageState extends State<RangeEditPage> {
                 return;
               }
               // /storage/emulated/0/Android/data/com.medlyves.simple_kiosk_software/files/downloads/test.json
-              final Directory? downloadsDir = await getDownloadsDirectory();
-              var file = File('${downloadsDir?.path}/test.json');
+              final Directory? downloadsDir =
+                  await getApplicationDocumentsDirectory();
+              var file = File('${AppConfig().configDir}/test.json');
               // var file = File(
               //     '/storage/emulated/0/Android/data/com.medlyves.simple_kiosk_software/files/test.json');
               File? fileCached;

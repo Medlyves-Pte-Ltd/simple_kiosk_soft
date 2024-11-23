@@ -5,6 +5,7 @@ import 'package:simple_kiosk_software/remote/vitals/measurement_body/ecg_measure
 import 'package:simple_kiosk_software/remote/vitals/measurement_body/htwt_measurement.dart';
 import 'package:simple_kiosk_software/remote/vitals/measurement_body/blood_oxygen_measurement.dart';
 import 'package:simple_kiosk_software/remote/vitals/measurement_body/temp_measurement.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 
 class VideoClip {
   final String startMeasureVid;
@@ -43,12 +44,12 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
   MeasurementType.heightWeight: MeasurementTypeInfo(
       'Height & Weight',
       {
-        'English': VideoClip("assets/videos/en/heightweight_EN.mp4",
-            "assets/videos/en/completed_next_EN.mp4"),
-        'Thai': VideoClip("assets/videos/th/heightweight_TH.mp4",
-            "assets/videos/th/completed_next_TH.mp4"),
-        'Chinese': VideoClip("assets/videos/zh/heightweight_ZH.mp4",
-            "assets/videos/zh/heightweight_completed_ZH.mp4"),
+        'English': VideoClip("${AppConfig().videosDir}/en/heightweight_EN.mp4",
+            "${AppConfig().videosDir}/en/completed_next_EN.mp4"),
+        'Thai': VideoClip("${AppConfig().videosDir}/th/heightweight_TH.mp4",
+            "${AppConfig().videosDir}/th/completed_next_TH.mp4"),
+        'Chinese': VideoClip("${AppConfig().videosDir}/zh/heightweight_ZH.mp4",
+            "${AppConfig().videosDir}/zh/heightweight_completed_ZH.mp4"),
         // Add more languages if needed
       },
       0,
@@ -56,12 +57,12 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
   MeasurementType.temperature: MeasurementTypeInfo(
       'Temperature',
       {
-        'English': VideoClip("assets/videos/en/temperature_EN.mp4",
-            "assets/videos/en/completed_next_EN.mp4"),
-        'Thai': VideoClip("assets/videos/th/temperature_TH.mp4",
-            "assets/videos/th/completed_next_TH.mp4"),
-        'Chinese': VideoClip("assets/videos/zh/temperature_ZH.mp4",
-            "assets/videos/zh/temperature_completed_ZH.mp4"),
+        'English': VideoClip("${AppConfig().videosDir}/en/temperature_EN.mp4",
+            "${AppConfig().videosDir}/en/completed_next_EN.mp4"),
+        'Thai': VideoClip("${AppConfig().videosDir}/th/temperature_TH.mp4",
+            "${AppConfig().videosDir}/th/completed_next_TH.mp4"),
+        'Chinese': VideoClip("${AppConfig().videosDir}/zh/temperature_ZH.mp4",
+            "${AppConfig().videosDir}/zh/temperature_completed_ZH.mp4"),
         // Add more languages if needed
       },
       1,
@@ -69,12 +70,12 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
   MeasurementType.bloodPressure: MeasurementTypeInfo(
       'Blood Pressure',
       {
-        'English': VideoClip("assets/videos/en/bloodpressure_EN.mp4",
-            "assets/videos/en/completed_next_EN.mp4"),
-        'Thai': VideoClip("assets/videos/th/bloodpressure_TH.mp4",
-            "assets/videos/th/completed_next_TH.mp4"),
-        'Chinese': VideoClip("assets/videos/zh/bloodpressure_ZH.mp4",
-            "assets/videos/zh/bloodpressure_completed_ZH.mp4"),
+        'English': VideoClip("${AppConfig().videosDir}/en/bloodpressure_EN.mp4",
+            "${AppConfig().videosDir}/en/completed_next_EN.mp4"),
+        'Thai': VideoClip("${AppConfig().videosDir}/th/bloodpressure_TH.mp4",
+            "${AppConfig().videosDir}/th/completed_next_TH.mp4"),
+        'Chinese': VideoClip("${AppConfig().videosDir}/zh/bloodpressure_ZH.mp4",
+            "${AppConfig().videosDir}/zh/bloodpressure_completed_ZH.mp4"),
         // Add more languages if needed
       },
       2,
@@ -82,12 +83,14 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
   MeasurementType.bodyComposition: MeasurementTypeInfo(
       'Body Composition',
       {
-        'English': VideoClip("assets/videos/en/bodycomposition_EN.mp4",
-            "assets/videos/en/completed_next_EN.mp4"),
-        'Thai': VideoClip("assets/videos/th/bodycomposition_TH.mp4",
-            "assets/videos/th/completed_next_TH.mp4"),
-        'Chinese': VideoClip("assets/videos/zh/bodycomposition_ZH.mp4",
-            "assets/videos/zh/bodycomposition_completed_ZH.mp4"),
+        'English': VideoClip(
+            "${AppConfig().videosDir}/en/bodycomposition_EN.mp4",
+            "${AppConfig().videosDir}/en/completed_next_EN.mp4"),
+        'Thai': VideoClip("${AppConfig().videosDir}/th/bodycomposition_TH.mp4",
+            "${AppConfig().videosDir}/th/completed_next_TH.mp4"),
+        'Chinese': VideoClip(
+            "${AppConfig().videosDir}/zh/bodycomposition_ZH.mp4",
+            "${AppConfig().videosDir}/zh/bodycomposition_completed_ZH.mp4"),
         // Add more languages if needed
       },
       3,
@@ -95,12 +98,12 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
   MeasurementType.spo2: MeasurementTypeInfo(
       'Oxygen Saturation',
       {
-        'English': VideoClip("assets/videos/en/spo2_EN.mp4",
-            "assets/videos/en/completed_next_EN.mp4"),
-        'Thai': VideoClip("assets/videos/th/spo2_TH.mp4",
-            "assets/videos/th/completed_next_TH.mp4"),
-        'Chinese': VideoClip("assets/videos/zh/spo2_ZH.mp4",
-            "assets/videos/zh/spo2_completed_ZH.mp4"),
+        'English': VideoClip("${AppConfig().videosDir}/en/spo2_EN.mp4",
+            "${AppConfig().videosDir}/en/completed_next_EN.mp4"),
+        'Thai': VideoClip("${AppConfig().videosDir}/th/spo2_TH.mp4",
+            "${AppConfig().videosDir}/th/completed_next_TH.mp4"),
+        'Chinese': VideoClip("${AppConfig().videosDir}/zh/spo2_ZH.mp4",
+            "${AppConfig().videosDir}/zh/spo2_completed_ZH.mp4"),
         // Add more languages if needed
       },
       4,
@@ -108,12 +111,12 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
   MeasurementType.ecg: MeasurementTypeInfo(
       'ECG',
       {
-        'English': VideoClip("aassets/videos/en/ecg_EN.mp4",
-            "assets/videos/en/completed_next_EN.mp4"),
-        'Thai': VideoClip("assets/videos/th/ecg_TH.mp4",
-            "assets/videos/th/completed_next_TH.mp4"),
-        'Chinese': VideoClip("assets/videos/zh/ecg_ZH.mp4",
-            "assets/videos/zh/ecg_completed_ZH.mp4"),
+        'English': VideoClip("a${AppConfig().videosDir}/en/ecg_EN.mp4",
+            "${AppConfig().videosDir}/en/completed_next_EN.mp4"),
+        'Thai': VideoClip("${AppConfig().videosDir}/th/ecg_TH.mp4",
+            "${AppConfig().videosDir}/th/completed_next_TH.mp4"),
+        'Chinese': VideoClip("${AppConfig().videosDir}/zh/ecg_ZH.mp4",
+            "${AppConfig().videosDir}/zh/ecg_completed_ZH.mp4"),
         // Add more languages if needed
       },
       5,
@@ -149,7 +152,7 @@ class VitalTitle {
 //       return videoName;
 //     } else {
 //       print("Active Step Out of Bounds");
-//       return 'assets/videos/thai/VideoNotFound.mp4'; // Or provide a default video name.
+//       return '${AppConfig().videosDir}/thai/VideoNotFound.mp4'; // Or provide a default video name.
 //     }
 //   }
 // }

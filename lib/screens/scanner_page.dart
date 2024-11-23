@@ -274,7 +274,10 @@ class ScannerPageState extends State<ScannerPage> {
   // 播放视频区域
   Widget buildVideoArea() {
     return VideoWidget(
-        key: GlobalKey(), videoName: curPlayFile, setLooping: true);
+        key: GlobalKey(),
+        videoName: curPlayFile,
+        setLooping: true,
+        fromFile: true);
   }
 
   void init() {
@@ -287,6 +290,6 @@ class ScannerPageState extends State<ScannerPage> {
     String localeCode =
         BlocProvider.of<LocaleCubit>(mainContext).locale.languageCode;
     String videoFileName = 'qr_code_${localeCode.toUpperCase()}.mp4';
-    return 'assets/videos/$localeCode/$videoFileName';
+    return '${AppConfig().videosDir}/$localeCode/$videoFileName';
   }
 }

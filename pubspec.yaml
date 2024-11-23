@@ -82,10 +82,10 @@ flutter:
     - assets/audios/
     - assets/images/
     - assets/videos/
-    - assets/videos/en/
+#    - assets/videos/en/
 #    - assets/videos/zh/
 #    - assets/videos/ta/
 #    - assets/videos/ms/
-    - assets/videos/th/
+#    - assets/videos/th/
     - assets/configs/
     - assets/configs/devices/

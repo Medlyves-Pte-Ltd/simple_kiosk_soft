@@ -96,7 +96,11 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
       },
       builder: (context, state) {
         curPlayFile = file;
-        return VideoWidget(key: GlobalKey(), videoName: file, setLooping: true);
+        return VideoWidget(
+            key: GlobalKey(),
+            videoName: file,
+            setLooping: true,
+            fromFile: true);
       },
     );
   }

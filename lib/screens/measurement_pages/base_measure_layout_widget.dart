@@ -13,6 +13,7 @@ import 'package:simple_kiosk_software/common/header.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 
 class BaseMeasureLayoutWidget extends StatelessWidget {
@@ -84,7 +85,8 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
       return file != curPlayFile;
     }, builder: (context, state) {
       curPlayFile = file;
-      return VideoWidget(key: GlobalKey(), videoName: file, setLooping: true);
+      return VideoWidget(
+          key: GlobalKey(), videoName: file, setLooping: true, fromFile: true);
     });
   }
 
@@ -255,7 +257,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
       videoFileName = '${directoryNames[type]}_${localeCode.toUpperCase()}.mp4';
     }
 
-    return 'assets/videos/$localeCode/$videoFileName';
+    return '${AppConfig().videosDir}/$localeCode/$videoFileName';
   }
 
   Widget startButton() {

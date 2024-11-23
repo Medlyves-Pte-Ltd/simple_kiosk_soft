@@ -10,7 +10,7 @@ import 'package:simple_kiosk_software/screens/scanner_page.dart';
 import 'package:simple_kiosk_software/screens/summary_pages/summary_layout_widget.dart';
 import 'package:simple_kiosk_software/screens/device_page.dart';
 import 'package:simple_kiosk_software/screens/manager/quick_test_device_page.dart';
-import 'package:simple_kiosk_software/screens/user_login.dart';
+import 'package:simple_kiosk_software/screens/user_login_page.dart';
 import 'package:simple_kiosk_software/screens/language/language_page.dart';
 import 'package:simple_kiosk_software/screens/manager/kiosk_manager.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/height_weight_measure.dart';
@@ -28,7 +28,7 @@ import 'package:flutter_devices_sdk/view/usb_info/usb_info_page.dart';
 // Define routing list
 final Map<String, Function> routes = {
   '/': (context, {arguments}) => const LanguagePage(),
-  '/login': (context, {arguments}) => const UserLogin(),
+  '/login': (context, {arguments}) => const UserLoginPage(),
   '/KioskManager': (context, {arguments}) => KioskManager(),
   '/HeightWeightMeasure': (context, {arguments}) => HeightWeightMeasure(),
   '/BodyTemperatureMeasure': (context, {arguments}) => BodyTemperatureMeasure(),

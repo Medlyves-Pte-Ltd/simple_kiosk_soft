@@ -11,14 +11,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_kiosk_software/utils/body_range.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 
-class UserLogin extends StatefulWidget {
-  const UserLogin({Key? key}) : super(key: key);
+class UserLoginPage extends StatefulWidget {
+  const UserLoginPage({Key? key}) : super(key: key);
 
   @override
-  State<UserLogin> createState() => UserLoginState();
+  State<UserLoginPage> createState() => UserLoginPageState();
 }
 
-class UserLoginState extends State<UserLogin> {
+class UserLoginPageState extends State<UserLoginPage> {
   final double spaceBetweenButtons = 15.0;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
@@ -31,7 +31,7 @@ class UserLoginState extends State<UserLogin> {
   String getVideoFileName() {
     String localeCode =
         BlocProvider.of<LocaleCubit>(context).locale.languageCode;
-    return 'assets/videos/$localeCode/login_manual_entry_${localeCode.toUpperCase()}.mp4';
+    return '${AppConfig().videosDir}/$localeCode/login_manual_entry_${localeCode.toUpperCase()}.mp4';
   }
 
   @override
@@ -56,9 +56,9 @@ class UserLoginState extends State<UserLogin> {
             //const DateTimeSection(),
             const Header(),
             VideoWidget(
-              videoName: getVideoFileName(),
-              setLooping: true,
-            ),
+                videoName: getVideoFileName(),
+                setLooping: true,
+                fromFile: true),
             // const Footer(),
             Padding(
               padding: const EdgeInsets.all(20.0),

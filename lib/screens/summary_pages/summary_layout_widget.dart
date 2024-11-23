@@ -138,7 +138,11 @@ class SummaryLayoutWidget extends StatelessWidget {
 
   // 播放视频区域
   Widget buildVideoArea() {
-    return VideoWidget(videoName: _curPlayFile, setLooping: true);
+    return VideoWidget(
+      videoName: _curPlayFile,
+      setLooping: true,
+      fromFile: true,
+    );
   }
 
   // 卡片信息区域
@@ -322,7 +326,7 @@ class SummaryLayoutWidget extends StatelessWidget {
   String getVideoFileName() {
     String localeCode =
         BlocProvider.of<LocaleCubit>(mainContext).locale.languageCode;
-    return 'assets/videos/$localeCode/end_session_${localeCode.toUpperCase()}.mp4';
+    return '${AppConfig().videosDir}/$localeCode/end_session_${localeCode.toUpperCase()}.mp4';
   }
 
   // 加边框
