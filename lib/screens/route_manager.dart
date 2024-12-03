@@ -20,7 +20,9 @@ import 'package:simple_kiosk_software/screens/measurement_pages/height_weight_me
 import 'package:simple_kiosk_software/screens/measurement_pages/body_temperature_measure.dart';
 import 'package:simple_kiosk_software/screens/manager/setting_list_page.dart';
 import 'package:flutter_devices_sdk/view/usb_info/usb_info_page.dart';
-import 'package:simple_kiosk_software/screens/manager/weight_calibration_page.dart';
+import 'package:simple_kiosk_software/screens/manager/singePoint_weight_calibration_page.dart';
+
+import 'manager/threePoint_weight_calibration_page.dart';
 
 // 如果需要从构造函数中获取参数,使用如下
 // If you need to obtain parameters from a constructor, use the following
@@ -52,6 +54,10 @@ final Map<String, Function> routes = {
   '/DeviceConfigPage': (context, {arguments}) => DeviceConfigPage(),
   '/ModifyPasswordPage': (context, {arguments}) => ModifyPasswordPage(),
   '/PermissionConfigPage': (context, {arguments}) => PermissionConfigPage(),
+  '/SingePointWeightCalibrationPage': (context, {arguments}) =>
+      singePointWeightCalibrationPage(),
+  '/ThreePointWeightCalibrationPage': (context, {arguments}) =>
+      ThreePointWeightCalibrationPage()
 };
 
 // 定义通用的onGenerateRoute

@@ -131,6 +131,7 @@
   "empty_the_pan": "1.Kosongkan panjang skala",
   "enter_the_weight": "2.Masukkan berat berat:",
   "put_the_weight": "3.Letakkan berat badan, ia mesti lebih besar dari 25 KG",
-  "click_the_Calibration_command_button": "4.Klik butang perintah kalibrasi",
-  "weight_check": "5.Ukur berat badan anda, bandingkan keputusan dan lihat sama ada keputusan berat yang ditentukur adalah betul"
+  "click_singe_calibration_command_button": "4.Klik butang perintah kalibrasi",
+  "weight_check": "5.Ukur berat badan anda, bandingkan keputusan dan lihat sama ada keputusan berat yang ditentukur adalah betul",
+  "click_three_calibration_command_button":"2.Tekan tombol, masukkan mode kalibrasi"
 }

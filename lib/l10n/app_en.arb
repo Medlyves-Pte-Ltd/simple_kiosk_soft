@@ -150,6 +150,7 @@
   "empty_the_pan": "1.Empty the pan",
   "enter_the_weight": "2.Enter the weight:",
   "put_the_weight": "3.Put the weight,Weight must be greater than 25 KG",
-  "click_the_Calibration_command_button": "4.Click the Calibration command button",
-  "weight_check": "5.Measure the weight and compare the results to see if the calibrated weight results are correct"
+  "click_singe_calibration_command_button": "4.Click the Calibration command button",
+  "weight_check": "5.Measure the weight and compare the results to see if the calibrated weight results are correct",
+  "click_three_calibration_command_button":"2.Click the button to enter the calibration state"
 }

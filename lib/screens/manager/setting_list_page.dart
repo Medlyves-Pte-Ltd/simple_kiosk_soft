@@ -172,7 +172,7 @@ class SettingListPageState extends State<SettingListPage> {
                       buildDivider(),
                       ListTile(
                         selectedColor: ColorPalette.materialGreen,
-                        title: Text('Weight Calibration'),
+                        title: Text('Singe Point Calibration'),
                         subtitle: Text(''),
                         leading: CircleAvatar(
                           child: Icon(Icons.accessibility_rounded),
@@ -181,10 +181,24 @@ class SettingListPageState extends State<SettingListPage> {
                         onTap: () {
                           // 处理点击事件
                           Navigator.pushNamed(
-                              context, "/WeightCalibrationPage");
+                              context, "/SingePointWeightCalibrationPage");
                         },
                       ),
                       buildDivider(),
+                      ListTile(
+                        selectedColor: ColorPalette.materialGreen,
+                        title: Text('Three Point Weight Calibration'),
+                        subtitle: Text(''),
+                        leading: CircleAvatar(
+                          child: Icon(Icons.settings_accessibility),
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios_rounded),
+                        onTap: () {
+                          // 处理点击事件
+                          Navigator.pushNamed(
+                              context, "/ThreePointWeightCalibrationPage");
+                        },
+                      ),
                     ],
                   ))),
           Footer(),
