@@ -97,16 +97,5 @@
     "enable": true,
     "vid":"1a86",
     "pid":"55d4"
-  },
-  {
-    "deviceName": "Up and down Io",
-    "deviceType": "IO_DEVICE",
-    "deviceIndex": 0,
-    "deviceList": ["YanMengIoDevice"],
-    "info": "",
-    "start_wait_time_s": 1.0,
-    "enable": false,
-    "vid":"",
-    "pid":""
   }
 ]
