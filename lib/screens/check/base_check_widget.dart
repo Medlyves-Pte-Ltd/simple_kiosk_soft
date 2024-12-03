@@ -5,6 +5,7 @@ import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_kiosk_software/blocs/device/device_state.dart';
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
+import 'package:simple_kiosk_software/utils/permission_config.dart';
 
 class BaseCheckWidget extends StatelessWidget {
   bool isStart = false;
@@ -144,31 +145,48 @@ class BaseCheckWidget extends StatelessWidget {
 
       return update;
     }, builder: (context, state) {
-      return InkWell(
-        onTap: () async {
-          if (btnText == AppLocalizations.of(mainContext)!.stop) {
-            await onStop();
-          } else {
-            await onStart();
-          }
-        },
-        child: Container(
-          height: height * 0.03,
-          width: width * 0.1,
-          decoration: BoxDecoration(
-            color: ColorPalette.materialGreen,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Center(
-            child: Text(btnText,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: btnFontSize,
-                    color: Colors.white)),
-          ),
-        ),
-      );
+      return PermissionConfig().havePermission(PermissionModules.DeviceTest)
+          ? InkWell(
+              onTap: () async {
+                if (btnText == AppLocalizations.of(mainContext)!.stop) {
+                  await onStop();
+                } else {
+                  await onStart();
+                }
+              },
+              child: Container(
+                height: height * 0.03,
+                width: width * 0.1,
+                decoration: BoxDecoration(
+                  color: ColorPalette.materialGreen,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(
+                  child: Text(btnText,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: btnFontSize,
+                          color: Colors.white)),
+                ),
+              ),
+            )
+          : Container(
+              height: height * 0.03,
+              width: width * 0.1,
+              decoration: BoxDecoration(
+                color: ColorPalette.darkGrey,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(
+                child: Text(btnText,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: btnFontSize,
+                        color: Colors.white)),
+              ),
+            );
     });
   }
 }

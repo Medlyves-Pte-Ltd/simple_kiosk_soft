@@ -5,6 +5,7 @@ import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/screens/check/base_check_widget.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:simple_kiosk_software/utils/permission_config.dart';
 
 class CameraCheck1 extends BaseCheckWidget {
   late CameraController controller;
@@ -29,32 +30,48 @@ class CameraCheck1 extends BaseCheckWidget {
     return ValueListenableBuilder<String>(
         valueListenable: btnText,
         builder: (context, value, child) {
-          return InkWell(
-            onTap: () async {
-              if (value == AppLocalizations.of(mainContext)!.stop) {
-                await onStop();
-                btnText.value = AppLocalizations.of(mainContext)!.start;
-              } else {
-                btnText.value = AppLocalizations.of(mainContext)!.stop;
-                await onStart();
-              }
-            },
-            child: Container(
-              height: height * 0.03,
-              width: width * 0.1,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: ColorPalette.materialGreen,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Text(value,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: btnFontSize,
-                      color: Colors.white)),
-            ),
-          );
+          return PermissionConfig().havePermission(PermissionModules.DeviceTest)
+              ? InkWell(
+                  onTap: () async {
+                    if (value == AppLocalizations.of(mainContext)!.stop) {
+                      await onStop();
+                      btnText.value = AppLocalizations.of(mainContext)!.start;
+                    } else {
+                      btnText.value = AppLocalizations.of(mainContext)!.stop;
+                      await onStart();
+                    }
+                  },
+                  child: Container(
+                    height: height * 0.03,
+                    width: width * 0.1,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: ColorPalette.materialGreen,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(value,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: btnFontSize,
+                            color: Colors.white)),
+                  ),
+                )
+              : Container(
+                  height: height * 0.03,
+                  width: width * 0.1,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: ColorPalette.darkGrey,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(value,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: btnFontSize,
+                          color: Colors.white)),
+                );
         });
   }
 

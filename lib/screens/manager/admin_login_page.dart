@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:simple_kiosk_software/utils/permission_config.dart';
 
 class AdminLoginPage extends StatefulWidget {
   @override
@@ -11,10 +13,6 @@ class AdminLoginPage extends StatefulWidget {
 class AdminLoginPageState extends State<AdminLoginPage> {
   late final TextEditingController _accountController;
   late final TextEditingController _passwordController;
-  // 管理员默认的账号和密码
-  // Administrator's default account and password
-  final _defaultAccount = 'admin';
-  final _defaultPassword = '666666';
 
   String _account = ''; // 账号
   String _password = ''; // 密码
@@ -92,6 +90,8 @@ class AdminLoginPageState extends State<AdminLoginPage> {
   }
 
   void onLogin() async {
+    String errorInfo = "";
+
     _password = _password.trim();
     _account = _account.trim();
 
@@ -105,17 +105,17 @@ class AdminLoginPageState extends State<AdminLoginPage> {
       return;
     }
 
-    if (_defaultAccount != _account) {
-      Fluttertoast.showToast(
-        msg: "The administrator account is incorrect",
-      );
-      return;
+    if (PermissionConfig().roleList.isEmpty) {
+      errorInfo = await PermissionConfig().loadFile();
+      if (errorInfo.isNotEmpty) {
+        Fluttertoast.showToast(msg: errorInfo);
+        return;
+      }
     }
 
-    if (_defaultPassword != _password) {
-      Fluttertoast.showToast(
-        msg: "The administrator password is incorrect",
-      );
+    errorInfo = PermissionConfig().login(_account, _password);
+    if (errorInfo.isNotEmpty) {
+      Fluttertoast.showToast(msg: errorInfo);
       return;
     }
 
@@ -163,15 +163,11 @@ class AdminLoginPageState extends State<AdminLoginPage> {
       width,
       TextInputType.text,
       inputFormatters: [
-        LengthLimitingTextInputFormatter(11),
+        LengthLimitingTextInputFormatter(20),
         FilteringTextInputFormatter.allow(
           // 仅支持字母数字
           RegExp("[a-zA-Z]|[0-9]"),
         ),
-        // 禁止输入空格
-        FilteringTextInputFormatter.deny(
-          RegExp(r"[\\s]"),
-        )
       ],
       controller: _accountController,
       decoration: InputDecoration(

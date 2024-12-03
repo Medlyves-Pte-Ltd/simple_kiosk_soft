@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
+import 'package:simple_kiosk_software/utils/permission_config.dart';
 
 class SettingListPage extends StatefulWidget {
   @override
@@ -79,6 +80,42 @@ class SettingListPageState extends State<SettingListPage> {
                       buildDivider(),
                       ListTile(
                         selectedColor: ColorPalette.materialGreen,
+                        title: Text('Device Config'),
+                        subtitle: Text(''),
+                        leading: CircleAvatar(
+                          child: Icon(Icons.settings),
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios_rounded),
+                        onTap: () {
+                          // 处理点击事件
+                          Navigator.pushNamed(context, "/DeviceConfigPage");
+                        },
+                      ),
+                      buildDivider(),
+                      Visibility(
+                          visible: PermissionConfig()
+                              .havePermission(PermissionModules.Permission),
+                          child: Column(
+                            children: [
+                              ListTile(
+                                selectedColor: ColorPalette.materialGreen,
+                                title: Text('Permission Config'),
+                                subtitle: Text(''),
+                                leading: CircleAvatar(
+                                  child: Icon(Icons.perm_identity_outlined),
+                                ),
+                                trailing: Icon(Icons.arrow_forward_ios_rounded),
+                                onTap: () {
+                                  // 处理点击事件
+                                  Navigator.pushNamed(
+                                      context, "/PermissionConfigPage");
+                                },
+                              ),
+                              buildDivider(),
+                            ],
+                          )),
+                      ListTile(
+                        selectedColor: ColorPalette.materialGreen,
                         title: Text('Device Test'),
                         subtitle: Text(''),
                         leading: CircleAvatar(
@@ -116,6 +153,20 @@ class SettingListPageState extends State<SettingListPage> {
                         onTap: () {
                           // 处理点击事件
                           Navigator.pushNamed(context, "/RangeEditPage");
+                        },
+                      ),
+                      buildDivider(),
+                      ListTile(
+                        selectedColor: ColorPalette.materialGreen,
+                        title: Text('Modify Password'),
+                        subtitle: Text(''),
+                        leading: CircleAvatar(
+                          child: Icon(Icons.password_outlined),
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios_rounded),
+                        onTap: () {
+                          // 处理点击事件
+                          Navigator.pushNamed(context, "/ModifyPasswordPage");
                         },
                       ),
                       buildDivider(),

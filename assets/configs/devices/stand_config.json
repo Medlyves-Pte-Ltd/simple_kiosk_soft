@@ -1,0 +1,101 @@
+[
+  {
+    "deviceName": "Height",
+    "deviceType": "HEIGHT_DEVICE",
+    "deviceIndex": 1,
+    "deviceList": ["ShengYuanHeight", "ZhongKeCQRFHeight", "ZhongKeCQRFHeightDeviceThreeInOne"],
+    "info": "",
+    "start_wait_time_s": 1.0,
+    "enable": true,
+    "vid":"1a86",
+    "pid":"7523"
+  },
+  {
+    "deviceName": "Blood Pressure",
+    "deviceType": "BP_DEVICE",
+    "deviceIndex": 0,
+    "deviceList": ["RaycomeBloodPressure", "PanasonicBloodPressure", "CemhoBloodPressure"],
+    "info": "",
+    "start_wait_time_s": 1.0,
+    "enable": true,
+    "vid":"67b",
+    "pid":"2303"
+  },
+  {
+    "deviceName": "Up and down Io",
+    "deviceType": "IO_DEVICE",
+    "deviceIndex": 0,
+    "deviceList": ["YanMengIoDevice"],
+    "info": "",
+    "start_wait_time_s": 1.0,
+    "enable": false,
+    "vid":"1a86",
+    "pid":"7523"
+  },
+  {
+    "deviceName": "Scanner",
+    "deviceType": "SCANNER_DEVICE",
+    "deviceIndex": 0,
+    "deviceList": ["YouKuEP8280CodeScanner"],
+    "info": "",
+    "start_wait_time_s": 1.0,
+    "enable": true,
+    "vid":"1a86",
+    "pid":"7523"
+  },
+  {
+    "deviceName": "Blood Oxygen",
+    "deviceType": "BO_DEVICE",
+    "deviceIndex": 2,
+    "deviceList": ["BloodOxygen", "ChengDuBloodOxygen", "KeRuiKangBloodOxygen", "OXIMETER_BloodOxygen"],
+    "info": "",
+    "start_wait_time_s": 1.0,
+    "enable": true,
+    "vid":"67b",
+    "pid":"23a3"
+  },
+  {
+    "deviceName": "Temperature",
+    "deviceType": "TEMP_DEVICE",
+    "deviceIndex": 3,
+    "deviceList": ["BodyTemperature", "URIONTemperature", "ChengDuDT8861Temperature", "CommonDT8861Temperature"],
+    "info": "",
+    "start_wait_time_s": 1.0,
+    "enable": true,
+    "vid":"67b",
+    "pid":"2303"
+  },
+  {
+    "deviceName": "Weight",
+    "deviceType": "WEIGHT_DEVICE",
+    "deviceIndex": 1,
+    "deviceList": ["ShengYuanWeight", "BoRuiWeiDG681Weight"],
+    "info": "Weight,bc share one USB port",
+    "start_wait_time_s": 1.0,
+    "enable": true,
+    "vid":"403",
+    "pid":"6001"
+  },
+  {
+    "deviceName": "Body Composition",
+    "deviceType": "BC_DEVICE",
+    "deviceIndex": 2,
+    "deviceList": ["ShengYuanBodyComposition", "ChengDuBodyComposition","BoRuiWeiDG681Composition"],
+    "info": "Weight,bc share one USB port",
+    "start_wait_time_s": 1.0,
+    "enable": true,
+    "vid":"403",
+    "pid":"6001"
+  },
+  {
+    "deviceName": "Printer",
+    "deviceType": "PRINTER_DEVICE",
+    "deviceIndex": 0,
+    "deviceList": ["YokoscanEM5826Printer"],
+    "info": "",
+    "start_wait_time_s": 1.0,
+    "enable": true,
+    "vid":"1a86",
+    "pid":"7523"
+  }
+]

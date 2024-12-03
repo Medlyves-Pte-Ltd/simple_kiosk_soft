@@ -77,7 +77,7 @@ class HtWtMeasurement extends StatelessWidget {
               bodyHeight = (state.deviceData as HeightData).height;
               bodyHeight = "${double.parse(bodyHeight).toStringAsFixed(1)}";
               // 如果收到身高数据，先关闭身高设备，再打开体重设备
-              Future.delayed(const Duration(milliseconds: 300), () {
+              Future.delayed(const Duration(milliseconds: 800), () {
                 DeviceConnectEvent connectEvent =
                     DeviceConnectEvent(deviceType: DeviceType.WEIGHT_DEVICE);
                 BlocProvider.of<DeviceBloc>(context).add(connectEvent);

@@ -32,7 +32,7 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     bool? result = await device?.connect();
     LogPrinter.log('Device connected status: $result.');
     emit(DeviceConnected(deviceType: deviceType));
-    Future.delayed(const Duration(milliseconds: 500),
+    Future.delayed(const Duration(milliseconds: 100),
         () => add(DeviceStartEvent(deviceType: deviceType)));
   }
 
@@ -60,7 +60,7 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     LogPrinter.log(deviceData.toString());
     LogPrinter.log('Trying to stop the device.');
     emit(DeviceDataUpdated(deviceType: deviceType, deviceData: deviceData));
-    Future.delayed(const Duration(milliseconds: 1000),
+    Future.delayed(const Duration(milliseconds: 500),
         () => add(DeviceDisconnectEvent(deviceType: event.deviceType)));
   }
 
@@ -73,7 +73,7 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     await device?.stop();
     LogPrinter.log('Device stoped from bloc.');
     emit(DeviceStopped(deviceType: deviceType));
-    Future.delayed(const Duration(milliseconds: 500),
+    Future.delayed(const Duration(milliseconds: 100),
         () => add(DeviceDisconnectEvent(deviceType: deviceType)));
   }
 

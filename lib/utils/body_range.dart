@@ -11,7 +11,7 @@ class BodyRange {
 
   // 读文件
   Future<String> loadFile() async {
-    var file = File('${AppConfig().configDir}/result_range.txt');
+    var file = File('${AppConfig().configDir}/result_range.json');
     try {
       jsonRange = await file.readAsString();
     } catch (e) {
@@ -31,7 +31,7 @@ class BodyRange {
     }
 
     jsonRange = text;
-    var file = File('${AppConfig().configDir}/result_range.txt');
+    var file = File('${AppConfig().configDir}/result_range.json');
     try {
       await file.writeAsString(text);
     } catch (e) {

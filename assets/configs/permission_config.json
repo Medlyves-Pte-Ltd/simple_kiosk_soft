@@ -1,0 +1,16 @@
+[
+    {
+        "account_class":"admin",
+        "account":"admin",
+        "password":"666666",
+        "permission_list":[
+            "KioskManager",
+            "DeviceConfig",
+            "DeviceTest",
+            "USBDevice",
+            "RangeSetting",
+            "WeightCalibration",
+            "Permission"
+        ]
+    }
+]

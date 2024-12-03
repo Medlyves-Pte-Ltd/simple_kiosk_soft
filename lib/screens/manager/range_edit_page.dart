@@ -8,6 +8,7 @@ import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/json_highlight.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:simple_kiosk_software/utils/body_range.dart';
+import 'package:simple_kiosk_software/utils/permission_config.dart';
 
 class RangeEditPage extends StatefulWidget {
   @override
@@ -56,7 +57,8 @@ class RangeEditPageState extends State<RangeEditPage> {
           children: [
             Expanded(
                 child: CodeEditor(
-              //readOnly: true,
+              readOnly: !PermissionConfig()
+                  .havePermission(PermissionModules.Permission),
               controller: _controller,
               style: CodeEditorStyle(
                 codeTheme: CodeHighlightTheme(
@@ -81,7 +83,10 @@ class RangeEditPageState extends State<RangeEditPage> {
               },
               sperator: Container(width: 1, color: Colors.blue),
             )),
-            buildSaveBtn(),
+            Visibility(
+                child: buildSaveBtn(),
+                visible: PermissionConfig()
+                    .havePermission(PermissionModules.Permission)),
             Footer(),
           ],
         ),

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:simple_kiosk_software/screens/manager/device_config_page.dart';
+import 'package:simple_kiosk_software/screens/manager/modify_password_page.dart';
+import 'package:simple_kiosk_software/screens/manager/permission/permission_config_page.dart';
 import 'package:simple_kiosk_software/screens/manager/range_edit_page.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/blood_fit_measure.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/blood_glucose_measure.dart';
@@ -45,6 +48,9 @@ final Map<String, Function> routes = {
   '/SettingListPage': (context, {arguments}) => SettingListPage(),
   '/UsbInfoPage': (context, {arguments}) => UsbInfoPage(),
   '/RangeEditPage': (context, {arguments}) => RangeEditPage(),
+  '/DeviceConfigPage': (context, {arguments}) => DeviceConfigPage(),
+  '/ModifyPasswordPage': (context, {arguments}) => ModifyPasswordPage(),
+  '/PermissionConfigPage': (context, {arguments}) => PermissionConfigPage(),
 };
 
 // 定义通用的onGenerateRoute

@@ -1,11 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_devices_sdk/run_param_setting.dart';
+import 'package:flutter_devices_sdk/device_sdk_param_setting.dart';
 import 'package:flutter_devices_sdk/devices/device_config.dart';
 import 'package:flutter_devices_sdk/devices/device_order_check.dart';
 import 'package:flutter_devices_sdk/devices/usb_relay_control.dart';
-import 'package:flutter_devices_sdk/project_type.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/header.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/scanner_utils.dart';
 
 class DevicePage extends StatefulWidget {
@@ -25,12 +27,29 @@ class _DevicePageState extends State<DevicePage> {
 
   void initState() {
     super.initState();
+
     Future.delayed(const Duration(milliseconds: 10), () async {
+      final dir = Directory(AppConfig().configDir);
+      bool result = await dir.exists();
+      if (!result) {
+        _showInfo.value = "${dir.path} not exists";
+        return;
+      }
+
       try {
-        // 打开USB IO继电器设备
-        await UsbRelayControl().connect();
+        await UsbRelayControl().initRelayIoStartTime();
       } catch (e) {
-        _showInfo.value = "The relay device not fond";
+        _showInfo.value = "$e";
+        return;
+      }
+
+      try {
+        RelayCommType type =
+            RelayCommType.values.byName(AppConfig().relayCommType);
+        // 打开USB IO继电器设备
+        await UsbRelayControl().connect(type);
+      } catch (e) {
+        _showInfo.value = "The relay device not fond, Error:$e";
         return;
       }
 
@@ -38,9 +57,15 @@ class _DevicePageState extends State<DevicePage> {
         _curIndex.value = index;
       });
 
-      // 设备初始化
-      await DeviceConfig().clearDeviceConfigStorage();
-      await DeviceConfig().init();
+      try {
+        // 设备初始化
+        await DeviceConfig().init();
+      } catch (e) {
+        _showInfo.value = "Error:$e";
+        return;
+      }
+
+      await Future.delayed(Duration(seconds: 1), () {});
       await DeviceOrderCheck().checkDeviceOrder();
 
       // hub故障或者继电器故障
@@ -68,7 +93,9 @@ class _DevicePageState extends State<DevicePage> {
         return;
       }
 
-      Navigator.pushNamedAndRemoveUntil(_context, '/', (route) => false);
+      if (!DeviceOrderCheck().usbError) {
+        Navigator.pushNamedAndRemoveUntil(_context, '/', (route) => false);
+      }
     });
   }
 
@@ -126,7 +153,7 @@ class _DevicePageState extends State<DevicePage> {
           valueListenable: _curIndex,
           builder: (context, value, child) {
             return Text(
-              "Starting device, $value  / ${RunParamSetting().replayIoCount}",
+              "Starting device, $value  / ${DeviceSdkParamSetting().replayIoCount}",
               softWrap: true,
               maxLines: 5,
               style: TextStyle(

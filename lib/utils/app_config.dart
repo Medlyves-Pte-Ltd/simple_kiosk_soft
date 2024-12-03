@@ -1,73 +1,195 @@
-import 'package:flutter_devices_sdk/run_param_setting.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'package:flutter_devices_sdk/kiosk_type.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
+import 'package:flutter_devices_sdk/device_sdk_param_setting.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:simple_kiosk_software/common/common.dart';
-import 'package:simple_kiosk_software/utils/shared_preferences.dart';
+import 'package:simple_kiosk_software/utils/body_range.dart';
+import 'package:simple_kiosk_software/remote/config/settings.dart';
 
 class AppConfig {
   String appVersion = '1.0.0';
-  static String mainDir = "/storage/emulated/0/kiosk";
-  String configDir = "$mainDir/configs";
-  String imagesDir = "$mainDir/images";
-  String videosDir = "$mainDir/videos";
-  String audiosDir = "$mainDir/audios";
-  String logsDir = "$mainDir/logs";
+  String mainDir = "/storage/emulated/0/kiosk";
+  //String mainDir = "/sdcard/kiosk";
+  String configDir = "";
+  String imagesDir = "";
+  String videosDir = "";
+  String audiosDir = "";
+  String logsDir = "";
+  Map<String, dynamic> configMap = {};
 
-  Future<void> createDir() async {
+  Future<void> init() async {
+    // 获取版本
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    appVersion = packageInfo.version;
+
+    configDir = "$mainDir/configs";
+    imagesDir = "$mainDir/images";
+    videosDir = "$mainDir/videos";
+    audiosDir = "$mainDir/audios";
+    logsDir = "$mainDir/logs";
+
     // 创建目录
-    await createDirectory(AppConfig().configDir);
-    await createDirectory(AppConfig().imagesDir);
-    await createDirectory(AppConfig().videosDir);
-    await createDirectory(AppConfig().audiosDir);
-    await createDirectory(AppConfig().logsDir);
+    await createDirectory(configDir);
+    await createDirectory(imagesDir);
+    await createDirectory(videosDir);
+    await createDirectory(audiosDir);
+    await createDirectory(logsDir);
+
+    // 加载配置文件
+    await loadFile();
+    // 环境设置
+    envSetting();
+    // 范围
+    await BodyRange().loadFile();
+
+    // 参数设置
+    DeviceSdkParamSetting().kioskType = KioskType.values.byName(kioskType);
+    DeviceSdkParamSetting().replayIoCount = relayIoCount;
+    DeviceSdkParamSetting().configDir = configDir;
+    DeviceSdkParamSetting().totalHeight = totalHeight;
+    DeviceSdkParamSetting().heightOffset = heightOffset;
+  }
+
+  // 环境设置
+  void envSetting() {
+    String envType = configMap["env_type"];
+    host = configMap[envType]["host"];
+    firebaseRdbUrl = configMap[envType]["firebaseRdbUrl"];
+    firebaseApiKey = configMap[envType]["firebaseApiKey"];
+    firebaseAppId = configMap[envType]["firebaseAppId"];
+    firebaseMessagingSenderId = configMap[envType]["firebaseMessagingSenderId"];
+    firebaseProjectId = configMap[envType]["firebaseProjectId"];
+    firebaseStorageBucket = configMap[envType]["firebaseStorageBucket"];
+  }
+
+  // 读文件
+  Future<String> loadFile() async {
+    var file = File('$configDir/app_config.json');
+    try {
+      String json = await file.readAsString();
+      configMap = jsonDecode(json);
+    } catch (e) {
+      LogPrinter.log('Error: $e');
+      return 'Error: $e';
+    }
+    return "";
+  }
+
+  // 写文件
+  Future<String> saveFile() async {
+    String text = jsonEncode(configMap);
+    var file = File('$configDir/app_config.json');
+    try {
+      await file.writeAsString(text);
+    } catch (e) {
+      LogPrinter.log('Error: $e');
+      return "Error: $e";
+    }
+
+    return "";
   }
 
   String get kioskId {
-    return SharedPreferencesUtil.getString("kioskId",
-        defaultValue: "TH-BC-010");
+    return configMap["kiosk_id"] as String;
   }
 
   set kioskId(String value) {
-    SharedPreferencesUtil.setString("kioskId", value);
+    configMap["kiosk_id"] = value;
+    saveFile();
   }
 
   String get deviceModel {
-    return SharedPreferencesUtil.getString("deviceModel", defaultValue: "");
+    return configMap["device_model"] as String;
   }
 
   set deviceModel(String value) {
-    SharedPreferencesUtil.setString("deviceModel", value);
+    configMap["device_model"] = value;
+    saveFile();
   }
 
   String get deviceAddress {
-    return SharedPreferencesUtil.getString("deviceAddress", defaultValue: "");
+    return configMap["device_address"] as String;
   }
 
   set deviceAddress(String value) {
-    SharedPreferencesUtil.setString("deviceAddress", value);
+    configMap["device_address"] = value;
+    saveFile();
   }
 
   String get clientName {
-    return SharedPreferencesUtil.getString("clientName", defaultValue: "");
+    return configMap["client_name"] as String;
   }
 
   set clientName(String value) {
-    SharedPreferencesUtil.setString("clientName", value);
+    configMap["client_name"] = value;
+    saveFile();
   }
 
   // 是否远程医疗
   bool get enableTC {
-    return SharedPreferencesUtil.getBool("tc", defaultValue: false);
+    return configMap["enable_tc"] as bool;
   }
 
   set enableTC(bool value) {
-    SharedPreferencesUtil.setBool("tc", value);
+    configMap["enable_tc"] = value;
+    saveFile();
   }
 
   double get totalHeight {
-    return SharedPreferencesUtil.getDouble("totalHeight", defaultValue: 2.14);
+    return configMap["total_height"] as double;
   }
 
   set totalHeight(double value) {
-    SharedPreferencesUtil.setDouble("totalHeight", value);
+    configMap["total_height"] = value;
+    saveFile();
+  }
+
+  double get heightOffset {
+    return configMap["height_offset"] as double;
+  }
+
+  set heightOffset(double value) {
+    configMap["height_offset"] = value;
+    saveFile();
+  }
+
+  String get kioskType {
+    return configMap["kiosk_type"] as String;
+  }
+
+  set kioskType(String value) {
+    configMap["kiosk_type"] = value;
+    saveFile();
+  }
+
+  String get envType {
+    return configMap["env_type"] as String;
+  }
+
+  set envType(String value) {
+    configMap["env_type"] = value;
+    envSetting();
+    saveFile();
+  }
+
+  int get relayIoCount {
+    return configMap["relay_io_count"] as int;
+  }
+
+  set relayIoCount(int value) {
+    configMap["relay_io_count"] = value;
+    saveFile();
+  }
+
+  String get relayCommType {
+    return configMap["relay_comm_type"] as String;
+  }
+
+  set relayCommType(String value) {
+    configMap["relay_comm_type"] = value;
+    saveFile();
   }
 
   // 私有构造函数

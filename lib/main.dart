@@ -1,9 +1,4 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter_devices_sdk/devices/device_config.dart';
-import 'package:flutter_devices_sdk/log/log_printer.dart';
-import 'package:flutter_devices_sdk/project_type.dart';
-import 'package:flutter_devices_sdk/run_param_setting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,29 +21,20 @@ import 'package:simple_kiosk_software/remote/vitals/viewmodels/vital_measurement
 import 'package:simple_kiosk_software/screens/route_manager.dart';
 import 'package:simple_kiosk_software/remote/services/appointment_api.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
-import 'package:simple_kiosk_software/utils/body_range.dart';
 import 'package:simple_kiosk_software/utils/permission_utils.dart';
 import 'package:simple_kiosk_software/remote/utils/shared_prefs.dart';
 import 'package:simple_kiosk_software/utils/shared_preferences.dart';
-import 'package:simple_kiosk_software/utils/user_info.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPreferencesUtil.init();
   // 检查权限
   await PermissionUtils().getStoragePermission();
-  await PermissionUtils().getManageExternalStoragePermission();
   await PermissionUtils().getCameraPermission();
   await PermissionUtils().getMicroPhonePermission();
-
-  RunParamSetting().init(ProjectType.simple_kiosk_software_v2);
-  RunParamSetting().totalHeight = AppConfig().totalHeight;
-  // 包版本
-  PackageInfo packageInfo = await PackageInfo.fromPlatform();
-  AppConfig().appVersion = packageInfo.version;
-  await AppConfig().createDir();
-  await BodyRange().loadFile();
+  await PermissionUtils().getManageExternalStoragePermission();
+  // app配置初始化
+  await AppConfig().init();
 
   SharedPrefs.setData('appointmentId', "");
 
@@ -59,7 +45,6 @@ void main() async {
   final TeleconsultationBloc teleconsultationBloc =
       TeleconsultationBloc(deviceBloc, appointmentRepository);
   final LivenessBloc livenessBloc = LivenessBloc();
-
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -136,13 +121,7 @@ class MyApp extends StatelessWidget {
             }
           },
           //initialRoute: "/",
-          //initialRoute: "/DevicePage",
-          initialRoute: "/RangeEditPage",
-          //initialRoute: "/TCMeetingScreen",
-          //initialRoute: "/Summary",
-          //initialRoute: "/KioskManager",
-          //initialRoute: "/HeightWeightMeasure",
-          //initialRoute: "/TestDevice",
+          initialRoute: "/DevicePage",
           supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData(
             textTheme: GoogleFonts.robotoTextTheme(textTheme).copyWith(
