@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_devices_sdk/device_type.dart';
+import 'package:flutter_devices_sdk/devices/device_config.dart';
 import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
@@ -265,31 +267,34 @@ class SummaryLayoutWidget extends StatelessWidget {
         SizedBox(
           width: width * 0.03,
         ),
-        ValueListenableBuilder(
-            valueListenable: enableClickPrint,
-            builder: (context, enable, child) {
-              return InkWell(
-                onTap: enable ? btnPrint : null,
-                child: Container(
-                    height: height * 0.03,
-                    width: width * 0.15,
-                    decoration: BoxDecoration(
-                      color: enable
-                          ? ColorPalette.materialGreen
-                          : ColorPalette.darkGrey,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Text(
-                        AppLocalizations.of(mainContext)!.print,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: height * 0.015,
-                            fontWeight: FontWeight.w600),
+        Visibility(
+          visible: DeviceConfig().deviceEnable(DeviceType.SCANNER_DEVICE),
+          child: ValueListenableBuilder(
+              valueListenable: enableClickPrint,
+              builder: (context, enable, child) {
+                return InkWell(
+                  onTap: enable ? btnPrint : null,
+                  child: Container(
+                      height: height * 0.03,
+                      width: width * 0.15,
+                      decoration: BoxDecoration(
+                        color: enable
+                            ? ColorPalette.materialGreen
+                            : ColorPalette.darkGrey,
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                    )),
-              );
-            }),
+                      child: Center(
+                        child: Text(
+                          AppLocalizations.of(mainContext)!.print,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: height * 0.015,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      )),
+                );
+              }),
+        ),
         SizedBox(
           width: width * 0.03,
         ),

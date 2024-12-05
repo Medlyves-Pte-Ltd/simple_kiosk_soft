@@ -83,8 +83,7 @@ class _KioskManagerState extends State<KioskManager> {
       children: [
         Text(
           "Kiosk Type",
-          style:
-              TextStyle(fontSize: height * 0.022, fontWeight: FontWeight.w500),
+          style: TextStyle(fontSize: height * 0.012),
         ),
         const Spacer(),
         allowEdit
@@ -100,7 +99,7 @@ class _KioskManagerState extends State<KioskManager> {
                     value: value,
                     child: Text(value,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: height * 0.02)),
+                        style: TextStyle(fontSize: height * 0.012)),
                   );
                 }).toList(),
               )
@@ -119,7 +118,7 @@ class _KioskManagerState extends State<KioskManager> {
                       value: value,
                       child: Text(value,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: height * 0.02)),
+                          style: TextStyle(fontSize: height * 0.012)),
                     );
                   }).toList(),
                 )),
@@ -133,8 +132,7 @@ class _KioskManagerState extends State<KioskManager> {
       children: [
         Text(
           "Environment",
-          style:
-              TextStyle(fontSize: height * 0.022, fontWeight: FontWeight.w500),
+          style: TextStyle(fontSize: height * 0.012),
         ),
         const Spacer(),
         allowEdit
@@ -150,7 +148,7 @@ class _KioskManagerState extends State<KioskManager> {
                     value: value,
                     child: Text(value,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: height * 0.02)),
+                        style: TextStyle(fontSize: height * 0.012)),
                   );
                 }).toList(),
               )
@@ -168,7 +166,7 @@ class _KioskManagerState extends State<KioskManager> {
                       value: value,
                       child: Text(value,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: height * 0.02)),
+                          style: TextStyle(fontSize: height * 0.012)),
                     );
                   }).toList(),
                 )),

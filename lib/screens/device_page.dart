@@ -1,10 +1,12 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_devices_sdk/device_sdk_param_setting.dart';
+import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:flutter_devices_sdk/devices/device_config.dart';
 import 'package:flutter_devices_sdk/devices/device_order_check.dart';
+import 'package:flutter_devices_sdk/devices/up_down_control.dart';
 import 'package:flutter_devices_sdk/devices/usb_relay_control.dart';
+import 'package:flutter_devices_sdk/kiosk_type.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/header.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
@@ -27,76 +29,7 @@ class _DevicePageState extends State<DevicePage> {
 
   void initState() {
     super.initState();
-
-    Future.delayed(const Duration(milliseconds: 10), () async {
-      final dir = Directory(AppConfig().configDir);
-      bool result = await dir.exists();
-      if (!result) {
-        _showInfo.value = "${dir.path} not exists";
-        return;
-      }
-
-      try {
-        await UsbRelayControl().initRelayIoStartTime();
-      } catch (e) {
-        _showInfo.value = "$e";
-        return;
-      }
-
-      try {
-        RelayCommType type =
-            RelayCommType.values.byName(AppConfig().relayCommType);
-        // 打开USB IO继电器设备
-        await UsbRelayControl().connect(type);
-      } catch (e) {
-        _showInfo.value = "The relay device not fond, Error:$e";
-        return;
-      }
-
-      await UsbRelayControl().setAutoControl((int index) {
-        _curIndex.value = index;
-      });
-
-      try {
-        // 设备初始化
-        await DeviceConfig().init();
-      } catch (e) {
-        _showInfo.value = "Error:$e";
-        return;
-      }
-
-      await Future.delayed(Duration(seconds: 1), () {});
-      await DeviceOrderCheck().checkDeviceOrder();
-
-      // hub故障或者继电器故障
-      if (DeviceOrderCheck().hubDeviceNames.isEmpty) {
-        _showInfo.value = "The relay or usb hub is not working properly";
-        return;
-      }
-
-      // 设备列表
-      deviceList = DeviceOrderCheck().usbList();
-      setState(() {});
-
-      if (DeviceOrderCheck().usbError) {
-        _showInfo.value = "USB device sequence error";
-        return;
-      }
-      // 延时
-      await Future.delayed(Duration(seconds: 2), () {});
-
-      try {
-        // 打开扫码器
-        await ScannerUtils().connect();
-      } catch (e) {
-        _showInfo.value = "Scanner connection failed";
-        return;
-      }
-
-      if (!DeviceOrderCheck().usbError) {
-        Navigator.pushNamedAndRemoveUntil(_context, '/', (route) => false);
-      }
-    });
+    Future.delayed(const Duration(milliseconds: 10), start);
   }
 
   @override
@@ -120,6 +53,101 @@ class _DevicePageState extends State<DevicePage> {
         ],
       ),
     );
+  }
+
+  // 启动
+  void start() async {
+    // 判断配置文件路径是否存在
+    final dir = Directory(AppConfig().configDir);
+    bool result = await dir.exists();
+    if (!result) {
+      _showInfo.value = "${dir.path} not exists";
+      return;
+    }
+
+    if (AppConfig().enableUsbRelay) {
+      // 读配置文件中每个设备等待响应的时间
+      try {
+        await UsbRelayControl().initRelayIoStartTime();
+      } catch (e) {
+        _showInfo.value = "Error: $e";
+        return;
+      }
+
+      // 连接usb继电器
+      try {
+        RelayCommType type =
+            RelayCommType.values.byName(AppConfig().relayCommType);
+        // 打开USB IO继电器设备
+        await UsbRelayControl().connect(type);
+      } catch (e) {
+        _showInfo.value = "The relay device not fond, Error:$e";
+        return;
+      }
+
+      // 继电器控制启动设备
+      await UsbRelayControl().setAutoControl((int index) {
+        _curIndex.value = index;
+      });
+    }
+
+    // 设备初始化
+    try {
+      await DeviceConfig().init();
+    } catch (e) {
+      _showInfo.value = "Error:$e";
+      return;
+    }
+
+    // 检查usb设备的顺序并显示结果
+    await Future.delayed(Duration(seconds: 1), () {});
+    await DeviceOrderCheck().checkDeviceOrder();
+
+    // hub故障或者继电器故障
+    if (DeviceOrderCheck().hubDeviceNames.isEmpty) {
+      _showInfo.value = "The relay or usb hub is not working properly";
+      return;
+    }
+
+    // 设备列表
+    deviceList = DeviceOrderCheck().usbList();
+    setState(() {});
+
+    // 如果有usb顺序错误
+    if (DeviceOrderCheck().usbError) {
+      _showInfo.value =
+          "USB device sequence error, \nPlease first check if the USB device sequence is correct, and then restart the machine";
+      return;
+    }
+
+    // 站式有升降io设备
+    if (DeviceSdkParamSetting().kioskType == KioskType.stand) {
+      if (DeviceConfig().deviceEnable(DeviceType.IO_DEVICE)) {
+        try {
+          await UpDownControl().connect();
+        } catch (e) {
+          _showInfo.value = "Up down io device connection failed, Error:$e";
+          return;
+        }
+      }
+    }
+
+    // 扫码设备能否使用
+    if (DeviceConfig().deviceEnable(DeviceType.SCANNER_DEVICE)) {
+      // 打开扫码器
+      try {
+        await ScannerUtils().connect();
+      } catch (e) {
+        _showInfo.value = "Scanner connection failed, Error:$e";
+        return;
+      }
+    }
+
+    await Future.delayed(Duration(seconds: 2), () {});
+    // 如果没有错误就进到欢迎界面
+    if (!DeviceOrderCheck().usbError) {
+      Navigator.pushNamedAndRemoveUntil(_context, '/', (route) => false);
+    }
   }
 
   Widget _buildError() {
@@ -153,7 +181,7 @@ class _DevicePageState extends State<DevicePage> {
           valueListenable: _curIndex,
           builder: (context, value, child) {
             return Text(
-              "Starting device, $value  / ${DeviceSdkParamSetting().replayIoCount}",
+              "Connecting USB device, $value  / ${DeviceSdkParamSetting().replayIoCount}",
               softWrap: true,
               maxLines: 5,
               style: TextStyle(

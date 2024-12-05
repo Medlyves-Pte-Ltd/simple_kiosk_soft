@@ -28,7 +28,7 @@
     "deviceList": ["YanMengIoDevice"],
     "info": "",
     "start_wait_time_s": 1.0,
-    "enable": false,
+    "enable": true,
     "vid":"1a86",
     "pid":"7523"
   },

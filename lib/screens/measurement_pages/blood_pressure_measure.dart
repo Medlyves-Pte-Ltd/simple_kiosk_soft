@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_devices_sdk/device_data/blood_oxygen_data.dart';
 import 'package:flutter_devices_sdk/device_data/blood_pressure_data.dart';
+import 'package:flutter_devices_sdk/device_sdk_param_setting.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
+import 'package:flutter_devices_sdk/devices/device_config.dart';
 import 'package:flutter_devices_sdk/devices/nhc/raycome_blood_pressure_device.dart';
+import 'package:flutter_devices_sdk/devices/up_down_control.dart';
+import 'package:flutter_devices_sdk/kiosk_type.dart';
 import 'package:simple_kiosk_software/common/range_widget.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
@@ -172,6 +176,55 @@ class BloodPressureMeasure extends BaseMeasureLayoutWidget {
                 rangeMeasureWidget(BodyRange().heartRateMin.toString(),
                     BodyRange().heartRateMax.toString(), dataFontSize, true)
               ],
+            ),
+            Visibility(
+              visible: DeviceSdkParamSetting().kioskType == KioskType.stand,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () async {
+                      await UpDownControl().up();
+                    },
+                    child: Container(
+                      height: height * 0.03,
+                      width: width * 0.15,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: ColorPalette.materialGreen,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text("Up",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: height * 0.015,
+                              color: Colors.white)),
+                    ),
+                  ),
+                  SizedBox(width: width * 0.05),
+                  InkWell(
+                    onTap: () async {
+                      await UpDownControl().down();
+                    },
+                    child: Container(
+                      height: height * 0.03,
+                      width: width * 0.15,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: ColorPalette.materialGreen,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text("Down",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: height * 0.015,
+                              color: Colors.white)),
+                    ),
+                  )
+                ],
+              ),
             )
           ],
         ),

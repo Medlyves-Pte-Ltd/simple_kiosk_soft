@@ -10,8 +10,8 @@ import 'package:simple_kiosk_software/remote/config/settings.dart';
 
 class AppConfig {
   String appVersion = '1.0.0';
-  String mainDir = "/storage/emulated/0/kiosk";
-  //String mainDir = "/sdcard/kiosk";
+  //String mainDir = "/storage/emulated/0/kiosk";
+  String mainDir = "/sdcard/kiosk";
   String configDir = "";
   String imagesDir = "";
   String videosDir = "";
@@ -189,6 +189,17 @@ class AppConfig {
 
   set relayCommType(String value) {
     configMap["relay_comm_type"] = value;
+    saveFile();
+  }
+
+  // 是否使用usb继电器
+  bool get enableUsbRelay {
+    return false;
+    return configMap["enable_usb_relay"] as bool;
+  }
+
+  set enableUsbRelay(bool value) {
+    configMap["enable_usb_relay"] = value;
     saveFile();
   }
 
