@@ -145,7 +145,7 @@ class BaseCheckWidget extends StatelessWidget {
 
       return update;
     }, builder: (context, state) {
-      return PermissionConfig().havePermission(PermissionModules.DeviceTest)
+      return PermissionConfig().havePermission(PermissionModules.DeviceDiagnostic)
           ? InkWell(
               onTap: () async {
                 if (btnText == AppLocalizations.of(mainContext)!.stop) {

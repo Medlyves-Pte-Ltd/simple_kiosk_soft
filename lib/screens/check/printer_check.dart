@@ -28,7 +28,7 @@ class PrinterCheck extends BaseCheckWidget {
     return ValueListenableBuilder<String>(
         valueListenable: btnText,
         builder: (context, value, child) {
-          return PermissionConfig().havePermission(PermissionModules.DeviceTest)
+          return PermissionConfig().havePermission(PermissionModules.DeviceDiagnostic)
               ? InkWell(
                   onTap: () async {
                     if (value == AppLocalizations.of(mainContext)!.stop) {

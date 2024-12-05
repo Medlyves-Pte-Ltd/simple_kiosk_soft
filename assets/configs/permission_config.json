@@ -4,13 +4,14 @@
         "account":"admin",
         "password":"666666",
         "permission_list":[
+            "Permission",
             "KioskManager",
-            "DeviceConfig",
-            "DeviceTest",
-            "USBDevice",
+            "DeviceConfiguration",
+            "DeviceDiagnostic",
+            "DeviceUSBDebug",
+            "DeviceCalibration",
             "RangeSetting",
-            "Calibration",
-            "Permission"
+            "DeviceUsbRelay"
         ]
     }
 ]

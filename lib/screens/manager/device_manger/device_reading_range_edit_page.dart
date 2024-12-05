@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
@@ -10,12 +8,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:simple_kiosk_software/utils/body_range.dart';
 import 'package:simple_kiosk_software/utils/permission_config.dart';
 
-class RangeEditPage extends StatefulWidget {
+class DeviceReadingRangeEditPage extends StatefulWidget {
   @override
-  State<RangeEditPage> createState() => RangeEditPageState();
+  State<DeviceReadingRangeEditPage> createState() =>
+      DeviceReadingRangeEditPageState();
 }
 
-class RangeEditPageState extends State<RangeEditPage> {
+class DeviceReadingRangeEditPageState
+    extends State<DeviceReadingRangeEditPage> {
   CodeLineEditingController? _controller;
   // 屏幕宽度
   double width = 0;
@@ -48,7 +48,7 @@ class RangeEditPageState extends State<RangeEditPage> {
             Navigator.pop(context);
           },
         ),
-        title: Text('Range Setting'),
+        title: Text('Device Reading Range Setting'),
       ),
       backgroundColor: Colors.white,
       //resizeToAvoidBottomInset: false,

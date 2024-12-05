@@ -49,7 +49,7 @@ class CalibrationSettingListPageState
             Navigator.pushNamed(context, "/DeviceMangerSettingListPage");
           },
         ),
-        title: Text('Calibration Setting List Page'),
+        title: Text('Device Calibration'),
       ),
       backgroundColor: Colors.white,
       body: Column(

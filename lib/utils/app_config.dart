@@ -194,7 +194,6 @@ class AppConfig {
 
   // 是否使用usb继电器
   bool get enableUsbRelay {
-    return false;
     return configMap["enable_usb_relay"] as bool;
   }
 

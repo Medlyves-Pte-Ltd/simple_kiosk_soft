@@ -21,9 +21,9 @@ import 'package:simple_kiosk_software/screens/check/up_down_check.dart';
 import 'package:simple_kiosk_software/screens/check/weight_check.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 
-class QuickTestDevicePage extends StatelessWidget {
+class DeviceDiagnosticPage extends StatelessWidget {
   late BuildContext mainContext;
-  QuickTestDevicePage() {
+  DeviceDiagnosticPage() {
     UserInfo().name = "User";
     UserInfo().age = "25";
     UserInfo().gender = 1;
@@ -72,7 +72,7 @@ class QuickTestDevicePage extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: Text('Device Test'),
+        title: Text('Device Diagnostic'),
       ),
       body: Column(
         children: [Expanded(child: _renderScrollArea()), Footer()],

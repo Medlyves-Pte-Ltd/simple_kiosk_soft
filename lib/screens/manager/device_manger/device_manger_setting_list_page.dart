@@ -50,7 +50,7 @@ class DeviceMangerSettingListPageState
                 context, '/SettingListPage', ((route) => false));
           },
         ),
-        title: Text('Device Manger'),
+        title: Text('Device Manager'),
       ),
       backgroundColor: Colors.white,
       body: Column(
@@ -69,21 +69,7 @@ class DeviceMangerSettingListPageState
                     children: [
                       ListTile(
                         selectedColor: ColorPalette.materialGreen,
-                        title: Text('Device Test'),
-                        subtitle: Text(''),
-                        leading: CircleAvatar(
-                          child: Icon(Icons.device_hub),
-                        ),
-                        trailing: Icon(Icons.arrow_forward_ios_rounded),
-                        onTap: () {
-                          // 处理点击事件
-                          Navigator.pushNamed(context, "/QuickTestDevicePage");
-                        },
-                      ),
-                      buildDivider(),
-                      ListTile(
-                        selectedColor: ColorPalette.materialGreen,
-                        title: Text('Device Config'),
+                        title: Text('Device Configuration'),
                         subtitle: Text(''),
                         leading: CircleAvatar(
                           child: Icon(Icons.settings),
@@ -97,7 +83,21 @@ class DeviceMangerSettingListPageState
                       buildDivider(),
                       ListTile(
                         selectedColor: ColorPalette.materialGreen,
-                        title: Text('USB Device'),
+                        title: Text('Device Diagnostic'),
+                        subtitle: Text(''),
+                        leading: CircleAvatar(
+                          child: Icon(Icons.device_hub),
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios_rounded),
+                        onTap: () {
+                          // 处理点击事件
+                          Navigator.pushNamed(context, "/DeviceDiagnosticPage");
+                        },
+                      ),
+                      buildDivider(),
+                      ListTile(
+                        selectedColor: ColorPalette.materialGreen,
+                        title: Text('Device USB Debug'),
                         subtitle: Text(''),
                         leading: CircleAvatar(
                           child: Icon(Icons.usb),
@@ -111,7 +111,7 @@ class DeviceMangerSettingListPageState
                       buildDivider(),
                       ListTile(
                         selectedColor: ColorPalette.materialGreen,
-                        title: Text('Calibration setting page'),
+                        title: Text('Device Calibration'),
                         subtitle: Text(''),
                         leading: CircleAvatar(
                           child: Icon(Icons.compass_calibration),
@@ -126,7 +126,7 @@ class DeviceMangerSettingListPageState
                       buildDivider(),
                       ListTile(
                         selectedColor: ColorPalette.materialGreen,
-                        title: Text('Range Setting'),
+                        title: Text('Device Reading Range Setting'),
                         subtitle: Text(''),
                         leading: CircleAvatar(
                           child: Icon(Icons.date_range_rounded),
@@ -134,7 +134,22 @@ class DeviceMangerSettingListPageState
                         trailing: Icon(Icons.arrow_forward_ios_rounded),
                         onTap: () {
                           // 处理点击事件
-                          Navigator.pushNamed(context, "/RangeEditPage");
+                          Navigator.pushNamed(
+                              context, "/DeviceReadingRangeEditPage");
+                        },
+                      ),
+                      buildDivider(),
+                      ListTile(
+                        selectedColor: ColorPalette.materialGreen,
+                        title: Text('Device Usb Relay'),
+                        subtitle: Text(''),
+                        leading: CircleAvatar(
+                          child: Icon(Icons.device_hub),
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios_rounded),
+                        onTap: () {
+                          // 处理点击事件
+                          Navigator.pushNamed(context, "/DeviceUsbRelayPage");
                         },
                       ),
                       buildDivider(),

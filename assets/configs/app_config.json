@@ -28,8 +28,9 @@
         "firebaseProjectId": "medlyves-doctor",
         "firebaseStorageBucket": "medlyves-doctor.firebasestorage.app"
     },
-    "relay_io_count_list": [8, 16],
-    "relay_io_count": 8,
+    "enable_usb_relay": true,
     "relay_comm_list":["usb", "serial"],
-    "relay_comm_type": "usb"
+    "relay_comm_type": "usb",
+    "relay_io_count_list": [8, 16],
+    "relay_io_count": 8
 }

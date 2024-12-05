@@ -36,7 +36,7 @@ class SampleKioskDeviceConfigViewState
     configFile =
         "${AppConfig().configDir}/devices/${AppConfig().kioskType}_config.json";
     widget.allowEdit =
-        PermissionConfig().havePermission(PermissionModules.DeviceConfig);
+        PermissionConfig().havePermission(PermissionModules.DeviceConfiguration);
     Future.delayed(Duration(milliseconds: 10), () async {
       await loadFile();
       setState(() {});

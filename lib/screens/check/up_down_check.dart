@@ -35,7 +35,7 @@ class UpDownCheck extends BaseCheckWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          PermissionConfig().havePermission(PermissionModules.DeviceTest)
+          PermissionConfig().havePermission(PermissionModules.DeviceDiagnostic)
               ? InkWell(
                   onTap: () async {
                     await UpDownControl().up();
@@ -72,7 +72,7 @@ class UpDownCheck extends BaseCheckWidget {
                           color: Colors.white)),
                 ),
           SizedBox(height: height * 0.01),
-          PermissionConfig().havePermission(PermissionModules.DeviceTest)
+          PermissionConfig().havePermission(PermissionModules.DeviceDiagnostic)
               ? InkWell(
                   onTap: () async {
                     await UpDownControl().down();

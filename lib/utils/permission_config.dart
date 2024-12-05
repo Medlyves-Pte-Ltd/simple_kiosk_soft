@@ -5,13 +5,22 @@ import 'package:simple_kiosk_software/utils/app_config.dart';
 
 // 权限模块
 enum PermissionModules {
+  // Kiosk管理
   KioskManager,
-  DeviceConfig,
-  DeviceTest,
-  USBDevice,
-  RangeSetting,
-  WeightCalibration,
+  // 权限
   Permission,
+  // 设备配置
+  DeviceConfiguration,
+  // 设备诊断
+  DeviceDiagnostic,
+  // Usb调试
+  DeviceUSBDebug,
+  // 范围编辑
+  RangeSetting,
+  // 设备校准
+  DeviceCalibration,
+  // 继电器
+  DeviceUsbRelay,
 }
 
 // 角色级别

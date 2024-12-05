@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:simple_kiosk_software/screens/manager/device_manger/device_config_page.dart';
+import 'package:simple_kiosk_software/screens/manager/device_manger/device_usb_relay_page.dart';
 import 'package:simple_kiosk_software/screens/manager/general/modify_password_page.dart';
-import 'package:simple_kiosk_software/screens/manager/general/permission_config_page.dart';
-import 'package:simple_kiosk_software/screens/manager/device_manger/range_edit_page.dart';
+import 'package:simple_kiosk_software/screens/manager/general/permission/permission_config_page.dart';
+import 'package:simple_kiosk_software/screens/manager/device_manger/device_reading_range_edit_page.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/blood_fit_measure.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/blood_glucose_measure.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/blood_oxygen_measure.dart';
@@ -12,7 +13,7 @@ import 'package:simple_kiosk_software/screens/measurement_pages/ecg_measure.dart
 import 'package:simple_kiosk_software/screens/scanner_page.dart';
 import 'package:simple_kiosk_software/screens/summary_pages/summary_layout_widget.dart';
 import 'package:simple_kiosk_software/screens/device_page.dart';
-import 'package:simple_kiosk_software/screens/manager/device_manger/quick_test_device_page.dart';
+import 'package:simple_kiosk_software/screens/manager/device_manger/device_diagnostic_page.dart';
 import 'package:simple_kiosk_software/screens/user_login_page.dart';
 import 'package:simple_kiosk_software/screens/language/language_page.dart';
 import 'package:simple_kiosk_software/screens/manager/kiosk_manager/kiosk_manager.dart';
@@ -51,10 +52,11 @@ final Map<String, Function> routes = {
   '/ScannerPage': (context, {arguments}) => ScannerPage(),
   '/ECGMeasure': (context, {arguments}) => ECGMeasure(),
   '/DevicePage': (context, {arguments}) => DevicePage(),
-  '/QuickTestDevicePage': (context, {arguments}) => QuickTestDevicePage(),
+  '/DeviceDiagnosticPage': (context, {arguments}) => DeviceDiagnosticPage(),
   '/SettingListPage': (context, {arguments}) => SettingListPage(),
   '/UsbInfoPage': (context, {arguments}) => UsbInfoPage(),
-  '/RangeEditPage': (context, {arguments}) => RangeEditPage(),
+  '/DeviceReadingRangeEditPage': (context, {arguments}) =>
+      DeviceReadingRangeEditPage(),
   '/DeviceConfigPage': (context, {arguments}) => DeviceConfigPage(),
   '/ModifyPasswordPage': (context, {arguments}) => ModifyPasswordPage(),
   '/PermissionConfigPage': (context, {arguments}) => PermissionConfigPage(),
@@ -69,7 +71,8 @@ final Map<String, Function> routes = {
       WeightCalibrationSettingListPage(),
   '/GeneralSettingListPage': (context, {arguments}) => GeneralSettingListPage(),
   '/DeviceMangerSettingListPage': (context, {arguments}) =>
-      DeviceMangerSettingListPage()
+      DeviceMangerSettingListPage(),
+  '/DeviceUsbRelayPage': (context, {arguments}) => DeviceUsbRelayPage()
 };
 
 // 定义通用的onGenerateRoute

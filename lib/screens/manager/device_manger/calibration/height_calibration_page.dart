@@ -26,7 +26,7 @@ class _HeightCalibrationPageState extends State<HeightCalibrationPage> {
   void initState() {
     super.initState();
     allowEdit =
-        PermissionConfig().havePermission(PermissionModules.KioskManager);
+        PermissionConfig().havePermission(PermissionModules.DeviceCalibration);
   }
 
   @override

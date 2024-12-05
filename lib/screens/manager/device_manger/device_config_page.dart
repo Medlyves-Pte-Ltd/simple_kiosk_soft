@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
-import 'package:simple_kiosk_software/screens/manager/kiosk_type/sample_kiosk_device_config_view.dart';
+import 'package:simple_kiosk_software/screens/manager/device_manger/kiosk_type_device_config/sample_kiosk_device_config_view.dart';
 
 class DeviceConfigPage extends StatefulWidget {
   @override
