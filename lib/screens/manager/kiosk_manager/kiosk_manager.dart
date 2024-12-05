@@ -53,7 +53,7 @@ class _KioskManagerState extends State<KioskManager> {
             Navigator.pop(context);
           },
         ),
-        title: Text('Kiosk Configuration Page'),
+        title: Text('Kiosk Manager'),
       ),
       backgroundColor: Colors.white,
       body: Column(
@@ -129,7 +129,6 @@ class _KioskManagerState extends State<KioskManager> {
 
   Widget envWidget() {
     List<dynamic> envList = AppConfig().configMap["env_list"];
-
     return Row(
       children: [
         Text(
@@ -198,7 +197,7 @@ class _KioskManagerState extends State<KioskManager> {
         readOnly: !allowEdit,
         inputType: TextInputType.text,
         needClear: false,
-        leftLabel: 'Device Model',
+        leftLabel: 'Back End API',
         controller: deviceModelControl,
         backgroundColor: Colors.white,
         contentAlignment: TextAlign.end,
@@ -206,21 +205,6 @@ class _KioskManagerState extends State<KioskManager> {
         rightWidget: TDText('', textColor: TDTheme.of(context).fontGyColor1),
         onChanged: (text) {
           AppConfig().deviceModel = text;
-          setState(() {});
-        },
-      ),
-      TDInput(
-        readOnly: !allowEdit,
-        inputType: TextInputType.text,
-        needClear: false,
-        leftLabel: 'Device Address',
-        controller: deviceAddressControl,
-        backgroundColor: Colors.white,
-        contentAlignment: TextAlign.end,
-        hintText: 'Input Text',
-        rightWidget: TDText('', textColor: TDTheme.of(context).fontGyColor1),
-        onChanged: (text) {
-          AppConfig().deviceAddress = text;
           setState(() {});
         },
       ),
@@ -261,44 +245,6 @@ class _KioskManagerState extends State<KioskManager> {
                 onChanged: (bool value) {},
               ),
             ),
-      TDInput(
-        readOnly: !allowEdit,
-        inputType: TextInputType.number,
-        type: TDInputType.special,
-        controller: totalHeightControl,
-        leftLabel: 'Total Height',
-        hintText: '0.0',
-        backgroundColor: Colors.white,
-        textAlign: TextAlign.end,
-        rightWidget: TDText('cm', textColor: TDTheme.of(context).fontGyColor1),
-        onChanged: (text) {
-          setState(() {});
-          if (text.isEmpty) {
-            return;
-          }
-          DeviceSdkParamSetting().totalHeight = double.parse(text);
-          AppConfig().totalHeight = double.parse(text);
-        },
-      ),
-      TDInput(
-        readOnly: !allowEdit,
-        inputType: TextInputType.number,
-        type: TDInputType.special,
-        controller: heightOffsetControl,
-        leftLabel: 'Height Offset',
-        hintText: '0.0',
-        backgroundColor: Colors.white,
-        textAlign: TextAlign.end,
-        rightWidget: TDText('cm', textColor: TDTheme.of(context).fontGyColor1),
-        onChanged: (text) {
-          setState(() {});
-          if (text.isEmpty) {
-            return;
-          }
-          DeviceSdkParamSetting().heightOffset = double.parse(text);
-          AppConfig().heightOffset = double.parse(text);
-        },
-      ),
       Padding(
           padding: EdgeInsets.symmetric(horizontal: 18),
           child: kioskTypeWidget()),

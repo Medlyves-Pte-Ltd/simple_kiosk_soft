@@ -1,29 +1,23 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_devices_sdk/device_data/weight_data.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:flutter_devices_sdk/devices/device_base_model.dart';
 import 'package:flutter_devices_sdk/devices/device_config.dart';
+import 'package:flutter_devices_sdk/utils/hex_utils.dart';
+import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
-import 'package:simple_kiosk_software/utils/user_info.dart';
-import '../../constants/colors.dart';
-import '../../remote/utils/app_constants.dart';
-import '../../utils/hex_utils.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter_devices_sdk/comm/usb_interface.dart';
 import 'package:flutter_android_usb/usb_port.dart';
-import 'package:flutter_devices_sdk/comm/communication_interface.dart';
 
-class singePointWeightCalibrationPage extends StatefulWidget {
+class SingerPointWeightCalibrationPage extends StatefulWidget {
   @override
-  _singePointWeightCalibrationPageState createState() =>
-      _singePointWeightCalibrationPageState();
+  _SingerPointWeightCalibrationPageState createState() =>
+      _SingerPointWeightCalibrationPageState();
 }
 
-class _singePointWeightCalibrationPageState
-    extends State<singePointWeightCalibrationPage> {
+class _SingerPointWeightCalibrationPageState
+    extends State<SingerPointWeightCalibrationPage> {
   // 屏幕宽度
   double width = 0;
   // 屏幕高度
@@ -43,7 +37,7 @@ class _singePointWeightCalibrationPageState
         break;
       }
     }
-    readData();
+    // readData();
   }
 
   @override
@@ -230,7 +224,7 @@ class _singePointWeightCalibrationPageState
         onPressed: () async {
           num weightCount = double.parse(counterWeight.text);
           while (weightCount != '') {
-            if (weightCount <= 24.9999) {
+            if (weightCount <= 24.9999 || weightCount == null) {
               Fluttertoast.showToast(msg: "The weight is less than 25 kg");
               break;
             } else {

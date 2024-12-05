@@ -5,12 +5,11 @@ import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:simple_kiosk_software/common/common.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:simple_kiosk_software/screens/manager/permission/add_admin_page.dart';
-import 'package:simple_kiosk_software/screens/manager/permission/add_ops_page.dart';
+import 'package:simple_kiosk_software/screens/manager/general/permission/add_admin_page.dart';
+import 'package:simple_kiosk_software/screens/manager/general/permission/add_ops_page.dart';
+import 'package:simple_kiosk_software/screens/manager/general/permission/edit_role_permission_page.dart';
 import 'package:simple_kiosk_software/utils/permission_config.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
-
-import 'edit_role_permission_page.dart';
 
 class PermissionConfigPage extends StatefulWidget {
   bool allowEdit = true;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:simple_kiosk_software/screens/manager/device_config_page.dart';
-import 'package:simple_kiosk_software/screens/manager/modify_password_page.dart';
-import 'package:simple_kiosk_software/screens/manager/permission/permission_config_page.dart';
-import 'package:simple_kiosk_software/screens/manager/range_edit_page.dart';
+import 'package:simple_kiosk_software/screens/manager/device_manger/device_config_page.dart';
+import 'package:simple_kiosk_software/screens/manager/general/modify_password_page.dart';
+import 'package:simple_kiosk_software/screens/manager/general/permission_config_page.dart';
+import 'package:simple_kiosk_software/screens/manager/device_manger/range_edit_page.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/blood_fit_measure.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/blood_glucose_measure.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/blood_oxygen_measure.dart';
@@ -12,17 +12,21 @@ import 'package:simple_kiosk_software/screens/measurement_pages/ecg_measure.dart
 import 'package:simple_kiosk_software/screens/scanner_page.dart';
 import 'package:simple_kiosk_software/screens/summary_pages/summary_layout_widget.dart';
 import 'package:simple_kiosk_software/screens/device_page.dart';
-import 'package:simple_kiosk_software/screens/manager/quick_test_device_page.dart';
+import 'package:simple_kiosk_software/screens/manager/device_manger/quick_test_device_page.dart';
 import 'package:simple_kiosk_software/screens/user_login_page.dart';
 import 'package:simple_kiosk_software/screens/language/language_page.dart';
-import 'package:simple_kiosk_software/screens/manager/kiosk_manager.dart';
+import 'package:simple_kiosk_software/screens/manager/kiosk_manager/kiosk_manager.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/height_weight_measure.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/body_temperature_measure.dart';
 import 'package:simple_kiosk_software/screens/manager/setting_list_page.dart';
 import 'package:flutter_devices_sdk/view/usb_info/usb_info_page.dart';
-import 'package:simple_kiosk_software/screens/manager/singePoint_weight_calibration_page.dart';
-
-import 'manager/threePoint_weight_calibration_page.dart';
+import 'manager/device_manger/calibration/calibration_setting_list_page.dart';
+import 'manager/device_manger/calibration/height_calibration_page.dart';
+import 'manager/device_manger/calibration/singePoint_weight_calibration_page.dart';
+import 'manager/device_manger/calibration/threePoint_weight_calibration_page.dart';
+import 'manager/device_manger/calibration/weight_calibration_setting_list_page.dart';
+import 'manager/device_manger/device_manger_setting_list_page.dart';
+import 'manager/general/general_setting_list_page.dart';
 
 // 如果需要从构造函数中获取参数,使用如下
 // If you need to obtain parameters from a constructor, use the following
@@ -54,10 +58,18 @@ final Map<String, Function> routes = {
   '/DeviceConfigPage': (context, {arguments}) => DeviceConfigPage(),
   '/ModifyPasswordPage': (context, {arguments}) => ModifyPasswordPage(),
   '/PermissionConfigPage': (context, {arguments}) => PermissionConfigPage(),
-  '/SingePointWeightCalibrationPage': (context, {arguments}) =>
-      singePointWeightCalibrationPage(),
+  '/SingerPointWeightCalibrationPage': (context, {arguments}) =>
+      SingerPointWeightCalibrationPage(),
   '/ThreePointWeightCalibrationPage': (context, {arguments}) =>
-      ThreePointWeightCalibrationPage()
+      ThreePointWeightCalibrationPage(),
+  '/CalibrationSettingListPage': (context, {arguments}) =>
+      CalibrationSettingListPage(),
+  '/HeightCalibrationPage': (context, {arguments}) => HeightCalibrationPage(),
+  '/WeightCalibrationSettingListPage': (context, {arguments}) =>
+      WeightCalibrationSettingListPage(),
+  '/GeneralSettingListPage': (context, {arguments}) => GeneralSettingListPage(),
+  '/DeviceMangerSettingListPage': (context, {arguments}) =>
+      DeviceMangerSettingListPage()
 };
 
 // 定义通用的onGenerateRoute

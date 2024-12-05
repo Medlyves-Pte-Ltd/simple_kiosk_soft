@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_devices_sdk/view/colors.dart';
-import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
-import 'package:simple_kiosk_software/common/header.dart';
 import 'package:simple_kiosk_software/screens/check/audio_player_check.dart';
-import 'package:simple_kiosk_software/screens/check/audio_record_check.dart';
-import 'package:simple_kiosk_software/screens/check/blood_fit_check.dart';
-import 'package:simple_kiosk_software/screens/check/blood_glucose_check.dart';
 import 'package:simple_kiosk_software/screens/check/blood_oxygen_check.dart';
 import 'package:simple_kiosk_software/screens/check/blood_pressure_check.dart';
 import 'package:simple_kiosk_software/screens/check/body_composition_check.dart';

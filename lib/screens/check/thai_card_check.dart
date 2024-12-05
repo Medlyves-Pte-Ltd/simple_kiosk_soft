@@ -3,7 +3,6 @@ import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/screens/check/base_check_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_kiosk_software/utils/permission_config.dart';
-import 'package:thai_idcard_reader_flutter/thai_idcard_reader_flutter.dart';
 import 'package:flutter_devices_sdk/devices/thai_id_card/thai_card.dart';
 
 class ThaiCardCheck extends BaseCheckWidget {

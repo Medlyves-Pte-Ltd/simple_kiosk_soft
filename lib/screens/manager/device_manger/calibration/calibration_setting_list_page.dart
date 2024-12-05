@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
-import 'package:simple_kiosk_software/utils/permission_config.dart';
 
-class SettingListPage extends StatefulWidget {
+class CalibrationSettingListPage extends StatefulWidget {
   @override
-  State<SettingListPage> createState() => SettingListPageState();
+  State<CalibrationSettingListPage> createState() =>
+      CalibrationSettingListPageState();
 }
 
-class SettingListPageState extends State<SettingListPage> {
+class CalibrationSettingListPageState
+    extends State<CalibrationSettingListPage> {
   // 屏幕宽度
   double width = 0;
   // 屏幕高度
@@ -45,10 +46,10 @@ class SettingListPageState extends State<SettingListPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pushNamedAndRemoveUntil(context, '/', ((route) => false));
+            Navigator.pushNamed(context, "/DeviceMangerSettingListPage");
           },
         ),
-        title: Text('Setting'),
+        title: Text('Calibration Setting List Page'),
       ),
       backgroundColor: Colors.white,
       body: Column(
@@ -67,40 +68,31 @@ class SettingListPageState extends State<SettingListPage> {
                     children: [
                       ListTile(
                         selectedColor: ColorPalette.materialGreen,
-                        title: Text('Kiosk Manager'),
+                        title: Text('Height Calibration'),
                         subtitle: Text(''),
-                        leading:
-                            CircleAvatar(child: Icon(Icons.manage_accounts)),
+                        leading: CircleAvatar(
+                          child: Icon(Icons.accessibility_rounded),
+                        ),
                         trailing: Icon(Icons.arrow_forward_ios_rounded),
                         onTap: () {
                           // 处理点击事件
-                          Navigator.pushNamed(context, "/KioskManager");
+                          Navigator.pushNamed(
+                              context, "/HeightCalibrationPage");
                         },
                       ),
                       buildDivider(),
                       ListTile(
                         selectedColor: ColorPalette.materialGreen,
-                        title: Text('Device Manger'),
+                        title: Text('Weight Calibration List Page'),
                         subtitle: Text(''),
-                        leading: CircleAvatar(child: Icon(Icons.manage_search)),
+                        leading: CircleAvatar(
+                          child: Icon(Icons.settings_accessibility),
+                        ),
                         trailing: Icon(Icons.arrow_forward_ios_rounded),
                         onTap: () {
                           // 处理点击事件
                           Navigator.pushNamed(
-                              context, "/DeviceMangerSettingListPage");
-                        },
-                      ),
-                      buildDivider(),
-                      ListTile(
-                        selectedColor: ColorPalette.materialGreen,
-                        title: Text('General'),
-                        subtitle: Text(''),
-                        leading: CircleAvatar(child: Icon(Icons.notes_rounded)),
-                        trailing: Icon(Icons.arrow_forward_ios_rounded),
-                        onTap: () {
-                          // 处理点击事件
-                          Navigator.pushNamed(
-                              context, "/GeneralSettingListPage");
+                              context, "/WeightCalibrationSettingListPage");
                         },
                       ),
                       buildDivider(),

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
-import 'package:simple_kiosk_software/utils/permission_config.dart';
 
-class SettingListPage extends StatefulWidget {
+class DeviceMangerSettingListPage extends StatefulWidget {
   @override
-  State<SettingListPage> createState() => SettingListPageState();
+  State<DeviceMangerSettingListPage> createState() =>
+      DeviceMangerSettingListPageState();
 }
 
-class SettingListPageState extends State<SettingListPage> {
+class DeviceMangerSettingListPageState
+    extends State<DeviceMangerSettingListPage> {
   // 屏幕宽度
   double width = 0;
   // 屏幕高度
@@ -45,10 +46,11 @@ class SettingListPageState extends State<SettingListPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pushNamedAndRemoveUntil(context, '/', ((route) => false));
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/SettingListPage', ((route) => false));
           },
         ),
-        title: Text('Setting'),
+        title: Text('Device Manger'),
       ),
       backgroundColor: Colors.white,
       body: Column(
@@ -67,40 +69,72 @@ class SettingListPageState extends State<SettingListPage> {
                     children: [
                       ListTile(
                         selectedColor: ColorPalette.materialGreen,
-                        title: Text('Kiosk Manager'),
+                        title: Text('Device Test'),
                         subtitle: Text(''),
-                        leading:
-                            CircleAvatar(child: Icon(Icons.manage_accounts)),
+                        leading: CircleAvatar(
+                          child: Icon(Icons.device_hub),
+                        ),
                         trailing: Icon(Icons.arrow_forward_ios_rounded),
                         onTap: () {
                           // 处理点击事件
-                          Navigator.pushNamed(context, "/KioskManager");
+                          Navigator.pushNamed(context, "/QuickTestDevicePage");
                         },
                       ),
                       buildDivider(),
                       ListTile(
                         selectedColor: ColorPalette.materialGreen,
-                        title: Text('Device Manger'),
+                        title: Text('Device Config'),
                         subtitle: Text(''),
-                        leading: CircleAvatar(child: Icon(Icons.manage_search)),
+                        leading: CircleAvatar(
+                          child: Icon(Icons.settings),
+                        ),
                         trailing: Icon(Icons.arrow_forward_ios_rounded),
                         onTap: () {
                           // 处理点击事件
-                          Navigator.pushNamed(
-                              context, "/DeviceMangerSettingListPage");
+                          Navigator.pushNamed(context, "/DeviceConfigPage");
                         },
                       ),
                       buildDivider(),
                       ListTile(
                         selectedColor: ColorPalette.materialGreen,
-                        title: Text('General'),
+                        title: Text('USB Device'),
                         subtitle: Text(''),
-                        leading: CircleAvatar(child: Icon(Icons.notes_rounded)),
+                        leading: CircleAvatar(
+                          child: Icon(Icons.usb),
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios_rounded),
+                        onTap: () {
+                          // 处理点击事件
+                          Navigator.pushNamed(context, "/UsbInfoPage");
+                        },
+                      ),
+                      buildDivider(),
+                      ListTile(
+                        selectedColor: ColorPalette.materialGreen,
+                        title: Text('Calibration setting page'),
+                        subtitle: Text(''),
+                        leading: CircleAvatar(
+                          child: Icon(Icons.compass_calibration),
+                        ),
                         trailing: Icon(Icons.arrow_forward_ios_rounded),
                         onTap: () {
                           // 处理点击事件
                           Navigator.pushNamed(
-                              context, "/GeneralSettingListPage");
+                              context, "/CalibrationSettingListPage");
+                        },
+                      ),
+                      buildDivider(),
+                      ListTile(
+                        selectedColor: ColorPalette.materialGreen,
+                        title: Text('Range Setting'),
+                        subtitle: Text(''),
+                        leading: CircleAvatar(
+                          child: Icon(Icons.date_range_rounded),
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios_rounded),
+                        onTap: () {
+                          // 处理点击事件
+                          Navigator.pushNamed(context, "/RangeEditPage");
                         },
                       ),
                       buildDivider(),

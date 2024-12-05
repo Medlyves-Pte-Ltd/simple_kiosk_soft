@@ -3,12 +3,12 @@ import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/utils/permission_config.dart';
 
-class SettingListPage extends StatefulWidget {
+class GeneralSettingListPage extends StatefulWidget {
   @override
-  State<SettingListPage> createState() => SettingListPageState();
+  State<GeneralSettingListPage> createState() => GeneralSettingListPageState();
 }
 
-class SettingListPageState extends State<SettingListPage> {
+class GeneralSettingListPageState extends State<GeneralSettingListPage> {
   // 屏幕宽度
   double width = 0;
   // 屏幕高度
@@ -45,10 +45,11 @@ class SettingListPageState extends State<SettingListPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pushNamedAndRemoveUntil(context, '/', ((route) => false));
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/SettingListPage', ((route) => false));
           },
         ),
-        title: Text('Setting'),
+        title: Text('general'),
       ),
       backgroundColor: Colors.white,
       body: Column(
@@ -65,42 +66,39 @@ class SettingListPageState extends State<SettingListPage> {
                   interactive: true,
                   child: ListView(
                     children: [
-                      ListTile(
-                        selectedColor: ColorPalette.materialGreen,
-                        title: Text('Kiosk Manager'),
-                        subtitle: Text(''),
-                        leading:
-                            CircleAvatar(child: Icon(Icons.manage_accounts)),
-                        trailing: Icon(Icons.arrow_forward_ios_rounded),
-                        onTap: () {
-                          // 处理点击事件
-                          Navigator.pushNamed(context, "/KioskManager");
-                        },
-                      ),
+                      Visibility(
+                          visible: PermissionConfig()
+                              .havePermission(PermissionModules.Permission),
+                          child: Column(
+                            children: [
+                              ListTile(
+                                selectedColor: ColorPalette.materialGreen,
+                                title: Text('Permission Config'),
+                                subtitle: Text(''),
+                                leading: CircleAvatar(
+                                  child: Icon(Icons.perm_identity_outlined),
+                                ),
+                                trailing: Icon(Icons.arrow_forward_ios_rounded),
+                                onTap: () {
+                                  // 处理点击事件
+                                  Navigator.pushNamed(
+                                      context, "/PermissionConfigPage");
+                                },
+                              ),
+                            ],
+                          )),
                       buildDivider(),
                       ListTile(
                         selectedColor: ColorPalette.materialGreen,
-                        title: Text('Device Manger'),
+                        title: Text('Modify Password'),
                         subtitle: Text(''),
-                        leading: CircleAvatar(child: Icon(Icons.manage_search)),
+                        leading: CircleAvatar(
+                          child: Icon(Icons.password_outlined),
+                        ),
                         trailing: Icon(Icons.arrow_forward_ios_rounded),
                         onTap: () {
                           // 处理点击事件
-                          Navigator.pushNamed(
-                              context, "/DeviceMangerSettingListPage");
-                        },
-                      ),
-                      buildDivider(),
-                      ListTile(
-                        selectedColor: ColorPalette.materialGreen,
-                        title: Text('General'),
-                        subtitle: Text(''),
-                        leading: CircleAvatar(child: Icon(Icons.notes_rounded)),
-                        trailing: Icon(Icons.arrow_forward_ios_rounded),
-                        onTap: () {
-                          // 处理点击事件
-                          Navigator.pushNamed(
-                              context, "/GeneralSettingListPage");
+                          Navigator.pushNamed(context, "/ModifyPasswordPage");
                         },
                       ),
                       buildDivider(),

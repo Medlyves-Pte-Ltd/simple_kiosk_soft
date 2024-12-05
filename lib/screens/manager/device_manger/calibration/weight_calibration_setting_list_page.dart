@@ -3,12 +3,14 @@ import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/utils/permission_config.dart';
 
-class SettingListPage extends StatefulWidget {
+class WeightCalibrationSettingListPage extends StatefulWidget {
   @override
-  State<SettingListPage> createState() => SettingListPageState();
+  State<WeightCalibrationSettingListPage> createState() =>
+      WeightCalibrationSettingListPageState();
 }
 
-class SettingListPageState extends State<SettingListPage> {
+class WeightCalibrationSettingListPageState
+    extends State<WeightCalibrationSettingListPage> {
   // 屏幕宽度
   double width = 0;
   // 屏幕高度
@@ -45,10 +47,11 @@ class SettingListPageState extends State<SettingListPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pushNamedAndRemoveUntil(context, '/', ((route) => false));
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/CalibrationSettingListPage', ((route) => false));
           },
         ),
-        title: Text('Setting'),
+        title: Text('Weight Calibration Setting List Page'),
       ),
       backgroundColor: Colors.white,
       body: Column(
@@ -67,40 +70,31 @@ class SettingListPageState extends State<SettingListPage> {
                     children: [
                       ListTile(
                         selectedColor: ColorPalette.materialGreen,
-                        title: Text('Kiosk Manager'),
+                        title: Text('Singe Point Calibration'),
                         subtitle: Text(''),
-                        leading:
-                            CircleAvatar(child: Icon(Icons.manage_accounts)),
+                        leading: CircleAvatar(
+                          child: Icon(Icons.accessibility_rounded),
+                        ),
                         trailing: Icon(Icons.arrow_forward_ios_rounded),
                         onTap: () {
                           // 处理点击事件
-                          Navigator.pushNamed(context, "/KioskManager");
+                          Navigator.pushNamed(
+                              context, "/SingerPointWeightCalibrationPage");
                         },
                       ),
                       buildDivider(),
                       ListTile(
                         selectedColor: ColorPalette.materialGreen,
-                        title: Text('Device Manger'),
+                        title: Text('Three Point Calibration'),
                         subtitle: Text(''),
-                        leading: CircleAvatar(child: Icon(Icons.manage_search)),
+                        leading: CircleAvatar(
+                          child: Icon(Icons.settings_accessibility),
+                        ),
                         trailing: Icon(Icons.arrow_forward_ios_rounded),
                         onTap: () {
                           // 处理点击事件
                           Navigator.pushNamed(
-                              context, "/DeviceMangerSettingListPage");
-                        },
-                      ),
-                      buildDivider(),
-                      ListTile(
-                        selectedColor: ColorPalette.materialGreen,
-                        title: Text('General'),
-                        subtitle: Text(''),
-                        leading: CircleAvatar(child: Icon(Icons.notes_rounded)),
-                        trailing: Icon(Icons.arrow_forward_ios_rounded),
-                        onTap: () {
-                          // 处理点击事件
-                          Navigator.pushNamed(
-                              context, "/GeneralSettingListPage");
+                              context, "/ThreePointWeightCalibrationPage");
                         },
                       ),
                       buildDivider(),
