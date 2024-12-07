@@ -21,6 +21,7 @@ import 'package:simple_kiosk_software/remote/vitals/viewmodels/vital_measurement
 import 'package:simple_kiosk_software/screens/route_manager.dart';
 import 'package:simple_kiosk_software/remote/services/appointment_api.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
+import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 import 'package:simple_kiosk_software/utils/permission_utils.dart';
 import 'package:simple_kiosk_software/remote/utils/shared_prefs.dart';
 import 'package:simple_kiosk_software/utils/shared_preferences.dart';
@@ -35,6 +36,7 @@ void main() async {
   await PermissionUtils().getManageExternalStoragePermission();
   // app配置初始化
   await AppConfig().init();
+  await KioskConfig().init();
 
   SharedPrefs.setData('appointmentId', "");
 
@@ -120,8 +122,8 @@ class MyApp extends StatelessWidget {
               return onCustomGenerateRoute(settings);
             }
           },
-          //initialRoute: "/",
-          initialRoute: "/DevicePage",
+          initialRoute: "/",
+          //initialRoute: "/DeviceStartPage",
           supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData(
             textTheme: GoogleFonts.robotoTextTheme(textTheme).copyWith(

@@ -1,10 +1,10 @@
 import 'package:flutter_devices_sdk/device_sdk_param_setting.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
-import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
+import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 import 'package:simple_kiosk_software/utils/permission_config.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 
@@ -18,15 +18,8 @@ class _KioskManagerState extends State<KioskManager> {
   bool allowEdit = true;
   double height = 0;
   double width = 0;
-  var kioskidControl = TextEditingController(text: AppConfig().kioskId);
-  var deviceModelControl = TextEditingController(text: AppConfig().deviceModel);
-  var deviceAddressControl =
-      TextEditingController(text: AppConfig().deviceAddress);
-  var clientNameControl = TextEditingController(text: AppConfig().clientName);
-  var totalHeightControl =
-      TextEditingController(text: AppConfig().totalHeight.toStringAsFixed(1));
-  var heightOffsetControl =
-      TextEditingController(text: AppConfig().heightOffset.toStringAsFixed(1));
+  var kioskidControl = TextEditingController(text: KioskConfig().kioskId);
+
   @override
   void initState() {
     super.initState();
@@ -76,8 +69,116 @@ class _KioskManagerState extends State<KioskManager> {
     );
   }
 
+  Widget healthScreeningModeWidget() {
+    List<dynamic> healthScreeningModeList =
+    KioskConfig().configMap["health_screening_mode_list"];
+
+    return Row(
+      children: [
+        Text(
+          "Health Screening Mode",
+          style: TextStyle(fontSize: height * 0.012),
+        ),
+        const Spacer(),
+        allowEdit
+            ? DropdownButton<String>(
+                value: KioskConfig().healthScreeningMode.name,
+                iconEnabledColor: ColorPalette.materialGreen,
+                onChanged: (value) {
+                  KioskConfig().healthScreeningMode =
+                      HealthScreeningMode.values.byName(value!);
+                  setState(() {});
+                },
+                items: healthScreeningModeList
+                    .map<DropdownMenuItem<String>>((var value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: height * 0.012)),
+                  );
+                }).toList(),
+              )
+            : IgnorePointer(
+                ignoring: true,
+                child: DropdownButton<String>(
+                  iconEnabledColor: ColorPalette.darkGrey,
+                  value: KioskConfig().healthScreeningMode.name,
+                  onChanged: (value) {
+                    KioskConfig().healthScreeningMode =
+                        HealthScreeningMode.values.byName(value!);
+                    setState(() {});
+                  },
+                  items: healthScreeningModeList
+                      .map<DropdownMenuItem<String>>((var value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontSize: height * 0.012)),
+                    );
+                  }).toList(),
+                )),
+      ],
+    );
+  }
+
+  Widget teleConsultationModeWidget() {
+    List<dynamic> teleConsultationModeList =
+    KioskConfig().configMap["tele_consultation_mode_list"];
+
+    return Row(
+      children: [
+        Text(
+          "Tele Consultation Mode",
+          style: TextStyle(fontSize: height * 0.012),
+        ),
+        const Spacer(),
+        allowEdit
+            ? DropdownButton<String>(
+                value: KioskConfig().teleConsultationMode.name,
+                iconEnabledColor: ColorPalette.materialGreen,
+                onChanged: (value) {
+                  KioskConfig().teleConsultationMode =
+                      TeleConsultationMode.values.byName(value!);
+                  setState(() {});
+                },
+                items: teleConsultationModeList
+                    .map<DropdownMenuItem<String>>((var value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: height * 0.012)),
+                  );
+                }).toList(),
+              )
+            : IgnorePointer(
+                ignoring: true,
+                child: DropdownButton<String>(
+                  iconEnabledColor: ColorPalette.darkGrey,
+                  value: KioskConfig().teleConsultationMode.name,
+                  onChanged: (value) {
+                    KioskConfig().teleConsultationMode =
+                        TeleConsultationMode.values.byName(value!);
+                    setState(() {});
+                  },
+                  items: teleConsultationModeList
+                      .map<DropdownMenuItem<String>>((var value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontSize: height * 0.012)),
+                    );
+                  }).toList(),
+                )),
+      ],
+    );
+  }
+
   Widget kioskTypeWidget() {
-    List<dynamic> kioskTypeList = AppConfig().configMap["kiosk_type_list"];
+    List<dynamic> kioskTypeList = KioskConfig().configMap["kiosk_type_list"];
 
     return Row(
       children: [
@@ -88,10 +189,10 @@ class _KioskManagerState extends State<KioskManager> {
         const Spacer(),
         allowEdit
             ? DropdownButton<String>(
-                value: AppConfig().kioskType,
+                value: KioskConfig().kioskType,
                 iconEnabledColor: ColorPalette.materialGreen,
                 onChanged: (value) {
-                  AppConfig().kioskType = value!;
+                  KioskConfig().kioskType = value!;
                   setState(() {});
                 },
                 items: kioskTypeList.map<DropdownMenuItem<String>>((var value) {
@@ -107,9 +208,9 @@ class _KioskManagerState extends State<KioskManager> {
                 ignoring: true,
                 child: DropdownButton<String>(
                   iconEnabledColor: ColorPalette.darkGrey,
-                  value: AppConfig().kioskType,
+                  value: KioskConfig().kioskType,
                   onChanged: (value) {
-                    AppConfig().kioskType = value!;
+                    KioskConfig().kioskType = value!;
                     setState(() {});
                   },
                   items:
@@ -127,7 +228,7 @@ class _KioskManagerState extends State<KioskManager> {
   }
 
   Widget envWidget() {
-    List<dynamic> envList = AppConfig().configMap["env_list"];
+    List<dynamic> envList = KioskConfig().configMap["env_list"];
     return Row(
       children: [
         Text(
@@ -137,10 +238,10 @@ class _KioskManagerState extends State<KioskManager> {
         const Spacer(),
         allowEdit
             ? DropdownButton<String>(
-                value: AppConfig().envType,
+                value: KioskConfig().envType,
                 iconEnabledColor: ColorPalette.materialGreen,
                 onChanged: (value) {
-                  AppConfig().envType = value!;
+                  KioskConfig().envType = value!;
                   setState(() {});
                 },
                 items: envList.map<DropdownMenuItem<String>>((var value) {
@@ -156,9 +257,9 @@ class _KioskManagerState extends State<KioskManager> {
                 ignoring: true,
                 child: DropdownButton<String>(
                   iconEnabledColor: ColorPalette.darkGrey,
-                  value: AppConfig().envType,
+                  value: KioskConfig().envType,
                   onChanged: (value) {
-                    AppConfig().envType = value!;
+                    KioskConfig().envType = value!;
                     setState(() {});
                   },
                   items: envList.map<DropdownMenuItem<String>>((var value) {
@@ -187,67 +288,21 @@ class _KioskManagerState extends State<KioskManager> {
         hintText: 'Input Text',
         rightWidget: TDText('', textColor: TDTheme.of(context).fontGyColor1),
         onChanged: (text) {
-          AppConfig().kioskId = text;
+          KioskConfig().kioskId = text;
           setState(() {});
         },
       ),
-      TDInput(
-        readOnly: !allowEdit,
-        inputType: TextInputType.text,
-        needClear: false,
-        leftLabel: 'Back End API',
-        controller: deviceModelControl,
-        backgroundColor: Colors.white,
-        contentAlignment: TextAlign.end,
-        hintText: 'Input Text',
-        rightWidget: TDText('', textColor: TDTheme.of(context).fontGyColor1),
-        onChanged: (text) {
-          AppConfig().deviceModel = text;
-          setState(() {});
-        },
-      ),
-      TDInput(
-        readOnly: !allowEdit,
-        inputType: TextInputType.text,
-        needClear: false,
-        leftLabel: 'Client Name',
-        controller: clientNameControl,
-        backgroundColor: Colors.white,
-        contentAlignment: TextAlign.end,
-        hintText: 'Input Text',
-        rightWidget: TDText('', textColor: TDTheme.of(context).fontGyColor1),
-        onChanged: (text) {
-          AppConfig().clientName = text;
-          setState(() {});
-        },
-      ),
-
-      // 远程医疗功能
-      allowEdit
-          ? SwitchListTile(
-              title: Text('Enable TC'),
-              value: AppConfig().enableTC,
-              onChanged: (bool value) {
-                AppConfig().enableTC = value;
-                setState(() {});
-              },
-            )
-          : IgnorePointer(
-              ignoring: true,
-              child: SwitchListTile(
-                title: Text('Enable TC'),
-                value: AppConfig().enableTC,
-                activeTrackColor: Colors.grey,
-                inactiveThumbColor: Colors.red,
-                inactiveTrackColor: Colors.grey,
-                onChanged: (bool value) {},
-              ),
-            ),
+      Padding(
+          padding: EdgeInsets.symmetric(horizontal: 18), child: envWidget()),
+      Padding(
+          padding: EdgeInsets.symmetric(horizontal: 18),
+          child: healthScreeningModeWidget()),
+      Padding(
+          padding: EdgeInsets.symmetric(horizontal: 18),
+          child: teleConsultationModeWidget()),
       Padding(
           padding: EdgeInsets.symmetric(horizontal: 18),
           child: kioskTypeWidget()),
-      Padding(
-          padding: EdgeInsets.symmetric(horizontal: 18), child: envWidget()),
       const SizedBox(
         height: 16,
       )

@@ -42,6 +42,7 @@ class BodyCompositionCheck extends BaseCheckWidget {
   late String skeletalMusclePercentage = '';
   // Body Fat Mass 脂肪量
   late String bodyFatMass = '';
+  final _scrollController = ScrollController();
 
   BodyCompositionCheck() {
     iconFile = "assets/images/bodycomposition_logo.png";
@@ -243,44 +244,54 @@ class BodyCompositionCheck extends BaseCheckWidget {
 
       return update;
     }, builder: (context, state) {
-      return GridView(
-        padding: EdgeInsets.symmetric(horizontal: width * 0.005),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          // 一行几列
-          crossAxisCount: 1,
-          // 设置每子元素的大小（宽高比）
-          childAspectRatio: 3,
-          // 元素的左右的 距离
-          crossAxisSpacing: width * 0.02,
-          // 子元素上下的 距离
-          mainAxisSpacing: height * 0.01,
-        ),
-        physics: const AlwaysScrollableScrollPhysics(), // 禁止滚动
-        shrinkWrap: true,
-        children: [
-          buildItem(AppLocalizations.of(context)!.bcm_fat, bodyFatPercentage),
-          buildItem(
-              AppLocalizations.of(context)!.bcm_metabolism, basalMetabolism),
-          buildItem(
-              AppLocalizations.of(context)!.bcm_visceralfat, visceralFatLevel),
-          buildItem(AppLocalizations.of(context)!.bcm_bone_mass, boneMass),
-          buildItem(
-              AppLocalizations.of(context)!.bcm_water, bodyWaterPercentage),
-          buildItem(AppLocalizations.of(context)!.bcm_protein_percentage,
-              proteinPercentage),
-          buildItem(AppLocalizations.of(context)!.bcm_muscle_mass, muscleMass),
-          buildItem(AppLocalizations.of(context)!.body_age, bodyAge),
-          buildItem(AppLocalizations.of(context)!.bcm_extrac_fluid,
-              extracellularFluid),
-          buildItem(AppLocalizations.of(context)!.bcm_intrac_fluid,
-              intracellularWaterPercentage),
-          buildItem(AppLocalizations.of(context)!.bcm_moisture, totalMoisture),
-          buildItem(AppLocalizations.of(context)!.bcm_protein, protein),
-          buildItem(AppLocalizations.of(context)!.bcm_skeletal,
-              skeletalMusclePercentage),
-          buildItem(AppLocalizations.of(context)!.bcm_fatmass, bodyFatMass),
-        ],
-      );
+      return RawScrollbar(
+          thumbColor: Colors.grey,
+          controller: _scrollController,
+          thumbVisibility: true, // 一直显示滑动条
+          thickness: 6, // 滑动条的宽度
+          radius: const Radius.circular(10),
+          interactive: true, // 滑动条为true 可拖动
+          child: GridView(
+            padding: EdgeInsets.symmetric(horizontal: width * 0.005),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              // 一行几列
+              crossAxisCount: 1,
+              // 设置每子元素的大小（宽高比）
+              childAspectRatio: 3,
+              // 元素的左右的 距离
+              crossAxisSpacing: width * 0.02,
+              // 子元素上下的 距离
+              mainAxisSpacing: height * 0.01,
+            ),
+            physics: const AlwaysScrollableScrollPhysics(), // 禁止滚动
+            shrinkWrap: true,
+            children: [
+              buildItem(
+                  AppLocalizations.of(context)!.bcm_fat, bodyFatPercentage),
+              buildItem(AppLocalizations.of(context)!.bcm_metabolism,
+                  basalMetabolism),
+              buildItem(AppLocalizations.of(context)!.bcm_visceralfat,
+                  visceralFatLevel),
+              buildItem(AppLocalizations.of(context)!.bcm_bone_mass, boneMass),
+              buildItem(
+                  AppLocalizations.of(context)!.bcm_water, bodyWaterPercentage),
+              buildItem(AppLocalizations.of(context)!.bcm_protein_percentage,
+                  proteinPercentage),
+              buildItem(
+                  AppLocalizations.of(context)!.bcm_muscle_mass, muscleMass),
+              buildItem(AppLocalizations.of(context)!.body_age, bodyAge),
+              buildItem(AppLocalizations.of(context)!.bcm_extrac_fluid,
+                  extracellularFluid),
+              buildItem(AppLocalizations.of(context)!.bcm_intrac_fluid,
+                  intracellularWaterPercentage),
+              buildItem(
+                  AppLocalizations.of(context)!.bcm_moisture, totalMoisture),
+              buildItem(AppLocalizations.of(context)!.bcm_protein, protein),
+              buildItem(AppLocalizations.of(context)!.bcm_skeletal,
+                  skeletalMusclePercentage),
+              buildItem(AppLocalizations.of(context)!.bcm_fatmass, bodyFatMass),
+            ],
+          ));
     });
   }
 }

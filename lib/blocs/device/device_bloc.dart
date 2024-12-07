@@ -60,7 +60,7 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     LogPrinter.log(deviceData.toString());
     LogPrinter.log('Trying to stop the device.');
     emit(DeviceDataUpdated(deviceType: deviceType, deviceData: deviceData));
-    Future.delayed(const Duration(milliseconds: 100),
+    Future.delayed(const Duration(milliseconds: 500),
         () => add(DeviceDisconnectEvent(deviceType: event.deviceType)));
   }
 

@@ -83,7 +83,7 @@ class CalibrationSettingListPageState
                       buildDivider(),
                       ListTile(
                         selectedColor: ColorPalette.materialGreen,
-                        title: Text('Weight Calibration List Page'),
+                        title: Text('Weight Calibration'),
                         subtitle: Text(''),
                         leading: CircleAvatar(
                           child: Icon(Icons.settings_accessibility),
@@ -91,8 +91,7 @@ class CalibrationSettingListPageState
                         trailing: Icon(Icons.arrow_forward_ios_rounded),
                         onTap: () {
                           // 处理点击事件
-                          Navigator.pushNamed(
-                              context, "/WeightCalibrationSettingListPage");
+                          Navigator.pushNamed(context, "/WeightCalibration");
                         },
                       ),
                       buildDivider(),

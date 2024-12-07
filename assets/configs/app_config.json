@@ -1,36 +1,11 @@
 {
-    "kiosk_id": "CN-ICD-DEV-1",
-    "device_model": "",
-    "device_address": "",
-    "client_name": "",
-    "enable_tc": false,
     "total_height": 214.0,
     "height_offset": 0.0,
-    "kiosk_type_list":["xk","stand", "simple_sg", "simple_tha"],
-    "kiosk_type":"simple_tha",
-    "env_list":["dev_env", "prod_env"],
-    "env_type":"dev_env",
-    "dev_env":{
-        "host":"medlyves-api-5hohk5qryq-as.a.run.app",
-        "firebaseRdbUrl":"https://medlyves-doctor-dev-default-rtdb.asia-southeast1.firebasedatabase.app",
-        "firebaseApiKey":"AIzaSyDydx8cjkwR4zBbwx8t0HM_pIzeQNR45Xs",
-        "firebaseAppId":"1:853443805611:android:142bce4a30203258fb12ee",
-        "firebaseMessagingSenderId":"853443805611",
-        "firebaseProjectId": "medlyves-doctor-dev",
-        "firebaseStorageBucket": "medlyves-doctor-dev.firebasestorage.app"
-    },
-    "prod_env":{
-        "host":"api.medlyves.com",
-        "firebaseRdbUrl":"https://medlyves-doctor-default-rtdb.asia-southeast1.firebasedatabase.app",
-        "firebaseApiKey":"AIzaSyBAUht4QU85pHQ9pZMdhgwzfVyyHGLCxM0",
-        "firebaseAppId":"1:1091315824870:android:36a4510a48d38ec6f2a327",
-        "firebaseMessagingSenderId":"1091315824870",
-        "firebaseProjectId": "medlyves-doctor",
-        "firebaseStorageBucket": "medlyves-doctor.firebasestorage.app"
-    },
     "enable_usb_relay": true,
     "relay_comm_list":["usb", "serial"],
     "relay_comm_type": "usb",
     "relay_io_count_list": [8, 16],
-    "relay_io_count": 8
+    "relay_io_count": 8,
+    "usb_sequence_check_time_s": 10,
+    "up_down_io_stop_time_ms": 1000
 }

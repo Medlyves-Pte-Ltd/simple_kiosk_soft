@@ -14,7 +14,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ECGCheck extends BaseCheckWidget {
   ECGData ecgData = ECGData();
-
+  final _scrollController = ScrollController();
   ECGCheck() {
     ecgData.HR = UserInfo().HR.isNotEmpty ? UserInfo().HR : dataDefaultValue;
     ecgData.PR = UserInfo().PR.isNotEmpty ? UserInfo().PR : dataDefaultValue;
@@ -119,30 +119,43 @@ class ECGCheck extends BaseCheckWidget {
 
       return update;
     }, builder: (context, state) {
-      return GridView(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          // 一行几列
-          crossAxisCount: 2,
-          // 设置每子元素的大小（宽高比）
-          childAspectRatio: 1.8,
-          // 元素的左右的 距离
-          crossAxisSpacing: width * 0.02,
-          // 子元素上下的 距离
-          mainAxisSpacing: height * 0.01,
-        ),
-        children: [
-          buildItem(AppLocalizations.of(context)!.ecg_hr, ecgData.HR),
-          buildItem(AppLocalizations.of(context)!.ecg_pr, ecgData.PR),
-          buildItem(AppLocalizations.of(context)!.ecg_qt, ecgData.QT),
-          buildItem(AppLocalizations.of(context)!.ecg_qtc, ecgData.QTc),
-          buildItem(AppLocalizations.of(context)!.ecg_p_width, ecgData.P_Width),
-          buildItem(AppLocalizations.of(context)!.ecg_qrs_dur, ecgData.QRS_Dur),
-          buildItem(AppLocalizations.of(context)!.ecg_p_axis, ecgData.P_Axis),
-          buildItem(
-              AppLocalizations.of(context)!.ecg_qrs_axis, ecgData.QRS_Axis),
-          buildItem(AppLocalizations.of(context)!.ecg_t_axis, ecgData.T_Axis),
-        ],
-      );
+      return RawScrollbar(
+          thumbColor: Colors.grey,
+          controller: _scrollController,
+          thumbVisibility: true, // 一直显示滑动条
+          thickness: 6, // 滑动条的宽度
+          radius: const Radius.circular(10),
+          interactive: true, // 滑动条为true 可拖动
+          child: GridView(
+            controller: _scrollController,
+            physics: const AlwaysScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              // 一行几列
+              crossAxisCount: 2,
+              // 设置每子元素的大小（宽高比）
+              childAspectRatio: 1.8,
+              // 元素的左右的 距离
+              crossAxisSpacing: width * 0.02,
+              // 子元素上下的 距离
+              mainAxisSpacing: height * 0.01,
+            ),
+            children: [
+              buildItem(AppLocalizations.of(context)!.ecg_hr, ecgData.HR),
+              buildItem(AppLocalizations.of(context)!.ecg_pr, ecgData.PR),
+              buildItem(AppLocalizations.of(context)!.ecg_qt, ecgData.QT),
+              buildItem(AppLocalizations.of(context)!.ecg_qtc, ecgData.QTc),
+              buildItem(
+                  AppLocalizations.of(context)!.ecg_p_width, ecgData.P_Width),
+              buildItem(
+                  AppLocalizations.of(context)!.ecg_qrs_dur, ecgData.QRS_Dur),
+              buildItem(
+                  AppLocalizations.of(context)!.ecg_p_axis, ecgData.P_Axis),
+              buildItem(
+                  AppLocalizations.of(context)!.ecg_qrs_axis, ecgData.QRS_Axis),
+              buildItem(
+                  AppLocalizations.of(context)!.ecg_t_axis, ecgData.T_Axis),
+            ],
+          ));
     });
   }
 }

@@ -12,12 +12,12 @@ import 'package:simple_kiosk_software/common/header.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/scanner_utils.dart';
 
-class DevicePage extends StatefulWidget {
+class DeviceStartPage extends StatefulWidget {
   @override
-  _DevicePageState createState() => _DevicePageState();
+  _DeviceStartPageState createState() => _DeviceStartPageState();
 }
 
-class _DevicePageState extends State<DevicePage> {
+class _DeviceStartPageState extends State<DeviceStartPage> {
   late BuildContext _context;
   // 屏幕宽度
   double width = 0;

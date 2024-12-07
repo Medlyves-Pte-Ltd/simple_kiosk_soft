@@ -12,6 +12,7 @@ import 'package:simple_kiosk_software/blocs/device/device_state.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/body_range.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
+import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -79,7 +80,7 @@ class BloodOxygenMeasure extends BaseMeasureLayoutWidget {
         spo2HeartRate = UserInfo().spo2HeartRate =
             (state.deviceData as BloodOxygenData).heartRate;
 
-        if (AppConfig().enableTC) {
+        if (KioskConfig().healthScreeningMode == HealthScreeningMode.online) {
           BlocProvider.of<AppointmentBloc>(mainContext)
               .processNewData(state.deviceData.data);
         }
@@ -111,8 +112,12 @@ class BloodOxygenMeasure extends BaseMeasureLayoutWidget {
                       fontSize: titleFontSize, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: height * 0.02),
-                measureValueChangeColor(_bloodOxygen, BodyRange().spo2Min.toString(),
-                    BodyRange().spo2Max.toString(), dataFontSize, true),
+                measureValueChangeColor(
+                    _bloodOxygen,
+                    BodyRange().spo2Min.toString(),
+                    BodyRange().spo2Max.toString(),
+                    dataFontSize,
+                    true),
                 rangeMeasureWidget(BodyRange().spo2Min.toString(),
                     BodyRange().spo2Max.toString(), dataFontSize, true)
               ],

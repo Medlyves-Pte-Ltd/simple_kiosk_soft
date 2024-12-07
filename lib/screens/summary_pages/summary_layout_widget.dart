@@ -12,6 +12,7 @@ import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/remote/utils/enum_appointment_mode.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
+import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 import 'package:simple_kiosk_software/utils/print_utils.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
@@ -233,9 +234,9 @@ class SummaryLayoutWidget extends StatelessWidget {
       onTap: () {
         LogPrinter.log('Call doctor pressed');
         BlocProvider.of<AppointmentBloc>(mainContext)
-            .add(SendReadyEvent(kioskId: AppConfig().kioskId));
+            .add(SendReadyEvent(kioskId: KioskConfig().kioskId));
         BlocProvider.of<AppointmentBloc>(mainContext)
-            .add(GetTeleconsultToken(kioskId: AppConfig().kioskId));
+            .add(GetTeleconsultToken(kioskId: KioskConfig().kioskId));
       },
       child: Container(
           height: height * 0.03,
@@ -261,14 +262,16 @@ class SummaryLayoutWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        AppConfig().enableTC && UserInfo().teleconsultation
+        KioskConfig().healthScreeningMode == HealthScreeningMode.online &&
+                KioskConfig().teleConsultationMode == TeleConsultationMode.on &&
+                UserInfo().teleconsultation
             ? startTCButton()
             : const SizedBox.shrink(),
         SizedBox(
           width: width * 0.03,
         ),
         Visibility(
-          visible: DeviceConfig().deviceEnable(DeviceType.SCANNER_DEVICE),
+          visible: DeviceConfig().deviceEnable(DeviceType.PRINTER_DEVICE),
           child: ValueListenableBuilder(
               valueListenable: enableClickPrint,
               builder: (context, enable, child) {

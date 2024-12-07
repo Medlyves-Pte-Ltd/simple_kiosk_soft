@@ -17,6 +17,7 @@ import 'package:simple_kiosk_software/remote/config/settings.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/body_range.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
+import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 import 'package:simple_kiosk_software/utils/scanner_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 
@@ -64,7 +65,7 @@ class ScannerPageState extends State<ScannerPage> {
     try {
       var appointmentBloc = BlocProvider.of<AppointmentBloc>(context);
       await appointmentBloc.appointmentRepository
-          .sendStartEvent(data, AppConfig().kioskId);
+          .sendStartEvent(data, KioskConfig().kioskId);
       await appointmentBloc.appointmentRepository.getUserDetails(data);
       Map<String, dynamic> userData =
           appointmentBloc.appointmentRepository.data;

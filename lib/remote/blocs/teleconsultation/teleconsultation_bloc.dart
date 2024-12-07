@@ -8,6 +8,7 @@ import 'package:simple_kiosk_software/remote/utils/enum_websocket.dart';
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
+import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 part 'teleconsultation_event.dart';
 part 'teleconsultation_state.dart';
 
@@ -32,7 +33,7 @@ class TeleconsultationBloc
 
     on<EndTeleconsultEvent>((event, emit) async {
       try {
-        await appointmentRepository.sendStopEvent(AppConfig().kioskId);
+        await appointmentRepository.sendStopEvent(KioskConfig().kioskId);
       } catch (_) {
         log('Failed to send stop event to backend');
       } finally {

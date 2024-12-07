@@ -153,6 +153,21 @@ class DeviceMangerSettingListPageState
                         },
                       ),
                       buildDivider(),
+                      ListTile(
+                        selectedColor: ColorPalette.materialGreen,
+                        title: Text('Device Relate Setting'),
+                        subtitle: Text(''),
+                        leading: CircleAvatar(
+                          child: Icon(Icons.settings),
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios_rounded),
+                        onTap: () {
+                          // 处理点击事件
+                          Navigator.pushNamed(
+                              context, "/DeviceRelateSettingPage");
+                        },
+                      ),
+                      buildDivider(),
                     ],
                   ))),
           Footer(),

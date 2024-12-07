@@ -3,7 +3,7 @@ import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:simple_kiosk_software/remote/services/api_methods.dart';
 import 'package:simple_kiosk_software/remote/services/kiosk_api.dart';
 import 'package:simple_kiosk_software/remote/utils/app_constants.dart';
-import 'package:simple_kiosk_software/utils/app_config.dart';
+import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 
 class KioskRepository {
   final KioskApi api;
@@ -15,7 +15,7 @@ class KioskRepository {
     int errorCount = 0;
     const oneMinute = Duration(minutes: 1);
     return Timer.periodic(oneMinute, (Timer _) async {
-      dynamic result = await api.pingKiosk(AppConfig().kioskId);
+      dynamic result = await api.pingKiosk(KioskConfig().kioskId);
       if (result is Failure) {
         errorCount += 1;
         if (errorCount % 5 == 0) {

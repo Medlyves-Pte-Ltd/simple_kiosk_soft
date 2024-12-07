@@ -9,6 +9,7 @@ import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 import 'package:simple_kiosk_software/utils/permission_config.dart';
 
 class SampleKioskDeviceConfigView extends StatefulWidget {
@@ -34,9 +35,9 @@ class SampleKioskDeviceConfigViewState
     // TODO: implement initState
     super.initState();
     configFile =
-        "${AppConfig().configDir}/devices/${AppConfig().kioskType}_config.json";
-    widget.allowEdit =
-        PermissionConfig().havePermission(PermissionModules.DeviceConfiguration);
+        "${AppConfig().configDir}/devices/${KioskConfig().kioskType}_config.json";
+    widget.allowEdit = PermissionConfig()
+        .havePermission(PermissionModules.DeviceConfiguration);
     Future.delayed(Duration(milliseconds: 10), () async {
       await loadFile();
       setState(() {});
@@ -65,7 +66,7 @@ class SampleKioskDeviceConfigViewState
             thumbColor: Colors.grey,
             controller: _scrollController,
             thumbVisibility: true, // 一直显示滑动条
-            thickness: 8, // 滑动条的宽度
+            thickness: 6, // 滑动条的宽度
             radius: const Radius.circular(10),
             interactive: true, // 滑动条为true 可拖动
             child: ReorderableListView.builder(

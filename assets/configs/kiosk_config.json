@@ -1,0 +1,29 @@
+{
+    "kiosk_id": "CN-ICD-DEV-1",
+    "health_screening_mode_list":["online", "standalone"],
+    "health_screening_mode":"standalone",
+    "tele_consultation_mode_list":["on", "off"],
+    "tele_consultation_mode":"off",
+    "kiosk_type_list":["xk","stand", "simple_sg", "simple_tha"],
+    "kiosk_type":"simple_tha",
+    "env_list":["dev_env", "prod_env"],
+    "env_type":"dev_env",
+    "dev_env":{
+        "host":"medlyves-api-5hohk5qryq-as.a.run.app",
+        "firebaseRdbUrl":"https://medlyves-doctor-dev-default-rtdb.asia-southeast1.firebasedatabase.app",
+        "firebaseApiKey":"AIzaSyDydx8cjkwR4zBbwx8t0HM_pIzeQNR45Xs",
+        "firebaseAppId":"1:853443805611:android:142bce4a30203258fb12ee",
+        "firebaseMessagingSenderId":"853443805611",
+        "firebaseProjectId": "medlyves-doctor-dev",
+        "firebaseStorageBucket": "medlyves-doctor-dev.firebasestorage.app"
+    },
+    "prod_env":{
+        "host":"api.medlyves.com",
+        "firebaseRdbUrl":"https://medlyves-doctor-default-rtdb.asia-southeast1.firebasedatabase.app",
+        "firebaseApiKey":"AIzaSyBAUht4QU85pHQ9pZMdhgwzfVyyHGLCxM0",
+        "firebaseAppId":"1:1091315824870:android:36a4510a48d38ec6f2a327",
+        "firebaseMessagingSenderId":"1091315824870",
+        "firebaseProjectId": "medlyves-doctor",
+        "firebaseStorageBucket": "medlyves-doctor.firebasestorage.app"
+    }
+}

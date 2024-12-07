@@ -5,6 +5,7 @@ import 'package:simple_kiosk_software/common/video_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_kiosk_software/screens/language/date_time_section.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
+import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 
 class LanguagePage extends StatefulWidget {
   const LanguagePage({Key? key}) : super(key: key);
@@ -79,7 +80,7 @@ class LanguagePageState extends State<LanguagePage> {
     return ElevatedButton(
       onPressed: () {
         BlocProvider.of<LocaleCubit>(context).loadLocale(Locale(languageCode));
-        if (AppConfig().enableTC) {
+        if (KioskConfig().healthScreeningMode == HealthScreeningMode.online) {
           Navigator.pushNamedAndRemoveUntil(
               context, '/ScannerPage', ((route) => false));
         } else {

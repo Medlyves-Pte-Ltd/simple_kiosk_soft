@@ -16,6 +16,7 @@ import 'package:simple_kiosk_software/screens/measurement_pages/base_measure_lay
 import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/body_range.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
+import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 
 class HeightWeightMeasure extends BaseMeasureLayoutWidget {
@@ -183,7 +184,7 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
           // 计算标准体重
           BodyRange().calculateStandWeight();
 
-          if (AppConfig().enableTC) {
+          if (KioskConfig().healthScreeningMode == HealthScreeningMode.online) {
             BlocProvider.of<AppointmentBloc>(mainContext).processNewData(
                 {"height": UserInfo().height, "weight": UserInfo().weight});
           }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:simple_kiosk_software/screens/manager/device_manger/calibration/weight_calibration.dart';
 import 'package:simple_kiosk_software/screens/manager/device_manger/device_config_page.dart';
+import 'package:simple_kiosk_software/screens/manager/device_manger/device_relate_setting_page.dart';
 import 'package:simple_kiosk_software/screens/manager/device_manger/device_usb_relay_page.dart';
 import 'package:simple_kiosk_software/screens/manager/general/modify_password_page.dart';
 import 'package:simple_kiosk_software/screens/manager/general/permission/permission_config_page.dart';
@@ -12,7 +14,7 @@ import 'package:simple_kiosk_software/screens/measurement_pages/body_composition
 import 'package:simple_kiosk_software/screens/measurement_pages/ecg_measure.dart';
 import 'package:simple_kiosk_software/screens/scanner_page.dart';
 import 'package:simple_kiosk_software/screens/summary_pages/summary_layout_widget.dart';
-import 'package:simple_kiosk_software/screens/device_page.dart';
+import 'package:simple_kiosk_software/screens/device_start_page.dart';
 import 'package:simple_kiosk_software/screens/manager/device_manger/device_diagnostic_page.dart';
 import 'package:simple_kiosk_software/screens/user_login_page.dart';
 import 'package:simple_kiosk_software/screens/language/language_page.dart';
@@ -23,9 +25,6 @@ import 'package:simple_kiosk_software/screens/manager/setting_list_page.dart';
 import 'package:flutter_devices_sdk/view/usb_info/usb_info_page.dart';
 import 'manager/device_manger/calibration/calibration_setting_list_page.dart';
 import 'manager/device_manger/calibration/height_calibration_page.dart';
-import 'manager/device_manger/calibration/singePoint_weight_calibration_page.dart';
-import 'manager/device_manger/calibration/threePoint_weight_calibration_page.dart';
-import 'manager/device_manger/calibration/weight_calibration_setting_list_page.dart';
 import 'manager/device_manger/device_manger_setting_list_page.dart';
 import 'manager/general/general_setting_list_page.dart';
 
@@ -51,7 +50,7 @@ final Map<String, Function> routes = {
   '/Summary': (context, {arguments}) => SummaryLayoutWidget(),
   '/ScannerPage': (context, {arguments}) => ScannerPage(),
   '/ECGMeasure': (context, {arguments}) => ECGMeasure(),
-  '/DevicePage': (context, {arguments}) => DevicePage(),
+  '/DeviceStartPage': (context, {arguments}) => DeviceStartPage(),
   '/DeviceDiagnosticPage': (context, {arguments}) => DeviceDiagnosticPage(),
   '/SettingListPage': (context, {arguments}) => SettingListPage(),
   '/UsbInfoPage': (context, {arguments}) => UsbInfoPage(),
@@ -60,19 +59,16 @@ final Map<String, Function> routes = {
   '/DeviceConfigPage': (context, {arguments}) => DeviceConfigPage(),
   '/ModifyPasswordPage': (context, {arguments}) => ModifyPasswordPage(),
   '/PermissionConfigPage': (context, {arguments}) => PermissionConfigPage(),
-  '/SingerPointWeightCalibrationPage': (context, {arguments}) =>
-      SingerPointWeightCalibrationPage(),
-  '/ThreePointWeightCalibrationPage': (context, {arguments}) =>
-      ThreePointWeightCalibrationPage(),
   '/CalibrationSettingListPage': (context, {arguments}) =>
       CalibrationSettingListPage(),
   '/HeightCalibrationPage': (context, {arguments}) => HeightCalibrationPage(),
-  '/WeightCalibrationSettingListPage': (context, {arguments}) =>
-      WeightCalibrationSettingListPage(),
   '/GeneralSettingListPage': (context, {arguments}) => GeneralSettingListPage(),
   '/DeviceMangerSettingListPage': (context, {arguments}) =>
       DeviceMangerSettingListPage(),
-  '/DeviceUsbRelayPage': (context, {arguments}) => DeviceUsbRelayPage()
+  '/DeviceUsbRelayPage': (context, {arguments}) => DeviceUsbRelayPage(),
+  '/WeightCalibration': (context, {arguments}) => WeightCalibration(),
+  '/DeviceRelateSettingPage': (context, {arguments}) =>
+      DeviceRelateSettingPage(),
 };
 
 // 定义通用的onGenerateRoute

@@ -15,6 +15,7 @@ class SummaryBodyComposition extends StatelessWidget {
   double dataFontSize = 0;
   // StatelessWidget需要保存上下文才能进行页面跳转，翻译
   late BuildContext mainContext;
+  final _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,7 @@ class SummaryBodyComposition extends StatelessWidget {
     titleFontSize = height * 0.02;
     dataFontSize = height * 0.02;
     return RawScrollbar(
+        controller: _scrollController,
         thumbColor: ColorPalette.darkGrey,
         // 一直显示滑动条
         thumbVisibility: true,
@@ -33,6 +35,7 @@ class SummaryBodyComposition extends StatelessWidget {
         // 滑动条为true 可拖动
         interactive: true,
         child: ListView(
+          controller: _scrollController,
           children: [
             buildBodyCompositionArea(),
           ],

@@ -21,6 +21,10 @@ enum PermissionModules {
   DeviceCalibration,
   // 继电器
   DeviceUsbRelay,
+  // 设备相关设置
+  DeviceRelateSetting,
+  // 通用
+  General,
 }
 
 // 角色级别

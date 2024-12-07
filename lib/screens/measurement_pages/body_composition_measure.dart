@@ -15,6 +15,7 @@ import 'package:simple_kiosk_software/blocs/device/device_state.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/body_range.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
+import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -48,6 +49,7 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
   late String skeletalMusclePercentage = '';
   // Body Fat Mass 脂肪量
   late String bodyFatMass = '';
+  final _scrollController = ScrollController();
 
   BodyCompositionMeasure() {
     bodyFatPercentage = UserInfo().bodyFatPercentage.isNotEmpty
@@ -233,7 +235,7 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
           UserInfo().bodyFatMass =
               bodyFatMass = bodyCompositionData.bodyFatMass ?? "";
 
-          if (AppConfig().enableTC) {
+          if (KioskConfig().healthScreeningMode == HealthScreeningMode.online) {
             BlocProvider.of<AppointmentBloc>(mainContext).processNewData({
               'bodyFatPercentage': UserInfo().bodyFatPercentage,
               'basalMetabolism': UserInfo().basalMetabolism,
@@ -261,6 +263,7 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
       return update;
     }, builder: (context, state) {
       return RawScrollbar(
+        controller: _scrollController,
         thumbColor: ColorPalette.darkGrey,
         // 一直显示滑动条
         thumbVisibility: true,
@@ -270,6 +273,7 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
         // 滑动条为true 可拖动
         interactive: true,
         child: GridView(
+          controller: _scrollController,
           padding: EdgeInsets.symmetric(horizontal: width * 0.005),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             // 一行几列

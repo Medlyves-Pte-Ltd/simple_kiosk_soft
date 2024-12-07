@@ -11,7 +11,9 @@
             "DeviceUSBDebug",
             "DeviceCalibration",
             "RangeSetting",
-            "DeviceUsbRelay"
+            "DeviceUsbRelay",
+            "DeviceRelateSetting",
+            "General"
         ]
     }
 ]

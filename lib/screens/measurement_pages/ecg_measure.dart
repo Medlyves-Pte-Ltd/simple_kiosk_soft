@@ -16,6 +16,7 @@ import 'package:simple_kiosk_software/blocs/device/device_event.dart';
 import 'package:simple_kiosk_software/blocs/device/device_state.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
+import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -124,7 +125,7 @@ class ECGMeasure extends BaseMeasureLayoutWidget {
             (ecgData.Conclusion ?? "").replaceAll("\n", " ");
         UserInfo().ResultImage = ecgData.ResultImage ?? "";
 
-        if (AppConfig().enableTC) {
+        if (KioskConfig().healthScreeningMode == HealthScreeningMode.online) {
           // 上传图片
           if (UserInfo().ResultImage.isNotEmpty) {
             File img = File(UserInfo().ResultImage);
