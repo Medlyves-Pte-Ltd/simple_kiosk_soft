@@ -122,8 +122,8 @@ class MyApp extends StatelessWidget {
               return onCustomGenerateRoute(settings);
             }
           },
-          initialRoute: "/",
-          //initialRoute: "/DeviceStartPage",
+          //initialRoute: "/",
+          initialRoute: "/DeviceStartPage",
           supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData(
             textTheme: GoogleFonts.robotoTextTheme(textTheme).copyWith(

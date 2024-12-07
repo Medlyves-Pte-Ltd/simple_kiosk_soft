@@ -91,20 +91,14 @@ class AppConfig {
     videosDir = "$mainDir/videos";
     audiosDir = "$mainDir/audios";
     logsDir = "$mainDir/logs";
-
-    // 创建目录
-    await createDirectory(configDir);
-    await createDirectory(imagesDir);
-    await createDirectory(videosDir);
-    await createDirectory(audiosDir);
-    await createDirectory(logsDir);
+    LogPrinter.logOutputPath = logsDir;
 
     // 加载配置文件
     await loadFile();
 
     // 范围
     await BodyRange().loadFile();
-
+    DeviceSdkParamSetting().useSimulateUsbDevice = false;
     DeviceSdkParamSetting().replayIoCount = relayIoCount;
     DeviceSdkParamSetting().configDir = configDir;
     DeviceSdkParamSetting().totalHeight = totalHeight;

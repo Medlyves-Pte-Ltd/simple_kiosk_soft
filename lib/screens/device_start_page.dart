@@ -104,7 +104,7 @@ class _DeviceStartPageState extends State<DeviceStartPage> {
     await DeviceOrderCheck().checkDeviceOrder();
 
     // hub故障或者继电器故障
-    if (DeviceOrderCheck().hubDeviceNames.isEmpty) {
+    if (DeviceOrderCheck().hubUsbPathList.isEmpty) {
       _showInfo.value = "The relay or usb hub is not working properly";
       return;
     }

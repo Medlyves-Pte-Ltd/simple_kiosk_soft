@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_devices_sdk/devices/device_config.dart';
 import 'package:flutter_devices_sdk/devices/device_order_check.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -26,9 +27,9 @@ class FooterState extends State<Footer> {
   @override
   void initState() {
     super.initState();
-    int time = AppConfig().usbSequenceCheckTime;
-    timer = Timer.periodic(
-        Duration(seconds: AppConfig().usbSequenceCheckTime), onTimer);
+    timer = makePeriodicTimer(
+        Duration(seconds: AppConfig().usbSequenceCheckTime), onTimer,
+        fireNow: true);
   }
 
   @override
@@ -37,25 +38,35 @@ class FooterState extends State<Footer> {
     timer.cancel();
   }
 
+  Timer makePeriodicTimer(
+    Duration duration,
+    void Function(Timer timer) callback, {
+    bool fireNow = false,
+  }) {
+    var timer = Timer.periodic(duration, callback);
+    if (fireNow) {
+      Future.delayed(const Duration(milliseconds: 10), () async {
+        callback(timer);
+      });
+    }
+    return timer;
+  }
+
   // 定时器
   Future<void> onTimer(Timer timer) async {
-    await DeviceOrderCheck().checkDeviceOrder();
+    List<DeviceInfo> usbDeviceLostList =
+        await DeviceOrderCheck().checkDeviceLost();
 
-    if (DeviceOrderCheck().hubDeviceNames.isEmpty) {
-      usbDeviceConnectStatus.value = false;
-      return;
-    }
-
-    usbDeviceConnectStatus.value = !DeviceOrderCheck().usbError;
-
-    if (DeviceOrderCheck().usbError) {
+    for (DeviceInfo item in usbDeviceLostList) {
+      String error = "${item.deviceName} not found, ${item.usbPath}";
       Fluttertoast.showToast(
           toastLength: Toast.LENGTH_LONG,
-          msg: "USB device sequence error",
+          msg: error,
           backgroundColor: ColorPalette.darkGrey,
           textColor: Colors.red);
-      return;
     }
+
+    usbDeviceConnectStatus.value = usbDeviceLostList.isEmpty;
   }
 
   @override

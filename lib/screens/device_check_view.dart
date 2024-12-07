@@ -18,11 +18,17 @@ class _DeviceCheckViewState extends State<DeviceCheckView> {
 
   void initState() {
     super.initState();
+    Future.delayed(const Duration(milliseconds: 10), start);
+  }
+
+  // 启动
+  void start() async {
+    await DeviceOrderCheck().checkDeviceOrder();
 
     deviceList = DeviceOrderCheck().usbList();
-
+    setState(() {});
     // hub故障或者继电器故障
-    if (DeviceOrderCheck().hubDeviceNames.isEmpty) {
+    if (DeviceOrderCheck().hubUsbPathList.isEmpty) {
       _showInfo.value = "The relay or usb hub is not working properly";
       return;
     }
