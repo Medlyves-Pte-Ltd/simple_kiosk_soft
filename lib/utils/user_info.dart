@@ -215,9 +215,11 @@ class UserInfo {
     if (bodyFatMass.isNotEmpty) {
       map["bodyFatMass"] = bodyFatMass;
     }
-    if (skeletalMusclePercentage.isNotEmpty) {
-      map["skeletalMusclePercentage"] = skeletalMusclePercentage;
-    }
+
+    // 没有骨骼肌率
+    // if (skeletalMusclePercentage.isNotEmpty) {
+    //   map["skeletalMusclePercentage"] = skeletalMusclePercentage;
+    // }
 
     if (HR.isNotEmpty) {
       map["bp_pulse"] = HR;

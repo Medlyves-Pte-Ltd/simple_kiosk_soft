@@ -84,7 +84,7 @@ class _WeightCalibrationState extends State<WeightCalibration> {
       alertDialog("Please put on the third calibration weight");
     } else if (order == 21) {
       // 校准完成
-      alertDialog("Calibration completed");
+      alertDialog("Calibration completed, please reboot machine");
     }
   }
 

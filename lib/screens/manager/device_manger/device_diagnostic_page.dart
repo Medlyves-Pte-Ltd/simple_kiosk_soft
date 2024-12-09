@@ -19,6 +19,7 @@ import 'package:simple_kiosk_software/screens/check/scanner_check.dart';
 import 'package:simple_kiosk_software/screens/check/thai_card_check.dart';
 import 'package:simple_kiosk_software/screens/check/up_down_check.dart';
 import 'package:simple_kiosk_software/screens/check/weight_check.dart';
+import 'package:simple_kiosk_software/utils/body_range.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 
 class DeviceDiagnosticPage extends StatelessWidget {
@@ -27,7 +28,9 @@ class DeviceDiagnosticPage extends StatelessWidget {
     UserInfo().name = "User";
     UserInfo().age = "25";
     UserInfo().gender = 1;
+
     UserInfo().clearResult();
+    BodyRange().init();
   }
 
   List<Widget> items = [

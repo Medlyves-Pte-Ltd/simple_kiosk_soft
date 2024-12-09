@@ -116,7 +116,7 @@ class FooterState extends State<Footer> {
                     builder: (context, enable, child) {
                       String path = enable
                           ? "assets/images/connected.png"
-                          : "assets/images/disconnected.png";
+                          : "assets/images/fail.png";
                       return IconButton(
                           iconSize: height * 0.025,
                           onPressed: () {
@@ -141,7 +141,10 @@ class FooterState extends State<Footer> {
                             // Navigator.pushNamedAndRemoveUntil(
                             //     context, '/KioskManager', ((route) => false));
                           },
-                          icon: Image.asset(path));
+                          icon: Image.asset(
+                            path,
+                            height: height * 0.025,
+                          ));
                     }),
               ],
             )),

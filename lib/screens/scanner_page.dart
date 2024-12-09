@@ -93,6 +93,7 @@ class ScannerPageState extends State<ScannerPage> {
     ScannerUtils().listenData = null;
     ControlMeasurePageUtils().pageIndex = 0;
     ControlMeasurePageUtils().clearMeasure();
+
     BodyRange().init();
     Navigator.pushNamedAndRemoveUntil(
         mainContext, "/HeightWeightMeasure", (route) => false);
@@ -135,15 +136,10 @@ class ScannerPageState extends State<ScannerPage> {
           onDoubleTap: () {
             // 测试
             listenScannerData("ZGVtbzFAbWVkbHl2ZXMuY29t_walkin_TC");
+            // 无远程医疗功能 _HS结尾
+            //listenScannerData("ZGVtbzFAbWVkbHl2ZXMuY29t_walkin_HS");
             // David信息
             //listenScannerData("ZGF2aWQud29uZ0BtZWRseXZlcy5jb20=_walkin_TC");
-            // // 测试id
-            // UserInfo().name = "User";
-            // UserInfo().age = "25";
-            // UserInfo().gender = 1;
-            // UserInfo().clearResult();
-            // Navigator.pushNamedAndRemoveUntil(
-            //     context, '/HeightWeightMeasure', ((route) => false));
           },
           child: Image.asset(
             "assets/images/qr-code.png",

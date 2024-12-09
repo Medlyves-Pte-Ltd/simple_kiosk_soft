@@ -9,6 +9,7 @@ import 'package:simple_kiosk_software/screens/language/date_time_section.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_kiosk_software/utils/body_range.dart';
+import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 
 class UserLoginPage extends StatefulWidget {
@@ -203,6 +204,9 @@ class UserLoginPageState extends State<UserLoginPage> {
                                 UserInfo().age = age;
                                 UserInfo().clearResult();
                                 BodyRange().init();
+
+                                ControlMeasurePageUtils().pageIndex = 0;
+                                ControlMeasurePageUtils().clearMeasure();
                                 Navigator.pushNamedAndRemoveUntil(context,
                                     '/HeightWeightMeasure', (route) => false);
                               } else {

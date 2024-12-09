@@ -91,6 +91,8 @@ class _DeviceStartPageState extends State<DeviceStartPage> {
       });
     }
 
+    // 检查usb设备的顺序并显示结果
+    await Future.delayed(Duration(seconds: 2), () {});
     // 设备初始化
     try {
       await DeviceConfig().init();
@@ -99,8 +101,6 @@ class _DeviceStartPageState extends State<DeviceStartPage> {
       return;
     }
 
-    // 检查usb设备的顺序并显示结果
-    await Future.delayed(Duration(seconds: 1), () {});
     await DeviceOrderCheck().checkDeviceOrder();
 
     // hub故障或者继电器故障
