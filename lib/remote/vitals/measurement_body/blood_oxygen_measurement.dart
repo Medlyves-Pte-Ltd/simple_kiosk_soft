@@ -9,14 +9,19 @@ import '../../../blocs/device/device_bloc.dart';
 import '../../../blocs/device/device_state.dart';
 
 class BloodOxygenMeasurement extends StatelessWidget {
-  const BloodOxygenMeasurement({super.key});
+  BloodOxygenMeasurement({super.key});
+  double width = 0;
+  double height = 0;
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+
     return Column(
       children: [
         SizedBox(
-          height: 2.h,
+          height: height * 0.01,
         ),
         // Container(
         //   padding: EdgeInsets.only(top: 1.h, bottom: 4.h),
@@ -28,19 +33,19 @@ class BloodOxygenMeasurement extends StatelessWidget {
             Text(
               AppLocalizations.of(context)!.bo_oxygen_staturation,
               style: TextStyle(
-                fontSize: 14.dp,
+                fontSize: height * 0.02,
               ),
             ),
             Text(
               AppLocalizations.of(context)!.bo_heartrate,
               style: TextStyle(
-                fontSize: 14.dp,
+                fontSize: height * 0.02,
               ),
             ),
           ],
         ),
         SizedBox(
-          height: 1.5.h,
+          height: height * 0.01,
         ),
         BlocBuilder<DeviceBloc, DeviceState>(builder: (context, state) {
           String spo2 = BlocProvider.of<AppointmentBloc>(context)
@@ -67,11 +72,11 @@ class BloodOxygenMeasurement extends StatelessWidget {
               children: [
                 Text(
                   spo2,
-                  style: TextStyle(fontSize: 20.dp, color: Colors.blue),
+                  style: TextStyle(fontSize: height * 0.02, color: Colors.blue),
                 ),
                 Text(
                   pr,
-                  style: TextStyle(fontSize: 20.dp, color: Colors.blue),
+                  style: TextStyle(fontSize: height * 0.02, color: Colors.blue),
                 ),
               ]);
         }),

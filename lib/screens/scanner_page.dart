@@ -64,6 +64,14 @@ class ScannerPageState extends State<ScannerPage> {
     LogPrinter.log("qr code normal data:$data");
     try {
       var appointmentBloc = BlocProvider.of<AppointmentBloc>(context);
+
+      try {
+        await appointmentBloc.appointmentRepository
+            .sendStopEvent(KioskConfig().kioskId);
+      } catch (e) {
+        print("$e");
+      }
+
       await appointmentBloc.appointmentRepository
           .sendStartEvent(data, KioskConfig().kioskId);
       await appointmentBloc.appointmentRepository.getUserDetails(data);
@@ -80,7 +88,8 @@ class ScannerPageState extends State<ScannerPage> {
       UserInfo().gender = userData["gender"] == "Female" ? 0 : 1;
       UserInfo().clearResult();
     } catch (e) {
-      Fluttertoast.showToast(msg: "User information acquisition failed!");
+      Fluttertoast.showToast(
+          msg: "User information acquisition failed!, Error:$e");
       return;
     }
 
@@ -135,7 +144,10 @@ class ScannerPageState extends State<ScannerPage> {
         GestureDetector(
           onDoubleTap: () {
             // 测试
-            listenScannerData("ZGVtbzFAbWVkbHl2ZXMuY29t_walkin_TC");
+            //listenScannerData("ZGVtbzFAbWVkbHl2ZXMuY29t_walkin_TC");
+            // 泰国测试人员二维码
+            listenScannerData(
+                "cGVlcmFkYS50YXdvbmdAbmVvcG93ZXJtZWQuY29t_walkin_TC");
             // 无远程医疗功能 _HS结尾
             //listenScannerData("ZGVtbzFAbWVkbHl2ZXMuY29t_walkin_HS");
             // David信息

@@ -8,6 +8,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:flutter_devices_sdk/devices/device_config.dart';
 import 'package:flutter_devices_sdk/log/log_printer.dart';
+import 'package:medlyves_mobile_components/blocs/hms_room_overview/room_overview_bloc.dart';
+import 'package:medlyves_mobile_components/blocs/hms_room_overview/room_overview_event.dart';
+import 'package:medlyves_mobile_components/blocs/hms_room_overview/room_overview_state.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/remote/utils/enum_appointment_mode.dart';
@@ -26,6 +29,7 @@ import 'package:simple_kiosk_software/screens/summary_pages/summary_otoscope.dar
 import 'package:simple_kiosk_software/screens/summary_pages/summary_stethoscope.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
+import 'package:simple_kiosk_software/utils/test_result_csv_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 import 'package:simple_kiosk_software/remote/config/settings.dart';
 
@@ -301,33 +305,48 @@ class SummaryLayoutWidget extends StatelessWidget {
         SizedBox(
           width: width * 0.03,
         ),
-        InkWell(
-          onTap: () {
-            UserInfo().clearUserInfo();
-            UserInfo().clearResult();
-            ControlMeasurePageUtils().pageIndex = 0;
-            ControlMeasurePageUtils().clearMeasure();
-            Navigator.pushNamedAndRemoveUntil(
-                mainContext, "/", (route) => false);
-          },
-          child: Container(
-              height: height * 0.03,
-              width: width * 0.15,
-              decoration: BoxDecoration(
-                color: ColorPalette.materialGreen,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Center(
-                child: Text(
-                  AppLocalizations.of(mainContext)!.exit,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: height * 0.015,
-                      fontWeight: FontWeight.w600),
-                ),
-              )),
+        buildExitBtn(),
+        SizedBox(
+          width: width * 0.03,
         ),
       ],
+    );
+  }
+
+  // 退出按钮
+  Widget buildExitBtn() {
+    return InkWell(
+      onTap: () async {
+        if (AppConfig().testResultOutCsv) {
+          TestResultCsv testResultCsv = TestResultCsv();
+          await testResultCsv.writeTestDataToCsv();
+        }
+
+        mainContext
+            .read<AppointmentBloc>()
+            .add(SendStopEvent(kioskId: KioskConfig().kioskId));
+        UserInfo().clearUserInfo();
+        UserInfo().clearResult();
+        ControlMeasurePageUtils().pageIndex = 0;
+        ControlMeasurePageUtils().clearMeasure();
+        Navigator.pushNamedAndRemoveUntil(mainContext, "/", (route) => false);
+      },
+      child: Container(
+          height: height * 0.03,
+          width: width * 0.15,
+          decoration: BoxDecoration(
+            color: ColorPalette.materialGreen,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Center(
+            child: Text(
+              AppLocalizations.of(mainContext)!.exit,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: height * 0.015,
+                  fontWeight: FontWeight.w600),
+            ),
+          )),
     );
   }
 

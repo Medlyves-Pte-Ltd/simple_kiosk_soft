@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
@@ -69,10 +70,56 @@ class LanguagePageState extends State<LanguagePage> {
                     .toList(),
               ),
             )),
+            downloadQrCode(),
+            SizedBox(
+              height: height * 0.01,
+            ),
             Footer(),
           ],
         ),
       ),
+    );
+  }
+
+  // 下载二维码
+  Widget downloadQrCode() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              "assets/images/apple_market.png",
+              height: height * 0.06,
+              width: height * 0.14,
+            ),
+            Image.asset(
+              "assets/images/apple_code.png",
+              height: height * 0.14,
+              width: height * 0.14,
+            )
+          ],
+        ),
+        SizedBox(
+          width: width * 0.12,
+        ),
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              "assets/images/google_market.png",
+              height: height * 0.06,
+              width: height * 0.14,
+            ),
+            Image.asset(
+              "assets/images/google_qrcode.png",
+              height: height * 0.14,
+              width: height * 0.14,
+            )
+          ],
+        )
+      ],
     );
   }
 

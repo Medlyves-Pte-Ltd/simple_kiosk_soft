@@ -111,6 +111,7 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
       Fluttertoast.showToast(msg: AppLocalizations.of(mainContext)!.bcm_prereq);
       return;
     }
+    startStatus = true;
     // 人体成分需要传入参数
     DeviceManager().getDevice(DeviceType.BC_DEVICE)?.mapData = {
       'height': UserInfo().height,
@@ -126,6 +127,7 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
 
   @override
   Future<void> onStop() async {
+    startStatus = false;
     DeviceStopEvent stopEvent =
         DeviceStopEvent(deviceType: DeviceType.BC_DEVICE);
     BlocProvider.of<DeviceBloc>(mainContext).add(stopEvent);
@@ -250,6 +252,7 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
           update = true;
         }
       } else if (state is DeviceDisconnected) {
+        startStatus = false;
         if (!measured) {
           intracellularWaterPercentage = totalMoisture = protein =
               skeletalMusclePercentage = bodyFatMass = muscleMass = bodyAge =

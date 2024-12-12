@@ -9,10 +9,15 @@ import 'package:simple_kiosk_software/remote/utils/enum_device_type.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ECGMeasurement extends StatelessWidget {
-  const ECGMeasurement({super.key});
+  ECGMeasurement({super.key});
+  double width = 0;
+  double height = 0;
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+
     return BlocBuilder<DeviceBloc, DeviceState>(
       builder: (context, state) {
         String hr = BlocProvider.of<AppointmentBloc>(context)
@@ -89,7 +94,7 @@ class ECGMeasurement extends StatelessWidget {
                         AppLocalizations.of(context)!.results,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 13.dp,
+                          fontSize: height * 0.02,
                           color: Colors
                               .blue, // Choose a color that fits your app theme
                         ),
@@ -103,7 +108,7 @@ class ECGMeasurement extends StatelessWidget {
                             cln,
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
-                              fontSize: 10.dp,
+                              fontSize: height * 0.02,
                               color: Colors
                                   .black87, // Adjust the color to match your theme
                             ),
@@ -116,14 +121,17 @@ class ECGMeasurement extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 40.0.h, // Set a fixed height for the GridView
+              height: height * 0.3, // Set a fixed height for the GridView
               child: GridView.count(
                 primary: false,
-                //padding: EdgeInsets.all(0),
+                // 一行几列
                 crossAxisCount: 3,
-                mainAxisSpacing: 1.w,
-                crossAxisSpacing: 1.w,
-                childAspectRatio: 1.7,
+                // 设置每子元素的大小（宽高比）
+                childAspectRatio: 1.8,
+                // 元素的左右的 距离
+                crossAxisSpacing: width * 0.02,
+                // 子元素上下的 距离
+                mainAxisSpacing: height * 0.01,
                 physics:
                     const NeverScrollableScrollPhysics(), // Disable GridView scrolling
                 shrinkWrap: true,
@@ -160,14 +168,14 @@ class ECGMeasurement extends StatelessWidget {
         children: [
           Text(
             label,
-            style: TextStyle(fontSize: 10.dp, color: Colors.black),
+            style: TextStyle(fontSize: height * 0.02, color: Colors.black),
           ),
           SizedBox(
-            height: 1.5.h,
+            height: height * 0.01,
           ),
           Text(
             value,
-            style: TextStyle(fontSize: 20.dp, color: Colors.blue),
+            style: TextStyle(fontSize: height * 0.02, color: Colors.blue),
           ),
         ],
       ),

@@ -66,7 +66,7 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
         // Add more languages if needed
       },
       1,
-      const TempMeasurement()),
+      TempMeasurement()),
   MeasurementType.bloodPressure: MeasurementTypeInfo(
       'Blood Pressure',
       {
@@ -79,7 +79,7 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
         // Add more languages if needed
       },
       2,
-      const BPMeasurement()),
+      BPMeasurement()),
   MeasurementType.bodyComposition: MeasurementTypeInfo(
       'Body Composition',
       {
@@ -94,7 +94,7 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
         // Add more languages if needed
       },
       3,
-      const BodyCompMeasurement()),
+      BodyCompMeasurement()),
   MeasurementType.spo2: MeasurementTypeInfo(
       'Oxygen Saturation',
       {
@@ -107,7 +107,7 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
         // Add more languages if needed
       },
       4,
-      const BloodOxygenMeasurement()),
+      BloodOxygenMeasurement()),
   MeasurementType.ecg: MeasurementTypeInfo(
       'ECG',
       {
@@ -120,7 +120,7 @@ Map<MeasurementType, MeasurementTypeInfo> measurementTypeVideos = {
         // Add more languages if needed
       },
       5,
-      const ECGMeasurement()),
+      ECGMeasurement()),
 };
 
 class VitalTitle {

@@ -354,7 +354,7 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
                             'Failed to handle appointment notification: $e');
                       }
                     }),
-                //const Header(),
+                const Header(),
                 SizedBox(
                   height: height * 0.33,
                   child: deviceStart
@@ -424,9 +424,8 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
                           context
                               .read<RoomOverviewBloc>()
                               .add(const RoomOverviewLeaveRequested());
-                          context
-                              .read<AppointmentBloc>()
-                              .add(SendStopEvent(kioskId: KioskConfig().kioskId));
+                          context.read<AppointmentBloc>().add(
+                              SendStopEvent(kioskId: KioskConfig().kioskId));
                         },
                         isEndbuttonVisible: !deviceStart,
                       );
@@ -452,23 +451,23 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
         break;
       case 2:
         deviceHeader = AppLocalizations.of(context)!.temperature;
-        measurementWidget = const TempMeasurement();
+        measurementWidget = TempMeasurement();
         break;
       case 3:
         deviceHeader = AppLocalizations.of(context)!.blood_pressure;
-        measurementWidget = const BPMeasurement();
+        measurementWidget = BPMeasurement();
         break;
       case 4:
         deviceHeader = AppLocalizations.of(context)!.bcm;
-        measurementWidget = const BodyCompMeasurement();
+        measurementWidget = BodyCompMeasurement();
         break;
       case 5:
         deviceHeader = AppLocalizations.of(context)!.bo;
-        measurementWidget = const BloodOxygenMeasurement();
+        measurementWidget = BloodOxygenMeasurement();
         break;
       case 6:
         deviceHeader = AppLocalizations.of(context)!.ecg;
-        measurementWidget = const ECGMeasurement();
+        measurementWidget = ECGMeasurement();
         break;
       default:
         deviceHeader = '';
@@ -477,7 +476,7 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
     return Stack(children: [
       Container(
         color: ColorPalette.colorAppTheme,
-        height: 47.h,
+        height: screenHeight * 0.58,
         padding: EdgeInsets.only(left: 3.w, right: 3.w, top: 3.w, bottom: 1.w),
         child: Container(
           decoration: BoxDecoration(
@@ -499,7 +498,7 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
                             deviceHeader,
                             style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 16.dp,
+                                fontSize: height * 0.02,
                                 fontWeight: FontWeight.bold),
                           ),
                           StartStopButton(
@@ -513,7 +512,7 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
                         ],
                       ),
                       SizedBox(
-                        height: 1.h,
+                        height: height * 0.01,
                       ),
                       measurementWidget,
                     ],
@@ -525,15 +524,16 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
         ),
       ),
       Positioned(
-          right: 35,
-          bottom: 20,
+          right: width * 0.04,
+          bottom: height * 0.01,
           child: SizedBox(
-              height: math.max(screenHeight * 0.04, 150),
-              width: math.max(screenWidth * 0.2, 160),
+              height: math.max(screenHeight * 0.04, height * 0.15),
+              width: math.max(screenWidth * 0.2, width * 0.4),
               child: MeetingPage(
                 onLeaveButtonPress: hangUp,
                 showOnlyRemotePeer: true,
-                meetingWidgetHeight: math.max(screenHeight * 0.04, 150),
+                meetingWidgetHeight:
+                    math.max(screenHeight * 0.04, height * 0.1),
               )))
     ]);
   }

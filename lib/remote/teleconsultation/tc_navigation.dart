@@ -25,13 +25,20 @@ class TCNavigation extends StatefulWidget {
 class _TCNavigationState extends State<TCNavigation> {
   bool isCallDoctorButtonVisible = true;
 
+  double width = 0;
+  double height = 0;
+
   @override
   Widget build(BuildContext context) {
     if (kDebugMode) {
       print("this tc_navigation");
     }
+
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+
     return Container(
-      height: 7.h,
+      height: height * 0.1,
       padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 1.w),
       color: ColorPalette.colorAppTheme,
       child: Row(
@@ -40,12 +47,12 @@ class _TCNavigationState extends State<TCNavigation> {
           Text(
             widget.displayName,
             style: TextStyle(
-                fontSize: 10.dp,
+                fontSize: height * 0.02,
                 fontWeight: FontWeight.bold,
                 color: Colors.white),
           ),
           SizedBox(
-            width: 2.w,
+            width: width * 0.01,
           ),
           widget.isEndbuttonVisible
               ? EndApptButton(navigation: _showExitConfirmationDialog)

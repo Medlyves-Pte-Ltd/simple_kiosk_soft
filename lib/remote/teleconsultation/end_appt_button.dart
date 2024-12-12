@@ -5,26 +5,32 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class EndApptButton extends StatelessWidget {
   final VoidCallback? navigation;
 
-  const EndApptButton({
+  EndApptButton({
     super.key,
     required this.navigation,
   });
 
+  double width = 0;
+  double height = 0;
+
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+
     return SizedBox(
-      height: 3.5.h,
-      width: 35.w,
+      height: height * 0.08,
+      width: width * 0.5,
       child: OutlinedButton.icon(
           onPressed: () => navigation!(),
           icon: Icon(
             Icons.exit_to_app,
             color: Colors.white,
-            size: 11.dp,
+            size: height * 0.025,
           ),
           label: Text(
             AppLocalizations.of(context)!.end_appt,
-            style: TextStyle(color: Colors.white, fontSize: 9.dp),
+            style: TextStyle(color: Colors.white, fontSize: height * 0.02),
           ),
           style: ButtonStyle(
             // backgroundColor:

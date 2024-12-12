@@ -19,6 +19,8 @@ class HtWtMeasurement extends StatelessWidget {
   bool weightMeasured = false;
   late String bodyHeight;
   late String bodyWeight;
+  double width = 0;
+  double height = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +30,13 @@ class HtWtMeasurement extends StatelessWidget {
     bodyWeight = BlocProvider.of<AppointmentBloc>(context)
             .getPatientBodyInfo()["weight"] ??
         "- - -";
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
 
     return Column(
       children: [
         SizedBox(
-          height: 2.h,
+          height: height * 0.01,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -40,19 +44,19 @@ class HtWtMeasurement extends StatelessWidget {
             Text(
               AppLocalizations.of(context)!.hw_height,
               style: TextStyle(
-                fontSize: 14.dp,
+                fontSize: height * 0.02,
               ),
             ),
             Text(
               AppLocalizations.of(context)!.hw_weight,
               style: TextStyle(
-                fontSize: 14.dp,
+                fontSize: height * 0.02,
               ),
             ),
           ],
         ),
         SizedBox(
-          height: 1.5.h,
+          height: height * 0.01,
         ),
         BlocBuilder<DeviceBloc, DeviceState>(buildWhen: (previous, state) {
           bool update = false;
@@ -98,11 +102,11 @@ class HtWtMeasurement extends StatelessWidget {
               children: [
                 Text(
                   bodyHeight,
-                  style: TextStyle(fontSize: 20.dp, color: Colors.blue),
+                  style: TextStyle(fontSize: height * 0.02, color: Colors.blue),
                 ),
                 Text(
                   bodyWeight,
-                  style: TextStyle(fontSize: 20.dp, color: Colors.blue),
+                  style: TextStyle(fontSize: height * 0.02, color: Colors.blue),
                 ),
               ]);
         })

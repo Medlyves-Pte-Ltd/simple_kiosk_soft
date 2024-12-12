@@ -37,6 +37,8 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
   double height = 0;
   // StatelessWidget需要保存上下文才能进行页面跳转，翻译
   late BuildContext mainContext;
+  // 开始状态
+  bool startStatus = false;
 
   // 子类需要实现的数据显示函数
   Widget buildCardDataShowArea() {
@@ -166,27 +168,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
       child: Row(
         children: [
           const Spacer(),
-          InkWell(
-            onTap: () {
-              ControlMeasurePageUtils().onBackStep(mainContext);
-            },
-            child: Container(
-                height: height * 0.03,
-                width: width * 0.15,
-                decoration: BoxDecoration(
-                  color: ColorPalette.materialGreen,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Center(
-                  child: Text(
-                    AppLocalizations.of(mainContext)!.back,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: height * 0.015,
-                        fontWeight: FontWeight.w600),
-                  ),
-                )),
-          ),
+          buildBackBtn(),
           SizedBox(
             width: width * 0.03,
           ),
@@ -194,6 +176,53 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  // 返回按钮
+  Widget buildBackBtn() {
+    if (ControlMeasurePageUtils().pageIndex == 0) {
+      return Container(
+          height: height * 0.03,
+          width: width * 0.15,
+          decoration: BoxDecoration(
+            color: ColorPalette.darkGrey,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Center(
+            child: Text(
+              AppLocalizations.of(mainContext)!.back,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: height * 0.015,
+                  fontWeight: FontWeight.w600),
+            ),
+          ));
+    } else {
+      return InkWell(
+        onTap: () {
+          if (startStatus) {
+            return;
+          }
+          ControlMeasurePageUtils().onBackStep(mainContext);
+        },
+        child: Container(
+            height: height * 0.03,
+            width: width * 0.15,
+            decoration: BoxDecoration(
+              color: ColorPalette.materialGreen,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Center(
+              child: Text(
+                AppLocalizations.of(mainContext)!.back,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: height * 0.015,
+                    fontWeight: FontWeight.w600),
+              ),
+            )),
+      );
+    }
   }
 
   // 卡片顶部区域
@@ -310,6 +339,9 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
         ControlMeasurePageUtils().measurelist.length - 1) {
       return InkWell(
         onTap: () {
+          if (startStatus) {
+            return;
+          }
           ControlMeasurePageUtils().onNextStep(mainContext);
         },
         child: Container(

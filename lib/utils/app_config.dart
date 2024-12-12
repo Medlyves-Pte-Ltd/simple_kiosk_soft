@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:flutter_devices_sdk/device_sdk_param_setting.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:simple_kiosk_software/common/common.dart';
 import 'package:simple_kiosk_software/utils/body_range.dart';
 
 class AppConfig {
@@ -15,6 +14,8 @@ class AppConfig {
   String audiosDir = "";
   String logsDir = "";
   Map<String, dynamic> configMap = {};
+  // 测试结果输出
+  bool testResultOutCsv = true;
 
   double get totalHeight {
     return configMap["total_height"] as double;

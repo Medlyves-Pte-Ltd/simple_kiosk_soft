@@ -27,6 +27,7 @@ class FooterState extends State<Footer> {
   @override
   void initState() {
     super.initState();
+    usbDeviceConnectStatus.value = !DeviceOrderCheck().usbError;
     timer = makePeriodicTimer(
         Duration(seconds: AppConfig().usbSequenceCheckTime), onTimer,
         fireNow: true);
@@ -66,7 +67,11 @@ class FooterState extends State<Footer> {
           textColor: Colors.red);
     }
 
-    usbDeviceConnectStatus.value = usbDeviceLostList.isEmpty;
+    if (DeviceOrderCheck().usbError) {
+      usbDeviceConnectStatus.value = false;
+    } else {
+      usbDeviceConnectStatus.value = usbDeviceLostList.isEmpty;
+    }
   }
 
   @override

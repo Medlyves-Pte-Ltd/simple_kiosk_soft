@@ -6,10 +6,9 @@ import 'package:simple_kiosk_software/remote/utils/device_id_map.dart';
 class BodyCompositionWidget extends StatelessWidget {
   final VitalMeasurementsController vitalMeasurementsController;
 
-  const BodyCompositionWidget(
-      {Key? key, required this.vitalMeasurementsController})
+  BodyCompositionWidget({Key? key, required this.vitalMeasurementsController})
       : super(key: key);
-
+  double height = 0;
   List<DataRow> buildTableRows(BuildContext context) {
     List<DataRow> dataRows = [];
     final bodyCompositionData =
@@ -26,12 +25,19 @@ class BodyCompositionWidget extends StatelessWidget {
         DataRow(
           cells: [
             DataCell(Text(
-                DeviceMap.IDTONAME(context, bodyCompositionData[i].deviceId))),
-            DataCell(Text(bodyCompositionData[i].units == "N.A." ||
-                    bodyCompositionData[i].units == "-" ||
-                    bodyCompositionData[i].units == ""
-                ? "${bodyCompositionData[i].value}"
-                : "${bodyCompositionData[i].value} ${bodyCompositionData[i].units}")),
+              DeviceMap.IDTONAME(context, bodyCompositionData[i].deviceId),
+              style: TextStyle(
+                  fontSize: height * 0.015, fontWeight: FontWeight.bold),
+            )),
+            DataCell(Text(
+              bodyCompositionData[i].units == "N.A." ||
+                      bodyCompositionData[i].units == "-" ||
+                      bodyCompositionData[i].units == ""
+                  ? "${bodyCompositionData[i].value}"
+                  : "${bodyCompositionData[i].value} ${bodyCompositionData[i].units}",
+              style: TextStyle(
+                  fontSize: height * 0.015, fontWeight: FontWeight.bold),
+            )),
           ],
         ),
       );
@@ -41,12 +47,24 @@ class BodyCompositionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    height = MediaQuery.of(context).size.height;
     return SingleChildScrollView(
       child: Center(
         child: DataTable(
+          dataRowHeight: height * 0.08,
           columns: [
-            DataColumn(label: Text(AppLocalizations.of(context)!.vital)),
-            DataColumn(label: Text(AppLocalizations.of(context)!.results)),
+            DataColumn(
+              label: Text(
+                AppLocalizations.of(context)!.vital,
+                style: TextStyle(
+                    fontSize: height * 0.018, fontWeight: FontWeight.bold),
+              ),
+            ),
+            DataColumn(
+              label: Text(AppLocalizations.of(context)!.results,
+                  style: TextStyle(
+                      fontSize: height * 0.018, fontWeight: FontWeight.bold)),
+            ),
           ],
           rows: buildTableRows(context),
         ),

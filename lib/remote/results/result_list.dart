@@ -22,6 +22,9 @@ class _ResultListState extends State<ResultList>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
 
+  double width = 0;
+  double height = 0;
+
   @override
   void initState() {
     super.initState();
@@ -47,57 +50,71 @@ class _ResultListState extends State<ResultList>
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+
     VitalMeasurementsController vitalMeasurementsController =
         Provider.of<VitalMeasurementsController>(context);
     return Column(children: [
-      SizedBox(height: 1.h),
-      TabBar(
-        controller: _tabController,
-        splashFactory: NoSplash.splashFactory,
-        dividerColor: Colors.transparent,
-        indicatorColor: ColorPalette.colorAppTheme,
-        unselectedLabelColor: Colors.black,
-        unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
-        labelColor: ColorPalette.colorAppBackground,
-        indicatorSize: TabBarIndicatorSize.tab,
-        indicatorPadding:
-            const EdgeInsetsDirectional.fromSTEB(20.0, 5.0, 20.0, 5.0),
-        indicator: ShapeDecoration(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
-            side: const BorderSide(
-                width: 5,
-                color: Color.fromARGB(200, 103, 155, 206),
-                strokeAlign: BorderSide.strokeAlignOutside),
+      SizedBox(height: height * 0.01),
+      SizedBox(
+        height: height * 0.05,
+        child: TabBar(
+          controller: _tabController,
+          splashFactory: NoSplash.splashFactory,
+          dividerColor: Colors.transparent,
+          indicatorColor: ColorPalette.colorAppTheme,
+          unselectedLabelColor: Colors.black,
+          unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
+          labelColor: ColorPalette.colorAppBackground,
+          indicatorSize: TabBarIndicatorSize.tab,
+          indicatorPadding:
+              const EdgeInsetsDirectional.fromSTEB(20.0, 5.0, 20.0, 5.0),
+          indicator: ShapeDecoration(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+              side: const BorderSide(
+                  width: 5,
+                  color: Color.fromARGB(200, 103, 155, 206),
+                  strokeAlign: BorderSide.strokeAlignOutside),
+            ),
+            color: const Color.fromARGB(200, 103, 155, 206),
           ),
-          color: const Color.fromARGB(200, 103, 155, 206),
+          tabs: <Widget>[
+            Tab(
+              child: Text(
+                AppLocalizations.of(context)!.basic_vitals,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: height * 0.015),
+              ),
+            ),
+            Tab(
+              child: Text(
+                AppLocalizations.of(context)!.bcm,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: height * 0.015),
+              ),
+            ),
+            Tab(
+              child: Text(
+                AppLocalizations.of(context)!.summary_ecg,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: height * 0.015),
+              ),
+            ),
+          ],
         ),
-        tabs: <Widget>[
-          Tab(
-            child: Text(
-              AppLocalizations.of(context)!.basic_vitals,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Tab(
-            child: Text(
-              AppLocalizations.of(context)!.bcm,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Tab(
-            text: AppLocalizations.of(context)!.ecg,
-          ),
-        ],
       ),
 
       // if (vitalMeasurementsController.getVerifyLoader)
       //       const Center(
       //           child: CircularProgressIndicator(
       //               color: ColorPalette.colorAppTheme)),
-
       SizedBox(
-        height: 40.h,
+        height: height * 0.01,
+      ),
+      SizedBox(
+        height: height * 0.4,
         child: Stack(
           children: [
             TabBarView(
@@ -108,7 +125,7 @@ class _ResultListState extends State<ResultList>
                     vitalMeasurementsController: vitalMeasurementsController),
                 BodyCompositionWidget(
                     vitalMeasurementsController: vitalMeasurementsController),
-                const ECGImage(),
+                ECGImage(),
               ],
             ),
           ],
@@ -119,10 +136,11 @@ class _ResultListState extends State<ResultList>
 }
 
 class ECGImage extends StatelessWidget {
-  const ECGImage({super.key});
+  ECGImage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     Map<String, dynamic> patientBodyInfo =
         context.watch<AppointmentBloc>().getPatientBodyInfo();
     String? ecgImagePath = patientBodyInfo["ecg_img"];
@@ -136,7 +154,9 @@ class ECGImage extends StatelessWidget {
                 File(ecgImagePath),
               ),
             )
-          : Text(AppLocalizations.of(context)!.ecg_img_unavail),
+          : Text(AppLocalizations.of(context)!.ecg_img_unavail,
+              style: TextStyle(
+                  fontSize: height * 0.015, fontWeight: FontWeight.bold)),
     );
   }
 

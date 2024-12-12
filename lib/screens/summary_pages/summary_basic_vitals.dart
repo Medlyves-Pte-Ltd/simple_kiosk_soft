@@ -36,154 +36,189 @@ class SummaryBasicVitals extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: width * 0.04),
           child: ListView(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    AppLocalizations.of(mainContext)!.hw_height,
-                    style: TextStyle(
-                        fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                  ),
-                ],
+              Offstage(
+                offstage: UserInfo().height.isEmpty,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(mainContext)!.hw_height,
+                      style: TextStyle(
+                          fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    UserInfo().height,
-                    style: TextStyle(
-                        fontSize: dataFontSize,
-                        fontWeight: FontWeight.bold,
-                        color: ColorPalette.materialGreen),
-                  ),
-                ],
+              Offstage(
+                offstage: UserInfo().height.isEmpty,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      UserInfo().height,
+                      style: TextStyle(
+                          fontSize: dataFontSize,
+                          fontWeight: FontWeight.bold,
+                          color: ColorPalette.materialGreen),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(height: height * 0.008),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    AppLocalizations.of(mainContext)!.hw_weight,
-                    style: TextStyle(
-                        fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                  ),
-                ],
+              Offstage(
+                offstage: UserInfo().weight.isEmpty,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(mainContext)!.hw_weight,
+                      style: TextStyle(
+                          fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  rangeSummaryWidget(
-                    BodyRange().weightMin.toStringAsFixed(1),
-                    BodyRange().weightMax.toStringAsFixed(1),
-                    dataFontSize,
-                  ),
-                  summaryValueChangeColor(
-                      UserInfo().weight,
+              Offstage(
+                offstage: UserInfo().weight.isEmpty,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    rangeSummaryWidget(
                       BodyRange().weightMin.toStringAsFixed(1),
                       BodyRange().weightMax.toStringAsFixed(1),
                       dataFontSize,
-                      true),
-                ],
+                    ),
+                    summaryValueChangeColor(
+                        UserInfo().weight,
+                        BodyRange().weightMin.toStringAsFixed(1),
+                        BodyRange().weightMax.toStringAsFixed(1),
+                        dataFontSize,
+                        true),
+                  ],
+                ),
               ),
               SizedBox(height: height * 0.008),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    AppLocalizations.of(mainContext)!.temp_temperature,
-                    style: TextStyle(
-                        fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                  ),
-                ],
+              Offstage(
+                offstage: UserInfo().temperature.isEmpty,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(mainContext)!.temp_temperature,
+                      style: TextStyle(
+                          fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  rangeSummaryWidget(
-                      BodyRange().temperatureMin.toStringAsFixed(1),
-                      BodyRange().temperatureMax.toStringAsFixed(1),
-                      dataFontSize),
-                  summaryValueChangeColor(
-                      UserInfo().temperature,
-                      BodyRange().temperatureMin.toStringAsFixed(1),
-                      BodyRange().temperatureMax.toStringAsFixed(1),
-                      dataFontSize,
-                      true),
-                ],
-              ),
-              SizedBox(height: height * 0.008),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    AppLocalizations.of(mainContext)!.bp_bloodpressure,
-                    style: TextStyle(
-                        fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "( < ${BodyRange().systolicMax}) / ( < ${BodyRange().diastolicMax})",
-                    style: TextStyle(
-                        fontSize: dataFontSize,
-                        color: ColorPalette.materialGreen),
-                  ),
-                  Text(
-                    "${UserInfo().systolic}/${UserInfo().diastolic}",
-                    style: TextStyle(
-                        fontSize: dataFontSize,
-                        fontWeight: FontWeight.bold,
-                        color: UserInfo().systolic.isNotEmpty &&
-                                UserInfo().diastolic.isNotEmpty &&
-                                ((double.parse(UserInfo().systolic) >
-                                        BodyRange().systolicMax ||
-                                    double.parse(UserInfo().diastolic) >
-                                        BodyRange().diastolicMax))
-                            ? Colors.red
-                            : ColorPalette.materialGreen),
-                  ),
-                ],
+              Offstage(
+                offstage: UserInfo().temperature.isEmpty,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    rangeSummaryWidget(
+                        BodyRange().temperatureMin.toStringAsFixed(1),
+                        BodyRange().temperatureMax.toStringAsFixed(1),
+                        dataFontSize),
+                    summaryValueChangeColor(
+                        UserInfo().temperature,
+                        BodyRange().temperatureMin.toStringAsFixed(1),
+                        BodyRange().temperatureMax.toStringAsFixed(1),
+                        dataFontSize,
+                        true),
+                  ],
+                ),
               ),
               SizedBox(height: height * 0.008),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    AppLocalizations.of(mainContext)!.bp_pulse,
-                    style: TextStyle(
-                        fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                  ),
-                ],
+              Offstage(
+                offstage: UserInfo().systolic.isEmpty,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(mainContext)!.bp_bloodpressure,
+                      style: TextStyle(
+                          fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               ),
-              buildPulse(),
+              Offstage(
+                offstage: UserInfo().systolic.isEmpty,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "( < ${BodyRange().systolicMax}) / ( < ${BodyRange().diastolicMax})",
+                      style: TextStyle(
+                          fontSize: dataFontSize,
+                          color: ColorPalette.materialGreen),
+                    ),
+                    Text(
+                      "${UserInfo().systolic}/${UserInfo().diastolic}",
+                      style: TextStyle(
+                          fontSize: dataFontSize,
+                          fontWeight: FontWeight.bold,
+                          color: UserInfo().systolic.isNotEmpty &&
+                                  UserInfo().diastolic.isNotEmpty &&
+                                  ((double.parse(UserInfo().systolic) >
+                                          BodyRange().systolicMax ||
+                                      double.parse(UserInfo().diastolic) >
+                                          BodyRange().diastolicMax))
+                              ? Colors.red
+                              : ColorPalette.materialGreen),
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(height: height * 0.008),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    AppLocalizations.of(mainContext)!.bo_oxygen_staturation,
-                    style: TextStyle(
-                        fontSize: titleFontSize, fontWeight: FontWeight.bold),
-                  ),
-                ],
+              Offstage(
+                offstage: getPulse().isEmpty,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(mainContext)!.bp_pulse,
+                      style: TextStyle(
+                          fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  rangeSummaryWidget(BodyRange().spo2Min.toString(),
-                      BodyRange().spo2Max.toString(), dataFontSize),
-                  summaryValueChangeColor(
-                      UserInfo().bloodOxygen,
-                      BodyRange().spo2Min.toString(),
-                      BodyRange().spo2Max.toString(),
-                      dataFontSize,
-                      true),
-                ],
+              Offstage(
+                offstage: getPulse().isEmpty,
+                child: buildPulse(getPulse()),
               ),
-
+              SizedBox(height: height * 0.008),
+              Offstage(
+                offstage: UserInfo().bloodOxygen.isEmpty,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(mainContext)!.bo_oxygen_staturation,
+                      style: TextStyle(
+                          fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+              Offstage(
+                offstage: UserInfo().bloodOxygen.isEmpty,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    rangeSummaryWidget(BodyRange().spo2Min.toString(),
+                        BodyRange().spo2Max.toString(), dataFontSize),
+                    summaryValueChangeColor(
+                        UserInfo().bloodOxygen,
+                        BodyRange().spo2Min.toString(),
+                        BodyRange().spo2Max.toString(),
+                        dataFontSize,
+                        true),
+                  ],
+                ),
+              ),
               // buildBloodGlucoseArea(),
               // buildBloodFitArea(),
             ],
@@ -191,15 +226,20 @@ class SummaryBasicVitals extends StatelessWidget {
         ));
   }
 
-  Widget buildPulse() {
+  String getPulse() {
     String pulse = "";
     if (UserInfo().HR.isNotEmpty) {
       pulse = UserInfo().HR;
     } else if (UserInfo().bpHeartRate.isNotEmpty) {
       pulse = UserInfo().bpHeartRate;
-    } else if (UserInfo().bpHeartRate.isNotEmpty) {
+    } else if (UserInfo().spo2HeartRate.isNotEmpty) {
       pulse = UserInfo().spo2HeartRate;
     }
+
+    return pulse;
+  }
+
+  Widget buildPulse(String pulse) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

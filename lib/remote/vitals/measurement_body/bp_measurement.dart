@@ -12,14 +12,20 @@ import '../../../blocs/device/device_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BPMeasurement extends StatelessWidget {
-  const BPMeasurement({super.key});
+  BPMeasurement({super.key});
+
+  double width = 0;
+  double height = 0;
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+
     return Column(
       children: [
         SizedBox(
-          height: 2.h,
+          height: height * 0.01,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -27,19 +33,19 @@ class BPMeasurement extends StatelessWidget {
             Text(
               AppLocalizations.of(context)!.bp_bloodpressure,
               style: TextStyle(
-                fontSize: 14.dp,
+                fontSize: height * 0.02,
               ),
             ),
             Text(
               AppLocalizations.of(context)!.bp_pulse,
               style: TextStyle(
-                fontSize: 14.dp,
+                fontSize: height * 0.02,
               ),
             ),
           ],
         ),
         SizedBox(
-          height: 1.5.h,
+          height: height * 0.01,
         ),
         BlocBuilder<DeviceBloc, DeviceState>(builder: (context, state) {
           LogPrinter.log("BP measurement received: ${state.toString()}");
@@ -72,24 +78,27 @@ class BPMeasurement extends StatelessWidget {
                 children: [
                   Text(
                     systolic,
-                    style: TextStyle(fontSize: 22.dp, color: Colors.blue),
+                    style:
+                        TextStyle(fontSize: height * 0.02, color: Colors.blue),
                   ),
                   Text(
                     "/",
-                    style: TextStyle(fontSize: 22.dp, color: Colors.black),
+                    style:
+                        TextStyle(fontSize: height * 0.02, color: Colors.black),
                   ),
                   Text(
                     diastolic,
-                    style: TextStyle(fontSize: 22.dp, color: Colors.blue),
+                    style:
+                        TextStyle(fontSize: height * 0.02, color: Colors.blue),
                   ),
                 ],
               ),
               SizedBox(
-                height: 0.5.h,
+                height: height * 0.01,
               ),
               Text(
                 pr,
-                style: TextStyle(fontSize: 22.dp, color: Colors.blue),
+                style: TextStyle(fontSize: height * 0.02, color: Colors.blue),
               ),
             ],
           );

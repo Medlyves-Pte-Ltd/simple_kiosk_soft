@@ -46,27 +46,30 @@ class SummaryBodyComposition extends StatelessWidget {
       String title, String? data, String min, String max, bool compare) {
     double titleFontSize = height * 0.02;
     double dataFontSize = height * 0.02;
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                  fontSize: titleFontSize, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            rangeSummaryWidget(min, max, dataFontSize),
-            summaryValueChangeColor(data!, min, max, dataFontSize, compare),
-          ],
-        ),
-        SizedBox(height: height * 0.008),
-      ],
+    return Offstage(
+      offstage: data!.isEmpty,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                    fontSize: titleFontSize, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              rangeSummaryWidget(min, max, dataFontSize),
+              summaryValueChangeColor(data!, min, max, dataFontSize, compare),
+            ],
+          ),
+          SizedBox(height: height * 0.008),
+        ],
+      ),
     );
   }
 

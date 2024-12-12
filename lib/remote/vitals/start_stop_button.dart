@@ -5,7 +5,10 @@ class StartStopButton extends StatelessWidget {
   final Color color;
   final String buttonName;
   final VoidCallback onPressed;
-  const StartStopButton(
+  double width = 0;
+  double height = 0;
+
+  StartStopButton(
       {super.key,
       required this.color,
       required this.buttonName,
@@ -13,13 +16,16 @@ class StartStopButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+
     return TextButton(
         onPressed: onPressed,
         child: Container(
-          width: 15.w,
-          padding: EdgeInsets.all(1.w),
+          height: height * 0.04,
+          width: width * 0.2,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(10),
             color: color,
           ),
           child: Center(
@@ -28,7 +34,7 @@ class StartStopButton extends StatelessWidget {
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 11.dp),
+                  fontSize: height * 0.025),
             ),
           ),
         ));

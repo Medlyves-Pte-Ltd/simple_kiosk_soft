@@ -38,6 +38,7 @@ class BodyTemperatureMeasure extends BaseMeasureLayoutWidget {
 
   @override
   Future<void> onStart() async {
+    startStatus = true;
     DeviceConnectEvent connectEvent =
         DeviceConnectEvent(deviceType: DeviceType.TEMP_DEVICE);
     BlocProvider.of<DeviceBloc>(mainContext).add(connectEvent);
@@ -45,6 +46,7 @@ class BodyTemperatureMeasure extends BaseMeasureLayoutWidget {
 
   @override
   Future<void> onStop() async {
+    startStatus = false;
     DeviceStopEvent stopEvent =
         DeviceStopEvent(deviceType: DeviceType.TEMP_DEVICE);
     BlocProvider.of<DeviceBloc>(mainContext).add(stopEvent);
@@ -81,6 +83,7 @@ class BodyTemperatureMeasure extends BaseMeasureLayoutWidget {
         measured = true;
         update = true;
       } else if (state is DeviceDisconnected) {
+        startStatus = false;
         if (!measured) {
           temperature = dataDefaultValue;
           update = true;

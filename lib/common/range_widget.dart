@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 
@@ -16,6 +17,13 @@ Widget measureValueChangeColor(
   }
 
   if (ControlMeasurePageUtils().measured) {
+    double value = 0.0;
+    try {
+      value = double.parse(data);
+    } catch (e) {
+      LogPrinter.log("$e");
+    }
+
     return Text(
       data,
       style: TextStyle(
@@ -24,8 +32,7 @@ Widget measureValueChangeColor(
           color: data.isNotEmpty &&
                   min.isNotEmpty &&
                   max.isNotEmpty &&
-                  (double.parse(data) > double.parse(max) ||
-                      double.parse(data) < double.parse(min))
+                  (value > double.parse(max) || value < double.parse(min))
               ? Colors.red
               : ColorPalette.materialGreen),
     );

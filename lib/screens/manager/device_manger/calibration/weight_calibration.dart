@@ -106,6 +106,19 @@ class _WeightCalibrationState extends State<WeightCalibration> {
     alertDialog("Connection successful");
   }
 
+  Future<void> disconnectWeightDevice() async {
+    if (DeviceConfig().deviceEnable(DeviceType.WEIGHT_DEVICE)) {
+      try {
+        BoruiweiDG861WeightCalibration().stop();
+        await BoruiweiDG861WeightCalibration().disConnect();
+      } catch (e) {
+        alertDialog("Disconnection failed, Error:$e");
+        return;
+      }
+    }
+    enableClickConnect.value = true;
+  }
+
   Future<void> calibration() async {
     enableClickSendCalibration.value = false;
     try {
@@ -302,7 +315,7 @@ class _WeightCalibrationState extends State<WeightCalibration> {
                     ),
                   ),
                 );
-              })
+              }),
         ],
       ),
       SizedBox(

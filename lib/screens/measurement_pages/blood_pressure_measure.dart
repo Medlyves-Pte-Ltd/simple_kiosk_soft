@@ -54,6 +54,7 @@ class BloodPressureMeasure extends BaseMeasureLayoutWidget {
 
   @override
   Future<void> onStart() async {
+    startStatus = true;
     DeviceConnectEvent connectEvent =
         DeviceConnectEvent(deviceType: DeviceType.BP_DEVICE);
     BlocProvider.of<DeviceBloc>(mainContext).add(connectEvent);
@@ -61,6 +62,7 @@ class BloodPressureMeasure extends BaseMeasureLayoutWidget {
 
   @override
   Future<void> onStop() async {
+    startStatus = false;
     DeviceStopEvent stopEvent =
         DeviceStopEvent(deviceType: DeviceType.BP_DEVICE);
     BlocProvider.of<DeviceBloc>(mainContext).add(stopEvent);
@@ -104,6 +106,7 @@ class BloodPressureMeasure extends BaseMeasureLayoutWidget {
         measured = true;
         update = true;
       } else if (state is DeviceDisconnected) {
+        startStatus = false;
         if (!measured) {
           systolic = diastolic = heartRate = dataDefaultValue;
           update = true;

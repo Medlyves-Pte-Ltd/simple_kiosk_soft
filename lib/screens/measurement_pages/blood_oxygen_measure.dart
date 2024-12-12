@@ -41,6 +41,7 @@ class BloodOxygenMeasure extends BaseMeasureLayoutWidget {
 
   @override
   Future<void> onStart() async {
+    startStatus = true;
     DeviceConnectEvent connectEvent =
         DeviceConnectEvent(deviceType: DeviceType.BO_DEVICE);
     BlocProvider.of<DeviceBloc>(mainContext).add(connectEvent);
@@ -48,6 +49,7 @@ class BloodOxygenMeasure extends BaseMeasureLayoutWidget {
 
   @override
   Future<void> onStop() async {
+    startStatus = false;
     DeviceStopEvent stopEvent =
         DeviceStopEvent(deviceType: DeviceType.BO_DEVICE);
     BlocProvider.of<DeviceBloc>(mainContext).add(stopEvent);
@@ -89,6 +91,7 @@ class BloodOxygenMeasure extends BaseMeasureLayoutWidget {
         measured = true;
         update = true;
       } else if (state is DeviceDisconnected) {
+        startStatus = false;
         if (!measured) {
           _bloodOxygen = dataDefaultValue;
           spo2HeartRate = dataDefaultValue;

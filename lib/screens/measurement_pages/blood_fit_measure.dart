@@ -54,6 +54,7 @@ class BloodFitMeasure extends BaseMeasureLayoutWidget {
 
   @override
   Future<void> onStart() async {
+    startStatus = true;
     DeviceConnectEvent connectEvent =
         DeviceConnectEvent(deviceType: DeviceType.BF_DEVICE);
     BlocProvider.of<DeviceBloc>(mainContext).add(connectEvent);
@@ -61,6 +62,7 @@ class BloodFitMeasure extends BaseMeasureLayoutWidget {
 
   @override
   Future<void> onStop() async {
+    startStatus = false;
     DeviceStopEvent stopEvent =
         DeviceStopEvent(deviceType: DeviceType.BF_DEVICE);
     BlocProvider.of<DeviceBloc>(mainContext).add(stopEvent);
@@ -132,6 +134,7 @@ class BloodFitMeasure extends BaseMeasureLayoutWidget {
           update = true;
         }
       } else if (state is DeviceDisconnected) {
+        startStatus = false;
         if (!measured) {
           chol = hdl = trig = ldl = dataDefaultValue;
           update = true;

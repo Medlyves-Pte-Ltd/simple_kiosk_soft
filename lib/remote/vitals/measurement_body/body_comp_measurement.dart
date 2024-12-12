@@ -10,12 +10,18 @@ import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BodyCompMeasurement extends StatelessWidget {
-  const BodyCompMeasurement({
+  BodyCompMeasurement({
     Key? key,
   }) : super(key: key);
 
+  double width = 0;
+  double height = 0;
+
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+
     return Column(
       children: [
         BlocBuilder<DeviceBloc, DeviceState>(builder: (context, state) {
@@ -116,10 +122,14 @@ class BodyCompMeasurement extends StatelessWidget {
             }
           }
           return GridView.count(
-            childAspectRatio: 2,
+            // 一行几列
             crossAxisCount: 2,
-            mainAxisSpacing: 1.w,
-            crossAxisSpacing: 1.w,
+            // 设置每子元素的大小（宽高比）
+            childAspectRatio: 2,
+            // 元素的左右的 距离
+            crossAxisSpacing: width * 0.02,
+            // 子元素上下的 距离
+            mainAxisSpacing: height * 0.015,
             physics:
                 const NeverScrollableScrollPhysics(), // Disable GridView scrolling
             shrinkWrap: true,
@@ -154,25 +164,25 @@ class BodyCompMeasurement extends StatelessWidget {
       ],
     );
   }
-}
 
-Widget _buildGridItem(String label, String value) {
-  return Container(
-    color: Colors.white,
-    child: Column(
-      children: [
-        Text(
-          label,
-          style: TextStyle(fontSize: 10.dp, color: Colors.black),
-        ),
-        SizedBox(
-          height: 1.5.h,
-        ),
-        Text(
-          value,
-          style: TextStyle(fontSize: 20.dp, color: Colors.blue),
-        ),
-      ],
-    ),
-  );
+  Widget _buildGridItem(String label, String value) {
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          Text(
+            label,
+            style: TextStyle(fontSize: height * 0.02, color: Colors.black),
+          ),
+          SizedBox(
+            height: height * 0.01,
+          ),
+          Text(
+            value,
+            style: TextStyle(fontSize: height * 0.02, color: Colors.blue),
+          ),
+        ],
+      ),
+    );
+  }
 }

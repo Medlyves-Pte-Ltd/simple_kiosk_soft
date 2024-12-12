@@ -120,6 +120,7 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
 
   @override
   Future<void> onStart() async {
+    startStatus = true;
     DeviceConnectEvent connectEvent =
         DeviceConnectEvent(deviceType: DeviceType.WEIGHT_DEVICE);
     BlocProvider.of<DeviceBloc>(mainContext).add(connectEvent);
@@ -127,6 +128,7 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
 
   @override
   Future<void> onStop() async {
+    startStatus = false;
     heightMeasured = weightMeasured = false;
 
     DeviceStopEvent stopEvent =
@@ -190,6 +192,7 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
           }
         }
       } else if (state is DeviceDisconnected) {
+        startStatus = false;
         if (!heightMeasured && !weightMeasured) {
           bodyHeight = bodyWeight = dataDefaultValue;
           update = true;

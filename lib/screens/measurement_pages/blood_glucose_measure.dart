@@ -46,6 +46,7 @@ class BloodGlucoseMeasure extends BaseMeasureLayoutWidget {
 
   @override
   Future<void> onStart() async {
+    startStatus = true;
     DeviceConnectEvent connectEvent =
         DeviceConnectEvent(deviceType: DeviceType.BG_DEVICE);
     BlocProvider.of<DeviceBloc>(mainContext).add(connectEvent);
@@ -53,6 +54,7 @@ class BloodGlucoseMeasure extends BaseMeasureLayoutWidget {
 
   @override
   Future<void> onStop() async {
+    startStatus = false;
     DeviceStopEvent stopEvent =
         DeviceStopEvent(deviceType: DeviceType.BG_DEVICE);
     BlocProvider.of<DeviceBloc>(mainContext).add(stopEvent);
@@ -93,6 +95,7 @@ class BloodGlucoseMeasure extends BaseMeasureLayoutWidget {
         measured = true;
         update = true;
       } else if (state is DeviceDisconnected) {
+        startStatus = false;
         if (!measured) {
           IFCC = eAG = dataDefaultValue;
           update = true;

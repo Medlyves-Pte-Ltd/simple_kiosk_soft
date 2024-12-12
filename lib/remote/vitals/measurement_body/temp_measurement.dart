@@ -8,14 +8,20 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 
 class TempMeasurement extends StatelessWidget {
-  const TempMeasurement({super.key});
+  TempMeasurement({super.key});
+
+  double width = 0;
+  double height = 0;
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+
     return Column(
       children: [
         SizedBox(
-          height: 2.h,
+          height: height * 0.01,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -23,13 +29,13 @@ class TempMeasurement extends StatelessWidget {
             Text(
               AppLocalizations.of(context)!.temp_temperature,
               style: TextStyle(
-                fontSize: 14.dp,
+                fontSize: height * 0.02,
               ),
             ),
           ],
         ),
         SizedBox(
-          height: 1.5.h,
+          height: height * 0.01,
         ),
         BlocBuilder<DeviceBloc, DeviceState>(builder: (context, state) {
           String temp = BlocProvider.of<AppointmentBloc>(context)
@@ -49,7 +55,7 @@ class TempMeasurement extends StatelessWidget {
             children: [
               Text(
                 temp,
-                style: TextStyle(fontSize: 20.dp, color: Colors.blue),
+                style: TextStyle(fontSize: height * 0.02, color: Colors.blue),
               )
             ],
           );
