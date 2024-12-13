@@ -51,7 +51,7 @@ class BodyCompositionWidget extends StatelessWidget {
     return SingleChildScrollView(
       child: Center(
         child: DataTable(
-          dataRowHeight: height * 0.08,
+          dataRowHeight: height * 0.048,
           columns: [
             DataColumn(
               label: Text(

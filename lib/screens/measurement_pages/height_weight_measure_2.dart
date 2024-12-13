@@ -192,7 +192,10 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
           }
         }
       } else if (state is DeviceDisconnected) {
-        startStatus = false;
+        if (heightMeasured) {
+          startStatus = false;
+        }
+
         if (!heightMeasured && !weightMeasured) {
           bodyHeight = bodyWeight = dataDefaultValue;
           update = true;
