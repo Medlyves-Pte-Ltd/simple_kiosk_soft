@@ -17,7 +17,7 @@
   "bcm_metabolism": "การเผาผลาญพื้นฐาน (kcal)",
   "bcm_prereq": "ขอให้วัดส่วนสูงน้ำหนักก่อน.",
   "bcm_protein": "โปรตีน (kg)",
-  "bcm_protein_percentage": "อัตราส่วนโปรตีน (kg)",
+  "bcm_protein_percentage": "อัตราส่วนโปรตีน (%)",
   "bcm_skeletal": "กล้ามเนื้อโครงร่าง (%)",
   "bcm_visceralfat": "ระดับไขมันในช่องท้อง",
   "bcm_water": "ปริมาณน้ำ (%)",

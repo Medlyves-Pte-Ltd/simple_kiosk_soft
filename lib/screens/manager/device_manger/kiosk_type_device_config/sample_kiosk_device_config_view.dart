@@ -253,18 +253,19 @@ class SampleKioskDeviceConfigViewState
                     style: TextStyle(fontSize: 12),
                   ),
                   const SizedBox(width: 5),
-                  SizedBox(
-                    height: 20,
-                    width: width * 0.5,
-                    child: TextField(
-                      readOnly: !widget.allowEdit,
-                      controller: TextEditingController(text: info),
-                      keyboardType: TextInputType.text,
-                      onChanged: (value) {
-                        _deviceConfigList[index]['info'] = value;
-                      },
-                    ),
-                  ),
+                  Text(info),
+                  // SizedBox(
+                  //   height: 20,
+                  //   width: width * 0.5,
+                  //   child: TextField(
+                  //     readOnly: !widget.allowEdit,
+                  //     controller: TextEditingController(text: info),
+                  //     keyboardType: TextInputType.text,
+                  //     onChanged: (value) {
+                  //       _deviceConfigList[index]['info'] = value;
+                  //     },
+                  //   ),
+                  // ),
                 ],
               ),
               const SizedBox(height: 10),
