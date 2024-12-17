@@ -147,7 +147,7 @@ class SummaryLayoutWidget extends StatelessWidget {
   Widget buildVideoArea() {
     return VideoWidget(
       videoName: _curPlayFile,
-      setLooping: true,
+      setLooping: false,
       fromFile: true,
     );
   }

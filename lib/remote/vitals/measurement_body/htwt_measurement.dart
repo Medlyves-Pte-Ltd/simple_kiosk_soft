@@ -19,6 +19,7 @@ class HtWtMeasurement extends StatelessWidget {
   bool weightMeasured = false;
   late String bodyHeight;
   late String bodyWeight;
+  late String bodyBmi;
   double width = 0;
   double height = 0;
 
@@ -30,6 +31,9 @@ class HtWtMeasurement extends StatelessWidget {
     bodyWeight = BlocProvider.of<AppointmentBloc>(context)
             .getPatientBodyInfo()["weight"] ??
         "- - -";
+    bodyBmi =
+        BlocProvider.of<AppointmentBloc>(context).getPatientBodyInfo()["bmi"] ??
+            "- - -";
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
 
@@ -53,6 +57,12 @@ class HtWtMeasurement extends StatelessWidget {
                 fontSize: height * 0.02,
               ),
             ),
+            Text(
+              AppLocalizations.of(context)!.hw_bmi,
+              style: TextStyle(
+                fontSize: height * 0.02,
+              ),
+            ),
           ],
         ),
         SizedBox(
@@ -70,10 +80,14 @@ class HtWtMeasurement extends StatelessWidget {
             bodyWeight = BlocProvider.of<AppointmentBloc>(context)
                     .getPatientBodyInfo()["weight"] ??
                 "- - -";
+            bodyBmi = BlocProvider.of<AppointmentBloc>(context)
+                    .getPatientBodyInfo()["bmi"] ??
+                "- - -";
             update = true;
           } else if (state is DeviceDataLoading &&
               state.deviceType == DeviceType.HEIGHT_DEVICE) {
-            bodyHeight = bodyWeight = AppLocalizations.of(context)!.loading;
+            bodyHeight =
+                bodyWeight = bodyBmi = AppLocalizations.of(context)!.loading;
             update = true;
           } else if (state is DeviceDataUpdated) {
             if (state.deviceData is HeightData) {
@@ -81,17 +95,22 @@ class HtWtMeasurement extends StatelessWidget {
               bodyHeight = (state.deviceData as HeightData).height;
               bodyHeight = "${double.parse(bodyHeight).toStringAsFixed(1)}";
               // 如果收到身高数据，先关闭身高设备，再打开体重设备
-              Future.delayed(const Duration(milliseconds: 800), () {
+              Future.delayed(const Duration(milliseconds: 500), () {
                 DeviceConnectEvent connectEvent =
                     DeviceConnectEvent(deviceType: DeviceType.WEIGHT_DEVICE);
                 BlocProvider.of<DeviceBloc>(context).add(connectEvent);
               });
             } else if (state.deviceData is WeightData) {
               bodyWeight = (state.deviceData as WeightData).weight;
+              // bmi
+              double height_m = double.parse(bodyHeight) / 100.0;
+              bodyBmi = (double.parse(bodyWeight) / (height_m * height_m))
+                  .toStringAsFixed(1);
+
               weightMeasured = true;
               update = true;
-              BlocProvider.of<AppointmentBloc>(context)
-                  .processNewData({"height": bodyHeight, "weight": bodyWeight});
+              BlocProvider.of<AppointmentBloc>(context).processNewData(
+                  {"height": bodyHeight, "weight": bodyWeight, "bmi": bodyBmi});
             }
           }
 
@@ -106,6 +125,10 @@ class HtWtMeasurement extends StatelessWidget {
                 ),
                 Text(
                   bodyWeight,
+                  style: TextStyle(fontSize: height * 0.02, color: Colors.blue),
+                ),
+                Text(
+                  bodyBmi,
                   style: TextStyle(fontSize: height * 0.02, color: Colors.blue),
                 ),
               ]);

@@ -21,6 +21,7 @@ import 'package:simple_kiosk_software/utils/user_info.dart';
 class HeightWeightMeasure extends BaseMeasureLayoutWidget {
   late String bodyHeight;
   late String bodyWeight;
+  late String bodyBmi;
   bool heightMeasured = false;
   bool weightMeasured = false;
   HeightWeightMeasure() {
@@ -28,6 +29,7 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
         UserInfo().height.isNotEmpty ? UserInfo().height : dataDefaultValue;
     bodyWeight =
         UserInfo().weight.isNotEmpty ? UserInfo().weight : dataDefaultValue;
+    bodyBmi = UserInfo().bmi.isNotEmpty ? UserInfo().bmi : dataDefaultValue;
   }
 
   @override
@@ -100,7 +102,7 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
         return VideoWidget(
             key: GlobalKey(),
             videoName: file,
-            setLooping: true,
+            setLooping: false,
             fromFile: true);
       },
     );
@@ -147,7 +149,7 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
 
       if (state is DeviceConnected &&
           state.deviceType == DeviceType.HEIGHT_DEVICE) {
-        bodyHeight = bodyWeight = dataDefaultValue;
+        bodyHeight = bodyWeight = bodyBmi = dataDefaultValue;
         UserInfo().height = "";
         UserInfo().weight = "";
         ControlMeasurePageUtils().measured = false;
@@ -155,17 +157,23 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
         update = true;
       } else if (state is DeviceDataLoading &&
           state.deviceType == DeviceType.HEIGHT_DEVICE) {
-        bodyHeight = bodyWeight = AppLocalizations.of(mainContext)!.loading;
+        bodyHeight =
+            bodyWeight = bodyBmi = AppLocalizations.of(mainContext)!.loading;
         update = true;
       } else if (state is DeviceDataUpdated) {
         if (state.deviceData is HeightData) {
           String h = (state.deviceData as HeightData).height;
           UserInfo().height = "${double.parse(h).toStringAsFixed(1)}";
+
+          // 显示身高数据
+          bodyHeight = UserInfo().height;
+          update = true;
+
           // 计算标准体重
           BodyRange().calculateStandWeight();
           heightMeasured = true;
           // 如果收到身高数据，先关闭身高设备，再打开体重设备
-          Future.delayed(const Duration(milliseconds: 300), () {
+          Future.delayed(const Duration(milliseconds: 500), () {
             DeviceConnectEvent connectEvent =
                 DeviceConnectEvent(deviceType: DeviceType.WEIGHT_DEVICE);
             BlocProvider.of<DeviceBloc>(mainContext).add(connectEvent);
@@ -174,13 +182,21 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
           bodyHeight = UserInfo().height;
           bodyWeight =
               UserInfo().weight = (state.deviceData as WeightData).weight;
+          double height_m = double.parse(bodyHeight) / 100.0;
+          bodyBmi = UserInfo().bmi =
+              (double.parse(bodyWeight) / (height_m * height_m))
+                  .toStringAsFixed(1);
+
           ControlMeasurePageUtils().measured = true;
           weightMeasured = true;
           update = true;
 
           if (KioskConfig().healthScreeningMode == HealthScreeningMode.online) {
-            BlocProvider.of<AppointmentBloc>(mainContext).processNewData(
-                {"height": UserInfo().height, "weight": UserInfo().weight});
+            BlocProvider.of<AppointmentBloc>(mainContext).processNewData({
+              "height": UserInfo().height,
+              "weight": UserInfo().weight,
+              "bmi": UserInfo().bmi
+            });
           }
         }
       } else if (state is DeviceDisconnected) {
@@ -189,7 +205,7 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
         }
 
         if (!heightMeasured && !weightMeasured) {
-          bodyHeight = bodyWeight = dataDefaultValue;
+          bodyHeight = bodyWeight = bodyBmi = dataDefaultValue;
           update = true;
         }
       }
@@ -216,6 +232,10 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
                       fontSize: dataFontSize,
                       fontWeight: FontWeight.bold,
                       color: ColorPalette.materialGreen),
+                ),
+                Offstage(
+                  offstage: !heightMeasured,
+                  child: Text(""),
                 )
               ],
             ),
@@ -242,7 +262,28 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
                     dataFontSize,
                     true)
               ],
-            )
+            ),
+            SizedBox(width: width * 0.1),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.hw_bmi,
+                  style: TextStyle(
+                      fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: height * 0.02),
+                measureValueChangeColor(
+                    bodyBmi,
+                    BodyRange().bmiMin.toStringAsFixed(1),
+                    BodyRange().bmiMax.toStringAsFixed(1),
+                    dataFontSize,
+                    true),
+                rangeMeasureWidget(BodyRange().bmiMin.toStringAsFixed(1),
+                    BodyRange().bmiMax.toStringAsFixed(1), dataFontSize, true)
+              ],
+            ),
           ],
         ),
       );

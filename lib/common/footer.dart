@@ -1,12 +1,16 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_devices_sdk/devices/device_config.dart';
 import 'package:flutter_devices_sdk/devices/device_order_check.dart';
+import 'package:flutter_devices_sdk/devices/usb_relay_control.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_kiosk_software/screens/device_check_view.dart';
 import 'package:simple_kiosk_software/screens/manager/admin_login_page.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
+import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -72,6 +76,61 @@ class FooterState extends State<Footer> {
     } else {
       usbDeviceConnectStatus.value = usbDeviceLostList.isEmpty;
     }
+  }
+
+  // 关机提示
+  void shutdownTip() {
+    showDialog(
+      context: context,
+      barrierDismissible: true, //点击弹窗以外背景是否取消弹窗
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Shutdown"),
+          content:
+              Text("Are you sure to perform a shutdown or restart operation"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                //关闭弹窗
+                Navigator.of(context).pop();
+              },
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: shutdown,
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // 关机
+  void shutdown() async {
+    LogPrinter.log("click shutdown btn");
+
+    if (AppConfig().enableUsbRelay) {
+      try {
+        await UsbRelayControl().setAllIoStatus(false);
+      } catch (e) {
+        Fluttertoast.showToast(msg: "Error:$e");
+        LogPrinter.log("Error:$e");
+        return;
+      }
+      await Future.delayed(Duration(seconds: 1), () {});
+    }
+
+    try {
+      MethodChannel methodChannel = const MethodChannel("Shutdown");
+      await methodChannel.invokeMethod("openShutdownApp");
+    } on PlatformException catch (e) {
+      LogPrinter.log("openShutdownApp failed! Error:$e");
+      Fluttertoast.showToast(msg: "openShutdownApp failed! Error:$e");
+      return;
+    }
+
+    LogPrinter.log("shutdown");
   }
 
   @override
@@ -151,6 +210,15 @@ class FooterState extends State<Footer> {
                             height: height * 0.025,
                           ));
                     }),
+                IconButton(
+                    iconSize: height * 0.025,
+                    onPressed: () {
+                      shutdownTip();
+                    },
+                    icon: Image.asset(
+                      "assets/images/reboot.png",
+                      height: height * 0.025,
+                    )),
               ],
             )),
             Row(
@@ -171,12 +239,13 @@ class FooterState extends State<Footer> {
               ],
             ),
             Expanded(
-              child: Align(
+              child: Container(
+                margin: EdgeInsets.all(10),
                 alignment: Alignment.bottomRight,
                 child: Text(
-                  '${AppLocalizations.of(context)!.version} ${AppConfig().appVersion}',
+                  '${KioskConfig().kioskId}-${AppConfig().appVersion}',
                   style:
-                      TextStyle(fontSize: height * 0.008, color: Colors.black),
+                      TextStyle(fontSize: height * 0.01, color: Colors.black),
                 ),
               ),
             ),

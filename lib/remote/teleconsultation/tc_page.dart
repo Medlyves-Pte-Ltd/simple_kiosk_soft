@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_devices_sdk/device_manager.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/common/header.dart';
@@ -33,6 +34,7 @@ import 'dart:developer';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/kiosk_config.dart';
+import 'package:simple_kiosk_software/utils/user_info.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:async';
 import 'dart:math' as math;
@@ -196,10 +198,29 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
         });
         await updateVideoName();
         if (context.mounted) {
+          DeviceType type = handleDeviceType(selectedDevice);
+          bcInfo(type);
           BlocProvider.of<TeleconsultationBloc>(context)
-              .add(StartDeviceEvent(handleDeviceType(selectedDevice)));
+              .add(StartDeviceEvent(type));
         }
       }
+    }
+  }
+
+  void bcInfo(DeviceType type) {
+    // 如果人体成分需要传身高,体重,年龄,性别
+    if (type == DeviceType.BC_DEVICE) {
+      String bodyHeight = BlocProvider.of<AppointmentBloc>(context)
+          .getPatientBodyInfo()["height"];
+      String bodyWeight = BlocProvider.of<AppointmentBloc>(context)
+          .getPatientBodyInfo()["weight"];
+      // 人体成分需要传入参数
+      DeviceManager().getDevice(DeviceType.BC_DEVICE)?.mapData = {
+        'height': bodyHeight,
+        'weight': bodyWeight,
+        'age': UserInfo().age,
+        'gender': UserInfo().gender
+      };
     }
   }
 
@@ -550,8 +571,10 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
         startButtonPressed = false;
       });
     } else if (startButtonPressed && isUIRendered) {
+      DeviceType type = handleDeviceType(selectedDevice);
+      bcInfo(type);
       BlocProvider.of<TeleconsultationBloc>(context)
-          .add(StartDeviceEvent(handleDeviceType(selectedDevice)));
+          .add(StartDeviceEvent(type));
     }
   }
 }

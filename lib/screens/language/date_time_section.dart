@@ -20,6 +20,10 @@ class _DateTimeSectionState extends State<DateTimeSection> {
   Timer? _timer;
   late bool _isConnected = false;
   ConnectivityResult connectivityResult = ConnectivityResult.none;
+  // 屏幕宽度
+  double width = 0;
+  // 屏幕高度
+  double height = 0;
 
   @override
   void initState() {
@@ -61,10 +65,14 @@ class _DateTimeSectionState extends State<DateTimeSection> {
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+
     return Container(
       width: double.infinity,
-      height: 25.h, // Expand the width to the screen width
-      padding: EdgeInsets.only(top: 8.h, bottom: 1.h, left: 4.w, right: 4.w),
+      height: height * 0.2, // Expand the width to the screen width
+      padding: EdgeInsets.only(
+          top: height * 0.07, bottom: height * 0.03, left: 4.w, right: 4.w),
       color: ColorPalette.colorAppTheme,
       child: Align(
         alignment: Alignment.center,
@@ -74,34 +82,34 @@ class _DateTimeSectionState extends State<DateTimeSection> {
               Text(
                 formatDate(_currentDateTime),
                 style: TextStyle(
-                  fontSize: 30.dp,
+                  fontSize: height * 0.03,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
               ),
-              SizedBox(width: 1.5.h),
+              SizedBox(width: width * 0.03),
               Icon(
                 _isConnected ? Icons.wifi : Icons.wifi_off,
-                size: 35.dp,
+                size: height * 0.03,
               ),
-              SizedBox(width: 1.5.h),
+              SizedBox(width: width * 0.03),
               BlocBuilder<LivenessBloc, LivenessState>(
                 builder: (BuildContext context, LivenessState state) {
                   return Icon(
                     state.isConnected
                         ? Icons.cloud_done_outlined
                         : Icons.cloud_off,
-                    size: 35.dp,
+                    size: height * 0.03,
                   );
                 },
               ),
             ]),
-            SizedBox(height: 1.h),
+            SizedBox(width: height * 0.08),
             Text(
               formatTime(_currentDateTime),
-              style: TextStyle(fontSize: 20.dp, color: Colors.black),
+              style: TextStyle(fontSize: height * 0.020, color: Colors.black),
             ),
-            SizedBox(height: 1.h),
+            SizedBox(width: height * 0.08),
           ],
         ),
       ),

@@ -102,11 +102,13 @@ class _DeviceStartPageState extends State<DeviceStartPage> {
     }
 
     await DeviceOrderCheck().checkDeviceOrder();
-
-    // hub故障或者继电器故障
-    if (DeviceOrderCheck().hubUsbPathList.isEmpty) {
-      _showInfo.value = "The relay or usb hub is not working properly";
-      return;
+    // 判断是否使用模拟的usb
+    if (!DeviceSdkParamSetting().useSimulateUsbDevice) {
+      // hub故障或者继电器故障
+      if (DeviceOrderCheck().hubUsbPathList.isEmpty) {
+        _showInfo.value = "The relay or usb hub is not working properly";
+        return;
+      }
     }
 
     // 设备列表
@@ -120,26 +122,29 @@ class _DeviceStartPageState extends State<DeviceStartPage> {
       return;
     }
 
-    // 站式有升降io设备
-    if (DeviceSdkParamSetting().kioskType == KioskType.stand) {
-      if (DeviceConfig().deviceEnable(DeviceType.IO_DEVICE)) {
-        try {
-          await UpDownControl().connect();
-        } catch (e) {
-          _showInfo.value = "Up down io device connection failed, Error:$e";
-          return;
+    // 判断是否使用模拟的usb
+    if (!DeviceSdkParamSetting().useSimulateUsbDevice) {
+      // 站式有升降io设备
+      if (DeviceSdkParamSetting().kioskType == KioskType.stand) {
+        if (DeviceConfig().deviceEnable(DeviceType.IO_DEVICE)) {
+          try {
+            await UpDownControl().connect();
+          } catch (e) {
+            _showInfo.value = "Up down io device connection failed, Error:$e";
+            return;
+          }
         }
       }
-    }
 
-    // 扫码设备能否使用
-    if (DeviceConfig().deviceEnable(DeviceType.SCANNER_DEVICE)) {
-      // 打开扫码器
-      try {
-        await ScannerUtils().connect();
-      } catch (e) {
-        _showInfo.value = "Scanner connection failed, Error:$e";
-        return;
+      // 扫码设备能否使用
+      if (DeviceConfig().deviceEnable(DeviceType.SCANNER_DEVICE)) {
+        // 打开扫码器
+        try {
+          await ScannerUtils().connect();
+        } catch (e) {
+          _showInfo.value = "Scanner connection failed, Error:$e";
+          return;
+        }
       }
     }
 

@@ -285,7 +285,7 @@ class ScannerPageState extends State<ScannerPage> {
     return VideoWidget(
         key: GlobalKey(),
         videoName: curPlayFile,
-        setLooping: true,
+        setLooping: false,
         fromFile: true);
   }
 

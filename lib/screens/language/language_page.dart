@@ -1,4 +1,6 @@
+import 'package:country_flags/country_flags.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
@@ -23,11 +25,11 @@ class LanguagePageState extends State<LanguagePage> {
   final double spaceBetweenButtons = 15.0;
   late Locale locale;
   final List<Map<String, String>> languages = [
-    {"name": "English", "code": "en"},
-    //{"name": "中文", "code": "zh"},
-    {"name": "ภาษาไทย", "code": "th"},
-    // {"name": "Bahasa Melayu", "code": "ms"},
-    // {"name": "தமிழ்", "code": "ta"},
+    {"name": "ภาษาไทย", "code": "th", "flag": "THA"},
+    {"name": "English", "code": "en", "flag": "GBR"},
+    // {"name": "中文", "code": "zh", "flag": "CHN"},
+    // {"name": "Bahasa Melayu", "code": "ms", "flag": ""},
+    // {"name": "தமிழ்", "code": "ta", "flag": ""},
   ];
 
   void _changeLanguage(String code) {
@@ -52,32 +54,68 @@ class LanguagePageState extends State<LanguagePage> {
             const DateTimeSection(),
             VideoWidget(
               videoName: "${AppConfig().videosDir}/th/welcome_TH.mp4",
-              // videoName: 'assets/videos/th/welcome_TH.mp4',
-              setLooping: true,
+              setLooping: false,
               fromFile: true,
             ),
-            // const Footer(),
-            SizedBox(height: height * 0.03),
+            SizedBox(height: height * 0.01),
             Expanded(
                 child: SingleChildScrollView(
-              child: Column(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: languages
-                    .map((language) => Padding(
-                          padding: EdgeInsets.only(bottom: spaceBetweenButtons),
+                    .map((language) => Container(
+                          margin:
+                              EdgeInsets.symmetric(horizontal: width * 0.03),
+                          height: height * 0.06,
+                          width: width * 0.18,
                           child: _buildLanguageButton(
-                              language["name"]!, language["code"]!),
+                            language["name"]!,
+                            language["code"]!,
+                            language["flag"]!,
+                          ),
                         ))
                     .toList(),
               ),
             )),
-            downloadQrCode(),
+            downloadInfo(),
             SizedBox(
               height: height * 0.01,
+            ),
+            downloadQrCode(),
+            SizedBox(
+              height: height * 0.03,
             ),
             Footer(),
           ],
         ),
       ),
+    );
+  }
+
+  // 下载信息提示
+  Widget downloadInfo() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "กรุณาสแกน QR Code เพื่อลงทะเบียนในแอปพลิเคชันมือถือ",
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(fontSize: height * 0.015),
+        ),
+        SizedBox(
+          height: height * 0.003,
+        ),
+        Text("Please scan QR code to register in Medlyves mobile application.",
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: height * 0.015)),
+        SizedBox(
+          height: height * 0.003,
+        ),
+        Text("请扫码二维码下载MedLyves App以注册账户",
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: height * 0.015)),
+      ],
     );
   }
 
@@ -91,31 +129,31 @@ class LanguagePageState extends State<LanguagePage> {
           children: [
             Image.asset(
               "assets/images/apple_market.png",
-              height: height * 0.06,
-              width: height * 0.14,
+              height: height * 0.03,
+              width: height * 0.10,
             ),
             Image.asset(
               "assets/images/apple_code.png",
-              height: height * 0.14,
-              width: height * 0.14,
+              height: height * 0.10,
+              width: height * 0.10,
             )
           ],
         ),
         SizedBox(
-          width: width * 0.12,
+          width: width * 0.2,
         ),
         Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Image.asset(
               "assets/images/google_market.png",
-              height: height * 0.06,
-              width: height * 0.14,
+              height: height * 0.03,
+              width: height * 0.10,
             ),
             Image.asset(
               "assets/images/google_qrcode.png",
-              height: height * 0.14,
-              width: height * 0.14,
+              height: height * 0.10,
+              width: height * 0.10,
             )
           ],
         )
@@ -123,7 +161,14 @@ class LanguagePageState extends State<LanguagePage> {
     );
   }
 
-  Widget _buildLanguageButton(String languageName, String languageCode) {
+  Widget _buildLanguageButton(
+      String languageName, String languageCode, String flagCode) {
+    Widget flag = CountryFlag.fromCountryCode(
+      flagCode,
+      height: height * 0.05,
+      width: width * 0.16,
+    );
+
     return ElevatedButton(
       onPressed: () {
         BlocProvider.of<LocaleCubit>(context).loadLocale(Locale(languageCode));
@@ -136,7 +181,7 @@ class LanguagePageState extends State<LanguagePage> {
         }
       },
       style: _getButtonStyle(),
-      child: Text(languageName, style: _getFontStyle()),
+      child: flag,
     );
   }
 
@@ -147,16 +192,12 @@ class LanguagePageState extends State<LanguagePage> {
       backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
       foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
       padding: MaterialStateProperty.all(
-          const EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
+          const EdgeInsets.symmetric(horizontal: 5, vertical: 5)),
       shape: MaterialStateProperty.all(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0))),
       elevation: MaterialStateProperty.all<double>(5),
       shadowColor: MaterialStateProperty.all<Color>(Colors.grey),
       minimumSize: MaterialStateProperty.all(const Size(320.0, 40.0)),
     );
-  }
-
-  TextStyle _getFontStyle() {
-    return const TextStyle(fontSize: 17, fontWeight: FontWeight.bold);
   }
 }

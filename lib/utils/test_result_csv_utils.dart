@@ -8,11 +8,13 @@ import 'package:simple_kiosk_software/utils/user_info.dart';
 class TestResultCsv {
   //表头
   List<String> header = [
+    '时间',
     '姓名',
     '年龄',
     '性别',
     '身高(cm)',
     '体重(kg)',
+    'BMI',
     '体温(℃)',
     '血压(mmHg)',
     '血氧(%)',
@@ -42,16 +44,25 @@ class TestResultCsv {
   final fileSuffix = '.csv';
   String path = "";
 
+  // 当前时间
+  String getNow() {
+    DateTime time = DateTime.now();
+    String nowLogName = '${time.hour}:${time.minute}:${time.second}';
+    return nowLogName;
+  }
+
   // 将表头和测试数据写入CSV文件
   Future<void> writeTestDataToCsv() async {
     path = AppConfig().mainDir;
     //数据列表
     List<String> Rows = [
+      getNow(),
       UserInfo().name,
       UserInfo().age,
       UserInfo().gender == 1 ? '男' : '女',
       UserInfo().height,
       UserInfo().weight,
+      UserInfo().bmi,
       UserInfo().temperature,
       UserInfo().systolic + '/' + UserInfo().diastolic,
       UserInfo().bloodOxygen,
@@ -78,6 +89,7 @@ class TestResultCsv {
       UserInfo().P_Axis,
       UserInfo().T_Axis
     ];
+
     // 获取文件路径
     String filePath = _getFileLogPath(DateTime.now());
     File file = File(filePath);
@@ -90,6 +102,7 @@ class TestResultCsv {
       String headerString = header.join(',');
       await file.writeAsString(headerString + '\n', mode: FileMode.write);
     }
+
     // 追加数据行到文件
     try {
       String rowsString = Rows.join(',');

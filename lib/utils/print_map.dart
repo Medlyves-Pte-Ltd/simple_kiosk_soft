@@ -9,6 +9,8 @@ class PrintMap {
         return "";
       case 'weight':
         return "(${BodyRange().weightMin.toStringAsFixed(1)} ~ ${BodyRange().weightMax.toStringAsFixed(1)})";
+      case 'bmi':
+        return "(${BodyRange().bmiMin.toStringAsFixed(1)} ~ ${BodyRange().bmiMax.toStringAsFixed(1)})";
       case 'temperature':
         return "(${BodyRange().temperatureMin.toStringAsFixed(1)} ~ ${BodyRange().temperatureMax.toStringAsFixed(1)})";
       case 'bloodPressure':
@@ -94,6 +96,8 @@ class PrintMap {
         return loc.hw_height;
       case 'weight':
         return loc.hw_weight;
+      case 'bmi':
+        return loc.hw_bmi;
       case 'temperature':
         return loc.temp_temperature;
       case 'bloodPressure':

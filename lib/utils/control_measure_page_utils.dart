@@ -15,16 +15,16 @@ class ControlMeasurePageUtils {
       "color": ColorPalette.colorheightWeight.value,
     },
     {
-      "icon_file": "assets/images/temperature_icon.png",
-      "measured": false,
-      "page_route": "/BodyTemperatureMeasure",
-      "color": ColorPalette.colorbodytemperature.value,
-    },
-    {
       "icon_file": "assets/images/bodycomposition_logo.png",
       "measured": false,
       "page_route": "/BodyCompositionMeasure",
       "color": ColorPalette.colorbodyComposition.value,
+    },
+    {
+      "icon_file": "assets/images/temperature_icon.png",
+      "measured": false,
+      "page_route": "/BodyTemperatureMeasure",
+      "color": ColorPalette.colorbodytemperature.value,
     },
     {
       "icon_file": "assets/images/bloodpressure_logo.png",

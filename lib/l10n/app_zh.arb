@@ -40,6 +40,7 @@
   "weight": "体重",
   "hw_height": "身高（cm）",
   "hw_weight": "体重（kg）",
+  "hw_bmi": "BMI",
   "kiosk_title": "自助体检医疗亭",
   "language_selection": "请选择您的语言",
   "loading": "测量中…",
@@ -154,5 +155,4 @@
   "click_singe_calibration_command_button": "4.点击校准命令按钮",
   "weight_check": "5.测量体重，对比结果，看校准后的体重结果是否正确",
   "click_three_calibration_command_button":"2.点击按钮，进入校准状态"
-
 }

@@ -58,7 +58,7 @@ class UserLoginPageState extends State<UserLoginPage> {
             const Header(),
             VideoWidget(
                 videoName: getVideoFileName(),
-                setLooping: true,
+                setLooping: false,
                 fromFile: true),
             // const Footer(),
             Padding(

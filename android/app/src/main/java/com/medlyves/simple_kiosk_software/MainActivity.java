@@ -14,6 +14,9 @@ public class MainActivity extends FlutterActivity {
     private static final String ECG_CHANNEL = "ECG";
     private static final int ECG_ACTIVITY_REQUEST_CODE = 1; // Request code
     private MethodChannel ecgChannel;
+    private String Shutdown_ChannelName = "Shutdown";
+    private MethodChannel shutdownChannel;
+
     Intent intent;
     @Override
     public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
@@ -29,14 +32,44 @@ public class MainActivity extends FlutterActivity {
                         if (opened) {
                             result.success(true);
                         } else {
-                            result.error("UNAVAILABLE", "Cannot open the app.", null);
+                            result.error("UNAVAILABLE", "Cannot open the ECG app.", null);
                         }
                     } else {
                         result.notImplemented();
                     }
                 }
         );
+
+        shutdownChannel = new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), Shutdown_ChannelName);
+        shutdownChannel.setMethodCallHandler((call, result) -> {
+            // 判断方法名是否支持
+            if(call.method.equals("openShutdownApp")){
+                boolean opened = openShutdownApp();
+                if (opened) {
+                    result.success(true);
+                } else {
+                    result.error("UNAVAILABLE", "Cannot open the shutdown app.", null);
+                }
+            }else{
+                // 方法暂时不支持
+                result.notImplemented();
+            }
+        });
     }
+
+    private boolean openShutdownApp() {
+        try {
+            ComponentName componentName = new ComponentName("com.samiadom.Shutdown", "com.samiadom.Shutdown.MainActivity");
+            Intent intent = new Intent();
+            intent.setComponent(componentName);
+            this.startActivity(intent);
+            //finish();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 
     private boolean openECGApp(String name, String gender, int age) {
         try {

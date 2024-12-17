@@ -38,6 +38,7 @@
   "weight": "Berat",
   "hw_height": "Tinggi (cm)",
   "hw_weight": "Berat (kg)",
+  "hw_bmi": "BMI",
   "kiosk_title": "Kiosk Pemeriksaan Kesihatan Swa-perkhidmatan",
   "language_selection": "Sila pilih bahasa pilihan anda",
   "loading": "Pengukuran...",

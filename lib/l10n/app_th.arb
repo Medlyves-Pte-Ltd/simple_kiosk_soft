@@ -62,6 +62,7 @@
   "weight": "น้ำหนัก",
   "hw_height": "ความสูง (cm)",
   "hw_weight": "น้ำหนัก (kg)",
+  "hw_bmi": "BMI",
   "kiosk_title": "Self-service Health Screening Kiosk",
   "language_selection": "โปรดเลือกภาษาที่คุณต้องการ",
   "loading": "การอ่าน...",

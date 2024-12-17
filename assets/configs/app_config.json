@@ -7,5 +7,6 @@
     "relay_io_count_list": [8, 16],
     "relay_io_count": 8,
     "usb_sequence_check_time_s": 10,
-    "up_down_io_stop_time_ms": 1000
+    "up_down_io_stop_time_ms": 1000,
+    "test_result_out_csv": false
 }

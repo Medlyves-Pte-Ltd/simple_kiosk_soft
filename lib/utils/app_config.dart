@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:flutter_devices_sdk/device_sdk_param_setting.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:simple_kiosk_software/common/common.dart';
 import 'package:simple_kiosk_software/utils/body_range.dart';
 
 class AppConfig {
@@ -14,8 +15,6 @@ class AppConfig {
   String audiosDir = "";
   String logsDir = "";
   Map<String, dynamic> configMap = {};
-  // 测试结果输出
-  bool testResultOutCsv = true;
 
   double get totalHeight {
     return configMap["total_height"] as double;
@@ -82,6 +81,20 @@ class AppConfig {
     saveFile();
   }
 
+  // 是否使用usb继电器
+  bool get testResultOutCsv {
+    try {
+      return configMap["test_result_out_csv"] as bool;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  set testResultOutCsv(bool value) {
+    configMap["test_result_out_csv"] = value;
+    saveFile();
+  }
+
   Future<void> init() async {
     // 获取版本
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -92,13 +105,16 @@ class AppConfig {
     videosDir = "$mainDir/videos";
     audiosDir = "$mainDir/audios";
     logsDir = "$mainDir/logs";
-    LogPrinter.logOutputPath = logsDir;
 
+    LogPrinter.logOutputPath = logsDir;
+    // 创建目录
+    await createDirectory(logsDir);
     // 加载配置文件
     await loadFile();
 
     // 范围
     await BodyRange().loadFile();
+
     DeviceSdkParamSetting().useSimulateUsbDevice = false;
     DeviceSdkParamSetting().replayIoCount = relayIoCount;
     DeviceSdkParamSetting().configDir = configDir;

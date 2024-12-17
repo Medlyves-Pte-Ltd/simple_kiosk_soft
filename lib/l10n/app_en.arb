@@ -62,6 +62,7 @@
   "weight": "Weight",
   "hw_height": "Height (cm)",
   "hw_weight": "Weight (kg)",
+  "hw_bmi": "BMI",
   "kiosk_title": "Self-service Health Screening Kiosk",
   "language_selection": "Please Select Your Preferred Language",
   "loading": "Reading...",
@@ -152,5 +153,6 @@
   "put_the_weight": "3.Put the weight,Weight must be greater than 25 KG",
   "click_singe_calibration_command_button": "4.Click the Calibration command button",
   "weight_check": "5.Measure the weight and compare the results to see if the calibrated weight results are correct",
-  "click_three_calibration_command_button":"2.Click the button to enter the calibration state"
+  "click_three_calibration_command_button":"2.Click the button to enter the calibration state",
+  "download_info":"Please scan QR code to register in Medlyves mobile application"
 }

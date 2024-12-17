@@ -13,6 +13,8 @@ class UserInfo {
   String height = '';
   // 体重 kg
   String weight = '';
+  // bmi
+  String bmi = '';
   // 温度
   String temperature = '';
 
@@ -98,6 +100,7 @@ class UserInfo {
   }
 
   void clearResult() {
+    bmi = "";
     extracellularFluid = "";
     bodyAge = "";
     bodyFatPercentage = '';
@@ -148,6 +151,9 @@ class UserInfo {
     }
     if (weight.isNotEmpty) {
       map["weight"] = weight;
+    }
+    if (bmi.isNotEmpty) {
+      map["bmi"] = bmi;
     }
     if (temperature.isNotEmpty) {
       map["temperature"] = temperature;

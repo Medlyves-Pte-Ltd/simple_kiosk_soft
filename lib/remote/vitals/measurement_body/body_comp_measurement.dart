@@ -172,7 +172,7 @@ class BodyCompMeasurement extends StatelessWidget {
         children: [
           Text(
             label,
-            style: TextStyle(fontSize: height * 0.02, color: Colors.black),
+            style: TextStyle(fontSize: height * 0.017, color: Colors.black),
           ),
           SizedBox(
             height: height * 0.01,

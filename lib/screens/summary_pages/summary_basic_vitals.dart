@@ -99,6 +99,39 @@ class SummaryBasicVitals extends StatelessWidget {
               ),
               SizedBox(height: height * 0.008),
               Offstage(
+                offstage: UserInfo().bmi.isEmpty,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(mainContext)!.hw_bmi,
+                      style: TextStyle(
+                          fontSize: titleFontSize, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+              Offstage(
+                offstage: UserInfo().bmi.isEmpty,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    rangeSummaryWidget(
+                      BodyRange().bmiMin.toStringAsFixed(1),
+                      BodyRange().bmiMax.toStringAsFixed(1),
+                      dataFontSize,
+                    ),
+                    summaryValueChangeColor(
+                        UserInfo().bmi,
+                        BodyRange().bmiMin.toStringAsFixed(1),
+                        BodyRange().bmiMax.toStringAsFixed(1),
+                        dataFontSize,
+                        true),
+                  ],
+                ),
+              ),
+              SizedBox(height: height * 0.008),
+              Offstage(
                 offstage: UserInfo().temperature.isEmpty,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
