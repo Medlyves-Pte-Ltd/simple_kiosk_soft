@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/device_data/height_data.dart';
 import 'package:flutter_devices_sdk/device_data/weight_data.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:simple_kiosk_software/blocs/device/device_event.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../blocs/device/device_bloc.dart';
 import '../../../blocs/device/device_state.dart';
-import 'package:simple_kiosk_software/remote/utils/app_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
 
@@ -103,9 +103,15 @@ class HtWtMeasurement extends StatelessWidget {
             } else if (state.deviceData is WeightData) {
               bodyWeight = (state.deviceData as WeightData).weight;
               // bmi
-              double height_m = double.parse(bodyHeight) / 100.0;
-              bodyBmi = (double.parse(bodyWeight) / (height_m * height_m))
-                  .toStringAsFixed(1);
+              try {
+                double height_m = double.parse(bodyHeight) / 100.0;
+                bodyBmi = (double.parse(bodyWeight) / (height_m * height_m))
+                    .toStringAsFixed(1);
+              } catch (e) {
+                bodyBmi = "0.0";
+                Fluttertoast.showToast(msg: "$e");
+                LogPrinter.log("$e");
+              }
 
               weightMeasured = true;
               update = true;

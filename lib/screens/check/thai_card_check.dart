@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/screens/check/base_check_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/permission_config.dart';
 import 'package:flutter_devices_sdk/devices/thai_id_card/thai_card.dart';
 
@@ -28,7 +29,8 @@ class ThaiCardCheck extends BaseCheckWidget {
     return ValueListenableBuilder<String>(
         valueListenable: btnText,
         builder: (context, value, child) {
-          return PermissionConfig().havePermission(PermissionModules.DeviceDiagnostic)
+          return PermissionConfig()
+                  .havePermission(PermissionModules.DeviceDiagnostic)
               ? InkWell(
                   onTap: () async {
                     if (value == AppLocalizations.of(mainContext)!.stop) {
@@ -108,15 +110,17 @@ class ThaiCardCheck extends BaseCheckWidget {
                     builder: (context, value, child) {
                       return SizedBox(
                         width: width * 0.25,
-                        child: Text(
-                          value,
-                          softWrap: true,
-                          maxLines: 10,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: dataFontSize,
-                              fontWeight: FontWeight.bold,
-                              color: ColorPalette.materialGreen),
+                        child: SingleChildScrollView(
+                          child: Text(
+                            value,
+                            softWrap: true,
+                            maxLines: 30,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize: dataFontSize,
+                                fontWeight: FontWeight.bold,
+                                color: ColorPalette.materialGreen),
+                          ),
                         ),
                       );
                     }),
@@ -127,8 +131,10 @@ class ThaiCardCheck extends BaseCheckWidget {
                     if (value == null) {
                       return const SizedBox.shrink();
                     }
-
                     uiData.value = value.toMap().toString();
+                    // id card 输出到文件
+                    // thaiCard.outputFile(
+                    //     AppConfig().mainDir, value.toMap().toString());
                     return SizedBox(
                       width: width * 0.25,
                       child: Text(""),

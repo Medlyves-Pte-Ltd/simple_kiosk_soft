@@ -7,6 +7,8 @@ import 'package:simple_kiosk_software/screens/check/base_check_widget.dart';
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
 import 'package:simple_kiosk_software/blocs/device/device_event.dart';
 import 'package:simple_kiosk_software/blocs/device/device_state.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
+import 'package:simple_kiosk_software/utils/test_result_csv_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -69,6 +71,11 @@ class WeightCheck extends BaseCheckWidget {
             UserInfo().weight = (state.deviceData as WeightData).weight;
         measured = true;
         update = true;
+
+        // Future.delayed(const Duration(milliseconds: 10), () async {
+        //   TestResultCsv testResultCsv = TestResultCsv();
+        //   await testResultCsv.writeTestDataToCsv();
+        // });
       } else if (state is DeviceDisconnected) {
         if (!measured) {
           bodyWeight = dataDefaultValue;

@@ -43,7 +43,7 @@
   "bg_bloodglucose": "Blood Glucose (mmol/L)",
   "bg_ifcc": "IFCC (%)",
   "bo": "Blood Oxygen",
-  "bo_oxygen_staturation": "Oyxgen Staturation（%）",
+  "bo_oxygen_staturation": "Oxygen Saturation（%）",
   "bo_heartrate": "Pulse Rate (bpm)",
   "temperature": "Temperature",
   "temp_temperature": "Temperature(℃)",

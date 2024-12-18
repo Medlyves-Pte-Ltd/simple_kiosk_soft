@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/device_data/height_data.dart';
 import 'package:flutter_devices_sdk/device_data/weight_data.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:simple_kiosk_software/common/range_widget.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
@@ -17,6 +18,7 @@ import 'package:simple_kiosk_software/utils/body_range.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class HeightWeightMeasure extends BaseMeasureLayoutWidget {
   late String bodyHeight;
@@ -182,10 +184,17 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
           bodyHeight = UserInfo().height;
           bodyWeight =
               UserInfo().weight = (state.deviceData as WeightData).weight;
-          double height_m = double.parse(bodyHeight) / 100.0;
-          bodyBmi = UserInfo().bmi =
-              (double.parse(bodyWeight) / (height_m * height_m))
-                  .toStringAsFixed(1);
+
+          try {
+            double height_m = double.parse(bodyHeight) / 100.0;
+            bodyBmi = UserInfo().bmi =
+                (double.parse(bodyWeight) / (height_m * height_m))
+                    .toStringAsFixed(1);
+          } catch (e) {
+            bodyBmi = "0.0";
+            Fluttertoast.showToast(msg: "$e");
+            LogPrinter.log("$e");
+          }
 
           ControlMeasurePageUtils().measured = true;
           weightMeasured = true;
