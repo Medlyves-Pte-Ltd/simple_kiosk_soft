@@ -137,8 +137,8 @@ class DeviceMap {
         return loc.height;
       case 2:
         return loc.weight;
-      // case 3:
-      //   return loc.bmi;
+      case 3:
+        return loc.hw_bmi;
       case 4:
         return loc.fat_percent;
       case 5:

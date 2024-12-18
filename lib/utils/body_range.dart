@@ -76,11 +76,11 @@ class BodyRange {
   }
 
   double get bmiMin {
-    return (rangeMap["bmi_min"] as double);
+    return (rangeMap["weight_min"] as double);
   }
 
   double get bmiMax {
-    return (rangeMap["bmi_max"] as double);
+    return (rangeMap["weight_max"] as double);
   }
 
   double get temperatureMin {

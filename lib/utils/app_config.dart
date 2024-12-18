@@ -14,6 +14,7 @@ class AppConfig {
   String videosDir = "";
   String audiosDir = "";
   String logsDir = "";
+  String recordDir = "";
   Map<String, dynamic> configMap = {};
 
   double get totalHeight {
@@ -105,13 +106,17 @@ class AppConfig {
     videosDir = "$mainDir/videos";
     audiosDir = "$mainDir/audios";
     logsDir = "$mainDir/logs";
+    recordDir = "$mainDir/records";
 
     LogPrinter.logOutputPath = logsDir;
-    // 创建目录
-    await createDirectory(logsDir);
     // 加载配置文件
     await loadFile();
 
+    // 创建目录
+    await createDirectory(logsDir);
+    if (testResultOutCsv) {
+      await createDirectory(recordDir);
+    }
     // 范围
     await BodyRange().loadFile();
 

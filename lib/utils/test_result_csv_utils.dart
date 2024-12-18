@@ -4,34 +4,64 @@ import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 
+// 人体成分
+// Body Fat Rate (脂肪率) %
+String bodyFatPercentage = '';
+// 水分含量 %
+String bodyWaterPercentage = '';
+// 肌肉量 kg
+String muscleMass = ''; //
+// 骨量 kg
+String boneMass = "";
+// Basal Metabolism (基础代谢)
+String basalMetabolism = '';
+// Visceral Fat Level (内脏脂肪等级)
+String visceralFatLevel = '';
+// 身体年龄
+String bodyAge = ""; //
+// Protein Rate (蛋白质率) %
+String proteinPercentage = '';
+// Extracellular Water Rate (细胞外液率) %
+String extracellularFluid = ''; //
+// Protein (蛋白质)
+String protein = '';
+// Intracellular Water Rate (细胞内液率)
+String intracellularWaterPercentage = '';
+// Total moisture (总水分)
+String totalMoisture = '';
+// Body Fat Mass (脂肪量)
+String bodyFatMass = '';
+// Skeletal Muscle Rate (骨骼肌率)
+String skeletalMusclePercentage = '';
+
 // 性别 0:女性 1:男性
 class TestResultCsv {
   //表头
   List<String> header = [
-    '时间',
-    '姓名',
-    '年龄',
-    '性别',
-    '身高(cm)',
-    '体重(kg)',
+    'Time',
+    'Name',
+    'Age',
+    'Gender',
+    'Height(cm)',
+    'Weight(kg)',
     'BMI',
-    '体温(℃)',
-    '血压(mmHg)',
-    '血氧(%)',
-    '体脂率(%)',
-    '骨量(kg)',
-    '基础代谢(kcal)',
-    '内脏脂肪等级',
-    '水含量(%)',
-    '蛋白率(kg)',
-    '肌肉量()',
-    '身体年龄',
-    '细胞外液(%)',
-    '蛋白质(kg)',
-    '细胞内液(%)',
-    '总水分(kg)',
-    '脂肪量(kg)',
-    '心率(bpm)',
+    'Temperature(℃)',
+    'BloodPressure(mmHg)',
+    'BloodOxygen(%)',
+    'BodyFatRate(%)',
+    'BoneMass(kg)',
+    'BasalMetabolism(kcal)',
+    'VisceralFatLevel',
+    'BodyWaterRate(%)',
+    'ProteinRate(kg)',
+    'MuscleMass(kg)',
+    'BodyAge',
+    'ExtracellularFluidRate(%)',
+    'Protein(kg)',
+    'IntracellularWaterRate(%)',
+    'TotalMoisture(kg)',
+    'FatMass(kg)',
+    'HeartRate(bpm)',
     'P',
     'PR',
     'QRS',
@@ -53,13 +83,13 @@ class TestResultCsv {
 
   // 将表头和测试数据写入CSV文件
   Future<void> writeTestDataToCsv() async {
-    path = AppConfig().mainDir;
+    path = AppConfig().recordDir;
     //数据列表
     List<String> Rows = [
       getNow(),
       UserInfo().name,
       UserInfo().age,
-      UserInfo().gender == 1 ? '男' : '女',
+      UserInfo().gender == 1 ? 'Male' : 'Female',
       UserInfo().height,
       UserInfo().weight,
       UserInfo().bmi,
