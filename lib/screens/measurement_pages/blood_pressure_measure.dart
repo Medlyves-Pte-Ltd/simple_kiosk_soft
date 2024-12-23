@@ -7,6 +7,7 @@ import 'package:flutter_devices_sdk/devices/device_config.dart';
 import 'package:flutter_devices_sdk/devices/nhc/raycome_blood_pressure_device.dart';
 import 'package:flutter_devices_sdk/devices/up_down_control.dart';
 import 'package:flutter_devices_sdk/kiosk_type.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:simple_kiosk_software/common/range_widget.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
@@ -90,12 +91,30 @@ class BloodPressureMeasure extends BaseMeasureLayoutWidget {
         update = true;
       } else if (state is DeviceDataUpdated &&
           state.deviceData is BloodPrssureData) {
+        String heartRateStr = UserInfo().bpHeartRate =
+            (state.deviceData as BloodPrssureData).heartRate;
+
+        // int hr = 0;
+        // try {
+        //   hr = int.parse(heartRateStr);
+        // } catch (e) {
+        //   hr = 0;
+        //   LogPrinter.log("Error: $e");
+        //   systolic = diastolic = heartRate = dataDefaultValue;
+        // }
+        //
+        // if (hr < 40) {
+        //   if (heartRateStr != heartRate) {
+        //     messageBox(mainContext, super.title,
+        //         AppLocalizations.of(mainContext)!.please_click_start_again);
+        //   }
+        //   systolic = diastolic = heartRate = dataDefaultValue;
+        // } else {
         systolic = UserInfo().systolic =
             (state.deviceData as BloodPrssureData).systolic;
         diastolic = UserInfo().diastolic =
             (state.deviceData as BloodPrssureData).diastolic;
-        heartRate = UserInfo().bpHeartRate =
-            (state.deviceData as BloodPrssureData).heartRate;
+        heartRate = UserInfo().bpHeartRate = heartRateStr;
 
         if (KioskConfig().healthScreeningMode == HealthScreeningMode.online) {
           BlocProvider.of<AppointmentBloc>(mainContext)
@@ -103,6 +122,8 @@ class BloodPressureMeasure extends BaseMeasureLayoutWidget {
         }
 
         ControlMeasurePageUtils().measured = true;
+        //}
+
         measured = true;
         update = true;
       } else if (state is DeviceDisconnected) {

@@ -28,7 +28,7 @@
     "deviceList": ["SGDianosticsBloodGlucose"],
     "info": "",
     "start_wait_time_s": 1.0,
-    "enable": true,
+    "enable": false,
     "vid":"1a86",
     "pid":"55d4"
   },
@@ -39,7 +39,7 @@
     "deviceList": ["PreciSCBloodFit"],
     "info": "",
     "start_wait_time_s": 1.0,
-    "enable": true,
+    "enable": false,
     "vid":"1a86",
     "pid":"55d4"
   },

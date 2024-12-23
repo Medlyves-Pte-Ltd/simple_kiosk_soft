@@ -1,25 +1,27 @@
-import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_devices_sdk/device_data/code_scanner_data.dart';
 import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:simple_kiosk_software/blocs/device/device_state.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/header.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
-import 'package:simple_kiosk_software/remote/config/settings.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/body_range.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 import 'package:simple_kiosk_software/utils/scanner_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
+
+import '../common/common.dart';
 
 class ScannerPage extends StatefulWidget {
   @override
@@ -47,8 +49,13 @@ class ScannerPageState extends State<ScannerPage> {
     ScannerUtils().listenData = listenScannerData;
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   // 监听扫码器数据
-  void listenScannerData(String data) async {
+  Future<void> listenScannerData(String data) async {
     // 测试id ZGVtbzFAbWVkbHl2ZXMuY29t_walkin_TC
     String patientId = "";
     // 判断时候是json数据
@@ -103,7 +110,11 @@ class ScannerPageState extends State<ScannerPage> {
     ControlMeasurePageUtils().pageIndex = 0;
     ControlMeasurePageUtils().clearMeasure();
 
+    // 范围根据性别获取
     BodyRange().init();
+    // // 关闭扫码器
+    // stopScanner(context);
+    // 跳转到测试页面
     Navigator.pushNamedAndRemoveUntil(
         mainContext, "/HeightWeightMeasure", (route) => false);
   }
@@ -137,34 +148,51 @@ class ScannerPageState extends State<ScannerPage> {
   }
 
   Widget buildQrCode() {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        GestureDetector(
-          onDoubleTap: () {
-            // 测试
-            //listenScannerData("ZGVtbzFAbWVkbHl2ZXMuY29t_walkin_TC");
-            // 泰国测试人员二维码
-            listenScannerData(
-                "cGVlcmFkYS50YXdvbmdAbmVvcG93ZXJtZWQuY29t_walkin_TC");
-            // 无远程医疗功能 _HS结尾
-            //listenScannerData("ZGVtbzFAbWVkbHl2ZXMuY29t_walkin_HS");
-            // David信息
-            //listenScannerData("ZGF2aWQud29uZ0BtZWRseXZlcy5jb20=_walkin_TC");
-          },
-          child: Image.asset(
-            "assets/images/qr-code.png",
-            height: width * 0.2,
-            width: width * 0.2,
-          ),
-        ),
-        Image.asset(
-          "assets/images/red_down_arrow.png",
-          height: width * 0.06,
-        ),
-      ],
-    );
+    return BlocListener<DeviceBloc, DeviceState>(
+        listener: (context, state) {
+          if (state is DeviceDataUpdated &&
+              state.deviceData is CodeScannerData) {
+            String data = (state.deviceData as CodeScannerData).scanner;
+            Future.delayed(Duration(milliseconds: 10), () async {
+              await listenScannerData(data);
+            });
+
+            // if (scannerText != data) {
+            //   scannerText = data;
+            //   Future.delayed(Duration(milliseconds: 10), () async {
+            //     await listenScannerData(scannerText);
+            //   });
+            // }
+          }
+        },
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onDoubleTap: () {
+                // 测试
+                //listenScannerData("ZGVtbzFAbWVkbHl2ZXMuY29t_walkin_TC");
+                // 泰国测试人员二维码
+                listenScannerData(
+                    "cGVlcmFkYS50YXdvbmdAbmVvcG93ZXJtZWQuY29t_walkin_TC");
+                // 无远程医疗功能 _HS结尾
+                //listenScannerData("ZGVtbzFAbWVkbHl2ZXMuY29t_walkin_HS");
+                // David信息
+                //listenScannerData("ZGF2aWQud29uZ0BtZWRseXZlcy5jb20=_walkin_TC");
+              },
+              child: Image.asset(
+                "assets/images/qr-code.png",
+                height: width * 0.2,
+                width: width * 0.2,
+              ),
+            ),
+            Image.asset(
+              "assets/images/red_down_arrow.png",
+              height: width * 0.06,
+            ),
+          ],
+        ));
   }
 
   Widget buildTipInfoArea() {
@@ -255,8 +283,9 @@ class ScannerPageState extends State<ScannerPage> {
           const Spacer(),
           InkWell(
             onTap: () {
+              //stopScanner(context);
               Navigator.pushNamedAndRemoveUntil(
-                  mainContext, "/", (route) => false);
+                  mainContext, "/LanguagePage", (route) => false);
             },
             child: Container(
                 height: height * 0.03,

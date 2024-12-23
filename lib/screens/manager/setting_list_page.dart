@@ -45,7 +45,8 @@ class SettingListPageState extends State<SettingListPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pushNamedAndRemoveUntil(context, '/', ((route) => false));
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/LanguagePage', ((route) => false));
           },
         ),
         title: Text('Setting'),

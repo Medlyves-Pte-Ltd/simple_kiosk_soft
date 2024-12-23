@@ -15,6 +15,9 @@ import 'package:tdesign_flutter/tdesign_flutter.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Footer extends StatefulWidget {
+  bool showStatus = false;
+  Footer({this.showStatus = true}) {}
+
   @override
   FooterState createState() => FooterState();
 }
@@ -31,16 +34,21 @@ class FooterState extends State<Footer> {
   @override
   void initState() {
     super.initState();
-    usbDeviceConnectStatus.value = !DeviceOrderCheck().usbError;
-    timer = makePeriodicTimer(
-        Duration(seconds: AppConfig().usbSequenceCheckTime), onTimer,
-        fireNow: true);
+
+    if (widget.showStatus) {
+      usbDeviceConnectStatus.value = !DeviceOrderCheck().usbOrderError();
+      timer = makePeriodicTimer(
+          Duration(seconds: AppConfig().usbSequenceCheckTime), onTimer,
+          fireNow: true);
+    }
   }
 
   @override
   void dispose() {
     super.dispose();
-    timer.cancel();
+    if (widget.showStatus) {
+      timer.cancel();
+    }
   }
 
   Timer makePeriodicTimer(
@@ -71,7 +79,7 @@ class FooterState extends State<Footer> {
           textColor: Colors.red);
     }
 
-    if (DeviceOrderCheck().usbError) {
+    if (DeviceOrderCheck().usbOrderError()) {
       usbDeviceConnectStatus.value = false;
     } else {
       usbDeviceConnectStatus.value = usbDeviceLostList.isEmpty;
@@ -175,41 +183,45 @@ class FooterState extends State<Footer> {
                       //     context, '/KioskManager', ((route) => false));
                     },
                     icon: Icon(Icons.settings)),
-                ValueListenableBuilder(
-                    valueListenable: usbDeviceConnectStatus,
-                    builder: (context, enable, child) {
-                      String path = enable
-                          ? "assets/images/connected.png"
-                          : "assets/images/fail.png";
-                      return IconButton(
-                          iconSize: height * 0.025,
-                          onPressed: () {
-                            Navigator.of(context).push(TDSlidePopupRoute(
-                                modalBarrierColor:
-                                    TDTheme.of(context).fontGyColor2,
-                                isDismissible: false,
-                                slideTransitionFrom: SlideTransitionFrom.center,
-                                builder: (context) {
-                                  return TDPopupCenterPanel(
-                                    closeUnderBottom: true,
-                                    closeClick: () {
-                                      Navigator.maybePop(context);
-                                    },
-                                    child: SizedBox(
-                                      height: height * 0.6,
-                                      width: width * 0.8,
-                                      child: DeviceCheckView(),
-                                    ),
-                                  );
-                                }));
-                            // Navigator.pushNamedAndRemoveUntil(
-                            //     context, '/KioskManager', ((route) => false));
-                          },
-                          icon: Image.asset(
-                            path,
-                            height: height * 0.025,
-                          ));
-                    }),
+                Offstage(
+                  offstage: !widget.showStatus,
+                  child: ValueListenableBuilder(
+                      valueListenable: usbDeviceConnectStatus,
+                      builder: (context, enable, child) {
+                        String path = enable
+                            ? "assets/images/connected.png"
+                            : "assets/images/fail.png";
+                        return IconButton(
+                            iconSize: height * 0.025,
+                            onPressed: () {
+                              Navigator.of(context).push(TDSlidePopupRoute(
+                                  modalBarrierColor:
+                                      TDTheme.of(context).fontGyColor2,
+                                  isDismissible: false,
+                                  slideTransitionFrom:
+                                      SlideTransitionFrom.center,
+                                  builder: (context) {
+                                    return TDPopupCenterPanel(
+                                      closeUnderBottom: true,
+                                      closeClick: () {
+                                        Navigator.maybePop(context);
+                                      },
+                                      child: SizedBox(
+                                        height: height * 0.6,
+                                        width: width * 0.8,
+                                        child: DeviceCheckView(),
+                                      ),
+                                    );
+                                  }));
+                              // Navigator.pushNamedAndRemoveUntil(
+                              //     context, '/KioskManager', ((route) => false));
+                            },
+                            icon: Image.asset(
+                              path,
+                              height: height * 0.025,
+                            ));
+                      }),
+                ),
                 IconButton(
                     iconSize: height * 0.025,
                     onPressed: () {

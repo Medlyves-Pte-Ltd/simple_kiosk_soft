@@ -6,7 +6,7 @@
 name: simple_kiosk_software
 description: "简易医疗亭/simple kiosk software"
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 1.2.1+1
+version: 1.2.2+1
 
 environment:
   sdk: '>=3.4.4 <4.0.0'
@@ -24,7 +24,6 @@ dependencies:
   equatable: ^2.0.5
   image: ^4.2.0
   intl: any
-  logger: ^2.4.0
   responsive_framework: ^0.2.0
   shared_preferences: ^2.3.1
   video_player: ^2.9.2
@@ -50,6 +49,7 @@ dependencies:
   firebase_database: ^11.1.5
   libserialport: ^0.3.0+1
   country_flags: ^3.0.0
+  encrypt: ^5.0.3
 #  flutter_devices_sdk: # 包名
 #      git:
 #        #url: https://github.com/Medlyves-Pte-Ltd/flutter_devices_sdk.git

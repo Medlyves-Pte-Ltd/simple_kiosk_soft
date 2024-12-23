@@ -34,7 +34,7 @@ class _DeviceCheckViewState extends State<DeviceCheckView> {
     }
 
     // 如果有usb顺序错误
-    if (DeviceOrderCheck().usbError) {
+    if (DeviceOrderCheck().usbOrderError()) {
       _showInfo.value =
           "USB device sequence error, \nPlease first check if the USB device sequence is correct, and then restart the machine";
       return;

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +41,9 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
   late BuildContext mainContext;
   // 开始状态
   bool startStatus = false;
+  // 开始按钮背景色
+  Color startButtonColor = ColorPalette.materialGreen;
+  Timer? timerStop;
 
   // 子类需要实现的数据显示函数
   Widget buildCardDataShowArea() {
@@ -70,6 +75,29 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
           Footer()
         ],
       ),
+    );
+  }
+
+  // 对话框
+  void messageBox(BuildContext context, String title, String text) {
+    showDialog(
+      context: context,
+      //点击弹窗以外背景是否取消弹窗
+      barrierDismissible: true,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(text),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -297,10 +325,19 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
 
       if (state is DeviceConnected) {
         btnText = AppLocalizations.of(mainContext)!.stop;
+        startButtonColor = Colors.red;
         update = true;
+        timerStop = Timer(Duration(seconds: 80), () {
+          if (startStatus) {
+            onStop();
+            timerStop?.cancel();
+          }
+        });
       } else if (state is DeviceDisconnected) {
         btnText = AppLocalizations.of(mainContext)!.start;
+        startButtonColor = ColorPalette.materialGreen;
         update = true;
+        timerStop?.cancel();
       }
 
       return update;
@@ -317,7 +354,7 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
           height: height * 0.04,
           width: width * 0.2,
           decoration: BoxDecoration(
-            color: ColorPalette.materialGreen,
+            color: startButtonColor,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Center(

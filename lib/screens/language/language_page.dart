@@ -1,8 +1,12 @@
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_devices_sdk/device_data/code_scanner_data.dart';
+import 'package:simple_kiosk_software/blocs/device/debug_device_bloc.dart';
+import 'package:simple_kiosk_software/blocs/device/device_state.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:simple_kiosk_software/common/common.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,10 +36,15 @@ class LanguagePageState extends State<LanguagePage> {
     // {"name": "தமிழ்", "code": "ta", "flag": ""},
   ];
 
-  void _changeLanguage(String code) {
-    BlocProvider.of<LocaleCubit>(context).loadLocale(Locale(code));
-    Navigator.pushNamedAndRemoveUntil(
-        context, '/ScannerPage', ((route) => false));
+  @override
+  void initState() {
+    super.initState();
+    // if (!AppConfig().useScanner) {
+    //   // 打开扫码器
+    //   Future.delayed(Duration(milliseconds: 50), () {
+    //     AppConfig().useScanner = startScanner(context);
+    //   });
+    // }
   }
 
   @override
@@ -78,6 +87,15 @@ class LanguagePageState extends State<LanguagePage> {
                     .toList(),
               ),
             )),
+            // BlocListener<DeviceBloc, DeviceState>(
+            //     listener: (context, state) {
+            //       if (state is DeviceDataUpdated &&
+            //           state.deviceData is CodeScannerData) {
+            //         String data = (state.deviceData as CodeScannerData).scanner;
+            //         print("language page qr code: $data");
+            //       }
+            //     },
+            //     child: downloadInfo()),
             downloadInfo(),
             SizedBox(
               height: height * 0.01,

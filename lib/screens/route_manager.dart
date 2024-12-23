@@ -37,7 +37,7 @@ import 'manager/general/general_setting_list_page.dart';
 // 定义路由列表
 // Define routing list
 final Map<String, Function> routes = {
-  '/': (context, {arguments}) => const LanguagePage(),
+  '/LanguagePage': (context, {arguments}) => const LanguagePage(),
   '/login': (context, {arguments}) => const UserLoginPage(),
   '/KioskManager': (context, {arguments}) => KioskManager(),
   '/HeightWeightMeasure': (context, {arguments}) => HeightWeightMeasure(),

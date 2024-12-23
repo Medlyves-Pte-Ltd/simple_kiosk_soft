@@ -166,7 +166,7 @@ class UserLoginPageState extends State<UserLoginPage> {
                             ),
                             onPressed: () {
                               Navigator.pushNamedAndRemoveUntil(
-                                  context, "/", (route) => false);
+                                  context, "/LanguagePage", (route) => false);
                             },
                             child: Text(AppLocalizations.of(context)!.back,
                                 style: TextStyle(

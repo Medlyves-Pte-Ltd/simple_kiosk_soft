@@ -153,5 +153,6 @@
   "put_the_weight": "3.ใส่น้ำหนักน้ำหนักต้องมากกว่า 25 กิโลกรัม",
   "click_singe_calibration_command_button": "4.คลิกที่ปุ่มคำสั่งการสอบเทียบ",
   "weight_check": "5.วัดน้ําหนัก เปรียบเทียบผลลัพธ์ และดูว่าผลน้ําหนักที่สอบเทียบถูกต้องหรือไม่",
-  "click_three_calibration_command_button":"2.คลิกที่ปุ่มเพื่อเข้าสู่สถานะการสอบเทียบ"
+  "click_three_calibration_command_button":"2.คลิกที่ปุ่มเพื่อเข้าสู่สถานะการสอบเทียบ",
+  "please_click_start_again": "กรุณาคลิกเพื่อเริ่มต้นอีกครั้ง"
 }

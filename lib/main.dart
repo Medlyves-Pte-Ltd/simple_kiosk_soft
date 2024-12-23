@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -34,6 +35,7 @@ void main() async {
   await PermissionUtils().getCameraPermission();
   await PermissionUtils().getMicroPhonePermission();
   await PermissionUtils().getManageExternalStoragePermission();
+  LogPrinter.init();
   // app配置初始化
   await AppConfig().init();
   await KioskConfig().init();
@@ -122,7 +124,7 @@ class MyApp extends StatelessWidget {
               return onCustomGenerateRoute(settings);
             }
           },
-          //initialRoute: "/",
+          //initialRoute: "/LanguagePage",
           initialRoute: "/DeviceStartPage",
           supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData(

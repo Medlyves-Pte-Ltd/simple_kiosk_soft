@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_devices_sdk/device_data/blood_oxygen_data.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:simple_kiosk_software/common/range_widget.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
@@ -77,10 +78,36 @@ class BloodOxygenMeasure extends BaseMeasureLayoutWidget {
         update = true;
       } else if (state is DeviceDataUpdated &&
           state.deviceData is BloodOxygenData) {
-        _bloodOxygen =
-            UserInfo().bloodOxygen = (state.deviceData as BloodOxygenData).spo2;
-        spo2HeartRate = UserInfo().spo2HeartRate =
-            (state.deviceData as BloodOxygenData).heartRate;
+        String spo2Str = (state.deviceData as BloodOxygenData).spo2;
+        String heartRateStr = (state.deviceData as BloodOxygenData).heartRate;
+
+        // int spo2 = 0;
+        // try {
+        //   spo2 = int.parse(spo2Str);
+        // } catch (e) {
+        //   spo2 = 0;
+        //   LogPrinter.log("Error: $e");
+        //   _bloodOxygen = spo2HeartRate = dataDefaultValue;
+        // }
+        //
+        // int heartRate = 0;
+        // try {
+        //   heartRate = int.parse(heartRateStr);
+        // } catch (e) {
+        //   heartRate = 0;
+        //   LogPrinter.log("Error: $e");
+        //   _bloodOxygen = spo2HeartRate = dataDefaultValue;
+        // }
+        //
+        // if (spo2 < 80 || heartRate < 40) {
+        //   if (spo2HeartRate != heartRateStr || _bloodOxygen != spo2Str) {
+        //     messageBox(mainContext, super.title,
+        //         AppLocalizations.of(mainContext)!.please_click_start_again);
+        //   }
+        //   _bloodOxygen = spo2HeartRate = dataDefaultValue;
+        // } else {
+        _bloodOxygen = UserInfo().bloodOxygen = spo2Str;
+        spo2HeartRate = UserInfo().spo2HeartRate = heartRateStr;
 
         if (KioskConfig().healthScreeningMode == HealthScreeningMode.online) {
           BlocProvider.of<AppointmentBloc>(mainContext)
@@ -88,6 +115,8 @@ class BloodOxygenMeasure extends BaseMeasureLayoutWidget {
         }
 
         ControlMeasurePageUtils().measured = true;
+        //}
+
         measured = true;
         update = true;
       } else if (state is DeviceDisconnected) {

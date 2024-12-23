@@ -221,6 +221,8 @@ class AppointmentApi {
   }
 
   Future<Map<String, dynamic>> getUserDetails(String patientId) async {
+    LogPrinter.log("patientId: $patientId");
+
     if (patientId.contains('_')) {
       List<String> patientIdParts = patientId.split('_');
       patientId = patientIdParts[0];
@@ -247,6 +249,7 @@ class AppointmentApi {
       }
       final Map<String, dynamic> patientDetails =
           result.data['patient_details'];
+      LogPrinter.log("${result.data['patient_details']}");
       final String name =
           '${patientDetails['first_name']} ${patientDetails['last_name']}';
       final String age = patientDetails['age'].toString();
