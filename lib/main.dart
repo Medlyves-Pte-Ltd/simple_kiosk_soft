@@ -1,13 +1,16 @@
+import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:screen_brightness/screen_brightness.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_state.dart';
@@ -93,66 +96,115 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  Timer? _timer;
+  int _counter = 0;
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
+    Future<void> setApplicationBrightness(double brightness) async {
+      try {
+        await ScreenBrightness.instance
+            .setApplicationScreenBrightness(brightness);
+      } catch (e) {
+        LogPrinter.log("set app brightness failed : " + e.toString());
+      }
+    }
+
+    void _startTimer() {
+      const oneMin = Duration(minutes: 1);
+      _timer = Timer.periodic(oneMin, (Timer timer) {
+        _counter++;
+        if (_counter == 10) {
+          setApplicationBrightness(0.037);
+          timer.cancel();
+          LogPrinter.log(
+              "10 minutes The device does not operate, the screen darkens, and the timer stops");
+        }
+      });
+    }
+
+    void _resetTimer() {
+      _timer?.cancel();
+      _counter = 0;
+      _startTimer();
+    }
+
     return BlocBuilder<LocaleCubit, LocaleState>(
       builder: (context, state) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          locale: state.locale,
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          onGenerateRoute: (settings) {
-            if (settings.name == "/TCMeetingScreen") {
-              final args = settings.arguments as Map<String, dynamic>?;
-              return MaterialPageRoute(
-                builder: (_context) => BlocProvider(
-                  create: (_) => TeleconsultationBloc(
-                      _context.read(), AppointmentRepository(AppointmentApi())),
-                  child: TCMeetingScreen(arguments: args),
-                ),
-              );
-            } else {
-              return onCustomGenerateRoute(settings);
-            }
+        _startTimer();
+        return GestureDetector(
+          onTap: () async {
+            _resetTimer();
+            setApplicationBrightness(0.9);
           },
-          //initialRoute: "/",
-          initialRoute: "/DeviceStartPage",
-          supportedLocales: AppLocalizations.supportedLocales,
-          theme: ThemeData(
-            textTheme: GoogleFonts.robotoTextTheme(textTheme).copyWith(
-              bodyMedium: GoogleFonts.roboto(
-                  textStyle: textTheme.bodyMedium), //measurement readings text
-              labelMedium: GoogleFonts.roboto(
-                  textStyle: textTheme.labelMedium), //navigation button text
-              titleSmall: GoogleFonts.roboto(
-                  textStyle: textTheme.titleSmall), //widget title
-              titleLarge: GoogleFonts.roboto(
-                  textStyle: textTheme
-                      .titleLarge), //Selection buttons and Header titles
-              titleMedium: GoogleFonts.roboto(
-                  textStyle: textTheme.titleMedium), //Get Started button
-            ),
-          ),
-          builder: (context, child) => ResponsiveWrapper.builder(
-            child,
-            maxWidth: 1200,
-            minWidth: 420,
-            defaultScale: true,
-            breakpoints: [
-              const ResponsiveBreakpoint.resize(600, name: MOBILE),
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            locale: state.locale,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
             ],
-            mediaQueryData: MediaQuery.of(context)
-                .copyWith(textScaler: const TextScaler.linear(1.02)),
+            onGenerateRoute: (settings) {
+              if (settings.name == "/TCMeetingScreen") {
+                final args = settings.arguments as Map<String, dynamic>?;
+                return MaterialPageRoute(
+                  builder: (_context) => BlocProvider(
+                    create: (_) => TeleconsultationBloc(_context.read(),
+                        AppointmentRepository(AppointmentApi())),
+                    child: TCMeetingScreen(arguments: args),
+                  ),
+                );
+              } else {
+                return onCustomGenerateRoute(settings);
+              }
+            },
+            //initialRoute: "/",
+            initialRoute: "/DeviceStartPage",
+            supportedLocales: AppLocalizations.supportedLocales,
+            theme: ThemeData(
+              textTheme: GoogleFonts.robotoTextTheme(textTheme).copyWith(
+                bodyMedium: GoogleFonts.roboto(
+                    textStyle:
+                        textTheme.bodyMedium), //measurement readings text
+                labelMedium: GoogleFonts.roboto(
+                    textStyle: textTheme.labelMedium), //navigation button text
+                titleSmall: GoogleFonts.roboto(
+                    textStyle: textTheme.titleSmall), //widget title
+                titleLarge: GoogleFonts.roboto(
+                    textStyle: textTheme
+                        .titleLarge), //Selection buttons and Header titles
+                titleMedium: GoogleFonts.roboto(
+                    textStyle: textTheme.titleMedium), //Get Started button
+              ),
+            ),
+            builder: (context, child) => ResponsiveWrapper.builder(
+              child,
+              maxWidth: 1200,
+              minWidth: 420,
+              defaultScale: true,
+              breakpoints: [
+                const ResponsiveBreakpoint.resize(600, name: MOBILE),
+              ],
+              mediaQueryData: MediaQuery.of(context)
+                  .copyWith(textScaler: const TextScaler.linear(1.02)),
+            ),
           ),
         );
       },
     );
+  }
+
+  Future<void> setApplicationBrightness(double brightness) async {
+    try {
+      await ScreenBrightness.instance
+          .setApplicationScreenBrightness(brightness);
+    } catch (e) {
+      debugPrint(e.toString());
+      throw 'Failed to set application brightness';
+    }
   }
 }
