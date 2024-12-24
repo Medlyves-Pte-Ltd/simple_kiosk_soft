@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/device_data/height_data.dart';
@@ -44,11 +46,20 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
       if (state is DeviceConnected &&
           state.deviceType == DeviceType.HEIGHT_DEVICE) {
         btnText = AppLocalizations.of(mainContext)!.stop;
+        startButtonColor = Colors.red;
         update = true;
+        timerStop = Timer(Duration(seconds: 45), () {
+          if (startStatus) {
+            onStop();
+            timerStop?.cancel();
+          }
+        });
       } else if (state is DeviceDisconnected) {
         if (state.deviceType == DeviceType.WEIGHT_DEVICE) {
           btnText = AppLocalizations.of(mainContext)!.start;
+          startButtonColor = ColorPalette.materialGreen;
           update = true;
+          timerStop?.cancel();
         }
       }
 
@@ -66,7 +77,7 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
           height: height * 0.04,
           width: width * 0.2,
           decoration: BoxDecoration(
-            color: ColorPalette.materialGreen,
+            color: startButtonColor,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Center(
@@ -164,8 +175,8 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
         update = true;
       } else if (state is DeviceDataUpdated) {
         if (state.deviceData is HeightData) {
-          String h = (state.deviceData as HeightData).height;
-          UserInfo().height = "${double.parse(h).toStringAsFixed(1)}";
+          String heightStr = (state.deviceData as HeightData).height;
+          UserInfo().height = "${double.parse(heightStr).toStringAsFixed(1)}";
 
           // 显示身高数据
           bodyHeight = UserInfo().height;
@@ -181,9 +192,36 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
             BlocProvider.of<DeviceBloc>(mainContext).add(connectEvent);
           });
         } else if (state.deviceData is WeightData) {
+          String weightStr = (state.deviceData as WeightData).weight;
+          // double h = 0.0;
+          // try {
+          //   h = double.parse(bodyHeight);
+          // } catch (e) {
+          //   h = 0.0;
+          //   LogPrinter.log("Error: $e");
+          //   bodyHeight = bodyWeight = bodyBmi = dataDefaultValue;
+          // }
+          //
+          // double w = 0;
+          // try {
+          //   w = double.parse(weightStr);
+          // } catch (e) {
+          //   w = 0.0;
+          //   LogPrinter.log("Error: $e");
+          //   bodyHeight = bodyWeight = bodyBmi = dataDefaultValue;
+          // }
+          //
+          // if (h < 80.0 || w < 20.0) {
+          //   heightMeasured = false;
+          //   if (bodyWeight != weightStr) {
+          //     messageBox(mainContext, super.title,
+          //         AppLocalizations.of(mainContext)!.please_click_start_again);
+          //   }
+          //
+          //   bodyHeight = bodyWeight = bodyBmi = dataDefaultValue;
+          // } else {
           bodyHeight = UserInfo().height;
-          bodyWeight =
-              UserInfo().weight = (state.deviceData as WeightData).weight;
+          bodyWeight = UserInfo().weight = weightStr;
 
           try {
             double height_m = double.parse(bodyHeight) / 100.0;
@@ -196,10 +234,6 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
             LogPrinter.log("$e");
           }
 
-          ControlMeasurePageUtils().measured = true;
-          weightMeasured = true;
-          update = true;
-
           if (KioskConfig().healthScreeningMode == HealthScreeningMode.online) {
             BlocProvider.of<AppointmentBloc>(mainContext).processNewData({
               "height": UserInfo().height,
@@ -207,6 +241,11 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
               "bmi": UserInfo().bmi
             });
           }
+          ControlMeasurePageUtils().measured = true;
+          //}
+
+          weightMeasured = true;
+          update = true;
         }
       } else if (state is DeviceDisconnected) {
         if (weightMeasured) {

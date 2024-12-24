@@ -154,5 +154,5 @@
   "click_singe_calibration_command_button": "4.Click the Calibration command button",
   "weight_check": "5.Measure the weight and compare the results to see if the calibrated weight results are correct",
   "click_three_calibration_command_button":"2.Click the button to enter the calibration state",
-  "download_info":"Please scan QR code to register in Medlyves mobile application"
+  "please_click_start_again": "Please click start again"
 }

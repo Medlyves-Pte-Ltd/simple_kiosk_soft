@@ -4,6 +4,8 @@ import 'package:flutter_devices_sdk/device_data/height_data.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/screens/check/base_check_widget.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
+import 'package:simple_kiosk_software/utils/test_result_csv_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_kiosk_software/blocs/device/device_state.dart';
@@ -68,6 +70,13 @@ class HeightCheck extends BaseCheckWidget {
         measured = true;
         update = true;
       } else if (state is DeviceDisconnected) {
+        if (AppConfig().testResultOutCsv) {
+          Future.delayed(const Duration(milliseconds: 10), () async {
+            TestResultCsv testResultCsv = TestResultCsv();
+            await testResultCsv.writeTestDataToCsv();
+          });
+        }
+
         if (!measured) {
           bodyHeight = dataDefaultValue;
           update = true;

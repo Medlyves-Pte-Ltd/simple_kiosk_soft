@@ -19,7 +19,7 @@ class KioskRepository {
       if (result is Failure) {
         errorCount += 1;
         if (errorCount % 5 == 0) {
-          LogPrinter.err(
+          LogPrinter.log(
               'Failed to ping kiosk server $errorCount consecutive times:\n${result.errorResponse.toString()}');
         } else {
           LogPrinter.log('Failed to ping kiosk server');

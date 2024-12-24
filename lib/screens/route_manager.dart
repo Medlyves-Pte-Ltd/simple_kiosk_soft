@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_kiosk_software/screens/login/id_card_login_page.dart';
 import 'package:simple_kiosk_software/screens/manager/device_manger/calibration/weight_calibration.dart';
 import 'package:simple_kiosk_software/screens/manager/device_manger/device_config_page.dart';
 import 'package:simple_kiosk_software/screens/manager/device_manger/device_relate_setting_page.dart';
@@ -12,11 +13,11 @@ import 'package:simple_kiosk_software/screens/measurement_pages/blood_oxygen_mea
 import 'package:simple_kiosk_software/screens/measurement_pages/blood_pressure_measure.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/body_composition_measure.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/ecg_measure.dart';
-import 'package:simple_kiosk_software/screens/scanner_page.dart';
+import 'package:simple_kiosk_software/screens/login/scanner_page.dart';
 import 'package:simple_kiosk_software/screens/summary_pages/summary_layout_widget.dart';
 import 'package:simple_kiosk_software/screens/device_start_page.dart';
 import 'package:simple_kiosk_software/screens/manager/device_manger/device_diagnostic_page.dart';
-import 'package:simple_kiosk_software/screens/user_login_page.dart';
+import 'package:simple_kiosk_software/screens/login/user_login_page.dart';
 import 'package:simple_kiosk_software/screens/language/language_page.dart';
 import 'package:simple_kiosk_software/screens/manager/kiosk_manager/kiosk_manager.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/height_weight_measure.dart';
@@ -37,7 +38,7 @@ import 'manager/general/general_setting_list_page.dart';
 // 定义路由列表
 // Define routing list
 final Map<String, Function> routes = {
-  '/': (context, {arguments}) => const LanguagePage(),
+  '/LanguagePage': (context, {arguments}) => const LanguagePage(),
   '/login': (context, {arguments}) => const UserLoginPage(),
   '/KioskManager': (context, {arguments}) => KioskManager(),
   '/HeightWeightMeasure': (context, {arguments}) => HeightWeightMeasure(),
@@ -69,6 +70,7 @@ final Map<String, Function> routes = {
   '/WeightCalibration': (context, {arguments}) => WeightCalibration(),
   '/DeviceRelateSettingPage': (context, {arguments}) =>
       DeviceRelateSettingPage(),
+  '/IdCardLoginPage': (context, {arguments}) => IdCardLoginPage(),
 };
 
 // 定义通用的onGenerateRoute

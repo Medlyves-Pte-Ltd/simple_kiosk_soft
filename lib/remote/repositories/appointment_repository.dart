@@ -57,6 +57,8 @@ class AppointmentRepository {
     final String age = patientDetails['age'].toString();
     final String gender = patientDetails['gender'];
 
+    LogPrinter.log("from server:$patientDetails");
+
     data = {
       ...data,
       'name': name,

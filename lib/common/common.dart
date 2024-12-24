@@ -1,7 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter_devices_sdk/log/log_printer.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_devices_sdk/device_type.dart';
+import 'package:flutter_devices_sdk/devices/device_config.dart';
+import 'package:simple_kiosk_software/blocs/device/debug_device_bloc.dart';
+import 'package:simple_kiosk_software/blocs/device/device_event.dart';
 
 Future<void> createDirectory(String path) async {
   try {
@@ -9,13 +14,13 @@ Future<void> createDirectory(String path) async {
     if (!await Directory(path).exists()) {
       // 如果不存在，则创建目录
       await Directory(path).create(recursive: true);
-      LogPrinter.log('Directory created at $path');
+      print('Directory created at $path');
     } else {
-      LogPrinter.log('Directory already exists at $path');
+      print('Directory already exists at $path');
     }
   } catch (e) {
     // 处理异常情况
-    LogPrinter.log('Error creating directory: $e');
+    print('Error creating directory: $e');
   }
 }
 
@@ -36,4 +41,25 @@ List copyWithList(List list) {
     }
   }
   return copyList;
+}
+
+// 打开扫码器
+bool startScanner(BuildContext context) {
+  if (DeviceConfig().deviceEnable(DeviceType.SCANNER_DEVICE)) {
+    // autoStop 不会自动关闭扫码器
+    DeviceConnectEvent connectEvent = DeviceConnectEvent(
+        deviceType: DeviceType.SCANNER_DEVICE, autoStop: false);
+    BlocProvider.of<DeviceBloc>(context).add(connectEvent);
+    return true;
+  }
+  return false;
+}
+
+// 关闭扫码器
+void stopScanner(BuildContext context) {
+  if (DeviceConfig().deviceEnable(DeviceType.SCANNER_DEVICE)) {
+    DeviceStopEvent stopEvent =
+        DeviceStopEvent(deviceType: DeviceType.SCANNER_DEVICE);
+    BlocProvider.of<DeviceBloc>(context).add(stopEvent);
+  }
 }

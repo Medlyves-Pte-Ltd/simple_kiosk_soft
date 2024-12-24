@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/device_data/body_temperature_data.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:simple_kiosk_software/common/range_widget.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
@@ -71,15 +72,36 @@ class BodyTemperatureMeasure extends BaseMeasureLayoutWidget {
         update = true;
       } else if (state is DeviceDataUpdated &&
           state.deviceData is BodyTemperatureData) {
-        temperature = UserInfo().temperature =
-            (state.deviceData as BodyTemperatureData).temperature;
+        String text = (state.deviceData as BodyTemperatureData).temperature;
 
-        if (KioskConfig().healthScreeningMode == HealthScreeningMode.online) {
-          BlocProvider.of<AppointmentBloc>(mainContext)
-              .processNewData({"temperature": temperature});
+        double temp = 0.0;
+
+        try {
+          temp = double.parse(text);
+        } catch (e) {
+          temp = 0.0;
+          LogPrinter.log("Error: $e");
+          temperature = dataDefaultValue;
         }
 
-        ControlMeasurePageUtils().measured = true;
+        if (temp < 32 || temp > 42.5) {
+          if (temperature != text) {
+            messageBox(mainContext, super.title,
+                AppLocalizations.of(mainContext)!.please_click_start_again);
+          }
+          temperature = dataDefaultValue;
+        } else {
+          temperature = UserInfo().temperature =
+              (state.deviceData as BodyTemperatureData).temperature;
+
+          if (KioskConfig().healthScreeningMode == HealthScreeningMode.online) {
+            BlocProvider.of<AppointmentBloc>(mainContext)
+                .processNewData({"temperature": temperature});
+          }
+
+          ControlMeasurePageUtils().measured = true;
+        }
+
         measured = true;
         update = true;
       } else if (state is DeviceDisconnected) {

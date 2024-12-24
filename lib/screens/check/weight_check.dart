@@ -71,12 +71,14 @@ class WeightCheck extends BaseCheckWidget {
             UserInfo().weight = (state.deviceData as WeightData).weight;
         measured = true;
         update = true;
-
-        // Future.delayed(const Duration(milliseconds: 10), () async {
-        //   TestResultCsv testResultCsv = TestResultCsv();
-        //   await testResultCsv.writeTestDataToCsv();
-        // });
       } else if (state is DeviceDisconnected) {
+        if (AppConfig().testResultOutCsv) {
+          Future.delayed(const Duration(milliseconds: 10), () async {
+            TestResultCsv testResultCsv = TestResultCsv();
+            await testResultCsv.writeTestDataToCsv();
+          });
+        }
+
         if (!measured) {
           bodyWeight = dataDefaultValue;
           update = true;

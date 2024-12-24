@@ -1,138 +1,94 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_devices_sdk/device_data/code_scanner_data.dart';
+import 'package:flutter_devices_sdk/device_type.dart';
+import 'package:simple_kiosk_software/common/common.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/screens/check/base_check_widget.dart';
-import 'package:simple_kiosk_software/utils/permission_config.dart';
-import 'package:simple_kiosk_software/utils/print_utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:simple_kiosk_software/utils/scanner_utils.dart';
+import 'package:simple_kiosk_software/blocs/device/device_state.dart';
+import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
+import 'package:simple_kiosk_software/blocs/device/device_event.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 
 class ScannerCheck extends BaseCheckWidget {
-  ValueNotifier<String> scannerData = ValueNotifier<String>("");
-  ValueNotifier<String> btnText = ValueNotifier<String>("");
+  String scannerData = "";
 
   ScannerCheck() {
-    scannerData.value = dataDefaultValue;
-    ScannerUtils().listenData = listenScannerData;
-  }
-
-  // 监听扫码器数据
-  void listenScannerData(String data) {
-    scannerData.value = data;
+    scannerData = dataDefaultValue;
   }
 
   @override
   void init() {
     super.title = AppLocalizations.of(mainContext)!.scanner;
-    btnText.value = AppLocalizations.of(mainContext)!.start;
     iconFile = "assets/images/scanner.png";
     underlineColor = ColorPalette.colorheightWeight;
   }
 
   @override
-  Widget startButton() {
-    double btnFontSize = height * 0.01;
-    return ValueListenableBuilder<String>(
-        valueListenable: btnText,
-        builder: (context, value, child) {
-          return PermissionConfig()
-                  .havePermission(PermissionModules.DeviceDiagnostic)
-              ? InkWell(
-                  onTap: () async {
-                    if (value == AppLocalizations.of(mainContext)!.stop) {
-                      await onStop();
-                      btnText.value = AppLocalizations.of(mainContext)!.start;
-                      scannerData.value = dataDefaultValue;
-                    } else {
-                      btnText.value = AppLocalizations.of(mainContext)!.stop;
-                      scannerData.value =
-                          AppLocalizations.of(mainContext)!.loading;
-                      await onStart();
-                    }
-                  },
-                  child: Container(
-                    height: height * 0.03,
-                    width: width * 0.1,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: ColorPalette.materialGreen,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(value,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: btnFontSize,
-                            color: Colors.white)),
-                  ),
-                )
-              : Container(
-                  height: height * 0.03,
-                  width: width * 0.1,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: ColorPalette.darkGrey,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text(value,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: btnFontSize,
-                          color: Colors.white)),
-                );
-        });
-  }
-
-  @override
   Future<void> onStart() async {
-    scannerData.value = dataDefaultValue;
-    // 打开扫码器
-    await ScannerUtils().connect();
+    DeviceConnectEvent connectEvent = DeviceConnectEvent(
+        deviceType: DeviceType.SCANNER_DEVICE, autoStop: false);
+    BlocProvider.of<DeviceBloc>(mainContext).add(connectEvent);
   }
 
   @override
-  Future<void> onStop() async {}
+  Future<void> onStop() async {
+    DeviceStopEvent stopEvent =
+        DeviceStopEvent(deviceType: DeviceType.SCANNER_DEVICE);
+    BlocProvider.of<DeviceBloc>(mainContext).add(stopEvent);
+  }
+
+  @override
+  bool needUpdate(DeviceType? type) {
+    return type == DeviceType.SCANNER_DEVICE;
+  }
 
   @override
   Widget buildCardDataShowArea() {
-    double titleFontSize = height * 0.01;
     double dataFontSize = height * 0.01;
+    return BlocBuilder<DeviceBloc, DeviceState>(buildWhen: (previous, state) {
+      if (!needUpdate(state.deviceType)) {
+        return false;
+      }
 
-    return Center(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                AppLocalizations.of(mainContext)!.scanner,
-                style: TextStyle(
-                    fontSize: titleFontSize, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: height * 0.02),
-              ValueListenableBuilder(
-                  valueListenable: scannerData,
-                  builder: (context, value, child) {
-                    return SizedBox(
-                      width: width * 0.25,
-                      child: Text(
-                        value,
-                        softWrap: true,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontSize: dataFontSize,
-                            fontWeight: FontWeight.bold,
-                            color: ColorPalette.materialGreen),
-                      ),
-                    );
-                  }),
-            ],
-          ),
-        ],
-      ),
-    );
+      bool update = false;
+      if (state is DeviceConnected) {
+        measured = false;
+        scannerData = dataDefaultValue;
+        update = true;
+      } else if (state is DeviceDataLoading) {
+        scannerData = AppLocalizations.of(mainContext)!.loading;
+        update = true;
+      } else if (state is DeviceDataUpdated &&
+          state.deviceData is CodeScannerData) {
+        scannerData = (state.deviceData as CodeScannerData).scanner;
+        measured = true;
+        update = true;
+      } else if (state is DeviceDisconnected) {
+        if (!measured) {
+          scannerData = dataDefaultValue;
+          update = true;
+        }
+      }
+
+      return update;
+    }, builder: (context, state) {
+      return Center(
+        child: SizedBox(
+            width: width * 0.25,
+            child: Text(
+              textAlign: TextAlign.center,
+              scannerData,
+              softWrap: true,
+              maxLines: 8,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  fontSize: dataFontSize,
+                  fontWeight: FontWeight.bold,
+                  color: ColorPalette.materialGreen),
+            )),
+      );
+    });
   }
 }

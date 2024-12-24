@@ -132,15 +132,11 @@ class BodyRange {
   }
 
   double get proteinRateMin {
-    return (rangeMap["protein_rate_min"] as double) *
-        standWeight /
-        actualWeight;
+    return (rangeMap["protein_rate_min"] as double);
   }
 
   double get proteinRateMax {
-    return (rangeMap["protein_rate_max"] as double) *
-        standWeight /
-        actualWeight;
+    return (rangeMap["protein_rate_max"] as double);
   }
 
   int get visceralFatLevelMin {

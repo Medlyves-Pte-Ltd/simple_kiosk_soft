@@ -32,8 +32,10 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     bool? result = await device?.connect();
     LogPrinter.log('Device connected status: $result.');
     emit(DeviceConnected(deviceType: deviceType));
-    Future.delayed(const Duration(milliseconds: 100),
-        () => add(DeviceStartEvent(deviceType: deviceType)));
+    Future.delayed(
+        const Duration(milliseconds: 100),
+        () => add(DeviceStartEvent(
+            deviceType: deviceType, autoStop: event.autoStop)));
   }
 
   Future<void> _onDeviceStartEvent(
@@ -43,7 +45,8 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
 
     LogPrinter.log('Trying to start from bloc.');
     _dataSubscription = device?.onDataReady.listen((data) {
-      add(DeviceUpdateDataEvent(deviceType: deviceType, deviceData: data));
+      add(DeviceUpdateDataEvent(
+          deviceType: deviceType, deviceData: data, autoStop: event.autoStop));
     });
     await device?.start();
     LogPrinter.log('Started Device from bloc.');
@@ -60,8 +63,11 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     LogPrinter.log(deviceData.toString());
     LogPrinter.log('Trying to stop the device.');
     emit(DeviceDataUpdated(deviceType: deviceType, deviceData: deviceData));
-    Future.delayed(const Duration(milliseconds: 300),
-        () => add(DeviceDisconnectEvent(deviceType: event.deviceType)));
+
+    if (event.autoStop) {
+      Future.delayed(const Duration(milliseconds: 300),
+          () => add(DeviceDisconnectEvent(deviceType: event.deviceType)));
+    }
   }
 
   Future<void> _onDeviceStopEvent(

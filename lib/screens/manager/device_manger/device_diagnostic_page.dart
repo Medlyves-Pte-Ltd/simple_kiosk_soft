@@ -45,7 +45,6 @@ class DeviceDiagnosticPage extends StatelessWidget {
     ECGCheck(),
     PrinterCheck(),
     ScannerCheck(),
-
     ThaiCardCheck(),
     CameraCheck1(),
     // CameraCheck2(),

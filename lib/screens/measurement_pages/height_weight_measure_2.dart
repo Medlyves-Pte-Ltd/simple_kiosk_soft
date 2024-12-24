@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/device_data/height_data.dart';
@@ -44,10 +46,17 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
           state.deviceType == DeviceType.WEIGHT_DEVICE) {
         btnText = AppLocalizations.of(mainContext)!.stop;
         update = true;
+        timerStop = Timer(Duration(seconds: 45), () {
+          if (startStatus) {
+            onStop();
+            timerStop?.cancel();
+          }
+        });
       } else if (state is DeviceDisconnected) {
         if (!weightMeasured || state.deviceType == DeviceType.HEIGHT_DEVICE) {
           btnText = AppLocalizations.of(mainContext)!.start;
           update = true;
+          timerStop?.cancel();
         }
       }
 

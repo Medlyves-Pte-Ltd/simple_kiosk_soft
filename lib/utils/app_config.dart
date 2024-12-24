@@ -7,6 +7,8 @@ import 'package:simple_kiosk_software/common/common.dart';
 import 'package:simple_kiosk_software/utils/body_range.dart';
 
 class AppConfig {
+  // 是否使用扫码器
+  bool useScanner = false;
   String appVersion = '1.0.0';
   String mainDir = "/sdcard/kiosk";
   String configDir = "";
@@ -82,7 +84,7 @@ class AppConfig {
     saveFile();
   }
 
-  // 是否使用usb继电器
+  // 退出时输出测试结果
   bool get testResultOutCsv {
     try {
       return configMap["test_result_out_csv"] as bool;
@@ -107,16 +109,14 @@ class AppConfig {
     audiosDir = "$mainDir/audios";
     logsDir = "$mainDir/logs";
     recordDir = "$mainDir/records";
-
-    LogPrinter.logOutputPath = logsDir;
+    // 创建目录
+    await createDirectory(logsDir);
+    await createDirectory(recordDir);
+    // 日志初始化
+    LogPrinter.init(logsDir);
     // 加载配置文件
     await loadFile();
 
-    // 创建目录
-    await createDirectory(logsDir);
-    if (testResultOutCsv) {
-      await createDirectory(recordDir);
-    }
     // 范围
     await BodyRange().loadFile();
 

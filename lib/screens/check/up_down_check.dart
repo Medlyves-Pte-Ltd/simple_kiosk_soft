@@ -3,8 +3,6 @@ import 'package:flutter_devices_sdk/devices/up_down_control.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/screens/check/base_check_widget.dart';
 import 'package:simple_kiosk_software/utils/permission_config.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:simple_kiosk_software/utils/scanner_utils.dart';
 
 class UpDownCheck extends BaseCheckWidget {
   UpDownCheck() {}

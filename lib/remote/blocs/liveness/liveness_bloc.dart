@@ -37,7 +37,7 @@ class LivenessBloc extends Bloc<LivenessEvent, LivenessState> {
     int newErrorCount = state.errorCount + 1;
     print('ping kiosk count ${newErrorCount}');
     if (newErrorCount % 5 == 0) {
-      LogPrinter.err(
+      LogPrinter.log(
           'Failed to ping kiosk server $newErrorCount consecutive times:\n${event.reason}');
       emit(LivenessState(isConnected: false, errorCount: newErrorCount));
     } else {

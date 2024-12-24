@@ -1,16 +1,13 @@
-import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:screen_brightness/screen_brightness.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_state.dart';
@@ -196,15 +193,5 @@ class MyApp extends StatelessWidget {
         );
       },
     );
-  }
-
-  Future<void> setApplicationBrightness(double brightness) async {
-    try {
-      await ScreenBrightness.instance
-          .setApplicationScreenBrightness(brightness);
-    } catch (e) {
-      debugPrint(e.toString());
-      throw 'Failed to set application brightness';
-    }
   }
 }

@@ -108,7 +108,8 @@ class SummaryLayoutWidget extends StatelessWidget {
           LogPrinter.log('Appointment ended');
           displayName = null;
           appointmentId = null;
-          Navigator.pushNamedAndRemoveUntil(mainContext, "/", (route) => false);
+          Navigator.pushNamedAndRemoveUntil(
+              mainContext, "/LanguagePage", (route) => false);
         }
       },
       child: BlocBuilder<AppointmentBloc, AppointmentState>(
@@ -329,7 +330,8 @@ class SummaryLayoutWidget extends StatelessWidget {
         UserInfo().clearResult();
         ControlMeasurePageUtils().pageIndex = 0;
         ControlMeasurePageUtils().clearMeasure();
-        Navigator.pushNamedAndRemoveUntil(mainContext, "/", (route) => false);
+        Navigator.pushNamedAndRemoveUntil(
+            mainContext, "/LanguagePage", (route) => false);
       },
       child: Container(
           height: height * 0.03,

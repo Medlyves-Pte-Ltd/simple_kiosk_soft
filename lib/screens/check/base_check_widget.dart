@@ -23,6 +23,8 @@ class BaseCheckWidget extends StatelessWidget {
   late Color underlineColor;
   // StatelessWidget需要保存上下文才能进行页面跳转，翻译
   late BuildContext mainContext;
+  // 开始按钮背景色
+  Color startButtonColor = ColorPalette.materialGreen;
 
   void init() {}
   // 开始
@@ -137,15 +139,18 @@ class BaseCheckWidget extends StatelessWidget {
 
       if (state is DeviceConnected) {
         btnText = AppLocalizations.of(mainContext)!.stop;
+        startButtonColor = Colors.red;
         update = true;
       } else if (state is DeviceDisconnected) {
         btnText = AppLocalizations.of(mainContext)!.start;
+        startButtonColor = ColorPalette.materialGreen;
         update = true;
       }
 
       return update;
     }, builder: (context, state) {
-      return PermissionConfig().havePermission(PermissionModules.DeviceDiagnostic)
+      return PermissionConfig()
+              .havePermission(PermissionModules.DeviceDiagnostic)
           ? InkWell(
               onTap: () async {
                 if (btnText == AppLocalizations.of(mainContext)!.stop) {
@@ -158,7 +163,7 @@ class BaseCheckWidget extends StatelessWidget {
                 height: height * 0.03,
                 width: width * 0.1,
                 decoration: BoxDecoration(
-                  color: ColorPalette.materialGreen,
+                  color: startButtonColor,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Center(
