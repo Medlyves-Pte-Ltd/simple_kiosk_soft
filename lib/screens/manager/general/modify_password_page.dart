@@ -46,7 +46,7 @@ class ModifyPasswordPageState extends State<ModifyPasswordPage> {
             Navigator.pop(context);
           },
         ),
-        title: Text('Modify Password'),
+        title: Text('Change Password'),
       ),
       body: Center(
         child: Column(

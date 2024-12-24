@@ -76,7 +76,7 @@ class GeneralSettingListPageState extends State<GeneralSettingListPage> {
                             children: [
                               ListTile(
                                 selectedColor: ColorPalette.materialGreen,
-                                title: Text('Permission Config'),
+                                title: Text('Permission Configuration'),
                                 subtitle: Text(''),
                                 leading: CircleAvatar(
                                   child: Icon(Icons.perm_identity_outlined),
@@ -93,7 +93,7 @@ class GeneralSettingListPageState extends State<GeneralSettingListPage> {
                       buildDivider(),
                       ListTile(
                         selectedColor: ColorPalette.materialGreen,
-                        title: Text('Modify Password'),
+                        title: Text('Change Password'),
                         subtitle: Text(''),
                         leading: CircleAvatar(
                           child: Icon(Icons.password_outlined),
@@ -108,7 +108,7 @@ class GeneralSettingListPageState extends State<GeneralSettingListPage> {
                       // 测试结果输出
                       allowEdit
                           ? SwitchListTile(
-                              title: Text('Test Result Out CSV File',
+                              title: Text('Test results export to csv file',
                                   style: TextStyle(fontSize: height * 0.012)),
                               value: AppConfig().testResultOutCsv,
                               onChanged: (bool value) {
@@ -119,7 +119,7 @@ class GeneralSettingListPageState extends State<GeneralSettingListPage> {
                           : IgnorePointer(
                               ignoring: true,
                               child: SwitchListTile(
-                                title: Text('Test Result Out File',
+                                title: Text('Test results export to csv file',
                                     style: TextStyle(fontSize: height * 0.012)),
                                 value: AppConfig().testResultOutCsv,
                                 activeTrackColor: Colors.grey,

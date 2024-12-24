@@ -131,7 +131,7 @@ class PermissionConfigPageState extends State<PermissionConfigPage> {
             Navigator.pop(context);
           },
         ),
-        title: Text('Permission Setting'),
+        title: Text('Permission Configuration'),
       ),
       backgroundColor: Colors.white,
       //resizeToAvoidBottomInset: false,
