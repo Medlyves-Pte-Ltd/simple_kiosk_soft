@@ -50,6 +50,7 @@ dependencies:
   libserialport: ^0.3.0+1
   country_flags: ^3.0.0
   encrypt: ^5.0.3
+  screen_brightness: ^2.0.1
 #  flutter_devices_sdk: # 包名
 #      git:
 #        #url: https://github.com/Medlyves-Pte-Ltd/flutter_devices_sdk.git

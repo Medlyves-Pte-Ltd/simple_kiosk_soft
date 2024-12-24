@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -25,6 +28,7 @@ import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 import 'package:simple_kiosk_software/utils/permission_utils.dart';
 import 'package:simple_kiosk_software/remote/utils/shared_prefs.dart';
 import 'package:simple_kiosk_software/utils/shared_preferences.dart';
+import 'package:screen_brightness/screen_brightness.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -95,46 +99,46 @@ void main() async {
 class MyApp extends StatelessWidget {
   Timer? _timer;
   int _counter = 0;
+  Future<void> setApplicationBrightness(double brightness) async {
+    try {
+      await ScreenBrightness.instance
+          .setApplicationScreenBrightness(brightness);
+    } catch (e) {
+      LogPrinter.log("set app brightness failed : " + e.toString());
+    }
+  }
+
+  void _startTimer() {
+    const oneMin = Duration(minutes: 1);
+    _timer = Timer.periodic(oneMin, (Timer timer) {
+      _counter++;
+      if (_counter == 10) {
+        setApplicationBrightness(0.037);
+        timer.cancel();
+        LogPrinter.log(
+            "10 minutes The device does not operate, the screen darkens, and the timer stops");
+      }
+    });
+  }
+
+  void _resetTimer() {
+    _timer?.cancel();
+    _counter = 0;
+    _startTimer();
+  }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-
-    Future<void> setApplicationBrightness(double brightness) async {
-      try {
-        await ScreenBrightness.instance
-            .setApplicationScreenBrightness(brightness);
-      } catch (e) {
-        LogPrinter.log("set app brightness failed : " + e.toString());
-      }
-    }
-
-    void _startTimer() {
-      const oneMin = Duration(minutes: 1);
-      _timer = Timer.periodic(oneMin, (Timer timer) {
-        _counter++;
-        if (_counter == 10) {
-          setApplicationBrightness(0.037);
-          timer.cancel();
-          LogPrinter.log(
-              "10 minutes The device does not operate, the screen darkens, and the timer stops");
-        }
-      });
-    }
-
-    void _resetTimer() {
-      _timer?.cancel();
-      _counter = 0;
-      _startTimer();
-    }
-
     return BlocBuilder<LocaleCubit, LocaleState>(
       builder: (context, state) {
         _startTimer();
         return GestureDetector(
           onTap: () async {
-            _resetTimer();
-            setApplicationBrightness(0.9);
+            if (AppConfig().ecoMode) {
+              _resetTimer();
+              setApplicationBrightness(0.9);
+            }
           },
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
@@ -159,7 +163,7 @@ class MyApp extends StatelessWidget {
                 return onCustomGenerateRoute(settings);
               }
             },
-            //initialRoute: "/",
+            //initialRoute: "/LanguagePage",
             initialRoute: "/DeviceStartPage",
             supportedLocales: AppLocalizations.supportedLocales,
             theme: ThemeData(

@@ -128,6 +128,29 @@ class GeneralSettingListPageState extends State<GeneralSettingListPage> {
                                 onChanged: (bool value) {},
                               ),
                             ),
+                      buildDivider(),
+                      allowEdit
+                          ? SwitchListTile(
+                              title: Text('Eco mode',
+                                  style: TextStyle(fontSize: height * 0.012)),
+                              value: AppConfig().ecoMode,
+                              onChanged: (bool value) {
+                                AppConfig().ecoMode = value;
+                                setState(() {});
+                              },
+                            )
+                          : IgnorePointer(
+                              ignoring: true,
+                              child: SwitchListTile(
+                                title: Text('Eco mode',
+                                    style: TextStyle(fontSize: height * 0.012)),
+                                value: AppConfig().ecoMode,
+                                activeTrackColor: Colors.grey,
+                                inactiveThumbColor: Colors.red,
+                                inactiveTrackColor: Colors.grey,
+                                onChanged: (bool value) {},
+                              ),
+                            ),
                     ],
                   ))),
           Footer(),

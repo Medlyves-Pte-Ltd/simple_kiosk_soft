@@ -98,6 +98,20 @@ class AppConfig {
     saveFile();
   }
 
+  // 节能模式
+  bool get ecoMode {
+    try {
+      return configMap["eco_mode"] as bool;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  set ecoMode(bool value) {
+    configMap["eco_mode"] = value;
+    saveFile();
+  }
+
   Future<void> init() async {
     // 获取版本
     PackageInfo packageInfo = await PackageInfo.fromPlatform();

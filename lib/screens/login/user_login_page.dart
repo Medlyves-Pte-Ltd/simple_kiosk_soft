@@ -75,7 +75,7 @@ class UserLoginPageState extends State<UserLoginPage> {
                       textCapitalization: TextCapitalization.words,
                       cursorColor: const Color.fromRGBO(103, 155, 206, 1),
                       decoration: InputDecoration(
-                          labelText: AppLocalizations.of(context)!.print_name,
+                          labelText: AppLocalizations.of(context)!.name,
                           labelStyle: TextStyle(
                               color: Color.fromRGBO(103, 155, 206, 1),
                               fontSize: height * 0.016),
