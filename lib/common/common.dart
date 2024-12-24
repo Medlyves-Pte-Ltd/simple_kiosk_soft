@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:flutter_devices_sdk/devices/device_config.dart';
-import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:simple_kiosk_software/blocs/device/debug_device_bloc.dart';
 import 'package:simple_kiosk_software/blocs/device/device_event.dart';
 
@@ -15,13 +14,13 @@ Future<void> createDirectory(String path) async {
     if (!await Directory(path).exists()) {
       // 如果不存在，则创建目录
       await Directory(path).create(recursive: true);
-      LogPrinter.log('Directory created at $path');
+      print('Directory created at $path');
     } else {
-      LogPrinter.log('Directory already exists at $path');
+      print('Directory already exists at $path');
     }
   } catch (e) {
     // 处理异常情况
-    LogPrinter.log('Error creating directory: $e');
+    print('Error creating directory: $e');
   }
 }
 

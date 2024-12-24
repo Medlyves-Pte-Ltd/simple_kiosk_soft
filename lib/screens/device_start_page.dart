@@ -172,17 +172,6 @@ class _DeviceStartPageState extends State<DeviceStartPage> {
       }
     }
 
-    // 扫码设备能否使用
-    if (DeviceConfig().deviceEnable(DeviceType.SCANNER_DEVICE)) {
-      // 打开扫码器
-      try {
-        await ScannerUtils().connect();
-      } catch (e) {
-        _showInfo.value = "Scanner connection failed, Error:$e";
-        return;
-      }
-    }
-
     await Future.delayed(Duration(seconds: 2), () {});
     // 如果没有错误就进到欢迎界面
     if (!DeviceOrderCheck().usbOrderError()) {

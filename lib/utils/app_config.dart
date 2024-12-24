@@ -109,15 +109,14 @@ class AppConfig {
     audiosDir = "$mainDir/audios";
     logsDir = "$mainDir/logs";
     recordDir = "$mainDir/records";
-
+    // 创建目录
+    await createDirectory(logsDir);
+    await createDirectory(recordDir);
+    // 日志初始化
+    LogPrinter.init(logsDir);
     // 加载配置文件
     await loadFile();
 
-    // 创建目录
-    await createDirectory(logsDir);
-    if (testResultOutCsv) {
-      await createDirectory(recordDir);
-    }
     // 范围
     await BodyRange().loadFile();
 

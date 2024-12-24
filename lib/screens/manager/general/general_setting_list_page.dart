@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/permission_config.dart';
 
 class GeneralSettingListPage extends StatefulWidget {
@@ -9,6 +10,7 @@ class GeneralSettingListPage extends StatefulWidget {
 }
 
 class GeneralSettingListPageState extends State<GeneralSettingListPage> {
+  bool allowEdit = true;
   // 屏幕宽度
   double width = 0;
   // 屏幕高度
@@ -17,6 +19,7 @@ class GeneralSettingListPageState extends State<GeneralSettingListPage> {
   @override
   void initState() {
     super.initState();
+    allowEdit = PermissionConfig().havePermission(PermissionModules.General);
   }
 
   @override
@@ -102,6 +105,29 @@ class GeneralSettingListPageState extends State<GeneralSettingListPage> {
                         },
                       ),
                       buildDivider(),
+                      // 测试结果输出
+                      allowEdit
+                          ? SwitchListTile(
+                              title: Text('Test Result Out CSV File',
+                                  style: TextStyle(fontSize: height * 0.012)),
+                              value: AppConfig().testResultOutCsv,
+                              onChanged: (bool value) {
+                                AppConfig().testResultOutCsv = value;
+                                setState(() {});
+                              },
+                            )
+                          : IgnorePointer(
+                              ignoring: true,
+                              child: SwitchListTile(
+                                title: Text('Test Result Out File',
+                                    style: TextStyle(fontSize: height * 0.012)),
+                                value: AppConfig().testResultOutCsv,
+                                activeTrackColor: Colors.grey,
+                                inactiveThumbColor: Colors.red,
+                                inactiveTrackColor: Colors.grey,
+                                onChanged: (bool value) {},
+                              ),
+                            ),
                     ],
                   ))),
           Footer(),

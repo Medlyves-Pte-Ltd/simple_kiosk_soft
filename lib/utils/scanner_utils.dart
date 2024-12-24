@@ -17,7 +17,6 @@ class ScannerUtils {
     scanner = DeviceManager().getDevice(DeviceType.SCANNER_DEVICE);
     scanner?.onDataReady.listen((event) {
       String data = (event as CodeScannerData).scanner;
-      LogPrinter.log("qr code orign data:$data");
       if (listenData != null) {
         listenData!(data);
       }

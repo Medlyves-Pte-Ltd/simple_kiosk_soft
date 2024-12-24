@@ -35,7 +35,6 @@ void main() async {
   await PermissionUtils().getCameraPermission();
   await PermissionUtils().getMicroPhonePermission();
   await PermissionUtils().getManageExternalStoragePermission();
-  LogPrinter.init();
   // app配置初始化
   await AppConfig().init();
   await KioskConfig().init();
