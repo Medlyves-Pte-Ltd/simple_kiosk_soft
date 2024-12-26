@@ -1,12 +1,8 @@
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_devices_sdk/device_data/code_scanner_data.dart';
-import 'package:simple_kiosk_software/blocs/device/debug_device_bloc.dart';
-import 'package:simple_kiosk_software/blocs/device/device_state.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_kiosk_software/common/common.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,7 +27,7 @@ class LanguagePageState extends State<LanguagePage> {
   final List<Map<String, String>> languages = [
     {"name": "ภาษาไทย", "code": "th", "flag": "THA"},
     {"name": "English", "code": "en", "flag": "GBR"},
-    // {"name": "中文", "code": "zh", "flag": "CHN"},
+    {"name": "中文", "code": "zh", "flag": "CHN"},
     // {"name": "Bahasa Melayu", "code": "ms", "flag": ""},
     // {"name": "தமிழ்", "code": "ta", "flag": ""},
   ];
