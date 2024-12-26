@@ -125,6 +125,33 @@ class AppConfig {
     saveFile();
   }
 
+  // usb转换器使用的vid-pid
+  int get relayUsbConverterVid {
+    try {
+      return configMap["relay_usb_converter_vid"] as int;
+    } catch (e) {
+      return 1027;
+    }
+  }
+
+  set relayUsbConverterVid(int value) {
+    configMap["relay_usb_converter_vid"] = value;
+    saveFile();
+  }
+
+  int get relayUsbConverterPid {
+    try {
+      return configMap["relay_usb_converter_pid"] as int;
+    } catch (e) {
+      return 24577;
+    }
+  }
+
+  set relayUsbConverterPid(int value) {
+    configMap["relay_usb_converter_pid"] = value;
+    saveFile();
+  }
+
   Future<void> init() async {
     // 获取版本
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -143,10 +170,11 @@ class AppConfig {
     LogPrinter.init(logsDir);
     // 加载配置文件
     await loadFile();
-
     // 范围
     await BodyRange().loadFile();
 
+    DeviceSdkParamSetting().relayUsbConverterVid = relayUsbConverterVid;
+    DeviceSdkParamSetting().relayUsbConverterPid = relayUsbConverterPid;
     DeviceSdkParamSetting().useSimulateUsbDevice = false;
     DeviceSdkParamSetting().replayIoCount = relayIoCount;
     DeviceSdkParamSetting().configDir = configDir;

@@ -71,9 +71,9 @@ class LanguagePageState extends State<LanguagePage> {
                 children: languages
                     .map((language) => Container(
                           margin:
-                              EdgeInsets.symmetric(horizontal: width * 0.03),
-                          height: height * 0.06,
-                          width: width * 0.18,
+                              EdgeInsets.symmetric(horizontal: width * 0.02),
+                          height: height * 0.08,
+                          width: width * 0.2,
                           child: _buildLanguageButton(
                             language["name"]!,
                             language["code"]!,
@@ -179,8 +179,8 @@ class LanguagePageState extends State<LanguagePage> {
       String languageName, String languageCode, String flagCode) {
     Widget flag = CountryFlag.fromCountryCode(
       flagCode,
-      height: height * 0.05,
-      width: width * 0.16,
+      height: height * 0.08,
+      width: width * 0.18,
     );
 
     return ElevatedButton(

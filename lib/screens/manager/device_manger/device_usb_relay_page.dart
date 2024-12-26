@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/utils/permission_config.dart';
+import 'package:tdesign_flutter/tdesign_flutter.dart';
 
 class DeviceUsbRelayPage extends StatefulWidget {
   @override
@@ -12,6 +13,10 @@ class DeviceUsbRelayPage extends StatefulWidget {
 
 class _DeviceUsbRelayPageState extends State<DeviceUsbRelayPage> {
   final _scrollController = ScrollController();
+  var relayUsbConverterVidControl =
+      TextEditingController(text: AppConfig().relayUsbConverterVid.toString());
+  var relayUsbConverterPidControl =
+      TextEditingController(text: AppConfig().relayUsbConverterPid.toString());
   bool allowEdit = true;
   double height = 0;
   double width = 0;
@@ -116,6 +121,67 @@ class _DeviceUsbRelayPageState extends State<DeviceUsbRelayPage> {
     );
   }
 
+  Widget relayUsbConvertPidWidget() {
+    return Row(
+      children: [
+        Text(
+          "Relay Usb Converter Pid",
+          style: TextStyle(fontSize: height * 0.012),
+        ),
+        const Spacer(),
+        SizedBox(
+            width: width * 0.1,
+            child: TextField(
+              readOnly: !allowEdit,
+              keyboardType: TextInputType.number,
+              autocorrect: false,
+              controller: relayUsbConverterPidControl,
+              textCapitalization: TextCapitalization.words,
+              cursorColor: const Color.fromRGBO(103, 155, 206, 1),
+              style: TextStyle(fontSize: height * 0.012),
+              onSubmitted: (text) {
+                setState(() {});
+                if (text.isEmpty) {
+                  return;
+                }
+                AppConfig().relayUsbConverterPid = int.parse(text);
+              },
+            )),
+      ],
+    );
+  }
+
+  Widget relayUsbConvertVidWidget() {
+    return Row(
+      children: [
+        Text(
+          "Relay Usb Converter Vid",
+          style: TextStyle(fontSize: height * 0.012),
+        ),
+        const Spacer(),
+        SizedBox(
+          width: width * 0.1,
+          child: TextField(
+            readOnly: !allowEdit,
+            keyboardType: TextInputType.number,
+            autocorrect: false,
+            controller: relayUsbConverterVidControl,
+            textCapitalization: TextCapitalization.words,
+            cursorColor: const Color.fromRGBO(103, 155, 206, 1),
+            style: TextStyle(fontSize: height * 0.012),
+            onSubmitted: (text) {
+              setState(() {});
+              if (text.isEmpty) {
+                return;
+              }
+              AppConfig().relayUsbConverterVid = int.parse(text);
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget usbRelayCommTypeWidget() {
     List<dynamic> relayCommTypeList = AppConfig().configMap["relay_comm_list"];
     return Row(
@@ -197,6 +263,12 @@ class _DeviceUsbRelayPageState extends State<DeviceUsbRelayPage> {
       Padding(
           padding: EdgeInsets.symmetric(horizontal: 18),
           child: relayIoCountWidget()),
+      Padding(
+          padding: EdgeInsets.symmetric(horizontal: 18),
+          child: relayUsbConvertVidWidget()),
+      Padding(
+          padding: EdgeInsets.symmetric(horizontal: 18),
+          child: relayUsbConvertPidWidget()),
       const SizedBox(
         height: 16,
       )
