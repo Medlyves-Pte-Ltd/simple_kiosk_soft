@@ -155,5 +155,6 @@
   "click_singe_calibration_command_button": "4.点击校准命令按钮",
   "weight_check": "5.测量体重，对比结果，看校准后的体重结果是否正确",
   "click_three_calibration_command_button":"2.点击按钮，进入校准状态",
-  "please_click_start_again": "请再次点击开始"
+  "please_click_start_again": "请再次点击开始",
+  "input": "输入"
 }

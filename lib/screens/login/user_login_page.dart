@@ -28,11 +28,10 @@ class UserLoginPageState extends State<UserLoginPage> {
   double width = 0;
   // 屏幕高度
   double height = 0;
-
+  String languageCode = "";
   String getVideoFileName() {
-    String localeCode =
-        BlocProvider.of<LocaleCubit>(context).locale.languageCode;
-    return '${AppConfig().videosDir}/$localeCode/login_manual_entry_${localeCode.toUpperCase()}.mp4';
+    languageCode = BlocProvider.of<LocaleCubit>(context).locale.languageCode;
+    return '${AppConfig().videosDir}/$languageCode/login_manual_entry_${languageCode.toUpperCase()}.mp4';
   }
 
   @override
@@ -152,88 +151,90 @@ class UserLoginPageState extends State<UserLoginPage> {
                     ),
 
                     SizedBox(height: height * 0.04),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(
-                            style: ButtonStyle(
-                              fixedSize: MaterialStateProperty.all<Size>(
-                                Size(width * 0.25, height * 0.04),
-                              ),
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                ColorPalette.materialGreen,
-                              ),
-                            ),
-                            onPressed: () {
-                              Navigator.pushNamedAndRemoveUntil(
-                                  context, "/LanguagePage", (route) => false);
-                            },
-                            child: Text(AppLocalizations.of(context)!.back,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: height * 0.016))),
-                        SizedBox(width: width * 0.08),
-                        ElevatedButton(
-                            style: ButtonStyle(
-                              fixedSize: MaterialStateProperty.all<Size>(
-                                Size(width * 0.25, height * 0.04),
-                              ),
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                ColorPalette.materialGreen,
-                              ),
-                            ),
-                            child: Text(AppLocalizations.of(context)!.next,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: height * 0.016)),
-                            onPressed: () {
-                              String name = _nameController.text.trim();
-                              String gender = selectedGender ?? '';
-                              String age = _ageController.text.trim();
-                              if (name.isNotEmpty &&
-                                  gender.isNotEmpty &&
-                                  age.isNotEmpty) {
-                                UserInfo().name = name;
-                                UserInfo().gender = gender.contains('男性') ||
-                                        gender.contains('Male') ||
-                                        gender.contains('Lelaki') ||
-                                        gender.contains('ஆண்') ||
-                                        gender.contains('ชาย')
-                                    ? 1
-                                    : 0;
-                                UserInfo().age = age;
-                                UserInfo().clearResult();
-                                BodyRange().init();
-
-                                ControlMeasurePageUtils().pageIndex = 0;
-                                ControlMeasurePageUtils().clearMeasure();
-                                Navigator.pushNamedAndRemoveUntil(context,
-                                    '/HeightWeightMeasure', (route) => false);
-                              } else {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: Text(
-                                        AppLocalizations.of(context)!.error),
-                                    content: const Text(
-                                        'Please fill in all required fields.'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text('OK'),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }
-                            }),
-                      ],
-                    )
                   ],
                 ),
               ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    style: ButtonStyle(
+                      fixedSize: MaterialStateProperty.all<Size>(
+                        Size(width * 0.22, height * 0.04),
+                      ),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        ColorPalette.materialGreen,
+                      ),
+                    ),
+                    onPressed: () {
+                      if (AppConfig().onlyInputLogin) {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, "/LanguagePage", (route) => false);
+                      } else {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, "/IdCardLoginPage", (route) => false);
+                      }
+                    },
+                    child: Text(AppLocalizations.of(context)!.back,
+                        style: TextStyle(
+                            color: Colors.white, fontSize: height * 0.016))),
+                SizedBox(width: width * 0.06),
+                ElevatedButton(
+                    style: ButtonStyle(
+                      fixedSize: MaterialStateProperty.all<Size>(
+                        Size(width * 0.22, height * 0.04),
+                      ),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        ColorPalette.materialGreen,
+                      ),
+                    ),
+                    child: Text(AppLocalizations.of(context)!.next,
+                        style: TextStyle(
+                            color: Colors.white, fontSize: height * 0.016)),
+                    onPressed: () {
+                      String name = _nameController.text.trim();
+                      String gender = selectedGender ?? '';
+                      String age = _ageController.text.trim();
+                      if (name.isNotEmpty &&
+                          gender.isNotEmpty &&
+                          age.isNotEmpty) {
+                        UserInfo().name = name;
+                        UserInfo().gender = gender.contains('男性') ||
+                                gender.contains('Male') ||
+                                gender.contains('Lelaki') ||
+                                gender.contains('ஆண்') ||
+                                gender.contains('ชาย')
+                            ? 1
+                            : 0;
+                        UserInfo().age = age;
+                        UserInfo().clearResult();
+                        BodyRange().init();
+
+                        ControlMeasurePageUtils().pageIndex = 0;
+                        ControlMeasurePageUtils().clearMeasure();
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, '/HeightWeightMeasure', (route) => false);
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text(AppLocalizations.of(context)!.error),
+                            content: const Text(
+                                'Please fill in all required fields.'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    }),
+              ],
             ),
             const Spacer(),
             Footer(),

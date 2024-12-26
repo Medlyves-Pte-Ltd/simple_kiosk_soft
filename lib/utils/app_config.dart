@@ -112,6 +112,19 @@ class AppConfig {
     saveFile();
   }
 
+  bool get onlyInputLogin {
+    try {
+      return configMap["only_input_login"] as bool;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  set onlyInputLogin(bool value) {
+    configMap["only_input_login"] = value;
+    saveFile();
+  }
+
   Future<void> init() async {
     // 获取版本
     PackageInfo packageInfo = await PackageInfo.fromPlatform();

@@ -194,8 +194,13 @@ class LanguagePageState extends State<LanguagePage> {
           Navigator.pushNamedAndRemoveUntil(
               context, '/ScannerPage', ((route) => false));
         } else {
-          Navigator.pushNamedAndRemoveUntil(
-              context, '/login', ((route) => false));
+          if (AppConfig().onlyInputLogin) {
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/UserLoginPage', ((route) => false));
+          } else {
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/IdCardLoginPage', ((route) => false));
+          }
         }
       },
       style: _getButtonStyle(),

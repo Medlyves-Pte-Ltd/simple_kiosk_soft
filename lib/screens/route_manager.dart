@@ -39,7 +39,7 @@ import 'manager/general/general_setting_list_page.dart';
 // Define routing list
 final Map<String, Function> routes = {
   '/LanguagePage': (context, {arguments}) => const LanguagePage(),
-  '/login': (context, {arguments}) => const UserLoginPage(),
+  '/UserLoginPage': (context, {arguments}) => const UserLoginPage(),
   '/KioskManager': (context, {arguments}) => KioskManager(),
   '/HeightWeightMeasure': (context, {arguments}) => HeightWeightMeasure(),
   '/BodyTemperatureMeasure': (context, {arguments}) => BodyTemperatureMeasure(),

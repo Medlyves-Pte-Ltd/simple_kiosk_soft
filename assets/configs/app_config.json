@@ -8,5 +8,7 @@
     "relay_io_count": 8,
     "usb_sequence_check_time_s": 10,
     "up_down_io_stop_time_ms": 1000,
-    "test_result_out_csv": false
+    "test_result_out_csv": false,
+    "eco_mode": false,
+    "only_input_login": false
 }
