@@ -59,8 +59,10 @@ class DeviceReadingRangeEditPageState
                 child: CodeEditor(
               readOnly: !PermissionConfig()
                   .havePermission(PermissionModules.Permission),
+              autofocus: false,
               controller: _controller,
               style: CodeEditorStyle(
+                fontSize: height * 0.02,
                 codeTheme: CodeHighlightTheme(
                     languages: {'json': CodeHighlightThemeMode(mode: langJson)},
                     theme: atomOneLightTheme),
