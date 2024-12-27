@@ -65,7 +65,7 @@
   "hw_bmi": "BMI",
   "kiosk_title": "Self-service Health Screening Kiosk",
   "language_selection": "โปรดเลือกภาษาที่คุณต้องการ",
-  "loading": "การอ่าน...",
+  "loading": "กำลังอ่าน...",
   "mode": "Mode",
   "mode_clinic": "Clinic Mode",
   "mode_frailty": "INDEPENDENCY Mode",
