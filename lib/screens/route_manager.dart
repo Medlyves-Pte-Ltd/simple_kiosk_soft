@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simple_kiosk_software/screens/login/id_card_login_page.dart';
+import 'package:simple_kiosk_software/screens/manager/device_manger/calibration/body_composition_calibration_page.dart';
 import 'package:simple_kiosk_software/screens/manager/device_manger/calibration/weight_calibration.dart';
 import 'package:simple_kiosk_software/screens/manager/device_manger/device_config_page.dart';
 import 'package:simple_kiosk_software/screens/manager/device_manger/device_relate_setting_page.dart';
@@ -71,6 +72,8 @@ final Map<String, Function> routes = {
   '/DeviceRelateSettingPage': (context, {arguments}) =>
       DeviceRelateSettingPage(),
   '/IdCardLoginPage': (context, {arguments}) => IdCardLoginPage(),
+  '/BodyCompositionCalibrationPage': (context, {arguments}) =>
+      BodyCompositionCalibrationPage(),
 };
 
 // 定义通用的onGenerateRoute

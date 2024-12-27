@@ -95,6 +95,21 @@ class CalibrationSettingListPageState
                         },
                       ),
                       buildDivider(),
+                      ListTile(
+                        selectedColor: ColorPalette.materialGreen,
+                        title: Text('Body Composition Calibration'),
+                        subtitle: Text(''),
+                        leading: CircleAvatar(
+                          child: Icon(Icons.settings_accessibility),
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios_rounded),
+                        onTap: () {
+                          // 处理点击事件
+                          Navigator.pushNamed(
+                              context, "/BodyCompositionCalibrationPage");
+                        },
+                      ),
+                      buildDivider(),
                     ],
                   ))),
           Footer(),
