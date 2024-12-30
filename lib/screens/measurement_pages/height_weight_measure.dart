@@ -48,7 +48,8 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
         btnText = AppLocalizations.of(mainContext)!.stop;
         startButtonColor = Colors.red;
         update = true;
-        timerStop = Timer(Duration(seconds: 45), () {
+        timerStop = Timer(
+            Duration(seconds: AppConfig().measureAutomaticStopTimeSecond), () {
           if (startStatus) {
             onStop();
             timerStop?.cancel();

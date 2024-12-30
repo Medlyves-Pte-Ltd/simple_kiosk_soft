@@ -155,7 +155,7 @@ class DeviceMangerSettingListPageState
                       buildDivider(),
                       ListTile(
                         selectedColor: ColorPalette.materialGreen,
-                        title: Text('Device Relate Setting'),
+                        title: Text('Device Other Setting'),
                         subtitle: Text(''),
                         leading: CircleAvatar(
                           child: Icon(Icons.settings),
@@ -164,7 +164,7 @@ class DeviceMangerSettingListPageState
                         onTap: () {
                           // 处理点击事件
                           Navigator.pushNamed(
-                              context, "/DeviceRelateSettingPage");
+                              context, "/DeviceOtherSettingPage");
                         },
                       ),
                       buildDivider(),

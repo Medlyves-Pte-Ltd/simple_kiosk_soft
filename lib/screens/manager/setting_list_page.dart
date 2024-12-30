@@ -81,14 +81,14 @@ class SettingListPageState extends State<SettingListPage> {
                       buildDivider(),
                       ListTile(
                         selectedColor: ColorPalette.materialGreen,
-                        title: Text('Device Manger'),
+                        title: Text('Device Manager'),
                         subtitle: Text(''),
                         leading: CircleAvatar(child: Icon(Icons.manage_search)),
                         trailing: Icon(Icons.arrow_forward_ios_rounded),
                         onTap: () {
                           // 处理点击事件
                           Navigator.pushNamed(
-                              context, "/DeviceMangerSettingListPage");
+                              context, "/DeviceManagerSettingListPage");
                         },
                       ),
                       buildDivider(),

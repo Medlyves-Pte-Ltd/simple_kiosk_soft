@@ -327,7 +327,8 @@ class BaseMeasureLayoutWidget extends StatelessWidget {
         btnText = AppLocalizations.of(mainContext)!.stop;
         startButtonColor = Colors.red;
         update = true;
-        timerStop = Timer(Duration(seconds: 80), () {
+        timerStop = Timer(
+            Duration(seconds: AppConfig().measureAutomaticStopTimeSecond), () {
           if (startStatus) {
             onStop();
             timerStop?.cancel();

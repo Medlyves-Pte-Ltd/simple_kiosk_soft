@@ -152,6 +152,32 @@ class AppConfig {
     saveFile();
   }
 
+  int get ecoModeTimeMinute {
+    try {
+      return configMap["eco_mode_time_minute"] as int;
+    } catch (e) {
+      return 5;
+    }
+  }
+
+  set ecoModeTimeMinute(int value) {
+    configMap["eco_mode_time_minute"] = value;
+    saveFile();
+  }
+
+  int get measureAutomaticStopTimeSecond {
+    try {
+      return configMap["measure_automatic_stop_time_s"] as int;
+    } catch (e) {
+      return 90;
+    }
+  }
+
+  set measureAutomaticStopTimeSecond(int value) {
+    configMap["measure_automatic_stop_time_s"] = value;
+    saveFile();
+  }
+
   Future<void> init() async {
     // 获取版本
     PackageInfo packageInfo = await PackageInfo.fromPlatform();

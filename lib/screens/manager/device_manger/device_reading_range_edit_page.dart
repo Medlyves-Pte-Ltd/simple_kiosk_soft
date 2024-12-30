@@ -62,7 +62,7 @@ class DeviceReadingRangeEditPageState
               autofocus: false,
               controller: _controller,
               style: CodeEditorStyle(
-                fontSize: height * 0.02,
+                fontSize: height * 0.016,
                 codeTheme: CodeHighlightTheme(
                     languages: {'json': CodeHighlightThemeMode(mode: langJson)},
                     theme: atomOneLightTheme),

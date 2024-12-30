@@ -46,7 +46,8 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
           state.deviceType == DeviceType.WEIGHT_DEVICE) {
         btnText = AppLocalizations.of(mainContext)!.stop;
         update = true;
-        timerStop = Timer(Duration(seconds: 45), () {
+        timerStop = Timer(
+            Duration(seconds: AppConfig().measureAutomaticStopTimeSecond), () {
           if (startStatus) {
             onStop();
             timerStop?.cancel();

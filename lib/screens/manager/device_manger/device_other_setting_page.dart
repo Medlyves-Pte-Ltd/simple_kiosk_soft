@@ -7,13 +7,12 @@ import 'package:flutter/services.dart';
 import 'package:simple_kiosk_software/utils/permission_config.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 
-class DeviceRelateSettingPage extends StatefulWidget {
+class DeviceOtherSettingPage extends StatefulWidget {
   @override
-  _DeviceRelateSettingPageState createState() =>
-      _DeviceRelateSettingPageState();
+  _DeviceOtherSettingPageState createState() => _DeviceOtherSettingPageState();
 }
 
-class _DeviceRelateSettingPageState extends State<DeviceRelateSettingPage> {
+class _DeviceOtherSettingPageState extends State<DeviceOtherSettingPage> {
   final _scrollController = ScrollController();
   bool allowEdit = true;
   double height = 0;
@@ -49,7 +48,7 @@ class _DeviceRelateSettingPageState extends State<DeviceRelateSettingPage> {
             Navigator.pop(context);
           },
         ),
-        title: Text('Device Relate Setting'),
+        title: Text('Device Other Setting'),
       ),
       backgroundColor: Colors.white,
       body: Column(

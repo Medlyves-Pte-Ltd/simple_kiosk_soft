@@ -3,7 +3,7 @@ import 'package:simple_kiosk_software/screens/login/id_card_login_page.dart';
 import 'package:simple_kiosk_software/screens/manager/device_manger/calibration/body_composition_calibration_page.dart';
 import 'package:simple_kiosk_software/screens/manager/device_manger/calibration/weight_calibration.dart';
 import 'package:simple_kiosk_software/screens/manager/device_manger/device_config_page.dart';
-import 'package:simple_kiosk_software/screens/manager/device_manger/device_relate_setting_page.dart';
+import 'package:simple_kiosk_software/screens/manager/device_manger/device_other_setting_page.dart';
 import 'package:simple_kiosk_software/screens/manager/device_manger/device_usb_relay_page.dart';
 import 'package:simple_kiosk_software/screens/manager/general/modify_password_page.dart';
 import 'package:simple_kiosk_software/screens/manager/general/permission/permission_config_page.dart';
@@ -65,12 +65,11 @@ final Map<String, Function> routes = {
       CalibrationSettingListPage(),
   '/HeightCalibrationPage': (context, {arguments}) => HeightCalibrationPage(),
   '/GeneralSettingListPage': (context, {arguments}) => GeneralSettingListPage(),
-  '/DeviceMangerSettingListPage': (context, {arguments}) =>
+  '/DeviceManagerSettingListPage': (context, {arguments}) =>
       DeviceMangerSettingListPage(),
   '/DeviceUsbRelayPage': (context, {arguments}) => DeviceUsbRelayPage(),
   '/WeightCalibration': (context, {arguments}) => WeightCalibration(),
-  '/DeviceRelateSettingPage': (context, {arguments}) =>
-      DeviceRelateSettingPage(),
+  '/DeviceOtherSettingPage': (context, {arguments}) => DeviceOtherSettingPage(),
   '/IdCardLoginPage': (context, {arguments}) => IdCardLoginPage(),
   '/BodyCompositionCalibrationPage': (context, {arguments}) =>
       BodyCompositionCalibrationPage(),
