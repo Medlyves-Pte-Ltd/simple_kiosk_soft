@@ -91,39 +91,63 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
   // 隐藏系统状态栏和导航栏
   // Hides the system status bar and navigation bar
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   Timer? _timer;
   int _counter = 0;
-  Future<void> setApplicationBrightness(double brightness) async {
+
+  @override
+  void initState() {
+    super.initState();
+    setSystemScreenBrightness(0.9);
+    _startTimer();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  Future<void> setSystemScreenBrightness(double brightness) async {
     try {
-      await ScreenBrightness.instance
-          .setApplicationScreenBrightness(brightness);
+      await ScreenBrightness.instance.setSystemScreenBrightness(brightness);
     } catch (e) {
-      LogPrinter.log("set app brightness failed : " + e.toString());
+      LogPrinter.log("set system brightness failed : " + e.toString());
     }
   }
 
   void _startTimer() {
-    const oneMin = Duration(minutes: 1);
-    _timer = Timer.periodic(oneMin, (Timer timer) {
-      _counter++;
-      if (_counter == 10) {
-        setApplicationBrightness(0.037);
-        timer.cancel();
-        LogPrinter.log(
-            "10 minutes The device does not operate, the screen darkens, and the timer stops");
-      }
-    });
+    if (AppConfig().ecoMode) {
+      _timer = Timer.periodic(const Duration(minutes: 1), (Timer timer) {
+        setState(() {
+          _counter++;
+          if (_counter == 5) {
+            setSystemScreenBrightness(0.01);
+            timer.cancel();
+            LogPrinter.log(
+                "user does not operate for a long time, the screen darkens and the timer stops");
+          }
+        });
+      });
+    }
   }
 
   void _resetTimer() {
     _timer?.cancel();
-    _counter = 0;
+    setState(() {
+      _counter = 0;
+    });
     _startTimer();
   }
 
@@ -132,12 +156,11 @@ class MyApp extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return BlocBuilder<LocaleCubit, LocaleState>(
       builder: (context, state) {
-        _startTimer();
         return GestureDetector(
-          onTap: () async {
+          onTap: () {
             if (AppConfig().ecoMode) {
               _resetTimer();
-              setApplicationBrightness(0.9);
+              setSystemScreenBrightness(0.9);
             }
           },
           child: MaterialApp(
@@ -164,6 +187,7 @@ class MyApp extends StatelessWidget {
               }
             },
             //initialRoute: "/LanguagePage",
+            //initialRoute: "/DeviceUsbRelayPage",
             initialRoute: "/DeviceStartPage",
             supportedLocales: AppLocalizations.supportedLocales,
             theme: ThemeData(
