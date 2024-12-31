@@ -17,6 +17,8 @@ class _DeviceUsbRelayPageState extends State<DeviceUsbRelayPage> {
       TextEditingController(text: AppConfig().relayUsbConverterVid.toString());
   var relayUsbConverterPidControl =
       TextEditingController(text: AppConfig().relayUsbConverterPid.toString());
+  var relayUsbPathControl =
+      TextEditingController(text: AppConfig().relayUsbPath.toString());
   bool allowEdit = true;
   double height = 0;
   double width = 0;
@@ -151,6 +153,36 @@ class _DeviceUsbRelayPageState extends State<DeviceUsbRelayPage> {
     );
   }
 
+  Widget relayUsbPathWidget() {
+    return Row(
+      children: [
+        Text(
+          "Relay Usb Path",
+          style: TextStyle(fontSize: height * 0.012),
+        ),
+        const Spacer(),
+        SizedBox(
+            width: width * 0.3,
+            child: TextField(
+              readOnly: !allowEdit,
+              keyboardType: TextInputType.text,
+              autocorrect: false,
+              controller: relayUsbPathControl,
+              textCapitalization: TextCapitalization.words,
+              cursorColor: const Color.fromRGBO(103, 155, 206, 1),
+              style: TextStyle(fontSize: height * 0.012),
+              onSubmitted: (text) {
+                setState(() {});
+                if (text.isEmpty) {
+                  return;
+                }
+                AppConfig().relayUsbPath = text;
+              },
+            )),
+      ],
+    );
+  }
+
   Widget relayUsbConvertVidWidget() {
     return Row(
       children: [
@@ -263,6 +295,9 @@ class _DeviceUsbRelayPageState extends State<DeviceUsbRelayPage> {
       Padding(
           padding: EdgeInsets.symmetric(horizontal: 18),
           child: relayIoCountWidget()),
+      Padding(
+          padding: EdgeInsets.symmetric(horizontal: 18),
+          child: relayUsbPathWidget()),
       Padding(
           padding: EdgeInsets.symmetric(horizontal: 18),
           child: relayUsbConvertVidWidget()),

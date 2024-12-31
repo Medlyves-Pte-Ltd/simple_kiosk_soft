@@ -1,10 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_devices_sdk/device_sdk_param_setting.dart';
-import 'package:flutter_devices_sdk/devices/device_config.dart';
 import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
@@ -175,7 +171,7 @@ class SampleKioskDeviceConfigViewState
                   const SizedBox(width: 5),
                   SizedBox(
                     height: 40,
-                    width: 30,
+                    width: 50,
                     child: TextField(
                       readOnly: !widget.allowEdit,
                       controller: TextEditingController(text: time.toString()),

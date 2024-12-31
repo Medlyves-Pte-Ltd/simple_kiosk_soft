@@ -43,7 +43,7 @@
   "hw_bmi": "BMI",
   "kiosk_title": "自助体检医疗亭",
   "language_selection": "请选择您的语言",
-  "loading": "测量中…",
+  "loading": "读取中…",
   "mode": "模式",
   "mode_clinic": "诊所模式",
   "mode_frailty": "INDEPENDENCY 模式",

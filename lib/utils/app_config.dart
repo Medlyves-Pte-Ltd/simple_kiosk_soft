@@ -136,6 +136,7 @@ class AppConfig {
 
   set relayUsbConverterVid(int value) {
     configMap["relay_usb_converter_vid"] = value;
+    DeviceSdkParamSetting().relayUsbConverterPid = value;
     saveFile();
   }
 
@@ -149,6 +150,21 @@ class AppConfig {
 
   set relayUsbConverterPid(int value) {
     configMap["relay_usb_converter_pid"] = value;
+    DeviceSdkParamSetting().relayUsbConverterVid = value;
+    saveFile();
+  }
+
+  String get relayUsbPath {
+    try {
+      return configMap["relay_usb_path"] as String;
+    } catch (e) {
+      return "/dev/bus/usb/002/";
+    }
+  }
+
+  set relayUsbPath(String value) {
+    configMap["relay_usb_path"] = value;
+    DeviceSdkParamSetting().relayUsbPath = value;
     saveFile();
   }
 
@@ -199,6 +215,7 @@ class AppConfig {
     // 范围
     await BodyRange().loadFile();
 
+    DeviceSdkParamSetting().relayUsbPath = relayUsbPath;
     DeviceSdkParamSetting().relayUsbConverterVid = relayUsbConverterVid;
     DeviceSdkParamSetting().relayUsbConverterPid = relayUsbConverterPid;
     DeviceSdkParamSetting().useSimulateUsbDevice = false;

@@ -109,13 +109,19 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    setSystemScreenBrightness(0.9);
-    _startTimer();
+
+    if (AppConfig().ecoMode) {
+      setSystemScreenBrightness(0.9);
+      _startTimer();
+    }
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
+    if (AppConfig().ecoMode) {
+      _timer?.cancel();
+    }
+
     super.dispose();
   }
 
@@ -128,19 +134,17 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _startTimer() {
-    if (AppConfig().ecoMode) {
-      _timer = Timer.periodic(const Duration(minutes: 1), (Timer timer) {
-        setState(() {
-          _counter++;
-          if (_counter == 5) {
-            setSystemScreenBrightness(0.01);
-            timer.cancel();
-            LogPrinter.log(
-                "user does not operate for a long time, the screen darkens and the timer stops");
-          }
-        });
+    _timer = Timer.periodic(const Duration(minutes: 1), (Timer timer) {
+      setState(() {
+        _counter++;
+        if (_counter == AppConfig().ecoModeTimeMinute) {
+          setSystemScreenBrightness(0.01);
+          timer.cancel();
+          LogPrinter.log(
+              "user does not operate for a long time, the screen darkens and the timer stops");
+        }
       });
-    }
+    });
   }
 
   void _resetTimer() {
@@ -157,10 +161,10 @@ class _MyAppState extends State<MyApp> {
     return BlocBuilder<LocaleCubit, LocaleState>(
       builder: (context, state) {
         return GestureDetector(
-          onTap: () {
+          onTap: () async {
             if (AppConfig().ecoMode) {
               _resetTimer();
-              setSystemScreenBrightness(0.9);
+              await setSystemScreenBrightness(0.9);
             }
           },
           child: MaterialApp(
@@ -187,7 +191,6 @@ class _MyAppState extends State<MyApp> {
               }
             },
             //initialRoute: "/LanguagePage",
-            //initialRoute: "/DeviceUsbRelayPage",
             initialRoute: "/DeviceStartPage",
             supportedLocales: AppLocalizations.supportedLocales,
             theme: ThemeData(

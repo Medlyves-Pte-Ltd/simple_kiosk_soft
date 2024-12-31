@@ -1,9 +1,9 @@
 [
   {
-    "deviceName": "Height",
-    "deviceType": "HEIGHT_DEVICE",
-    "deviceIndex": 1,
-    "deviceList": ["ShengYuanHeight", "ZhongKeCQRFHeight", "ZhongKeCQRFHeightDeviceThreeInOne"],
+    "deviceName": "Up and down Io",
+    "deviceType": "IO_DEVICE",
+    "deviceIndex": 0,
+    "deviceList": ["YanMengIoDevice"],
     "info": "",
     "start_wait_time_s": 1.0,
     "enable": true,
@@ -22,21 +22,10 @@
     "pid":"2303"
   },
   {
-    "deviceName": "Up and down Io",
-    "deviceType": "IO_DEVICE",
-    "deviceIndex": 0,
-    "deviceList": ["YanMengIoDevice"],
-    "info": "",
-    "start_wait_time_s": 1.0,
-    "enable": true,
-    "vid":"1a86",
-    "pid":"7523"
-  },
-  {
-    "deviceName": "Scanner",
-    "deviceType": "SCANNER_DEVICE",
-    "deviceIndex": 0,
-    "deviceList": ["YouKuEP8280CodeScanner"],
+    "deviceName": "Height",
+    "deviceType": "HEIGHT_DEVICE",
+    "deviceIndex": 1,
+    "deviceList": ["ShengYuanHeight", "ZhongKeCQRFHeight", "ZhongKeCQRFHeightDeviceThreeInOne"],
     "info": "",
     "start_wait_time_s": 1.0,
     "enable": true,
@@ -53,6 +42,17 @@
     "enable": true,
     "vid":"67b",
     "pid":"23a3"
+  },
+  {
+    "deviceName": "Scanner",
+    "deviceType": "SCANNER_DEVICE",
+    "deviceIndex": 0,
+    "deviceList": ["YouKuEP8280CodeScanner"],
+    "info": "",
+    "start_wait_time_s": 1.0,
+    "enable": true,
+    "vid":"1a86",
+    "pid":"7523"
   },
   {
     "deviceName": "Temperature",

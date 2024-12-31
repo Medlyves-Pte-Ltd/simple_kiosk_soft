@@ -46,7 +46,7 @@ class CalibrationSettingListPageState
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pushNamed(context, "/DeviceMangerSettingListPage");
+            Navigator.pushNamed(context, "/DeviceManagerSettingListPage");
           },
         ),
         title: Text('Device Calibration'),

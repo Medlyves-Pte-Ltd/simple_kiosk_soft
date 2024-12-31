@@ -156,65 +156,72 @@ class GeneralSettingListPageState extends State<GeneralSettingListPage> {
                               ),
                             ),
                       buildDivider(),
-                      Row(
-                        children: [
-                          Text(
-                            "Eco mode time minute",
-                            style: TextStyle(fontSize: height * 0.012),
-                          ),
-                          const Spacer(),
-                          SizedBox(
-                              width: width * 0.1,
-                              child: TextField(
-                                readOnly: !allowEdit,
-                                keyboardType: TextInputType.number,
-                                autocorrect: false,
-                                controller: ecoModeTimeMinuteControl,
-                                textCapitalization: TextCapitalization.words,
-                                cursorColor:
-                                    const Color.fromRGBO(103, 155, 206, 1),
+                      Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 18),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Eco mode time minute",
                                 style: TextStyle(fontSize: height * 0.012),
-                                onSubmitted: (text) {
-                                  setState(() {});
-                                  if (text.isEmpty) {
-                                    return;
-                                  }
-                                  AppConfig().ecoModeTimeMinute =
-                                      int.parse(text);
-                                },
-                              )),
-                        ],
-                      ),
+                              ),
+                              const Spacer(),
+                              SizedBox(
+                                  width: width * 0.1,
+                                  child: TextField(
+                                    readOnly: !allowEdit,
+                                    keyboardType: TextInputType.number,
+                                    autocorrect: false,
+                                    controller: ecoModeTimeMinuteControl,
+                                    textCapitalization:
+                                        TextCapitalization.words,
+                                    cursorColor:
+                                        const Color.fromRGBO(103, 155, 206, 1),
+                                    style: TextStyle(fontSize: height * 0.012),
+                                    onSubmitted: (text) {
+                                      setState(() {});
+                                      if (text.isEmpty) {
+                                        return;
+                                      }
+                                      AppConfig().ecoModeTimeMinute =
+                                          int.parse(text);
+                                    },
+                                  )),
+                            ],
+                          )),
                       buildDivider(),
-                      Row(
-                        children: [
-                          Text(
-                            "Measure automatic stop time second",
-                            style: TextStyle(fontSize: height * 0.012),
-                          ),
-                          const Spacer(),
-                          SizedBox(
-                              width: width * 0.1,
-                              child: TextField(
-                                readOnly: !allowEdit,
-                                keyboardType: TextInputType.number,
-                                autocorrect: false,
-                                controller: measureAutomaticStopTimeControl,
-                                textCapitalization: TextCapitalization.words,
-                                cursorColor:
-                                    const Color.fromRGBO(103, 155, 206, 1),
+                      Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 18),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Measure automatic stop time second",
                                 style: TextStyle(fontSize: height * 0.012),
-                                onSubmitted: (text) {
-                                  setState(() {});
-                                  if (text.isEmpty) {
-                                    return;
-                                  }
-                                  AppConfig().measureAutomaticStopTimeSecond =
-                                      int.parse(text);
-                                },
-                              )),
-                        ],
-                      ),
+                              ),
+                              const Spacer(),
+                              SizedBox(
+                                  width: width * 0.1,
+                                  child: TextField(
+                                    readOnly: !allowEdit,
+                                    keyboardType: TextInputType.number,
+                                    autocorrect: false,
+                                    controller: measureAutomaticStopTimeControl,
+                                    textCapitalization:
+                                        TextCapitalization.words,
+                                    cursorColor:
+                                        const Color.fromRGBO(103, 155, 206, 1),
+                                    style: TextStyle(fontSize: height * 0.012),
+                                    onSubmitted: (text) {
+                                      setState(() {});
+                                      if (text.isEmpty) {
+                                        return;
+                                      }
+                                      AppConfig()
+                                              .measureAutomaticStopTimeSecond =
+                                          int.parse(text);
+                                    },
+                                  )),
+                            ],
+                          )),
                       buildDivider(),
                       allowEdit
                           ? SwitchListTile(
