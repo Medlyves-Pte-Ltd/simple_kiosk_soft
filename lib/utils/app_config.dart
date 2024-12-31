@@ -25,6 +25,7 @@ class AppConfig {
 
   set totalHeight(double value) {
     configMap["total_height"] = value;
+    DeviceSdkParamSetting().totalHeight = value;
     saveFile();
   }
 
@@ -34,6 +35,7 @@ class AppConfig {
 
   set heightOffset(double value) {
     configMap["height_offset"] = value;
+    DeviceSdkParamSetting().heightOffset = value;
     saveFile();
   }
 
@@ -43,6 +45,7 @@ class AppConfig {
 
   set relayIoCount(int value) {
     configMap["relay_io_count"] = value;
+    DeviceSdkParamSetting().replayIoCount = value;
     saveFile();
   }
 
@@ -81,6 +84,7 @@ class AppConfig {
 
   set upDownIoStopTime(int value) {
     configMap["up_down_io_stop_time_ms"] = value;
+    DeviceSdkParamSetting().upDownIoStopTimeInterval = value;
     saveFile();
   }
 
