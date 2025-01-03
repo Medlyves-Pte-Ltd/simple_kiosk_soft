@@ -20,12 +20,16 @@ class AppConfig {
   Map<String, dynamic> configMap = {};
 
   double get totalHeight {
-    return configMap["total_height"] as double;
+    try {
+      return configMap["total_height"] as double;
+    } catch (e) {
+      return DeviceSdkParamSetting().totalHeight1;
+    }
   }
 
   set totalHeight(double value) {
     configMap["total_height"] = value;
-    DeviceSdkParamSetting().totalHeight = value;
+    DeviceSdkParamSetting().totalHeight1 = value;
     saveFile();
   }
 
@@ -240,7 +244,7 @@ class AppConfig {
     DeviceSdkParamSetting().useSimulateUsbDevice = false;
     DeviceSdkParamSetting().replayIoCount = relayIoCount;
     DeviceSdkParamSetting().configDir = configDir;
-    DeviceSdkParamSetting().totalHeight = totalHeight;
+    DeviceSdkParamSetting().totalHeight1 = totalHeight;
     DeviceSdkParamSetting().heightOffset = heightOffset;
     DeviceSdkParamSetting().upDownIoStopTimeInterval = upDownIoStopTime;
   }

@@ -98,7 +98,6 @@ class _HeightCalibrationPageState extends State<HeightCalibrationPage> {
           if (text.isEmpty) {
             return;
           }
-          DeviceSdkParamSetting().totalHeight = double.parse(text);
           AppConfig().totalHeight = double.parse(text);
         },
       ),
