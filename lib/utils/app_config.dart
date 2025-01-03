@@ -172,6 +172,20 @@ class AppConfig {
     saveFile();
   }
 
+  String get relaySerialPath {
+    try {
+      return configMap["relay_serial_path"] as String;
+    } catch (e) {
+      return "/dev/ttyS4";
+    }
+  }
+
+  set relaySerialPath(String value) {
+    configMap["relay_serial_path"] = value;
+    DeviceSdkParamSetting().relaySerialPath = value;
+    saveFile();
+  }
+
   int get ecoModeTimeMinute {
     try {
       return configMap["eco_mode_time_minute"] as int;
@@ -222,6 +236,7 @@ class AppConfig {
     DeviceSdkParamSetting().relayUsbPath = relayUsbPath;
     DeviceSdkParamSetting().relayUsbConverterVid = relayUsbConverterVid;
     DeviceSdkParamSetting().relayUsbConverterPid = relayUsbConverterPid;
+    DeviceSdkParamSetting().relaySerialPath = relaySerialPath;
     DeviceSdkParamSetting().useSimulateUsbDevice = false;
     DeviceSdkParamSetting().replayIoCount = relayIoCount;
     DeviceSdkParamSetting().configDir = configDir;

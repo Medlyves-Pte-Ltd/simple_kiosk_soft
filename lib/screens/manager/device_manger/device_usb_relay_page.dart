@@ -19,6 +19,8 @@ class _DeviceUsbRelayPageState extends State<DeviceUsbRelayPage> {
       TextEditingController(text: AppConfig().relayUsbConverterPid.toString());
   var relayUsbPathControl =
       TextEditingController(text: AppConfig().relayUsbPath.toString());
+  var relaySerialPathControl =
+      TextEditingController(text: AppConfig().relaySerialPath.toString());
   bool allowEdit = true;
   double height = 0;
   double width = 0;
@@ -183,6 +185,36 @@ class _DeviceUsbRelayPageState extends State<DeviceUsbRelayPage> {
     );
   }
 
+  Widget relaySerialPathWidget() {
+    return Row(
+      children: [
+        Text(
+          "Relay Serial Port Path",
+          style: TextStyle(fontSize: height * 0.012),
+        ),
+        const Spacer(),
+        SizedBox(
+            width: width * 0.3,
+            child: TextField(
+              readOnly: !allowEdit,
+              keyboardType: TextInputType.text,
+              autocorrect: false,
+              controller: relaySerialPathControl,
+              textCapitalization: TextCapitalization.words,
+              cursorColor: const Color.fromRGBO(103, 155, 206, 1),
+              style: TextStyle(fontSize: height * 0.012),
+              onSubmitted: (text) {
+                setState(() {});
+                if (text.isEmpty) {
+                  return;
+                }
+                AppConfig().relaySerialPath = text;
+              },
+            )),
+      ],
+    );
+  }
+
   Widget relayUsbConvertVidWidget() {
     return Row(
       children: [
@@ -304,6 +336,9 @@ class _DeviceUsbRelayPageState extends State<DeviceUsbRelayPage> {
       Padding(
           padding: EdgeInsets.symmetric(horizontal: 18),
           child: relayUsbConvertPidWidget()),
+      Padding(
+          padding: EdgeInsets.symmetric(horizontal: 18),
+          child: relaySerialPathWidget()),
       const SizedBox(
         height: 16,
       )

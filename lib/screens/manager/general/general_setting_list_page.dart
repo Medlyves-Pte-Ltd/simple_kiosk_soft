@@ -133,62 +133,62 @@ class GeneralSettingListPageState extends State<GeneralSettingListPage> {
                               ),
                             ),
                       buildDivider(),
-                      allowEdit
-                          ? SwitchListTile(
-                              title: Text('Eco mode',
-                                  style: TextStyle(fontSize: height * 0.012)),
-                              value: AppConfig().ecoMode,
-                              onChanged: (bool value) {
-                                AppConfig().ecoMode = value;
-                                setState(() {});
-                              },
-                            )
-                          : IgnorePointer(
-                              ignoring: true,
-                              child: SwitchListTile(
-                                title: Text('Eco mode',
-                                    style: TextStyle(fontSize: height * 0.012)),
-                                value: AppConfig().ecoMode,
-                                activeTrackColor: Colors.grey,
-                                inactiveThumbColor: Colors.red,
-                                inactiveTrackColor: Colors.grey,
-                                onChanged: (bool value) {},
-                              ),
-                            ),
-                      buildDivider(),
-                      Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 18),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Eco mode time minute",
-                                style: TextStyle(fontSize: height * 0.012),
-                              ),
-                              const Spacer(),
-                              SizedBox(
-                                  width: width * 0.1,
-                                  child: TextField(
-                                    readOnly: !allowEdit,
-                                    keyboardType: TextInputType.number,
-                                    autocorrect: false,
-                                    controller: ecoModeTimeMinuteControl,
-                                    textCapitalization:
-                                        TextCapitalization.words,
-                                    cursorColor:
-                                        const Color.fromRGBO(103, 155, 206, 1),
-                                    style: TextStyle(fontSize: height * 0.012),
-                                    onSubmitted: (text) {
-                                      setState(() {});
-                                      if (text.isEmpty) {
-                                        return;
-                                      }
-                                      AppConfig().ecoModeTimeMinute =
-                                          int.parse(text);
-                                    },
-                                  )),
-                            ],
-                          )),
-                      buildDivider(),
+                      // allowEdit
+                      //     ? SwitchListTile(
+                      //         title: Text('Eco mode',
+                      //             style: TextStyle(fontSize: height * 0.012)),
+                      //         value: AppConfig().ecoMode,
+                      //         onChanged: (bool value) {
+                      //           AppConfig().ecoMode = value;
+                      //           setState(() {});
+                      //         },
+                      //       )
+                      //     : IgnorePointer(
+                      //         ignoring: true,
+                      //         child: SwitchListTile(
+                      //           title: Text('Eco mode',
+                      //               style: TextStyle(fontSize: height * 0.012)),
+                      //           value: AppConfig().ecoMode,
+                      //           activeTrackColor: Colors.grey,
+                      //           inactiveThumbColor: Colors.red,
+                      //           inactiveTrackColor: Colors.grey,
+                      //           onChanged: (bool value) {},
+                      //         ),
+                      //       ),
+                      // buildDivider(),
+                      // Padding(
+                      //     padding: EdgeInsets.symmetric(horizontal: 18),
+                      //     child: Row(
+                      //       children: [
+                      //         Text(
+                      //           "Eco mode time minute",
+                      //           style: TextStyle(fontSize: height * 0.012),
+                      //         ),
+                      //         const Spacer(),
+                      //         SizedBox(
+                      //             width: width * 0.1,
+                      //             child: TextField(
+                      //               readOnly: !allowEdit,
+                      //               keyboardType: TextInputType.number,
+                      //               autocorrect: false,
+                      //               controller: ecoModeTimeMinuteControl,
+                      //               textCapitalization:
+                      //                   TextCapitalization.words,
+                      //               cursorColor:
+                      //                   const Color.fromRGBO(103, 155, 206, 1),
+                      //               style: TextStyle(fontSize: height * 0.012),
+                      //               onSubmitted: (text) {
+                      //                 setState(() {});
+                      //                 if (text.isEmpty) {
+                      //                   return;
+                      //                 }
+                      //                 AppConfig().ecoModeTimeMinute =
+                      //                     int.parse(text);
+                      //               },
+                      //             )),
+                      //       ],
+                      //     )),
+                      // buildDivider(),
                       Padding(
                           padding: EdgeInsets.symmetric(horizontal: 18),
                           child: Row(

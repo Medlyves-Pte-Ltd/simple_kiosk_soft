@@ -10,7 +10,6 @@ import 'package:flutter_devices_sdk/kiosk_type.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/header.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
-import 'package:simple_kiosk_software/utils/scanner_utils.dart';
 
 class DeviceStartPage extends StatefulWidget {
   @override
@@ -65,13 +64,13 @@ class _DeviceStartPageState extends State<DeviceStartPage> {
       return;
     }
 
+    RelayCommType relayCommType = RelayCommType.usb;
     if (AppConfig().enableUsbRelay) {
       // 连接usb继电器
       try {
-        RelayCommType type =
-            RelayCommType.values.byName(AppConfig().relayCommType);
+        relayCommType = RelayCommType.values.byName(AppConfig().relayCommType);
         // 打开USB IO继电器设备
-        await UsbRelayControl().connect(type);
+        await UsbRelayControl().connect(relayCommType);
       } catch (e) {
         _showInfo.value = "The relay device not fond, Error:$e";
         return;
@@ -118,6 +117,11 @@ class _DeviceStartPageState extends State<DeviceStartPage> {
         await UsbRelayControl().setAutoControl((int index) {
           _curIndex.value = index;
         });
+
+        // 关闭继电器
+        if (UsbRelayControl().relayCommType == RelayCommType.serial) {
+          await UsbRelayControl().disConnect();
+        }
 
         // 检查usb设备的顺序并显示结果
         await Future.delayed(Duration(seconds: 2), () {});

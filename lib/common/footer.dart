@@ -120,6 +120,10 @@ class FooterState extends State<Footer> {
 
     if (AppConfig().enableUsbRelay) {
       try {
+        // 串口已经关闭继电器，需要重新连接
+        if (UsbRelayControl().relayCommType == RelayCommType.serial) {
+          await UsbRelayControl().connect(RelayCommType.serial);
+        }
         await UsbRelayControl().setAllIoStatus(false);
       } catch (e) {
         Fluttertoast.showToast(msg: "Error:$e");
