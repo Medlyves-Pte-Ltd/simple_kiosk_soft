@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
+import 'package:screen_brightness/screen_brightness.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
@@ -24,6 +28,8 @@ class LanguagePageState extends State<LanguagePage> {
   double height = 0;
   final double spaceBetweenButtons = 15.0;
   late Locale locale;
+  Timer? time;
+  int count = 0;
   final List<Map<String, String>> languages = [
     {"name": "ภาษาไทย", "code": "th", "flag": "THA"},
     {"name": "English", "code": "en", "flag": "GBR"},
@@ -35,6 +41,7 @@ class LanguagePageState extends State<LanguagePage> {
   @override
   void initState() {
     super.initState();
+    _startTimer();
     // if (!AppConfig().useScanner) {
     //   // 打开扫码器
     //   Future.delayed(Duration(milliseconds: 50), () {
@@ -44,67 +51,110 @@ class LanguagePageState extends State<LanguagePage> {
   }
 
   @override
+  void dispose() {
+    time?.cancel();
+    super.dispose();
+  }
+
+  Future<void> setSystemScreenBrightness(double brightness) async {
+    try {
+      await ScreenBrightness.instance.setSystemScreenBrightness(brightness);
+    } catch (e) {
+      LogPrinter.log("set system brightness failed : " + e.toString());
+    }
+  }
+
+  void _startTimer() {
+    time = Timer.periodic(const Duration(minutes: 1), (Timer timer) {
+      setState(() {
+        count++;
+        if (count == AppConfig().ecoModeTimeMinute) {
+          setSystemScreenBrightness(0.01);
+          timer.cancel();
+          LogPrinter.log(
+              "user does not operate for a long time, the screen darkens and the timer stops");
+        }
+      });
+    });
+  }
+
+  void _resetTimer() {
+    time?.cancel();
+    setState(() {
+      count = 0;
+    });
+    _startTimer();
+  }
+
+  @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      resizeToAvoidBottomInset: false,
-      body: Container(
-        color: Colors.white,
-        child: Column(
-          children: [
-            // const Footer(),
-            const DateTimeSection(),
-            VideoWidget(
-              videoName: "${AppConfig().videosDir}/th/welcome_TH.mp4",
-              setLooping: false,
-              fromFile: true,
+    return GestureDetector(
+        onTap: () async {
+          if (AppConfig().ecoMode) {
+            _resetTimer();
+            await setSystemScreenBrightness(1);
+          }
+        },
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          resizeToAvoidBottomInset: false,
+          body: Container(
+            color: Colors.white,
+            child: Column(
+              children: [
+                // const Footer(),
+                const DateTimeSection(),
+                VideoWidget(
+                  videoName: "${AppConfig().videosDir}/th/welcome_TH.mp4",
+                  setLooping: false,
+                  fromFile: true,
+                ),
+                SizedBox(height: height * 0.01),
+                Expanded(
+                    child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: languages
+                        .map((language) => Container(
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: width * 0.02),
+                              height: height * 0.08,
+                              width: width * 0.2,
+                              child: _buildLanguageButton(
+                                language["name"]!,
+                                language["code"]!,
+                                language["flag"]!,
+                              ),
+                            ))
+                        .toList(),
+                  ),
+                )),
+                // BlocListener<DeviceBloc, DeviceState>(
+                //     listener: (context, state) {
+                //       if (state is DeviceDataUpdated &&
+                //           state.deviceData is CodeScannerData) {
+                //         String data = (state.deviceData as CodeScannerData).scanner;
+                //         print("language page qr code: $data");
+                //       }
+                //     },
+                //     child: downloadInfo()),
+                downloadInfo(),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                downloadQrCode(),
+                SizedBox(
+                  height: height * 0.03,
+                ),
+                Footer(),
+              ],
             ),
-            SizedBox(height: height * 0.01),
-            Expanded(
-                child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: languages
-                    .map((language) => Container(
-                          margin:
-                              EdgeInsets.symmetric(horizontal: width * 0.02),
-                          height: height * 0.08,
-                          width: width * 0.2,
-                          child: _buildLanguageButton(
-                            language["name"]!,
-                            language["code"]!,
-                            language["flag"]!,
-                          ),
-                        ))
-                    .toList(),
-              ),
-            )),
-            // BlocListener<DeviceBloc, DeviceState>(
-            //     listener: (context, state) {
-            //       if (state is DeviceDataUpdated &&
-            //           state.deviceData is CodeScannerData) {
-            //         String data = (state.deviceData as CodeScannerData).scanner;
-            //         print("language page qr code: $data");
-            //       }
-            //     },
-            //     child: downloadInfo()),
-            downloadInfo(),
-            SizedBox(
-              height: height * 0.01,
-            ),
-            downloadQrCode(),
-            SizedBox(
-              height: height * 0.03,
-            ),
-            Footer(),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 
   // 下载信息提示
