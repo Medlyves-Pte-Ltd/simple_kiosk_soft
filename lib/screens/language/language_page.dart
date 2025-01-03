@@ -41,18 +41,16 @@ class LanguagePageState extends State<LanguagePage> {
   @override
   void initState() {
     super.initState();
-    _startTimer();
-    // if (!AppConfig().useScanner) {
-    //   // 打开扫码器
-    //   Future.delayed(Duration(milliseconds: 50), () {
-    //     AppConfig().useScanner = startScanner(context);
-    //   });
-    // }
+    if (AppConfig().ecoMode) {
+      _startTimer();
+    }
   }
 
   @override
   void dispose() {
-    time?.cancel();
+    if (AppConfig().ecoMode) {
+      time?.cancel();
+    }
     super.dispose();
   }
 
