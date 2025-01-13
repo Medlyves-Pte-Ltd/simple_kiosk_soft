@@ -5,8 +5,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:flutter_devices_sdk/devices/device_config.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:simple_kiosk_software/blocs/device/debug_device_bloc.dart';
 import 'package:simple_kiosk_software/blocs/device/device_event.dart';
+
+void deleteFilesInDirectory(String path) {
+  Directory directory = Directory(path);
+  if (directory.existsSync()) {
+    List<FileSystemEntity> files = directory.listSync();
+    if (files.isNotEmpty) {
+      LogPrinter.log("$path file count: ${files.length}");
+      for (var file in files) {
+        file.deleteSync();
+      }
+    }
+  }
+}
 
 Future<void> createDirectory(String path) async {
   try {

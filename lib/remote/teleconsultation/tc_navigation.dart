@@ -5,6 +5,8 @@ import 'package:simple_kiosk_software/remote/general_widgets/popup_dialog.dart';
 import 'package:simple_kiosk_software/remote/teleconsultation/end_appt_button.dart';
 import 'package:simple_kiosk_software/remote/utils/app_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
+import 'package:simple_kiosk_software/utils/test_result_csv_utils.dart';
 
 class TCNavigation extends StatefulWidget {
   final String displayName;
@@ -72,7 +74,11 @@ class _TCNavigationState extends State<TCNavigation> {
           showCancelButton: true,
           showOkButton: false,
           showConfirmButton: true,
-          onPressedConfirm: () {
+          onPressedConfirm: () async {
+            if (AppConfig().testResultOutCsv) {
+              TestResultCsv testResultCsv = TestResultCsv();
+              await testResultCsv.writeTestDataToCsv();
+            }
             Navigator.of(context).pop(); // close dialog
             widget.onExit(); // Call the exit callback
           },

@@ -10,6 +10,7 @@ import 'package:flutter_devices_sdk/kiosk_type.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/header.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
+import 'package:volume_controller/volume_controller.dart';
 
 class DeviceStartPage extends StatefulWidget {
   @override
@@ -177,6 +178,7 @@ class _DeviceStartPageState extends State<DeviceStartPage> {
     }
 
     await Future.delayed(Duration(seconds: 2), () {});
+    await VolumeController.instance.setVolume(AppConfig().playVolume);
     // 如果没有错误就进到欢迎界面
     if (!DeviceOrderCheck().usbOrderError()) {
       Navigator.pushNamedAndRemoveUntil(

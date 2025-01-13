@@ -29,6 +29,7 @@ class _VideoWidgetState extends State<VideoWidget> {
     if (widget.fromFile) {
       _controller = VideoPlayerController.file(File(widget.videoName))
         ..setLooping(widget.setLooping)
+        ..setVolume(1.0)
         ..initialize().then((_) {
           setState(() {});
         })

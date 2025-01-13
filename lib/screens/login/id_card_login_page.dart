@@ -194,10 +194,13 @@ class IdCardLoginPageState extends State<IdCardLoginPage> {
                     _age = age.toString();
                     // 性别
                     int? gender = dataMap['gender'];
-                    _genderStr = gender! == 1
-                        ? AppLocalizations.of(context)!.male
-                        : AppLocalizations.of(context)!.female;
-                    _gender = gender;
+                    if (gender == 1) {
+                      _gender = 1;
+                      _genderStr = AppLocalizations.of(context)!.male;
+                    } else {
+                      _gender = 0;
+                      _genderStr = AppLocalizations.of(context)!.female;
+                    }
                   }
 
                   return buildBody();

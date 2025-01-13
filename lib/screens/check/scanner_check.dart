@@ -27,8 +27,8 @@ class ScannerCheck extends BaseCheckWidget {
 
   @override
   Future<void> onStart() async {
-    DeviceConnectEvent connectEvent = DeviceConnectEvent(
-        deviceType: DeviceType.SCANNER_DEVICE, autoStop: false);
+    DeviceConnectEvent connectEvent =
+        DeviceConnectEvent(deviceType: DeviceType.SCANNER_DEVICE);
     BlocProvider.of<DeviceBloc>(mainContext).add(connectEvent);
   }
 

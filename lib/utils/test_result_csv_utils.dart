@@ -87,7 +87,7 @@ class TestResultCsv {
     //数据列表
     List<String> Rows = [
       getNow(),
-      UserInfo().name,
+      "",
       UserInfo().age,
       UserInfo().gender == 1 ? 'Male' : 'Female',
       UserInfo().height,

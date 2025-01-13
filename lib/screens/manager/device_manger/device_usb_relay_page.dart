@@ -17,6 +17,8 @@ class _DeviceUsbRelayPageState extends State<DeviceUsbRelayPage> {
       TextEditingController(text: AppConfig().relayUsbConverterVid.toString());
   var relayUsbConverterPidControl =
       TextEditingController(text: AppConfig().relayUsbConverterPid.toString());
+  var relayIoCountControl =
+      TextEditingController(text: AppConfig().relayIoCount.toString());
   var relayUsbPathControl =
       TextEditingController(text: AppConfig().relayUsbPath.toString());
   var relaySerialPathControl =
@@ -75,52 +77,32 @@ class _DeviceUsbRelayPageState extends State<DeviceUsbRelayPage> {
   }
 
   Widget relayIoCountWidget() {
-    List<dynamic> relayIoCountList =
-        AppConfig().configMap["relay_io_count_list"];
-
     return Row(
       children: [
         Text(
-          "Usb Relay IO Count",
+          "Usb Relay IO Count (8-16)",
           style: TextStyle(fontSize: height * 0.012),
         ),
         const Spacer(),
-        allowEdit
-            ? DropdownButton<int>(
-                value: AppConfig().relayIoCount,
-                iconEnabledColor: ColorPalette.materialGreen,
-                onChanged: (value) {
-                  AppConfig().relayIoCount = value!;
-                  setState(() {});
-                },
-                items: relayIoCountList.map<DropdownMenuItem<int>>((var value) {
-                  return DropdownMenuItem<int>(
-                    value: value,
-                    child: Text(value.toString(),
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: height * 0.012)),
-                  );
-                }).toList(),
-              )
-            : IgnorePointer(
-                ignoring: true,
-                child: DropdownButton<int>(
-                  iconEnabledColor: ColorPalette.darkGrey,
-                  value: AppConfig().relayIoCount,
-                  onChanged: (value) {
-                    AppConfig().relayIoCount = value!;
-                    setState(() {});
-                  },
-                  items:
-                      relayIoCountList.map<DropdownMenuItem<int>>((var value) {
-                    return DropdownMenuItem<int>(
-                      value: value,
-                      child: Text(value.toString(),
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: height * 0.012)),
-                    );
-                  }).toList(),
-                )),
+        SizedBox(
+            width: width * 0.1,
+            child: TextField(
+              readOnly: !allowEdit,
+              keyboardType: TextInputType.number,
+              autocorrect: false,
+              controller: relayIoCountControl,
+              textCapitalization: TextCapitalization.words,
+              cursorColor: const Color.fromRGBO(103, 155, 206, 1),
+              style: TextStyle(fontSize: height * 0.012),
+              onSubmitted: (text) {
+                setState(() {});
+                if (text.isEmpty) {
+                  return;
+                }
+                AppConfig().relayIoCount = int.parse(text);
+                setState(() {});
+              },
+            )),
       ],
     );
   }

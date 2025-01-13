@@ -29,6 +29,7 @@ import 'package:simple_kiosk_software/utils/permission_utils.dart';
 import 'package:simple_kiosk_software/remote/utils/shared_prefs.dart';
 import 'package:simple_kiosk_software/utils/shared_preferences.dart';
 import 'package:screen_brightness/screen_brightness.dart';
+import 'package:volume_controller/volume_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,10 +39,12 @@ void main() async {
   await PermissionUtils().getCameraPermission();
   await PermissionUtils().getMicroPhonePermission();
   await PermissionUtils().getManageExternalStoragePermission();
-  await ScreenBrightness.instance.setSystemScreenBrightness(1);
   // app配置初始化
   await AppConfig().init();
   await KioskConfig().init();
+  await ScreenBrightness.instance.setSystemScreenBrightness(1);
+  // 设置系统音量
+  await VolumeController.instance.setVolume(AppConfig().playVolume);
 
   SharedPrefs.setData('appointmentId', "");
 

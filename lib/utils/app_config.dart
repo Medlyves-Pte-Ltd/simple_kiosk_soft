@@ -10,7 +10,8 @@ class AppConfig {
   // 是否使用扫码器
   bool useScanner = false;
   String appVersion = '1.0.0';
-  String mainDir = "/sdcard/kiosk";
+  String externalStorageDir = "/sdcard";
+  String mainDir = "";
   String configDir = "";
   String imagesDir = "";
   String videosDir = "";
@@ -40,6 +41,19 @@ class AppConfig {
   set heightOffset(double value) {
     configMap["height_offset"] = value;
     DeviceSdkParamSetting().heightOffset = value;
+    saveFile();
+  }
+
+  double get playVolume {
+    try {
+      return configMap["play_volume"] as double;
+    } catch (e) {
+      return 1.0;
+    }
+  }
+
+  set playVolume(double value) {
+    configMap["play_volume"] = value;
     saveFile();
   }
 
@@ -220,7 +234,7 @@ class AppConfig {
     // 获取版本
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     appVersion = packageInfo.version;
-
+    mainDir = "$externalStorageDir/kiosk";
     configDir = "$mainDir/configs";
     imagesDir = "$mainDir/images";
     videosDir = "$mainDir/videos";
@@ -232,6 +246,10 @@ class AppConfig {
     await createDirectory(recordDir);
     // 日志初始化
     LogPrinter.init(logsDir);
+    // 删除ecg缓存数据
+    deleteFilesInDirectory("$externalStorageDir/ECGDATA/DATA");
+    deleteFilesInDirectory("$externalStorageDir/ECGDATA/RETURN");
+    // deleteFilesInDirectory("$externalStorageDir/ECGDATA/LOG");
     // 加载配置文件
     await loadFile();
     // 范围

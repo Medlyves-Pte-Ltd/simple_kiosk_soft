@@ -16,5 +16,6 @@
     "only_input_login": false,
     "eco_mode_time_minute": 5,
     "measure_automatic_stop_time_s": 90,
-    "relay_usb_path": "/dev/bus/usb/002/"
+    "relay_usb_path": "/dev/bus/usb/002/",
+    "play_volume":1.0
 }

@@ -19,6 +19,8 @@ class GeneralSettingListPageState extends State<GeneralSettingListPage> {
       TextEditingController(text: AppConfig().ecoModeTimeMinute.toString());
   var measureAutomaticStopTimeControl = TextEditingController(
       text: AppConfig().measureAutomaticStopTimeSecond.toString());
+  var systemVolumeControl =
+      TextEditingController(text: AppConfig().playVolume.toStringAsFixed(1));
 
   @override
   void initState() {
@@ -245,6 +247,39 @@ class GeneralSettingListPageState extends State<GeneralSettingListPage> {
                                 onChanged: (bool value) {},
                               ),
                             ),
+                      buildDivider(),
+                      Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 18),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Set the system volume between 0.0 to 1.0",
+                                style: TextStyle(fontSize: height * 0.012),
+                              ),
+                              const Spacer(),
+                              SizedBox(
+                                  width: width * 0.1,
+                                  child: TextField(
+                                    readOnly: !allowEdit,
+                                    keyboardType: TextInputType.number,
+                                    autocorrect: false,
+                                    controller: systemVolumeControl,
+                                    textCapitalization:
+                                        TextCapitalization.words,
+                                    cursorColor:
+                                        const Color.fromRGBO(103, 155, 206, 1),
+                                    style: TextStyle(fontSize: height * 0.012),
+                                    onSubmitted: (text) {
+                                      setState(() {});
+                                      if (text.isEmpty) {
+                                        return;
+                                      }
+                                      AppConfig().playVolume =
+                                          double.parse(text);
+                                    },
+                                  )),
+                            ],
+                          )),
                       buildDivider(),
                     ],
                   ))),
