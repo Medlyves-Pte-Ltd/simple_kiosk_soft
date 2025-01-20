@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_devices_sdk/device_data/code_scanner_data.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:flutter_devices_sdk/devices/device_config.dart';
@@ -22,8 +20,6 @@ import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 import 'package:simple_kiosk_software/utils/scanner_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
-
-import '../../common/common.dart';
 
 class ScannerPage extends StatefulWidget {
   @override
@@ -148,10 +144,10 @@ class ScannerPageState extends State<ScannerPage> {
           const Header(),
           buildVideoArea(),
           SizedBox(
-            height: height * 0.02,
+            height: height * 0.018,
           ),
           SizedBox(
-            height: height * 0.3,
+            height: height * 0.29,
             child: buildTipInfoArea(),
           ),
           buildQrCode(),
@@ -299,9 +295,10 @@ class ScannerPageState extends State<ScannerPage> {
           const Spacer(),
           InkWell(
             onTap: () {
-              //stopScanner(context);
-              Navigator.pushNamedAndRemoveUntil(
-                  mainContext, "/LanguagePage", (route) => false);
+              KioskConfig().healthScreeningMode =
+                  HealthScreeningMode.standalone;
+              KioskConfig().teleConsultationMode = TeleConsultationMode.off;
+              Navigator.of(context).pop();
             },
             child: Container(
                 height: height * 0.03,

@@ -66,6 +66,7 @@ class IdCardLoginPageState extends State<IdCardLoginPage> {
         width: width * 0.7,
         child: Column(
           children: [
+            SizedBox(height: height * 0.01),
             Row(
               children: [
                 Icon(
@@ -76,7 +77,7 @@ class IdCardLoginPageState extends State<IdCardLoginPage> {
                   AppLocalizations.of(context)!.name,
                   style: TextStyle(
                       color: Color.fromRGBO(103, 155, 206, 1),
-                      fontSize: height * 0.016),
+                      fontSize: height * 0.02),
                 ),
                 SizedBox(width: width * 0.01),
                 Expanded(
@@ -99,7 +100,7 @@ class IdCardLoginPageState extends State<IdCardLoginPage> {
                   AppLocalizations.of(context)!.gender,
                   style: TextStyle(
                       color: Color.fromRGBO(103, 155, 206, 1),
-                      fontSize: height * 0.016),
+                      fontSize: height * 0.02),
                 ),
                 SizedBox(width: width * 0.01),
                 Expanded(
@@ -122,7 +123,7 @@ class IdCardLoginPageState extends State<IdCardLoginPage> {
                   AppLocalizations.of(context)!.print_age,
                   style: TextStyle(
                       color: Color.fromRGBO(103, 155, 206, 1),
-                      fontSize: height * 0.016),
+                      fontSize: height * 0.02),
                 ),
                 SizedBox(width: width * 0.01),
                 Expanded(
@@ -218,30 +219,13 @@ class IdCardLoginPageState extends State<IdCardLoginPage> {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, "/LanguagePage", (route) => false);
+                      Navigator.pushNamedAndRemoveUntil(context,
+                          '/SelectLoginMethodPage', ((route) => false));
                     },
                     child: Text(AppLocalizations.of(context)!.back,
                         style: TextStyle(
                             color: Colors.white, fontSize: height * 0.016))),
-                SizedBox(width: width * 0.06),
-                ElevatedButton(
-                    style: ButtonStyle(
-                      fixedSize: MaterialStateProperty.all<Size>(
-                        Size(width * 0.22, height * 0.04),
-                      ),
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                        ColorPalette.materialGreen,
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, "/UserLoginPage", (route) => false);
-                    },
-                    child: Text(AppLocalizations.of(context)!.input,
-                        style: TextStyle(
-                            color: Colors.white, fontSize: height * 0.016))),
-                SizedBox(width: width * 0.06),
+                SizedBox(width: width * 0.26),
                 ElevatedButton(
                     style: ButtonStyle(
                       fixedSize: MaterialStateProperty.all<Size>(
@@ -272,7 +256,8 @@ class IdCardLoginPageState extends State<IdCardLoginPage> {
                           context: context,
                           builder: (context) => AlertDialog(
                             title: Text(AppLocalizations.of(context)!.error),
-                            content: const Text('Please reinsert the idcard.'),
+                            content: Text(AppLocalizations.of(context)!
+                                .please_reinsert_id_card),
                             actions: [
                               TextButton(
                                 onPressed: () {

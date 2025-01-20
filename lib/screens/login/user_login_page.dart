@@ -5,7 +5,6 @@ import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/header.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:simple_kiosk_software/screens/language/date_time_section.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_kiosk_software/utils/body_range.dart';
@@ -66,6 +65,7 @@ class UserLoginPageState extends State<UserLoginPage> {
                 width: width * 0.7,
                 child: Column(
                   children: [
+                    SizedBox(height: height * 0.01),
                     // Text Field for Name
                     TextField(
                       keyboardType: TextInputType.text,
@@ -87,7 +87,7 @@ class UserLoginPageState extends State<UserLoginPage> {
                             color: Color.fromRGBO(103, 155, 206, 1),
                             width: 2.0,
                           ))),
-                      style: TextStyle(fontSize: height * 0.016),
+                      style: TextStyle(fontSize: height * 0.02),
                     ),
                     SizedBox(height: height * 0.02),
 
@@ -97,7 +97,7 @@ class UserLoginPageState extends State<UserLoginPage> {
                           labelText: AppLocalizations.of(context)!.gender,
                           labelStyle: TextStyle(
                               color: Color.fromRGBO(103, 155, 206, 1),
-                              fontSize: height * 0.016),
+                              fontSize: height * 0.02),
                           hintText: 'Select Gender',
                           prefixIcon: Icon(
                             Icons.wc,
@@ -137,7 +137,7 @@ class UserLoginPageState extends State<UserLoginPage> {
                           labelText: AppLocalizations.of(context)!.print_age,
                           labelStyle: TextStyle(
                             color: Color.fromRGBO(103, 155, 206, 1),
-                            fontSize: height * 0.016,
+                            fontSize: height * 0.02,
                           ),
                           prefixIcon: Icon(Icons.escalator_warning,
                               size: height * 0.018),
@@ -169,8 +169,8 @@ class UserLoginPageState extends State<UserLoginPage> {
                     ),
                     onPressed: () {
                       if (AppConfig().onlyInputLogin) {
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, "/LanguagePage", (route) => false);
+                        Navigator.pushNamedAndRemoveUntil(context,
+                            "/SelectLoginMethodPage", (route) => false);
                       } else {
                         Navigator.pushNamedAndRemoveUntil(
                             context, "/IdCardLoginPage", (route) => false);

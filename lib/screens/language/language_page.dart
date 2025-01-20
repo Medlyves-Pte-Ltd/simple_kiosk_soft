@@ -1,8 +1,5 @@
 import 'dart:async';
-
 import 'package:country_flags/country_flags.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
@@ -93,7 +90,7 @@ class LanguagePageState extends State<LanguagePage> {
         onTap: () async {
           if (AppConfig().ecoMode) {
             _resetTimer();
-            await setSystemScreenBrightness(1);
+            await setSystemScreenBrightness(1.0);
           }
         },
         child: Scaffold(
@@ -103,7 +100,6 @@ class LanguagePageState extends State<LanguagePage> {
             color: Colors.white,
             child: Column(
               children: [
-                // const Footer(),
                 const DateTimeSection(),
                 VideoWidget(
                   videoName: "${AppConfig().videosDir}/th/welcome_TH.mp4",
@@ -236,14 +232,14 @@ class LanguagePageState extends State<LanguagePage> {
         BlocProvider.of<LocaleCubit>(context).loadLocale(Locale(languageCode));
         if (KioskConfig().healthScreeningMode == HealthScreeningMode.online) {
           Navigator.pushNamedAndRemoveUntil(
-              context, '/ScannerPage', ((route) => false));
+              context, '/SelectLoginMethodPage', ((route) => false));
         } else {
           if (AppConfig().onlyInputLogin) {
             Navigator.pushNamedAndRemoveUntil(
-                context, '/UserLoginPage', ((route) => false));
+                context, '/SelectLoginMethodPage', ((route) => false));
           } else {
             Navigator.pushNamedAndRemoveUntil(
-                context, '/IdCardLoginPage', ((route) => false));
+                context, '/SelectLoginMethodPage', ((route) => false));
           }
         }
       },
