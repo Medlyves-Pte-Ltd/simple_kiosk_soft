@@ -1,6 +1,6 @@
 {
-  "name": "姓名:",
-  "age": "年龄:",
+  "name": "姓名: ",
+  "age": "年龄: ",
   "back": "返回",
   "female": "女性",
   "male": "男性",
@@ -157,8 +157,8 @@
   "click_three_calibration_command_button":"2.点击按钮，进入校准状态",
   "please_click_start_again": "请再次点击开始",
   "input": "输入",
-  "identity_card_number": "身份证号码",
-  "thai_id": "身份证",
+  "identity_card_number": "员工ID",
+  "thai_id": "身份证: ",
   "reenter_id_num": "请重新输入您的身份证号码",
   "please_reinsert_id_card": "请重新插入您的身份证",
   "manual_entry":"手动输入"

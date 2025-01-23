@@ -62,12 +62,7 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     emit(DeviceDataUpdated(deviceType: deviceType, deviceData: deviceData));
 
     if (event.autoStop) {
-      LogPrinter.log('Callback received. Cancel subscription.');
-      _dataSubscription!.cancel();
-      LogPrinter.log(deviceData.toString());
-      LogPrinter.log('Trying to stop the device.');
-
-      Future.delayed(const Duration(milliseconds: 200),
+      Future.delayed(const Duration(milliseconds: 300),
           () => add(DeviceDisconnectEvent(deviceType: event.deviceType)));
     }
   }

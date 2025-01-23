@@ -8,11 +8,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:flutter_devices_sdk/devices/device_config.dart';
 import 'package:flutter_devices_sdk/log/log_printer.dart';
-import 'package:medlyves_mobile_components/blocs/hms_room_overview/room_overview_bloc.dart';
-import 'package:medlyves_mobile_components/blocs/hms_room_overview/room_overview_event.dart';
-import 'package:medlyves_mobile_components/blocs/hms_room_overview/room_overview_state.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
+import 'package:simple_kiosk_software/remote/mpt_api.dart';
 import 'package:simple_kiosk_software/remote/utils/enum_appointment_mode.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/kiosk_config.dart';
@@ -25,13 +23,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_kiosk_software/screens/summary_pages/summary_basic_vitals.dart';
 import 'package:simple_kiosk_software/screens/summary_pages/summary_body_composition.dart';
 import 'package:simple_kiosk_software/screens/summary_pages/summary_ecg.dart';
-import 'package:simple_kiosk_software/screens/summary_pages/summary_otoscope.dart';
-import 'package:simple_kiosk_software/screens/summary_pages/summary_stethoscope.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/test_result_csv_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
-import 'package:simple_kiosk_software/remote/config/settings.dart';
 
 class SummaryLayoutWidget extends StatelessWidget {
   // 文本和Widget顺序需要相同
@@ -321,6 +316,14 @@ class SummaryLayoutWidget extends StatelessWidget {
         if (AppConfig().testResultOutCsv) {
           TestResultCsv testResultCsv = TestResultCsv();
           await testResultCsv.writeTestDataToCsv();
+        }
+
+        try {
+          await MptApi.uploadData();
+        } catch (e) {
+          ScaffoldMessenger.of(mainContext).showSnackBar(
+            SnackBar(content: Text('An error occurred: $e')),
+          );
         }
 
         mainContext

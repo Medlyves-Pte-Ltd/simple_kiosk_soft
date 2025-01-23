@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:simple_kiosk_software/remote/vitals/viewmodels/vital_measurement_controller.dart';
 import 'package:simple_kiosk_software/remote/utils/app_constants.dart';
 import 'package:provider/provider.dart';

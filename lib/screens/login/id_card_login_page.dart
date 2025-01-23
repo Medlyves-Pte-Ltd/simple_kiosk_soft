@@ -25,6 +25,7 @@ class IdCardLoginPageState extends State<IdCardLoginPage> {
   // 屏幕高度
   double height = 0;
   ThaiCard thaiCard = ThaiCard();
+  String _thaiID = "";
   String _name = "";
   String _age = "";
   String _genderStr = "";
@@ -67,6 +68,29 @@ class IdCardLoginPageState extends State<IdCardLoginPage> {
         child: Column(
           children: [
             SizedBox(height: height * 0.01),
+            Row(
+              children: [
+                Icon(
+                  Icons.perm_identity,
+                  size: height * 0.018,
+                ),
+                Text(
+                  AppLocalizations.of(context)!.thai_id,
+                  style: TextStyle(
+                      color: Color.fromRGBO(103, 155, 206, 1),
+                      fontSize: height * 0.02),
+                ),
+                SizedBox(width: width * 0.01),
+                Expanded(
+                    child: Text(
+                  _thaiID,
+                  style: TextStyle(fontSize: height * 0.016),
+                )),
+              ],
+            ),
+            SizedBox(height: height * 0.02),
+            buildDivider(),
+            SizedBox(height: height * 0.02),
             Row(
               children: [
                 Icon(
@@ -156,7 +180,7 @@ class IdCardLoginPageState extends State<IdCardLoginPage> {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-    _name = _age = _genderStr = AppLocalizations.of(context)!.loading;
+    _thaiID = _name = _age = _genderStr = AppLocalizations.of(context)!.loading;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -176,6 +200,8 @@ class IdCardLoginPageState extends State<IdCardLoginPage> {
                 builder: (context, idcard, child) {
                   if (idcard != null) {
                     var dataMap = idcard.toMap();
+                    //ID号码
+                    _thaiID = '${dataMap['nationID']}';
                     // 姓名
                     if (languageCode == 'th') {
                       _name =
@@ -241,6 +267,7 @@ class IdCardLoginPageState extends State<IdCardLoginPage> {
                     onPressed: () {
                       String text = AppLocalizations.of(context)!.loading;
                       if (_name != text) {
+                        UserInfo().patientId = _thaiID;
                         UserInfo().name = _name;
                         UserInfo().gender = _gender;
                         UserInfo().age = _age;

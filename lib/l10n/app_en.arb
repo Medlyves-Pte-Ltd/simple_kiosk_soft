@@ -1,5 +1,5 @@
 {
-  "name": "Name:",
+  "name": "Name: ",
   "age": "Age: ",
   "back": "Back",
   "female": "Female",
@@ -156,8 +156,8 @@
   "click_three_calibration_command_button":"2.Click the button to enter the calibration state",
   "please_click_start_again": "Please click start again",
   "input": "Input",
-  "identity_card_number": "Identity card number",
-  "thai_id": "ID Card",
+  "identity_card_number": "Staff ID",
+  "thai_id": "ID Card: ",
   "reenter_id_num": "Please re enter your ID number",
   "please_reinsert_id_card": "Please reinsert your ID card",
   "manual_entry":"Manual Entry"

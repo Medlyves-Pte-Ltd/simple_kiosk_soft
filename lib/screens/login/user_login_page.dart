@@ -20,6 +20,7 @@ class UserLoginPage extends StatefulWidget {
 
 class UserLoginPageState extends State<UserLoginPage> {
   final double spaceBetweenButtons = 15.0;
+  final TextEditingController _staffIdController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
   String selectedGender = '';
@@ -36,6 +37,7 @@ class UserLoginPageState extends State<UserLoginPage> {
   @override
   void dispose() {
     super.dispose();
+    _staffIdController.dispose();
     _nameController.dispose();
     _ageController.dispose();
   }
@@ -65,6 +67,30 @@ class UserLoginPageState extends State<UserLoginPage> {
                 width: width * 0.7,
                 child: Column(
                   children: [
+                    // Text Field for StaffId
+                    TextField(
+                      keyboardType: TextInputType.text,
+                      autocorrect: false,
+                      controller: _staffIdController,
+                      textCapitalization: TextCapitalization.none,
+                      cursorColor: const Color.fromRGBO(103, 155, 206, 1),
+                      decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!
+                              .identity_card_number,
+                          labelStyle: TextStyle(
+                              color: Color.fromRGBO(103, 155, 206, 1),
+                              fontSize: height * 0.016),
+                          prefixIcon: Icon(
+                            Icons.perm_identity,
+                            size: height * 0.018,
+                          ),
+                          focusedBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(
+                            color: Color.fromRGBO(103, 155, 206, 1),
+                            width: 2.0,
+                          ))),
+                      style: TextStyle(fontSize: height * 0.02),
+                    ),
                     SizedBox(height: height * 0.01),
                     // Text Field for Name
                     TextField(
@@ -168,13 +194,8 @@ class UserLoginPageState extends State<UserLoginPage> {
                       ),
                     ),
                     onPressed: () {
-                      if (AppConfig().onlyInputLogin) {
-                        Navigator.pushNamedAndRemoveUntil(context,
-                            "/SelectLoginMethodPage", (route) => false);
-                      } else {
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, "/IdCardLoginPage", (route) => false);
-                      }
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, "/SelectLoginMethodPage", (route) => false);
                     },
                     child: Text(AppLocalizations.of(context)!.back,
                         style: TextStyle(
@@ -193,12 +214,15 @@ class UserLoginPageState extends State<UserLoginPage> {
                         style: TextStyle(
                             color: Colors.white, fontSize: height * 0.016)),
                     onPressed: () {
+                      String staffId = _staffIdController.text.trim();
                       String name = _nameController.text.trim();
                       String gender = selectedGender ?? '';
                       String age = _ageController.text.trim();
-                      if (name.isNotEmpty &&
+                      if (staffId.isNotEmpty &&
+                          name.isNotEmpty &&
                           gender.isNotEmpty &&
                           age.isNotEmpty) {
+                        UserInfo().patientId = staffId;
                         UserInfo().name = name;
                         UserInfo().gender = gender.contains('男性') ||
                                 gender.contains('Male') ||

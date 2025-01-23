@@ -1,5 +1,5 @@
 {
-  "name": "ชื่อ:",
+  "name": "ชื่อ: ",
   "age": "อายุ: ",
   "back": "กลับ",
   "female": "หญิง",
@@ -156,8 +156,8 @@
   "click_three_calibration_command_button":"2.คลิกที่ปุ่มเพื่อเข้าสู่สถานะการสอบเทียบ",
   "please_click_start_again": "กรุณาคลิกเพื่อเริ่มต้นอีกครั้ง",
   "input": "ป้อนข้อมูล",
-  "identity_card_number": "หมายเลขบัตรประชาชน",
-  "thai_id": "บัตรประชาชน",
+  "identity_card_number": "รหัสพนักงาน",
+  "thai_id": "บัตรประชาชน: ",
   "reenter_id_num": "กรุณาใส่หมายเลขบัตรประชาชนของคุณอีกครั้ง",
   "please_reinsert_id_card": "กรุณาใส่บัตรประชาชนของคุณ",
   "manual_entry":"ป้อนเอง"

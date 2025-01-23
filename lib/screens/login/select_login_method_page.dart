@@ -5,6 +5,7 @@ import 'package:screen_brightness/screen_brightness.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
+import 'package:simple_kiosk_software/remote/mpt_api.dart';
 import 'package:simple_kiosk_software/screens/language/date_time_section.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -77,6 +78,12 @@ class SelectLoginMethodPageState extends State<SelectLoginMethodPage> {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
+
+    MptApi.retrieveJwtToken().onError((error, stackTrace) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('An error occurred: $error')),
+      );
+    });
 
     return GestureDetector(
       onTap: () async {
