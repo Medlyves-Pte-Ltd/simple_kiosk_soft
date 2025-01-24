@@ -118,7 +118,7 @@ class AppointmentRepository {
         });
       }
     });
-    //api.uploadDeviceData(data['id'], readings); // Upload data
+    api.uploadDeviceData(data['id'], readings); // Upload data
     data = {...data, ...newData}; // Update data
   }
 
@@ -130,6 +130,6 @@ class AppointmentRepository {
     String timestamp = now.toIso8601String();
     String appointmentId = data['id'];
     // String conclusion = data['ecg_cln'];
-    //api.addEcgDocument(file, patientId, timestamp, appointmentId, conclusion);
+    api.addEcgDocument(file, patientId, timestamp, appointmentId, conclusion);
   }
 }
