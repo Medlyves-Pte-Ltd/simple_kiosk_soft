@@ -39,7 +39,7 @@ class TestResultCsv {
   //表头
   List<String> header = [
     'Time',
-    'Staff ID',
+    'ID',
     'Name',
     'Age',
     'Gender',
@@ -89,7 +89,7 @@ class TestResultCsv {
     List<String> Rows = [
       getNow(),
       UserInfo().patientId,
-      "",
+      UserInfo().name,
       UserInfo().age,
       UserInfo().gender == 1 ? 'Male' : 'Female',
       UserInfo().height,

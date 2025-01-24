@@ -136,8 +136,9 @@
   "weight_check": "5.Ukur berat badan anda, bandingkan keputusan dan lihat sama ada keputusan berat yang ditentukur adalah betul",
   "click_three_calibration_command_button":"2.Tekan tombol, masukkan mode kalibrasi",
   "input": "masukkan",
-  "identity_card_number": "Id no",
+  "identity_card_number": "Id no: ",
   "thai_id": "ID Card",
+  "id": "ID",
   "reenter_id_num": "Sila masukkan semula nombor Kad Pengenalan anda",
   "please_reinsert_id_card": "Sila masukkan semula ID anda",
   "manual_entry": "Kemasukan Manual"

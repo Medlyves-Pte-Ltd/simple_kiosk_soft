@@ -160,9 +160,13 @@ class UserInfo {
     }
     if (systolic.isNotEmpty && diastolic.isNotEmpty) {
       map["bloodPressure"] = "$systolic / $diastolic";
-      map["systolic"] = systolic;
-      map["diastolic"] = diastolic;
     }
+    // if (systolic.isNotEmpty) {
+    //   map["systolic"] = systolic;
+    // }
+    // if (diastolic.isNotEmpty) {
+    //   map["diastolic"] = diastolic;
+    // }
     if (bloodOxygen.isNotEmpty) {
       map["bloodOxygen"] = bloodOxygen;
     }

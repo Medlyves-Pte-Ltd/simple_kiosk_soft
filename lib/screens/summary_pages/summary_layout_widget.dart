@@ -1,9 +1,6 @@
 import 'dart:core';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:flutter_devices_sdk/devices/device_config.dart';
@@ -321,9 +318,7 @@ class SummaryLayoutWidget extends StatelessWidget {
         try {
           await MptApi.uploadData();
         } catch (e) {
-          ScaffoldMessenger.of(mainContext).showSnackBar(
-            SnackBar(content: Text('An error occurred: $e')),
-          );
+          LogPrinter.log('An error occurred: $e');
         }
 
         mainContext

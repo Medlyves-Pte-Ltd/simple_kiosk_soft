@@ -163,7 +163,7 @@ class UserLoginPageState extends State<UserLoginPage> {
                           labelText: AppLocalizations.of(context)!.print_age,
                           labelStyle: TextStyle(
                             color: Color.fromRGBO(103, 155, 206, 1),
-                            fontSize: height * 0.02,
+                            fontSize: height * 0.016,
                           ),
                           prefixIcon: Icon(Icons.escalator_warning,
                               size: height * 0.018),
@@ -200,7 +200,7 @@ class UserLoginPageState extends State<UserLoginPage> {
                     child: Text(AppLocalizations.of(context)!.back,
                         style: TextStyle(
                             color: Colors.white, fontSize: height * 0.016))),
-                SizedBox(width: width * 0.06),
+                SizedBox(width: width * 0.26),
                 ElevatedButton(
                     style: ButtonStyle(
                       fixedSize: MaterialStateProperty.all<Size>(

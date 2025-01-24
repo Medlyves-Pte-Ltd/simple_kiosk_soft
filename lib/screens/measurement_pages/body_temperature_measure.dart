@@ -5,12 +5,10 @@ import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:simple_kiosk_software/common/range_widget.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
-import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/screens/measurement_pages/base_measure_layout_widget.dart';
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
 import 'package:simple_kiosk_software/blocs/device/device_event.dart';
 import 'package:simple_kiosk_software/blocs/device/device_state.dart';
-import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/body_range.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/kiosk_config.dart';
@@ -86,10 +84,9 @@ class BodyTemperatureMeasure extends BaseMeasureLayoutWidget {
 
         if (temp < 32 || temp > 42.5) {
           if (temperature != text) {
-            messageBox(mainContext, super.title,
-                AppLocalizations.of(mainContext)!.please_click_start_again);
+            temperature =
+                AppLocalizations.of(mainContext)!.please_click_start_again;
           }
-          temperature = dataDefaultValue;
         } else {
           temperature = UserInfo().temperature =
               (state.deviceData as BodyTemperatureData).temperature;

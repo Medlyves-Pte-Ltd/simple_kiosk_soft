@@ -2,10 +2,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
@@ -39,7 +41,13 @@ void main() async {
   // app配置初始化
   await AppConfig().init();
   await KioskConfig().init();
-  await ScreenBrightness.instance.setSystemScreenBrightness(1.0);
+
+  try {
+    await ScreenBrightness.instance.setSystemScreenBrightness(1.0);
+  } catch (e) {
+    LogPrinter.log("set system brightness failed : " + e.toString());
+  }
+
   // 设置系统音量
   await VolumeController.instance.setVolume(AppConfig().playVolume);
 

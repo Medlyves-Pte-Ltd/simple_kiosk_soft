@@ -156,8 +156,9 @@
   "click_three_calibration_command_button":"2.Click the button to enter the calibration state",
   "please_click_start_again": "Please click start again",
   "input": "Input",
-  "identity_card_number": "Staff ID",
+  "identity_card_number": "ID: ",
   "thai_id": "ID Card: ",
+  "id": "ID Card",
   "reenter_id_num": "Please re enter your ID number",
   "please_reinsert_id_card": "Please reinsert your ID card",
   "manual_entry":"Manual Entry"

@@ -80,9 +80,7 @@ class SelectLoginMethodPageState extends State<SelectLoginMethodPage> {
     height = MediaQuery.of(context).size.height;
 
     MptApi.retrieveJwtToken().onError((error, stackTrace) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('An error occurred: $error')),
-      );
+      LogPrinter.log('An error occurred: $error');
     });
 
     return GestureDetector(
@@ -187,7 +185,7 @@ class SelectLoginMethodPageState extends State<SelectLoginMethodPage> {
                 ),
               ),
               SizedBox(height: height * 0.02),
-              Text(AppLocalizations.of(context)!.thai_id,
+              Text(AppLocalizations.of(context)!.id,
                   style: TextStyle(
                       fontSize: height * 0.018,
                       color: ColorPalette.materialGreen)),

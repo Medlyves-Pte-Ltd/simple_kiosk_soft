@@ -58,7 +58,10 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
       DeviceUpdateDataEvent event, Emitter<DeviceState> emit) async {
     DeviceType deviceType = event.deviceType;
     DeviceData deviceData = event.deviceData;
-
+    LogPrinter.log('Callback received. Cancel subscription.');
+    _dataSubscription!.cancel();
+    LogPrinter.log(deviceData.toString());
+    LogPrinter.log('Trying to stop the device.');
     emit(DeviceDataUpdated(deviceType: deviceType, deviceData: deviceData));
 
     if (event.autoStop) {
