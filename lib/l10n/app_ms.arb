@@ -114,7 +114,7 @@
   "basic_vitals": "Keperluan Asas",
   "ecg_img_unavail": "Imej ECG tidak tersedia.",
   "error": "Ralat",
-  "powered_by": "Dijanakan oleh:",
+  "powered_by": "Powered by: ",
   "version": "Versi",
   "id_card": "kad id",
   "errorcode_01": "Sensor berayun secara tidak normal",

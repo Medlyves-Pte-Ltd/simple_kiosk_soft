@@ -136,7 +136,7 @@
   "body_age": "身体年龄",
   "overall": "整体得分",
   "error": "错误",
-  "powered_by": "技术支持：",
+  "powered_by": "Powered by: ",
   "version": "版本",
   "id_card": "身份证",
   "errorcode_01": "传感器震荡异常",
