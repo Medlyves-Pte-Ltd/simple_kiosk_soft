@@ -28,6 +28,8 @@
   "bcm_moisture": "总水分（kg）",
   "blood_pressure": "血压",
   "bp_bloodpressure": "血压（mmHg）",
+  "bp_systolic": "收缩压 (mmHg)",
+  "bp_diastolic": "舒张压 (mmHg)",
   "bp_pulse": "脉搏（bpm）",
   "client_details": "用户详情",
   "complete_session": "会话完成",

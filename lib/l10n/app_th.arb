@@ -28,6 +28,8 @@
   "bcm_moisture": "ความชื้น（kg）",
   "blood_pressure": "ความดันโลหิต",
   "bp_bloodpressure": "ความดันโลหิต (mmHg)",
+  "bp_systolic": "ความดันโลหิตตัวบน (mmHg)",
+  "bp_diastolic": "ความดันโลหิตตัวล่าง (mmHg)",
   "bp_pulse": "อัตราชีพจร (bpm)",
   "client_details": "รายละเอียดลูกค้า",
   "complete_session": "เสร็จสิ้นวาระงาน",

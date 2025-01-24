@@ -107,9 +107,9 @@ class PrintMap {
       case 'bloodPressure':
         return loc.bp_bloodpressure;
       case 'systolic':
-        return loc.systolic;
+        return loc.bp_systolic;
       case 'diastolic':
-        return loc.diastolic;
+        return loc.bp_diastolic;
       case 'bp_pulse':
         return loc.bp_pulse;
       case 'bloodOxygen':

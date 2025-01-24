@@ -28,6 +28,8 @@
   "bcm_moisture": "Total Moisture（kg）",
   "blood_pressure": "Blood Pressure",
   "bp_bloodpressure": "Blood Pressure (mmHg)",
+  "bp_systolic": "systolic (mmHg)",
+  "bp_diastolic": "diastolic (mmHg)",
   "bp_pulse": "Heart Rate (bpm)",
   "client_details": "Client Details",
   "complete_session": "Session Complete",
