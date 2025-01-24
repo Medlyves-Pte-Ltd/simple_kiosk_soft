@@ -15,6 +15,10 @@ class PrintMap {
         return "(${BodyRange().temperatureMin.toStringAsFixed(1)} ~ ${BodyRange().temperatureMax.toStringAsFixed(1)})";
       case 'bloodPressure':
         return "( < ${BodyRange().systolicMax})/( < ${BodyRange().diastolicMax})";
+      case 'systolic':
+        return "( < ${BodyRange().systolicMax})";
+      case 'diastolic':
+        return "( < ${BodyRange().diastolicMax})";
       case 'bp_pulse':
         return "(${BodyRange().heartRateMin.toString()} ~ ${BodyRange().heartRateMax.toString()})";
       case 'bloodOxygen':
@@ -102,6 +106,10 @@ class PrintMap {
         return loc.temp_temperature;
       case 'bloodPressure':
         return loc.bp_bloodpressure;
+      case 'systolic':
+        return loc.systolic;
+      case 'diastolic':
+        return loc.diastolic;
       case 'bp_pulse':
         return loc.bp_pulse;
       case 'bloodOxygen':
