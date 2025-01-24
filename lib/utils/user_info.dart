@@ -1,4 +1,8 @@
 class UserInfo {
+  // 开始时间
+  String startTime = "";
+  // 结束时间
+  String endTime = "";
   // 是否远程医疗
   bool teleconsultation = true;
   // 患者ID
@@ -100,6 +104,8 @@ class UserInfo {
   }
 
   void clearResult() {
+    startTime = "";
+    endTime = "";
     bmi = "";
     extracellularFluid = "";
     bodyAge = "";

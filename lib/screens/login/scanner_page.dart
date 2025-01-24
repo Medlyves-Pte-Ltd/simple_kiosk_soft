@@ -183,15 +183,18 @@ class ScannerPageState extends State<ScannerPage> {
           children: [
             GestureDetector(
               onDoubleTap: () {
-                // 测试
-                //listenScannerData("ZGVtbzFAbWVkbHl2ZXMuY29t_walkin_TC");
-                // 泰国测试人员二维码
-                listenScannerData(
-                    "cGVlcmFkYS50YXdvbmdAbmVvcG93ZXJtZWQuY29t_walkin_TC");
-                // 无远程医疗功能 _HS结尾
-                //listenScannerData("ZGVtbzFAbWVkbHl2ZXMuY29t_walkin_HS");
-                // David信息
-                //listenScannerData("ZGF2aWQud29uZ0BtZWRseXZlcy5jb20=_walkin_TC");
+                if (KioskConfig().envType == "dev_env") {
+                  // 开发分支的二维码
+                  listenScannerData("ZGVtbzFAbWVkbHl2ZXMuY29t_walkin_TC");
+                } else {
+                  // 泰国测试人员二维码
+                  listenScannerData(
+                      "cGVlcmFkYS50YXdvbmdAbmVvcG93ZXJtZWQuY29t_walkin_TC");
+                  // 无远程医疗功能 _HS结尾
+                  //listenScannerData("ZGVtbzFAbWVkbHl2ZXMuY29t_walkin_HS");
+                  // David信息
+                  //listenScannerData("ZGF2aWQud29uZ0BtZWRseXZlcy5jb20=_walkin_TC");
+                }
               },
               child: Image.asset(
                 "assets/images/qr-code.png",

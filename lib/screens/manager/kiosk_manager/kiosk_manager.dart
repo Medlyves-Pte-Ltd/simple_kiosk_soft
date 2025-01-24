@@ -71,7 +71,7 @@ class _KioskManagerState extends State<KioskManager> {
 
   Widget healthScreeningModeWidget() {
     List<dynamic> healthScreeningModeList =
-    KioskConfig().configMap["health_screening_mode_list"];
+        KioskConfig().configMap["health_screening_mode_list"];
 
     return Row(
       children: [
@@ -125,7 +125,7 @@ class _KioskManagerState extends State<KioskManager> {
 
   Widget teleConsultationModeWidget() {
     List<dynamic> teleConsultationModeList =
-    KioskConfig().configMap["tele_consultation_mode_list"];
+        KioskConfig().configMap["tele_consultation_mode_list"];
 
     return Row(
       children: [
@@ -294,12 +294,12 @@ class _KioskManagerState extends State<KioskManager> {
       ),
       Padding(
           padding: EdgeInsets.symmetric(horizontal: 18), child: envWidget()),
-      Padding(
-          padding: EdgeInsets.symmetric(horizontal: 18),
-          child: healthScreeningModeWidget()),
-      Padding(
-          padding: EdgeInsets.symmetric(horizontal: 18),
-          child: teleConsultationModeWidget()),
+      // Padding(
+      //     padding: EdgeInsets.symmetric(horizontal: 18),
+      //     child: healthScreeningModeWidget()),
+      // Padding(
+      //     padding: EdgeInsets.symmetric(horizontal: 18),
+      //     child: teleConsultationModeWidget()),
       Padding(
           padding: EdgeInsets.symmetric(horizontal: 18),
           child: kioskTypeWidget()),

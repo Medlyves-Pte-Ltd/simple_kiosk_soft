@@ -284,7 +284,13 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
                 ),
                 Offstage(
                   offstage: !heightMeasured,
-                  child: Text(""),
+                  child: Text(
+                    "",
+                    style: TextStyle(
+                        fontSize: height * 0.02,
+                        fontWeight: FontWeight.bold,
+                        color: ColorPalette.materialGreen),
+                  ),
                 )
               ],
             ),
