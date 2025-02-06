@@ -75,7 +75,7 @@ class IdCardLoginPageState extends State<IdCardLoginPage> {
                   size: height * 0.018,
                 ),
                 Text(
-                  AppLocalizations.of(context)!.thai_id,
+                  AppLocalizations.of(context)!.identity_card_number,
                   style: TextStyle(
                       color: Color.fromRGBO(103, 155, 206, 1),
                       fontSize: height * 0.02),

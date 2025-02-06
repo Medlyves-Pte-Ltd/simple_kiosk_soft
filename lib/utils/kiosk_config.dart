@@ -49,25 +49,8 @@ class KioskConfig {
     saveFile();
   }
 
-  HealthScreeningMode get healthScreeningMode {
-    String name = configMap["health_screening_mode"] as String;
-    return HealthScreeningMode.values.byName(name);
-  }
-
-  set healthScreeningMode(HealthScreeningMode mode) {
-    configMap["health_screening_mode"] = mode.name;
-    saveFile();
-  }
-
-  TeleConsultationMode get teleConsultationMode {
-    String name = configMap["tele_consultation_mode"] as String;
-    return TeleConsultationMode.values.byName(name);
-  }
-
-  set teleConsultationMode(TeleConsultationMode mode) {
-    configMap["tele_consultation_mode"] = mode.name;
-    saveFile();
-  }
+  HealthScreeningMode healthScreeningMode = HealthScreeningMode.standalone;
+  TeleConsultationMode teleConsultationMode = TeleConsultationMode.off;
 
   Future<void> init() async {
     // 加载配置文件
