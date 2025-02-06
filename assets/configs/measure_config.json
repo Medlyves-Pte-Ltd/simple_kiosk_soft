@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Height Weight",
+    "enable": true
+  },
+  {
+    "name": "Body Composition",
+    "enable": true
+  },
+  {
+    "name": "Temperature",
+    "enable": true
+  },
+  {
+    "name": "Blood Pressure",
+    "enable": true
+  },
+  {
+    "name": "Blood Oxygen",
+    "enable": true
+  },
+  {
+    "name": "Blood Glucose",
+    "enable": false
+  },
+  {
+    "name": "Blood Fit",
+    "enable": false
+  },
+  {
+    "name": "ECG",
+    "enable": true
+  }
+]

@@ -5,6 +5,7 @@ import 'package:flutter_devices_sdk/device_sdk_param_setting.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:simple_kiosk_software/common/common.dart';
 import 'package:simple_kiosk_software/utils/body_range.dart';
+import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 
 class AppConfig {
   // 是否使用扫码器
@@ -254,6 +255,7 @@ class AppConfig {
     await loadFile();
     // 范围
     await BodyRange().loadFile();
+    await ControlMeasurePageUtils().load();
 
     DeviceSdkParamSetting().relayUsbPath = relayUsbPath;
     DeviceSdkParamSetting().relayUsbConverterVid = relayUsbConverterVid;

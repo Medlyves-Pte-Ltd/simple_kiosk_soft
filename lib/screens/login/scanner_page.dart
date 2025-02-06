@@ -127,8 +127,8 @@ class ScannerPageState extends State<ScannerPage> {
     // // 关闭扫码器
     // stopScanner(context);
     // 跳转到测试页面
-    Navigator.pushNamedAndRemoveUntil(
-        mainContext, "/HeightWeightMeasure", (route) => false);
+    Navigator.pushNamedAndRemoveUntil(mainContext,
+        ControlMeasurePageUtils().firstMeasurePage(), (route) => false);
   }
 
   @override

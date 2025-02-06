@@ -277,7 +277,9 @@ class IdCardLoginPageState extends State<IdCardLoginPage> {
                         ControlMeasurePageUtils().pageIndex = 0;
                         ControlMeasurePageUtils().clearMeasure();
                         Navigator.pushNamedAndRemoveUntil(
-                            context, '/HeightWeightMeasure', (route) => false);
+                            context,
+                            ControlMeasurePageUtils().firstMeasurePage(),
+                            (route) => false);
                       } else {
                         showDialog(
                           context: context,

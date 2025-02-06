@@ -7,6 +7,7 @@ import 'package:flutter_devices_sdk/device_data/ecg_data.dart';
 import 'package:flutter_devices_sdk/device_manager.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:flutter_devices_sdk/devices/device_base_model.dart';
+import 'package:flutter_devices_sdk/devices/device_config.dart';
 import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
@@ -55,6 +56,9 @@ class ECGMeasure extends BaseMeasureLayoutWidget {
 
   @override
   Future<void> onStart() async {
+    // ecg配置里面禁用，只是不检查它的连接情况，设备依然能够使用
+    DeviceManager().bindToDevice(DeviceType.ECG_DEVICE, 0);
+
     DeviceBaseModel? ecg = DeviceManager().getDevice(DeviceType.ECG_DEVICE);
     ecg?.mapData = {
       'name': UserInfo().name,
