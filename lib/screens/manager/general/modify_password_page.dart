@@ -72,7 +72,7 @@ class ModifyPasswordPageState extends State<ModifyPasswordPage> {
               backgroundColor: Colors.white,
               hintText: 'Old password (6-20 letters, numbers)',
               hintTextStyle: TextStyle(fontSize: height * 0.015),
-              onChanged: (text) {
+              onSubmitted: (text) {
                 _oldPassword = text;
                 setState(() {});
               },
@@ -100,7 +100,7 @@ class ModifyPasswordPageState extends State<ModifyPasswordPage> {
               backgroundColor: Colors.white,
               hintText: 'New password (6-20 letters, numbers)',
               hintTextStyle: TextStyle(fontSize: height * 0.015),
-              onChanged: (text) {
+              onSubmitted: (text) {
                 _newPassword = text;
                 setState(() {});
               },

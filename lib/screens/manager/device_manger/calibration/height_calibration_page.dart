@@ -93,7 +93,7 @@ class _HeightCalibrationPageState extends State<HeightCalibrationPage> {
         backgroundColor: Colors.white,
         textAlign: TextAlign.end,
         rightWidget: TDText('cm', textColor: TDTheme.of(context).fontGyColor1),
-        onChanged: (text) {
+        onSubmitted: (text) {
           setState(() {});
           if (text.isEmpty) {
             return;
@@ -111,7 +111,7 @@ class _HeightCalibrationPageState extends State<HeightCalibrationPage> {
         backgroundColor: Colors.white,
         textAlign: TextAlign.end,
         rightWidget: TDText('cm', textColor: TDTheme.of(context).fontGyColor1),
-        onChanged: (text) {
+        onSubmitted: (text) {
           setState(() {});
           if (text.isEmpty) {
             return;

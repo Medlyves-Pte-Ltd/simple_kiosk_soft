@@ -283,11 +283,19 @@ class AppConfig {
   // 写文件
   Future<String> saveFile() async {
     String text = jsonEncode(configMap);
+
+    try {
+      jsonDecode(text);
+    } catch (e) {
+      LogPrinter.log('Error: $e text:$text');
+      text = jsonEncode(configMap);
+    }
+
     var file = File('$configDir/app_config.json');
     try {
       await file.writeAsString(text);
     } catch (e) {
-      LogPrinter.log('Error: $e');
+      LogPrinter.log('Error: $e text:$text');
       return "Error: $e";
     }
 

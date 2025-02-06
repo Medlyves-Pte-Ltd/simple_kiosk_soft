@@ -83,7 +83,7 @@ class _DeviceOtherSettingPageState extends State<DeviceOtherSettingPage> {
         contentAlignment: TextAlign.end,
         hintText: 'Input Text',
         rightWidget: TDText('s', textColor: TDTheme.of(context).fontGyColor1),
-        onChanged: (text) {
+        onSubmitted: (text) {
           if (text.isEmpty) {
             return;
           }
@@ -100,7 +100,7 @@ class _DeviceOtherSettingPageState extends State<DeviceOtherSettingPage> {
         contentAlignment: TextAlign.end,
         hintText: 'Input Text',
         rightWidget: TDText('ms', textColor: TDTheme.of(context).fontGyColor1),
-        onChanged: (text) {
+        onSubmitted: (text) {
           if (text.isEmpty) {
             return;
           }

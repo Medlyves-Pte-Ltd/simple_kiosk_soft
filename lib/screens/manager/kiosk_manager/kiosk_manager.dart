@@ -287,7 +287,7 @@ class _KioskManagerState extends State<KioskManager> {
         contentAlignment: TextAlign.end,
         hintText: 'Input Text',
         rightWidget: TDText('', textColor: TDTheme.of(context).fontGyColor1),
-        onChanged: (text) {
+        onSubmitted: (text) {
           KioskConfig().kioskId = text;
           setState(() {});
         },

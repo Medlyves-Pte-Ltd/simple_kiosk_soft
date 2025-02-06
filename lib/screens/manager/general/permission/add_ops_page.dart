@@ -91,7 +91,7 @@ class AddOpsPageState extends State<AddOpsPage> {
               backgroundColor: Colors.white,
               hintText: 'Account',
               hintTextStyle: TextStyle(fontSize: height * 0.015),
-              onChanged: (text) {
+              onSubmitted: (text) {
                 role.account = text;
                 setState(() {});
               },
@@ -119,7 +119,7 @@ class AddOpsPageState extends State<AddOpsPage> {
               backgroundColor: Colors.white,
               hintText: 'Password (6-20 letters, numbers)',
               hintTextStyle: TextStyle(fontSize: height * 0.015),
-              onChanged: (text) {
+              onSubmitted: (text) {
                 role.password = text;
                 setState(() {});
               },

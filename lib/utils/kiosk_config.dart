@@ -107,6 +107,15 @@ class KioskConfig {
   // 写文件
   Future<String> saveFile() async {
     String text = jsonEncode(configMap);
+
+    // 确保序列化成功，否则会导致启动白屏
+    try {
+      jsonDecode(text);
+    } catch (e) {
+      LogPrinter.log('Error: $e text:$text');
+      text = jsonEncode(configMap);
+    }
+
     var file = File('${AppConfig().configDir}/kiosk_config.json');
     try {
       await file.writeAsString(text);

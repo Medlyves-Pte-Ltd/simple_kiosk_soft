@@ -76,7 +76,7 @@ class AddAdminPageState extends State<AddAdminPage> {
               backgroundColor: Colors.white,
               hintText: 'Account',
               hintTextStyle: TextStyle(fontSize: height * 0.015),
-              onChanged: (text) {
+              onSubmitted: (text) {
                 role.account = text;
                 setState(() {});
               },
@@ -104,7 +104,7 @@ class AddAdminPageState extends State<AddAdminPage> {
               backgroundColor: Colors.white,
               hintText: 'Password (6-20 letters, numbers)',
               hintTextStyle: TextStyle(fontSize: height * 0.015),
-              onChanged: (text) {
+              onSubmitted: (text) {
                 role.password = text;
                 setState(() {});
               },
