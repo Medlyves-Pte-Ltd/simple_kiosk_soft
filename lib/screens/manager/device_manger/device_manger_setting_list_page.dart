@@ -69,7 +69,7 @@ class DeviceMangerSettingListPageState
                     children: [
                       ListTile(
                         selectedColor: ColorPalette.materialGreen,
-                        title: Text('Device Configuration'),
+                        title: Text('Device Connection Configuration'),
                         subtitle: Text(''),
                         leading: CircleAvatar(
                           child: Icon(Icons.settings),
@@ -83,7 +83,7 @@ class DeviceMangerSettingListPageState
                       buildDivider(),
                       ListTile(
                         selectedColor: ColorPalette.materialGreen,
-                        title: Text('Measure Configuration'),
+                        title: Text('Device Measure Configuration'),
                         subtitle: Text(''),
                         leading: CircleAvatar(
                           child: Icon(Icons.settings),
@@ -91,7 +91,8 @@ class DeviceMangerSettingListPageState
                         trailing: Icon(Icons.arrow_forward_ios_rounded),
                         onTap: () {
                           // 处理点击事件
-                          Navigator.pushNamed(context, "/MeasureConfigPage");
+                          Navigator.pushNamed(
+                              context, "/DeviceMeasureConfigPage");
                         },
                       ),
                       buildDivider(),

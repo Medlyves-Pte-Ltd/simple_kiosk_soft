@@ -6,7 +6,7 @@ import 'package:simple_kiosk_software/screens/manager/device_manger/calibration/
 import 'package:simple_kiosk_software/screens/manager/device_manger/device_config_page.dart';
 import 'package:simple_kiosk_software/screens/manager/device_manger/device_other_setting_page.dart';
 import 'package:simple_kiosk_software/screens/manager/device_manger/device_usb_relay_page.dart';
-import 'package:simple_kiosk_software/screens/manager/device_manger/measure_config_page.dart';
+import 'package:simple_kiosk_software/screens/manager/device_manger/device_measure_config_page.dart';
 import 'package:simple_kiosk_software/screens/manager/general/modify_password_page.dart';
 import 'package:simple_kiosk_software/screens/manager/general/permission/permission_config_page.dart';
 import 'package:simple_kiosk_software/screens/manager/device_manger/device_reading_range_edit_page.dart';
@@ -76,7 +76,8 @@ final Map<String, Function> routes = {
   '/BodyCompositionCalibrationPage': (context, {arguments}) =>
       BodyCompositionCalibrationPage(),
   '/SelectLoginMethodPage': (context, {arguments}) => SelectLoginMethodPage(),
-  '/MeasureConfigPage': (context, {arguments}) => MeasureConfigPage(),
+  '/DeviceMeasureConfigPage': (context, {arguments}) =>
+      DeviceMeasureConfigPage(),
 };
 
 // 定义通用的onGenerateRoute

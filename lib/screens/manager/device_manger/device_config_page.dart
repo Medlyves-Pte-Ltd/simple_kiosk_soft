@@ -30,7 +30,7 @@ class DeviceConfigPageState extends State<DeviceConfigPage> {
             Navigator.pop(context);
           },
         ),
-        title: Text('Device Config'),
+        title: Text('Device Connection Configuration'),
       ),
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,

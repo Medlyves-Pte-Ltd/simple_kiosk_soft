@@ -225,29 +225,6 @@ class GeneralSettingListPageState extends State<GeneralSettingListPage> {
                             ],
                           )),
                       buildDivider(),
-                      allowEdit
-                          ? SwitchListTile(
-                              title: Text('Only use input log in',
-                                  style: TextStyle(fontSize: height * 0.012)),
-                              value: AppConfig().onlyInputLogin,
-                              onChanged: (bool value) {
-                                AppConfig().onlyInputLogin = value;
-                                setState(() {});
-                              },
-                            )
-                          : IgnorePointer(
-                              ignoring: true,
-                              child: SwitchListTile(
-                                title: Text('Only use input log in',
-                                    style: TextStyle(fontSize: height * 0.012)),
-                                value: AppConfig().onlyInputLogin,
-                                activeTrackColor: Colors.grey,
-                                inactiveThumbColor: Colors.red,
-                                inactiveTrackColor: Colors.grey,
-                                onChanged: (bool value) {},
-                              ),
-                            ),
-                      buildDivider(),
                       Padding(
                           padding: EdgeInsets.symmetric(horizontal: 18),
                           child: Row(

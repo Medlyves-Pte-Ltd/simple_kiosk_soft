@@ -5,14 +5,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/permission_config.dart';
 
-class MeasureConfigPage extends StatefulWidget {
+class DeviceMeasureConfigPage extends StatefulWidget {
   bool allowEdit = true;
 
   @override
-  MeasureConfigPageState createState() => MeasureConfigPageState();
+  DeviceMeasureConfigPageState createState() => DeviceMeasureConfigPageState();
 }
 
-class MeasureConfigPageState extends State<MeasureConfigPage> {
+class DeviceMeasureConfigPageState extends State<DeviceMeasureConfigPage> {
   final _scrollController = ScrollController();
 
   List<dynamic> _measureConfigList = [];
@@ -48,7 +48,7 @@ class MeasureConfigPageState extends State<MeasureConfigPage> {
               Navigator.pop(context);
             },
           ),
-          title: Text('Measure Configuration'),
+          title: Text('Device Measure Configuration'),
         ),
         backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
