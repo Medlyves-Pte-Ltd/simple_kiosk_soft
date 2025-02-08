@@ -240,10 +240,21 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
           if (KioskConfig().healthScreeningMode == HealthScreeningMode.online) {
             BlocProvider.of<AppointmentBloc>(mainContext).processNewData({
               'bodyFatPercentage': UserInfo().bodyFatPercentage,
+              'bodyFatMass': UserInfo().bodyFatMass,
               'basalMetabolism': UserInfo().basalMetabolism,
               'visceralFatLevel': UserInfo().visceralFatLevel,
               'protein': UserInfo().protein,
-              "bodyWaterPercentage": UserInfo().bodyWaterPercentage
+              'mineral': UserInfo().boneMass,
+              'totalMoisture': UserInfo().totalMoisture,
+              "bodyWaterPercentage": UserInfo().bodyWaterPercentage,
+              "extracellularWaterPercentage": UserInfo().extracellularFluid,
+              "intracellularWaterPercentage":
+                  UserInfo().intracellularWaterPercentage,
+              "bodyAge": UserInfo().bodyAge,
+              // 无骨骼肌率
+              // "skeletalMusclePercentage": UserInfo().skeletalMusclePercentage,
+              // 无蛋白质率
+              // 无肌肉量
             });
           }
 

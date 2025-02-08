@@ -111,6 +111,7 @@ class AppointmentRepository {
     List<dynamic> readings = [];
     newData.forEach((key, value) {
       if (key != 'ecg_cln' && key != 'ecg_img') {
+        value = value == "" ? "0.0" : value;
         readings.add({
           'device_id': DeviceMap.CODETOID[key],
           'value': double.parse(value),
@@ -118,7 +119,13 @@ class AppointmentRepository {
         });
       }
     });
-    api.uploadDeviceData(data['id'], readings); // Upload data
+
+    try {
+      api.uploadDeviceData(data['id'], readings); // Upload data
+    } catch (e) {
+      LogPrinter.log("$Error: $e");
+    }
+
     data = {...data, ...newData}; // Update data
   }
 

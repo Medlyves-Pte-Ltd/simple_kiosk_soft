@@ -90,6 +90,7 @@ class MeasureConfigPageState extends State<MeasureConfigPage> {
     String? name = _measureConfigList[index]['name'] as String;
 
     return Container(
+      height: height * 0.07,
       key: ObjectKey(index),
       padding: const EdgeInsets.only(top: 5, left: 5, right: 5),
       margin: const EdgeInsets.only(bottom: 10),
@@ -107,8 +108,8 @@ class MeasureConfigPageState extends State<MeasureConfigPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: height * 0.05,
-            height: height * 0.05,
+            width: height * 0.04,
+            height: height * 0.04,
             decoration: BoxDecoration(
               color: ColorPalette.materialGreen,
               borderRadius: BorderRadius.circular(150),
@@ -116,13 +117,15 @@ class MeasureConfigPageState extends State<MeasureConfigPage> {
             alignment: Alignment.center,
             child: Text(
               "${index + 1}",
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, fontSize: height * 0.018),
             ),
           ),
           const SizedBox(width: 10),
           Text(
             name,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontSize: height * 0.018),
           ),
           const Spacer(),
           selectDeviceEnable(index, enable),
@@ -178,8 +181,7 @@ class MeasureConfigPageState extends State<MeasureConfigPage> {
               if (error.isNotEmpty) {
                 Fluttertoast.showToast(msg: error);
               } else {
-                Fluttertoast.showToast(
-                    msg: "save success, please reboot machine");
+                Fluttertoast.showToast(msg: "save success, please restart app");
               }
             },
             child: Container(

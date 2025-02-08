@@ -148,7 +148,7 @@ class AppointmentApi {
 
     final body = {'appointment_id': apptID, 'timestamp': now, 'readings': data};
 
-    LogPrinter.log(jsonEncode(body));
+    LogPrinter.log("send server: ${jsonEncode(body)}");
 
     final response = await http.post(uploadDataUrl,
         headers: {
@@ -156,6 +156,8 @@ class AppointmentApi {
           'Content-Type': 'application/json'
         },
         body: jsonEncode(body));
+
+    LogPrinter.log("server response: ${response.body}");
 
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
