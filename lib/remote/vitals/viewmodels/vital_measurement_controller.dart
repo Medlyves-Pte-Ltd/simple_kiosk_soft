@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:simple_kiosk_software/remote/models/vital_measurements.dart';
 import 'package:simple_kiosk_software/remote/services/api_methods.dart';
 import 'package:simple_kiosk_software/remote/services/device_readings.dart';
@@ -25,6 +26,7 @@ class VitalMeasurementsController extends ChangeNotifier {
   }
 
   Future<dynamic> fetchVitalMeasurements() async {
+    LogPrinter.log("start vital reading");
     setLoader(true);
     final appointmentId = await SharedPrefs.getData('appointmentId');
     final response = await DeviceVitalReadings.getDeviceReadings(appointmentId);
@@ -32,20 +34,24 @@ class VitalMeasurementsController extends ChangeNotifier {
 
     if (response is Success) {
       final readingsResponse = response.successResponse as List<VitalReadings>;
+
       setVitalData(readingsResponse);
-      getVitalData();
+
       if (getVerifyLoader) {
-        print("vital reading success");
-        print(readingsResponse);
+        LogPrinter.log(
+            "vital reading success, readingsResponse size: ${readingsResponse.length}");
+
         for (var reading in readingsResponse) {
-          log(reading.toString());
+          print(reading.toString());
         }
       }
-    } else if (response is Failure) {
-      if (kDebugMode) {
-        print("vital reading failure");
-        print(response.errorResponse['message'].toString());
+
+      for (var reading in vitalData) {
+        LogPrinter.log("get measure data: ${reading.toJson()}");
       }
+    } else if (response is Failure) {
+      LogPrinter.log("vital reading failure");
+      LogPrinter.log(response.errorResponse['message'].toString());
       setLoader(false);
     }
     setLoader(false);
