@@ -40,8 +40,8 @@ class UserInfo {
   String bodyWaterPercentage = '';
   // 肌肉量 kg
   String muscleMass = ''; //
-  // 骨量 kg
-  String boneMass = "";
+  // 矿物质 kg
+  String mineral = "";
   // Basal Metabolism (基础代谢)
   String basalMetabolism = '';
   // Visceral Fat Level (内脏脂肪等级)
@@ -62,9 +62,6 @@ class UserInfo {
   String bodyFatMass = '';
   // Skeletal Muscle Rate (骨骼肌率)
   String skeletalMusclePercentage = '';
-
-  // Mineral (无机盐)
-  String mineral = '';
 
   // 血脂
   // 胆固醇
@@ -135,7 +132,6 @@ class UserInfo {
     IFCC = '';
     eAG = '';
     proteinPercentage = '';
-    boneMass = '';
     HR = '';
     P_Width = '';
     PR = '';
@@ -193,9 +189,10 @@ class UserInfo {
     if (bodyFatPercentage.isNotEmpty) {
       map["bodyFatPercentage"] = bodyFatPercentage;
     }
-    if (boneMass.isNotEmpty) {
-      map["boneMass"] = boneMass;
+    if (mineral.isNotEmpty) {
+      map["mineral"] = mineral;
     }
+
     if (basalMetabolism.isNotEmpty) {
       map["basalMetabolism"] = basalMetabolism;
     }

@@ -107,11 +107,11 @@ class BodyRange {
     return (rangeMap["water_rate_max"] as double);
   }
 
-  double get boneMassMin {
+  double get mineralMin {
     return (rangeMap["bone_mass_min"] as double) * standWeight;
   }
 
-  double get boneMassMax {
+  double get mineralMax {
     return (rangeMap["bone_mass_max"] as double) * standWeight;
   }
 

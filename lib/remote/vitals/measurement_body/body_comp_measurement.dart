@@ -93,7 +93,7 @@ class BodyCompMeasurement extends StatelessWidget {
             visceralFatLevel = bodyCompositionData.visceralFatLevel ?? "";
             protein = bodyCompositionData.proteinPercentage ?? "";
             bodyWaterPercentage = bodyCompositionData.bodyWaterPercentage ?? "";
-            mineral = bodyCompositionData.boneMass ?? "";
+            mineral = bodyCompositionData.mineral ?? "";
             totalMoisture = bodyCompositionData.totalMoisture ?? "";
             extracellularWaterPercentage =
                 bodyCompositionData.extracellularWaterPercentage ?? "";
@@ -153,7 +153,7 @@ class BodyCompMeasurement extends StatelessWidget {
                   _buildGridItem(AppLocalizations.of(context)!.bcm_visceralfat,
                       visceralFatLevel),
                   _buildGridItem(
-                      AppLocalizations.of(context)!.bcm_bone_mass, mineral),
+                      AppLocalizations.of(context)!.mineral, mineral),
                   _buildGridItem(AppLocalizations.of(context)!.bcm_water,
                       bodyWaterPercentage),
                   _buildGridItem(
@@ -169,47 +169,11 @@ class BodyCompMeasurement extends StatelessWidget {
                       AppLocalizations.of(context)!.moisture, totalMoisture),
                   _buildGridItem(
                       AppLocalizations.of(context)!.body_age, bodyAge),
+                  _buildGridItem("", ""),
+                  _buildGridItem("", ""),
                   //_buildGridItem(AppLocalizations.of(context)!.overall, overall),
                 ],
               )),
-        );
-
-        return GridView.count(
-          // 一行几列
-          crossAxisCount: 2,
-          // 设置每子元素的大小（宽高比）
-          childAspectRatio: 2,
-          // 元素的左右的 距离
-          crossAxisSpacing: width * 0.02,
-          // 子元素上下的 距离
-          mainAxisSpacing: height * 0.015,
-          physics:
-              const NeverScrollableScrollPhysics(), // Disable GridView scrolling
-          shrinkWrap: true,
-          children: [
-            _buildGridItem(
-                AppLocalizations.of(context)!.bcm_fat, bodyFatPercentage),
-            _buildGridItem(
-                AppLocalizations.of(context)!.bcm_metabolism, basalMetabolism),
-            _buildGridItem(AppLocalizations.of(context)!.bcm_visceralfat,
-                visceralFatLevel),
-            _buildGridItem(
-                AppLocalizations.of(context)!.bcm_bone_mass, mineral),
-            _buildGridItem(
-                AppLocalizations.of(context)!.bcm_water, bodyWaterPercentage),
-            _buildGridItem(
-                AppLocalizations.of(context)!.bcm_protein_percentage, protein),
-            _buildGridItem(AppLocalizations.of(context)!.water_percent,
-                bodyWaterPercentage),
-            _buildGridItem(AppLocalizations.of(context)!.extrac_fluid,
-                extracellularWaterPercentage),
-            _buildGridItem(AppLocalizations.of(context)!.intrac_fluid,
-                intracellularWaterPercentage),
-            _buildGridItem(
-                AppLocalizations.of(context)!.moisture, totalMoisture),
-            _buildGridItem(AppLocalizations.of(context)!.body_age, bodyAge),
-            //_buildGridItem(AppLocalizations.of(context)!.overall, overall),
-          ],
         );
       },
     );

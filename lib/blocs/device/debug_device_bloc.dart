@@ -79,7 +79,7 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
               protein: "12.8",
               bodyAge: "33",
               muscleMass: "52.7",
-              boneMass: "2.8",
+              mineral: "2.8",
               proteinPercentage: "17.1",
             ),
             deviceType: deviceType));

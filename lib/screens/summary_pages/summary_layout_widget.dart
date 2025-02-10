@@ -326,6 +326,8 @@ class SummaryLayoutWidget extends StatelessWidget {
         mainContext
             .read<AppointmentBloc>()
             .add(SendStopEvent(kioskId: KioskConfig().kioskId));
+        LogPrinter.log("${KioskConfig().kioskId} end TC");
+
         UserInfo().clearUserInfo();
         UserInfo().clearResult();
         ControlMeasurePageUtils().pageIndex = 0;

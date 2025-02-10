@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/device_manager.dart';
+import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
 import 'package:simple_kiosk_software/common/header.dart';
@@ -440,13 +441,12 @@ class _TCMeetingScreenContentState extends State<TCMeetingScreenContent> {
                       return TCNavigation(
                         displayName: widget.displayName ?? '',
                         onExit: () {
-                          log('Exit pressed');
-                          log("exit 100ms video call");
                           context
                               .read<RoomOverviewBloc>()
                               .add(const RoomOverviewLeaveRequested());
                           context.read<AppointmentBloc>().add(
                               SendStopEvent(kioskId: KioskConfig().kioskId));
+                          LogPrinter.log("${KioskConfig().kioskId} end TC");
                         },
                         isEndbuttonVisible: !deviceStart,
                       );

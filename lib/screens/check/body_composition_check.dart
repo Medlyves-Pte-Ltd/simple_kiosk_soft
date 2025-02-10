@@ -18,8 +18,8 @@ class BodyCompositionCheck extends BaseCheckWidget {
   late String bodyFatPercentage;
   // Basal Metabolism (基础代谢)
   late String basalMetabolism;
-  // 骨量
-  late String boneMass;
+  // 矿物质
+  late String mineral;
   // Visceral Fat Level (内脏脂肪等级)
   late String visceralFatLevel;
   // Protein Rate (蛋白质率)
@@ -53,8 +53,8 @@ class BodyCompositionCheck extends BaseCheckWidget {
     basalMetabolism = UserInfo().basalMetabolism.isNotEmpty
         ? UserInfo().basalMetabolism
         : dataDefaultValue;
-    boneMass =
-        UserInfo().boneMass.isNotEmpty ? UserInfo().boneMass : dataDefaultValue;
+    mineral =
+        UserInfo().mineral.isNotEmpty ? UserInfo().mineral : dataDefaultValue;
     visceralFatLevel = UserInfo().visceralFatLevel.isNotEmpty
         ? UserInfo().visceralFatLevel
         : dataDefaultValue;
@@ -163,18 +163,16 @@ class BodyCompositionCheck extends BaseCheckWidget {
         measured = false;
         intracellularWaterPercentage = totalMoisture = protein =
             skeletalMusclePercentage = bodyFatMass = muscleMass = bodyAge =
-                extracellularFluid = bodyFatPercentage = boneMass =
-                    basalMetabolism = boneMass = visceralFatLevel =
-                        proteinPercentage =
-                            bodyWaterPercentage = dataDefaultValue;
+                extracellularFluid = bodyFatPercentage = basalMetabolism =
+                    mineral = visceralFatLevel = proteinPercentage =
+                        bodyWaterPercentage = dataDefaultValue;
 
         UserInfo().bodyFatPercentage = "";
         UserInfo().bodyFatMass = "";
         UserInfo().basalMetabolism = "";
-        UserInfo().boneMass = "";
+        UserInfo().mineral = "";
         UserInfo().visceralFatLevel = "";
         UserInfo().proteinPercentage = "";
-        UserInfo().mineral = "";
         UserInfo().bodyWaterPercentage = "";
         UserInfo().muscleMass = "";
         UserInfo().bodyAge = "";
@@ -189,9 +187,9 @@ class BodyCompositionCheck extends BaseCheckWidget {
       } else if (state is DeviceDataLoading) {
         intracellularWaterPercentage = totalMoisture = protein =
             skeletalMusclePercentage = bodyFatMass = muscleMass = bodyAge =
-                extracellularFluid = bodyFatPercentage = boneMass =
-                    basalMetabolism = boneMass = visceralFatLevel =
-                        proteinPercentage = bodyWaterPercentage =
+                extracellularFluid = bodyFatPercentage = basalMetabolism =
+                    mineral = visceralFatLevel = proteinPercentage =
+                        bodyWaterPercentage =
                             AppLocalizations.of(mainContext)!.loading;
         update = true;
       } else if (state is DeviceDataUpdated) {
@@ -202,7 +200,7 @@ class BodyCompositionCheck extends BaseCheckWidget {
               bodyFatPercentage = bodyCompositionData.bodyFatPercentage ?? "";
           UserInfo().basalMetabolism =
               basalMetabolism = bodyCompositionData.basalMetabolism ?? "";
-          UserInfo().boneMass = boneMass = bodyCompositionData.boneMass ?? "";
+          UserInfo().mineral = mineral = bodyCompositionData.mineral ?? "";
           UserInfo().visceralFatLevel =
               visceralFatLevel = bodyCompositionData.visceralFatLevel ?? "";
           UserInfo().proteinPercentage =
@@ -234,10 +232,9 @@ class BodyCompositionCheck extends BaseCheckWidget {
         if (!measured) {
           intracellularWaterPercentage = totalMoisture = protein =
               skeletalMusclePercentage = bodyFatMass = muscleMass = bodyAge =
-                  extracellularFluid = bodyFatPercentage = boneMass =
-                      basalMetabolism = boneMass = visceralFatLevel =
-                          proteinPercentage =
-                              bodyWaterPercentage = dataDefaultValue;
+                  extracellularFluid = bodyFatPercentage = basalMetabolism =
+                      mineral = visceralFatLevel = proteinPercentage =
+                          bodyWaterPercentage = dataDefaultValue;
           update = true;
         }
       }
@@ -272,7 +269,7 @@ class BodyCompositionCheck extends BaseCheckWidget {
                   basalMetabolism),
               buildItem(AppLocalizations.of(context)!.bcm_visceralfat,
                   visceralFatLevel),
-              buildItem(AppLocalizations.of(context)!.bcm_bone_mass, boneMass),
+              buildItem(AppLocalizations.of(context)!.mineral, mineral),
               buildItem(
                   AppLocalizations.of(context)!.bcm_water, bodyWaterPercentage),
               buildItem(AppLocalizations.of(context)!.bcm_protein_percentage,

@@ -25,8 +25,8 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
   late String bodyFatPercentage;
   // Basal Metabolism (基础代谢)
   late String basalMetabolism;
-  // 骨量
-  late String boneMass;
+  // 无机盐
+  late String mineral;
   // Visceral Fat Level (内脏脂肪等级)
   late String visceralFatLevel;
   // Protein Rate (蛋白质率)
@@ -58,8 +58,8 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
     basalMetabolism = UserInfo().basalMetabolism.isNotEmpty
         ? UserInfo().basalMetabolism
         : dataDefaultValue;
-    boneMass =
-        UserInfo().boneMass.isNotEmpty ? UserInfo().boneMass : dataDefaultValue;
+    mineral =
+        UserInfo().mineral.isNotEmpty ? UserInfo().mineral : dataDefaultValue;
     visceralFatLevel = UserInfo().visceralFatLevel.isNotEmpty
         ? UserInfo().visceralFatLevel
         : dataDefaultValue;
@@ -173,14 +173,14 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
         measured = false;
         intracellularWaterPercentage = totalMoisture = protein =
             skeletalMusclePercentage = bodyFatMass = muscleMass = bodyAge =
-                extracellularFluid = bodyFatPercentage = boneMass =
+                extracellularFluid = bodyFatPercentage = mineral =
                     basalMetabolism = visceralFatLevel = proteinPercentage =
                         bodyWaterPercentage = dataDefaultValue;
 
         UserInfo().bodyFatPercentage = "";
         UserInfo().bodyFatMass = "";
         UserInfo().basalMetabolism = "";
-        UserInfo().boneMass = "";
+        UserInfo().mineral = "";
         UserInfo().visceralFatLevel = "";
         UserInfo().proteinPercentage = "";
         UserInfo().mineral = "";
@@ -199,8 +199,8 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
       } else if (state is DeviceDataLoading) {
         intracellularWaterPercentage = totalMoisture = protein =
             skeletalMusclePercentage = bodyFatMass = muscleMass = bodyAge =
-                extracellularFluid = bodyFatPercentage = boneMass =
-                    basalMetabolism = boneMass = visceralFatLevel =
+                extracellularFluid = bodyFatPercentage = mineral =
+                    basalMetabolism = mineral = visceralFatLevel =
                         proteinPercentage = bodyWaterPercentage =
                             AppLocalizations.of(mainContext)!.loading;
         update = true;
@@ -212,7 +212,7 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
               bodyFatPercentage = bodyCompositionData.bodyFatPercentage ?? "";
           UserInfo().basalMetabolism =
               basalMetabolism = bodyCompositionData.basalMetabolism ?? "";
-          UserInfo().boneMass = boneMass = bodyCompositionData.boneMass ?? "";
+          UserInfo().mineral = mineral = bodyCompositionData.mineral ?? "";
           UserInfo().visceralFatLevel =
               visceralFatLevel = bodyCompositionData.visceralFatLevel ?? "";
           UserInfo().proteinPercentage =
@@ -244,7 +244,7 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
               'basalMetabolism': UserInfo().basalMetabolism,
               'visceralFatLevel': UserInfo().visceralFatLevel,
               'protein': UserInfo().protein,
-              'mineral': UserInfo().boneMass,
+              'mineral': UserInfo().mineral,
               'totalMoisture': UserInfo().totalMoisture,
               "bodyWaterPercentage": UserInfo().bodyWaterPercentage,
               "extracellularWaterPercentage": UserInfo().extracellularFluid,
@@ -267,7 +267,7 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
         if (!measured) {
           intracellularWaterPercentage = totalMoisture = protein =
               skeletalMusclePercentage = bodyFatMass = muscleMass = bodyAge =
-                  extracellularFluid = bodyFatPercentage = boneMass =
+                  extracellularFluid = bodyFatPercentage = mineral =
                       basalMetabolism = visceralFatLevel = proteinPercentage =
                           bodyWaterPercentage = dataDefaultValue;
           update = true;
@@ -321,10 +321,10 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
                 BodyRange().visceralFatLevelMax.toString(),
                 true),
             buildItem(
-                AppLocalizations.of(context)!.bcm_bone_mass,
-                boneMass,
-                BodyRange().boneMassMin.toStringAsFixed(1),
-                BodyRange().boneMassMax.toStringAsFixed(1),
+                AppLocalizations.of(context)!.mineral,
+                mineral,
+                BodyRange().mineralMin.toStringAsFixed(1),
+                BodyRange().mineralMax.toStringAsFixed(1),
                 true),
             buildItem(
                 AppLocalizations.of(context)!.bcm_water,

@@ -11,8 +11,8 @@ String bodyFatPercentage = '';
 String bodyWaterPercentage = '';
 // 肌肉量 kg
 String muscleMass = ''; //
-// 骨量 kg
-String boneMass = "";
+// 矿物质 kg
+String mineral = "";
 // Basal Metabolism (基础代谢)
 String basalMetabolism = '';
 // Visceral Fat Level (内脏脂肪等级)
@@ -50,7 +50,7 @@ class TestResultCsv {
     'BloodPressure(mmHg)',
     'BloodOxygen(%)',
     'BodyFatRate(%)',
-    'BoneMass(kg)',
+    'Mineral(kg)',
     'BasalMetabolism(kcal)',
     'VisceralFatLevel',
     'BodyWaterRate(%)',
@@ -99,7 +99,7 @@ class TestResultCsv {
       UserInfo().systolic + '/' + UserInfo().diastolic,
       UserInfo().bloodOxygen,
       UserInfo().bodyFatPercentage,
-      UserInfo().boneMass,
+      UserInfo().mineral,
       UserInfo().basalMetabolism,
       UserInfo().visceralFatLevel,
       UserInfo().bodyWaterPercentage,

@@ -51,8 +51,8 @@ class PrintMap {
         return "(${BodyRange().proteinMin.toStringAsFixed(1)} ~ ${BodyRange().proteinMax.toStringAsFixed(1)})";
       case "proteinPercentage":
         return "(${BodyRange().proteinRateMin.toStringAsFixed(1)} ~ ${BodyRange().proteinRateMax.toStringAsFixed(1)})";
-      case "boneMass":
-        return "(${BodyRange().boneMassMin.toStringAsFixed(1)} ~ ${BodyRange().boneMassMax.toStringAsFixed(1)})";
+      case "mineral":
+        return "(${BodyRange().mineralMin.toStringAsFixed(1)} ~ ${BodyRange().mineralMax.toStringAsFixed(1)})";
       case "muscleMass":
         return "(${BodyRange().muscleMassMin.toStringAsFixed(1)} ~ ${BodyRange().muscleMassMax.toStringAsFixed(1)})";
       case "bodyAge":
@@ -142,8 +142,8 @@ class PrintMap {
         return loc.bcm_protein;
       case "proteinPercentage":
         return loc.bcm_protein_percentage;
-      case "boneMass":
-        return loc.bcm_bone_mass;
+      case "mineral":
+        return loc.mineral;
       case "muscleMass":
         return loc.bcm_muscle_mass;
       case "bodyAge":

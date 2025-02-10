@@ -86,9 +86,9 @@ class ScannerPageState extends State<ScannerPage> {
 
       try {
         await appointmentBloc.appointmentRepository
-            .sendStopEvent(KioskConfig().kioskId);
+            .endKioskApptEvent(KioskConfig().kioskId);
       } catch (e) {
-        print("$e");
+        LogPrinter.log("${KioskConfig().kioskId} TC Stop Event Error:$e");
       }
 
       await appointmentBloc.appointmentRepository

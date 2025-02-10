@@ -45,6 +45,7 @@ class AppointmentApi {
     );
     mobile_components.Result result =
         mobile_components.MedlyvesService.parseJSONResponse(response);
+    LogPrinter.log("sendAppointmentEvent response: ${response.toString()}");
     if (result is mobile_components.Failure &&
         result.errorCode != 'APT327' &&
         result.errorCode != 'OTH602') {
