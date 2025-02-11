@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:simple_kiosk_software/common/common.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/permission_config.dart';
 
@@ -76,7 +77,8 @@ class DeviceMeasureConfigPageState extends State<DeviceMeasureConfigPage> {
                 onReorder: _onReorder),
           ),
         ),
-        widget.allowEdit ? buildSaveBtn() : const SizedBox.shrink()
+        widget.allowEdit ? buildSaveBtn() : const SizedBox.shrink(),
+        Footer()
       ],
     );
   }
