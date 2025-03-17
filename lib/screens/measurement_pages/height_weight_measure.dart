@@ -243,8 +243,6 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
             });
           }
           ControlMeasurePageUtils().measured = true;
-          //}
-
           weightMeasured = true;
           update = true;
         }
@@ -282,16 +280,27 @@ class HeightWeightMeasure extends BaseMeasureLayoutWidget {
                       fontWeight: FontWeight.bold,
                       color: ColorPalette.materialGreen),
                 ),
-                Offstage(
-                  offstage: !heightMeasured,
-                  child: Text(
-                    "",
-                    style: TextStyle(
-                        fontSize: height * 0.02,
-                        fontWeight: FontWeight.bold,
-                        color: ColorPalette.materialGreen),
-                  ),
-                )
+                AppConfig().healthReferenceRange && endVideoFile == curPlayFile
+                    ? Text(
+                        "",
+                        style: TextStyle(
+                            fontSize: height * 0.02,
+                            fontWeight: FontWeight.bold,
+                            color: ColorPalette.materialGreen),
+                      )
+                    : SizedBox.shrink(),
+                // Offstage(
+                //   offstage: !heightMeasured,
+                //   child: AppConfig().healthReferenceRange
+                //       ? Text(
+                //           "",
+                //           style: TextStyle(
+                //               fontSize: height * 0.02,
+                //               fontWeight: FontWeight.bold,
+                //               color: ColorPalette.materialGreen),
+                //         )
+                //       : SizedBox.shrink(),
+                // )
               ],
             ),
             SizedBox(width: width * 0.1),

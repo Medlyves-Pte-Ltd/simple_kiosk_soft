@@ -135,6 +135,34 @@ class AppConfig {
     saveFile();
   }
 
+  // 健康参考范围
+  bool get healthReferenceRange {
+    try {
+      return configMap["Health_reference_range"] as bool;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  set healthReferenceRange(bool value) {
+    configMap["Health_reference_range"] = value;
+    saveFile();
+  }
+
+  // 测量值超过范围是否改变颜色
+  bool get rangeChangeColor {
+    try {
+      return configMap["range_change_color"] as bool;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  set rangeChangeColor(bool value) {
+    configMap["range_change_color"] = value;
+    saveFile();
+  }
+
   bool get onlyInputLogin {
     try {
       return configMap["only_input_login"] as bool;

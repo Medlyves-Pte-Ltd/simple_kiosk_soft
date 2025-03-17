@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:simple_kiosk_software/blocs/device/device_state.dart';
+import 'package:simple_kiosk_software/common/common.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
@@ -27,6 +28,8 @@ class ScannerPage extends StatefulWidget {
 }
 
 class ScannerPageState extends State<ScannerPage> {
+  DateTime _lastScanLockTime =
+      DateTime.now().subtract(const Duration(seconds: 6)); // 初始化时间确保首次可扫描‌
   late final AppointmentBloc appointmentBloc;
   // 数据默认值
   String dataDefaultValue = "- - -";
@@ -72,6 +75,22 @@ class ScannerPageState extends State<ScannerPage> {
     String patientId = "";
     // 判断时候是json数据
     int endPos = data.indexOf('_');
+
+    final currentTime = DateTime.now();
+
+    // 时间差计算（精确到毫秒）
+    final timeDiff = currentTime.difference(_lastScanLockTime).inMilliseconds;
+
+    if (timeDiff < 5000) {
+      // 5秒内禁止二次扫描‌
+      LogPrinter.log(
+          "Scanning frequency limit: Scanning cannot be repeated within 5 seconds");
+      return;
+    }
+
+    // 更新锁定时间并处理有效数据
+    _lastScanLockTime = currentTime; // 重置时间戳‌
+
     if (endPos != -1) {
       patientId = data.substring(0, endPos);
     } else {

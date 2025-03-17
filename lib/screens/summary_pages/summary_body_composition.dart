@@ -64,7 +64,7 @@ class SummaryBodyComposition extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               rangeSummaryWidget(min, max, dataFontSize),
-              summaryValueChangeColor(data!, min, max, dataFontSize, compare),
+              summaryValueChangeColor(data, min, max, dataFontSize, compare),
             ],
           ),
           SizedBox(height: height * 0.008),
@@ -99,9 +99,9 @@ class SummaryBodyComposition extends StatelessWidget {
               true),
           buildItem(
               AppLocalizations.of(mainContext)!.bcm_bone_mass,
-              UserInfo().mineral,
-              BodyRange().mineralMin.toStringAsFixed(1),
-              BodyRange().mineralMax.toStringAsFixed(1),
+              UserInfo().boneMass,
+              BodyRange().boneMassMin.toStringAsFixed(1),
+              BodyRange().boneMassMax.toStringAsFixed(1),
               true),
           buildItem(
               AppLocalizations.of(mainContext)!.bcm_water,

@@ -158,6 +158,54 @@ class GeneralSettingListPageState extends State<GeneralSettingListPage> {
                               ),
                             ),
                       buildDivider(),
+                      // 范围开关
+                      allowEdit
+                          ? SwitchListTile(
+                              title: Text('health reference range',
+                                  style: TextStyle(fontSize: height * 0.012)),
+                              value: AppConfig().healthReferenceRange,
+                              onChanged: (bool value) {
+                                AppConfig().healthReferenceRange = value;
+                                setState(() {});
+                              },
+                            )
+                          : IgnorePointer(
+                              ignoring: true,
+                              child: SwitchListTile(
+                                title: Text('Health reference range',
+                                    style: TextStyle(fontSize: height * 0.012)),
+                                value: AppConfig().healthReferenceRange,
+                                activeTrackColor: Colors.grey,
+                                inactiveThumbColor: Colors.red,
+                                inactiveTrackColor: Colors.grey,
+                                onChanged: (bool value) {},
+                              ),
+                            ),
+                      buildDivider(),
+                      // 颜色开关
+                      allowEdit
+                          ? SwitchListTile(
+                              title: Text('Range change color',
+                                  style: TextStyle(fontSize: height * 0.012)),
+                              value: AppConfig().rangeChangeColor,
+                              onChanged: (bool value) {
+                                AppConfig().rangeChangeColor = value;
+                                setState(() {});
+                              },
+                            )
+                          : IgnorePointer(
+                              ignoring: true,
+                              child: SwitchListTile(
+                                title: Text('Range change color',
+                                    style: TextStyle(fontSize: height * 0.012)),
+                                value: AppConfig().rangeChangeColor,
+                                activeTrackColor: Colors.grey,
+                                inactiveThumbColor: Colors.red,
+                                inactiveTrackColor: Colors.grey,
+                                onChanged: (bool value) {},
+                              ),
+                            ),
+                      buildDivider(),
                       Padding(
                           padding: EdgeInsets.symmetric(horizontal: 18),
                           child: Row(

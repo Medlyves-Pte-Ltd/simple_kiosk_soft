@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 
 Widget measureValueChangeColor(
@@ -29,7 +29,8 @@ Widget measureValueChangeColor(
       style: TextStyle(
           fontSize: fontSize,
           fontWeight: FontWeight.bold,
-          color: data.isNotEmpty &&
+          color: AppConfig().rangeChangeColor &&
+                  data.isNotEmpty &&
                   min.isNotEmpty &&
                   max.isNotEmpty &&
                   (value > double.parse(max) || value < double.parse(min))
@@ -54,7 +55,8 @@ Widget summaryValueChangeColor(
     style: TextStyle(
         fontSize: fontSize,
         fontWeight: FontWeight.bold,
-        color: data.isNotEmpty &&
+        color: AppConfig().rangeChangeColor &&
+                data.isNotEmpty &&
                 min.isNotEmpty &&
                 max.isNotEmpty &&
                 ((double.parse(data) > double.parse(max) ||
@@ -71,17 +73,23 @@ Widget rangeMeasureWidget(
   }
 
   return Visibility(
-    child: Text(
-      "($min ~ $max)",
-      style: TextStyle(fontSize: fontSize, color: ColorPalette.materialGreen),
-    ),
+    child: AppConfig().healthReferenceRange
+        ? Text(
+            "($min ~ $max)",
+            style: TextStyle(
+                fontSize: fontSize, color: ColorPalette.materialGreen),
+          )
+        : const SizedBox.shrink(),
     visible: ControlMeasurePageUtils().measured,
   );
 }
 
 Widget rangeSummaryWidget(String min, String max, double fontSize) {
-  return Text(
-    "($min ~ $max)",
-    style: TextStyle(fontSize: fontSize, color: ColorPalette.materialGreen),
-  );
+  return AppConfig().healthReferenceRange
+      ? Text(
+          "($min ~ $max)",
+          style:
+              TextStyle(fontSize: fontSize, color: ColorPalette.materialGreen),
+        )
+      : const SizedBox.shrink();
 }

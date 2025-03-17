@@ -14,6 +14,7 @@ import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class BodyTemperatureMeasure extends BaseMeasureLayoutWidget {
   late String temperature;
@@ -84,8 +85,8 @@ class BodyTemperatureMeasure extends BaseMeasureLayoutWidget {
 
         if (temp < 32 || temp > 42.5) {
           if (temperature != text) {
-            temperature =
-                AppLocalizations.of(mainContext)!.please_click_start_again;
+            Fluttertoast.showToast(
+                msg: AppLocalizations.of(mainContext)!.please_click_start_again);
           }
         } else {
           temperature = UserInfo().temperature =

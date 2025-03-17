@@ -1,6 +1,6 @@
 {
     "info": "Default use of Thai kiosk device parameters",
-    "total_height": 214.0,
+    "total_height": 211.4,
     "height_offset": 0.0,
     "enable_usb_relay": true,
     "relay_comm_list":["usb", "serial"],
@@ -17,5 +17,7 @@
     "eco_mode_time_minute": 5,
     "measure_automatic_stop_time_s": 90,
     "relay_usb_path": "/dev/bus/usb/002/",
-    "play_volume":1.0
+    "play_volume":1.0,
+    "Health_reference_range": true,
+    "range_change_color": true
 }

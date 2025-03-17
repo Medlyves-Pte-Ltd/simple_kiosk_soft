@@ -159,8 +159,8 @@ class SelectLoginMethodPageState extends State<SelectLoginMethodPage> {
               GestureDetector(
                 onTap: () {
                   KioskConfig().healthScreeningMode =
-                      HealthScreeningMode.standalone;
-                  KioskConfig().teleConsultationMode = TeleConsultationMode.off;
+                      HealthScreeningMode.online;
+                  KioskConfig().teleConsultationMode = TeleConsultationMode.on;
                   Navigator.pushNamed(context, "/IdCardLoginPage");
                 },
                 child: Container(
@@ -194,8 +194,8 @@ class SelectLoginMethodPageState extends State<SelectLoginMethodPage> {
               GestureDetector(
                 onTap: () {
                   KioskConfig().healthScreeningMode =
-                      HealthScreeningMode.standalone;
-                  KioskConfig().teleConsultationMode = TeleConsultationMode.off;
+                      HealthScreeningMode.online;
+                  KioskConfig().teleConsultationMode = TeleConsultationMode.on;
                   Navigator.pushNamed(context, "/UserLoginPage");
                 },
                 child: Container(

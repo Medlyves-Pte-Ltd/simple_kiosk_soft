@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_devices_sdk/device_data/blood_oxygen_data.dart';
 import 'package:flutter_devices_sdk/device_data/blood_pressure_data.dart';
 import 'package:flutter_devices_sdk/device_sdk_param_setting.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
-import 'package:flutter_devices_sdk/devices/device_config.dart';
-import 'package:flutter_devices_sdk/devices/nhc/raycome_blood_pressure_device.dart';
 import 'package:flutter_devices_sdk/devices/up_down_control.dart';
 import 'package:flutter_devices_sdk/kiosk_type.dart';
-import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:simple_kiosk_software/common/range_widget.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
@@ -150,7 +146,8 @@ class BloodPressureMeasure extends BaseMeasureLayoutWidget {
                       fontSize: titleFontSize, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: height * 0.02),
-                ControlMeasurePageUtils().measured
+                ControlMeasurePageUtils().measured &&
+                        AppConfig().rangeChangeColor
                     ? Text(
                         "$systolic / $diastolic",
                         style: TextStyle(
@@ -171,12 +168,14 @@ class BloodPressureMeasure extends BaseMeasureLayoutWidget {
                             color: ColorPalette.materialGreen),
                       ),
                 Visibility(
-                  child: Text(
-                    "( < ${BodyRange().systolicMax}) / ( < ${BodyRange().diastolicMax})",
-                    style: TextStyle(
-                        fontSize: dataFontSize,
-                        color: ColorPalette.materialGreen),
-                  ),
+                  child: AppConfig().healthReferenceRange
+                      ? Text(
+                          "( < ${BodyRange().systolicMax}) / ( < ${BodyRange().diastolicMax})",
+                          style: TextStyle(
+                              fontSize: dataFontSize,
+                              color: ColorPalette.materialGreen),
+                        )
+                      : const SizedBox.shrink(),
                   visible: ControlMeasurePageUtils().measured,
                 )
               ],
@@ -194,8 +193,12 @@ class BloodPressureMeasure extends BaseMeasureLayoutWidget {
                 SizedBox(height: height * 0.02),
                 measureValueChangeColor(
                     heartRate,
-                    BodyRange().heartRateMin.toString(),
-                    BodyRange().heartRateMax.toString(),
+                    AppConfig().rangeChangeColor
+                        ? BodyRange().heartRateMin.toString()
+                        : '',
+                    AppConfig().rangeChangeColor
+                        ? BodyRange().heartRateMax.toString()
+                        : '',
                     dataFontSize,
                     true),
                 rangeMeasureWidget(BodyRange().heartRateMin.toString(),

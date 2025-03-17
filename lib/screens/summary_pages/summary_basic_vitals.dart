@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_kiosk_software/common/range_widget.dart';
+import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/body_range.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 
@@ -181,18 +181,21 @@ class SummaryBasicVitals extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "( < ${BodyRange().systolicMax}) / ( < ${BodyRange().diastolicMax})",
-                      style: TextStyle(
-                          fontSize: dataFontSize,
-                          color: ColorPalette.materialGreen),
-                    ),
+                    AppConfig().healthReferenceRange
+                        ? Text(
+                            "( < ${BodyRange().systolicMax}) / ( < ${BodyRange().diastolicMax})",
+                            style: TextStyle(
+                                fontSize: dataFontSize,
+                                color: ColorPalette.materialGreen),
+                          )
+                        : SizedBox.shrink(),
                     Text(
                       "${UserInfo().systolic}/${UserInfo().diastolic}",
                       style: TextStyle(
                           fontSize: dataFontSize,
                           fontWeight: FontWeight.bold,
-                          color: UserInfo().systolic.isNotEmpty &&
+                          color: AppConfig().rangeChangeColor &&
+                                  UserInfo().systolic.isNotEmpty &&
                                   UserInfo().diastolic.isNotEmpty &&
                                   ((double.parse(UserInfo().systolic) >
                                           BodyRange().systolicMax ||

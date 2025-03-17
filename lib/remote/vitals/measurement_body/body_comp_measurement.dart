@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/device_data/body_composition_data.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
-
+import 'package:simple_kiosk_software/blocs/device/device_state.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
-import '../../../blocs/device/device_state.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -59,8 +57,8 @@ class BodyCompMeasurement extends StatelessWidget {
         String protein = BlocProvider.of<AppointmentBloc>(context)
                 .getPatientBodyInfo()["protein"] ??
             "- - -";
-        String mineral = BlocProvider.of<AppointmentBloc>(context)
-                .getPatientBodyInfo()["mineral"] ??
+        String boneMass = BlocProvider.of<AppointmentBloc>(context)
+                .getPatientBodyInfo()["boneMass"] ??
             "- - -";
         String bodyAge = BlocProvider.of<AppointmentBloc>(context)
                 .getPatientBodyInfo()["bodyAge"] ??
@@ -75,7 +73,7 @@ class BodyCompMeasurement extends StatelessWidget {
           // skeletalMusclePercentage = AppLocalizations.of(context)!.loading;
           visceralFatLevel = AppLocalizations.of(context)!.loading;
           protein = AppLocalizations.of(context)!.loading;
-          mineral = AppLocalizations.of(context)!.loading;
+          boneMass = AppLocalizations.of(context)!.loading;
           bodyWaterPercentage = AppLocalizations.of(context)!.loading;
           extracellularWaterPercentage = AppLocalizations.of(context)!.loading;
           intracellularWaterPercentage = AppLocalizations.of(context)!.loading;
@@ -93,7 +91,7 @@ class BodyCompMeasurement extends StatelessWidget {
             visceralFatLevel = bodyCompositionData.visceralFatLevel ?? "";
             protein = bodyCompositionData.proteinPercentage ?? "";
             bodyWaterPercentage = bodyCompositionData.bodyWaterPercentage ?? "";
-            mineral = bodyCompositionData.mineral ?? "";
+            boneMass = bodyCompositionData.boneMass ?? "";
             totalMoisture = bodyCompositionData.totalMoisture ?? "";
             extracellularWaterPercentage =
                 bodyCompositionData.extracellularWaterPercentage ?? "";
@@ -108,7 +106,7 @@ class BodyCompMeasurement extends StatelessWidget {
               //"skeletalMusclePercentage": skeletalMusclePercentage,
               'visceralFatLevel': visceralFatLevel,
               'protein': protein,
-              'mineral': mineral,
+              'boneMass': boneMass,
               'totalMoisture': totalMoisture,
               "bodyWaterPercentage": bodyWaterPercentage,
               "extracellularWaterPercentage": extracellularWaterPercentage,
@@ -153,7 +151,7 @@ class BodyCompMeasurement extends StatelessWidget {
                   _buildGridItem(AppLocalizations.of(context)!.bcm_visceralfat,
                       visceralFatLevel),
                   _buildGridItem(
-                      AppLocalizations.of(context)!.mineral, mineral),
+                      AppLocalizations.of(context)!.bcm_bone_mass, boneMass),
                   _buildGridItem(AppLocalizations.of(context)!.bcm_water,
                       bodyWaterPercentage),
                   _buildGridItem(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_devices_sdk/device_data/body_composition_data.dart';
-import 'package:flutter_devices_sdk/device_data/device_data.dart';
 import 'package:flutter_devices_sdk/device_manager.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:simple_kiosk_software/common/range_widget.dart';
@@ -12,7 +11,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
 import 'package:simple_kiosk_software/blocs/device/device_event.dart';
 import 'package:simple_kiosk_software/blocs/device/device_state.dart';
-import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/body_range.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/kiosk_config.dart';
@@ -25,8 +23,8 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
   late String bodyFatPercentage;
   // Basal Metabolism (基础代谢)
   late String basalMetabolism;
-  // 无机盐
-  late String mineral;
+  // 骨量
+  late String boneMass;
   // Visceral Fat Level (内脏脂肪等级)
   late String visceralFatLevel;
   // Protein Rate (蛋白质率)
@@ -58,8 +56,8 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
     basalMetabolism = UserInfo().basalMetabolism.isNotEmpty
         ? UserInfo().basalMetabolism
         : dataDefaultValue;
-    mineral =
-        UserInfo().mineral.isNotEmpty ? UserInfo().mineral : dataDefaultValue;
+    boneMass =
+        UserInfo().boneMass.isNotEmpty ? UserInfo().boneMass : dataDefaultValue;
     visceralFatLevel = UserInfo().visceralFatLevel.isNotEmpty
         ? UserInfo().visceralFatLevel
         : dataDefaultValue;
@@ -173,17 +171,17 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
         measured = false;
         intracellularWaterPercentage = totalMoisture = protein =
             skeletalMusclePercentage = bodyFatMass = muscleMass = bodyAge =
-                extracellularFluid = bodyFatPercentage = mineral =
+                extracellularFluid = bodyFatPercentage = boneMass =
                     basalMetabolism = visceralFatLevel = proteinPercentage =
                         bodyWaterPercentage = dataDefaultValue;
 
         UserInfo().bodyFatPercentage = "";
         UserInfo().bodyFatMass = "";
         UserInfo().basalMetabolism = "";
-        UserInfo().mineral = "";
+        UserInfo().boneMass = "";
         UserInfo().visceralFatLevel = "";
         UserInfo().proteinPercentage = "";
-        UserInfo().mineral = "";
+        UserInfo().boneMass = "";
         UserInfo().bodyWaterPercentage = "";
         UserInfo().muscleMass = "";
         UserInfo().bodyAge = "";
@@ -199,8 +197,8 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
       } else if (state is DeviceDataLoading) {
         intracellularWaterPercentage = totalMoisture = protein =
             skeletalMusclePercentage = bodyFatMass = muscleMass = bodyAge =
-                extracellularFluid = bodyFatPercentage = mineral =
-                    basalMetabolism = mineral = visceralFatLevel =
+                extracellularFluid = bodyFatPercentage = boneMass =
+                    basalMetabolism = boneMass = visceralFatLevel =
                         proteinPercentage = bodyWaterPercentage =
                             AppLocalizations.of(mainContext)!.loading;
         update = true;
@@ -212,7 +210,7 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
               bodyFatPercentage = bodyCompositionData.bodyFatPercentage ?? "";
           UserInfo().basalMetabolism =
               basalMetabolism = bodyCompositionData.basalMetabolism ?? "";
-          UserInfo().mineral = mineral = bodyCompositionData.mineral ?? "";
+          UserInfo().boneMass = boneMass = bodyCompositionData.boneMass ?? "";
           UserInfo().visceralFatLevel =
               visceralFatLevel = bodyCompositionData.visceralFatLevel ?? "";
           UserInfo().proteinPercentage =
@@ -244,7 +242,7 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
               'basalMetabolism': UserInfo().basalMetabolism,
               'visceralFatLevel': UserInfo().visceralFatLevel,
               'protein': UserInfo().protein,
-              'mineral': UserInfo().mineral,
+              'boneMass': UserInfo().boneMass,
               'totalMoisture': UserInfo().totalMoisture,
               "bodyWaterPercentage": UserInfo().bodyWaterPercentage,
               "extracellularWaterPercentage": UserInfo().extracellularFluid,
@@ -267,7 +265,7 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
         if (!measured) {
           intracellularWaterPercentage = totalMoisture = protein =
               skeletalMusclePercentage = bodyFatMass = muscleMass = bodyAge =
-                  extracellularFluid = bodyFatPercentage = mineral =
+                  extracellularFluid = bodyFatPercentage = boneMass =
                       basalMetabolism = visceralFatLevel = proteinPercentage =
                           bodyWaterPercentage = dataDefaultValue;
           update = true;
@@ -321,10 +319,10 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
                 BodyRange().visceralFatLevelMax.toString(),
                 true),
             buildItem(
-                AppLocalizations.of(context)!.mineral,
-                mineral,
-                BodyRange().mineralMin.toStringAsFixed(1),
-                BodyRange().mineralMax.toStringAsFixed(1),
+                AppLocalizations.of(context)!.bcm_bone_mass,
+                boneMass,
+                BodyRange().boneMassMin.toStringAsFixed(1),
+                BodyRange().boneMassMax.toStringAsFixed(1),
                 true),
             buildItem(
                 AppLocalizations.of(context)!.bcm_water,
@@ -344,8 +342,6 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
                 BodyRange().muscleMassMin.toStringAsFixed(1),
                 BodyRange().muscleMassMax.toStringAsFixed(1),
                 true),
-            buildItem(
-                AppLocalizations.of(context)!.body_age, bodyAge, "", "", false),
             buildItem(
                 AppLocalizations.of(context)!.bcm_extrac_fluid,
                 extracellularFluid,
@@ -383,6 +379,8 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
                 BodyRange().bodyFatMassMin.toStringAsFixed(1),
                 BodyRange().bodyFatMassMax.toStringAsFixed(1),
                 true),
+            buildItem(
+                AppLocalizations.of(context)!.body_age, bodyAge, "", "", false),
           ],
         ),
       );
