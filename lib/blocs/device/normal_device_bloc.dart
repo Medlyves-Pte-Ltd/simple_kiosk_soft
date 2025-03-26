@@ -65,8 +65,8 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     emit(DeviceDataUpdated(deviceType: deviceType, deviceData: deviceData));
 
     if (event.autoStop) {
-      Future.delayed(const Duration(milliseconds: 300),
-          () => add(DeviceDisconnectEvent(deviceType: event.deviceType)));
+      Future.delayed(const Duration(milliseconds: 500),
+              () => add(DeviceDisconnectEvent(deviceType: event.deviceType)));
     }
   }
 
@@ -79,8 +79,8 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     await device?.stop();
     LogPrinter.log('Device stoped from bloc.');
     emit(DeviceStopped(deviceType: deviceType));
-    Future.delayed(const Duration(milliseconds: 100),
-        () => add(DeviceDisconnectEvent(deviceType: deviceType)));
+    Future.delayed(const Duration(milliseconds: 500),
+            () => add(DeviceDisconnectEvent(deviceType: deviceType)));
   }
 
   Future<void> _onDeviceDisconnectEvent(
@@ -91,7 +91,12 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
 
     LogPrinter.log('Disconnecting');
     await device?.disconnect();
-    LogPrinter.log('Disconnected.');
-    emit(DeviceDisconnected(deviceType: deviceType));
+    LogPrinter.log(deviceType.toString() + ' device Disconnected.');
+
+    try {
+      emit(DeviceDisconnected(deviceType: deviceType));
+    } catch (e) {
+      LogPrinter.log('Error: $e');
+    }
   }
 }
