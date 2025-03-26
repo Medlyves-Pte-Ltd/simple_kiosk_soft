@@ -1,5 +1,4 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +7,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
@@ -26,14 +24,13 @@ import 'package:simple_kiosk_software/remote/services/appointment_api.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 import 'package:simple_kiosk_software/utils/permission_utils.dart';
+
 import 'package:simple_kiosk_software/remote/utils/shared_prefs.dart';
-import 'package:simple_kiosk_software/utils/shared_preferences.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 import 'package:volume_controller/volume_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SharedPreferencesUtil.init();
   // 检查权限
   await PermissionUtils().getStoragePermission();
   await PermissionUtils().getCameraPermission();
@@ -136,7 +133,8 @@ class MyApp extends StatelessWidget {
               return onCustomGenerateRoute(settings);
             }
           },
-          initialRoute: kDebugMode ? "/LanguagePage" : "/DeviceStartPage",
+          //initialRoute: kDebugMode ? "/LanguagePage" : "/DeviceStartPage",
+          initialRoute: "/LanguagePage",
           // initialRoute: "/DeviceStartPage",
           supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData(
