@@ -23,6 +23,7 @@ import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:simple_kiosk_software/utils/control_measure_page_utils.dart';
 import 'package:simple_kiosk_software/utils/test_result_csv_utils.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
+import 'package:simple_kiosk_software/utils/xk_print_utils.dart';
 
 class SummaryLayoutWidget extends StatelessWidget {
   // 文本和Widget顺序需要相同
@@ -207,11 +208,18 @@ class SummaryLayoutWidget extends StatelessWidget {
   // 打印
   void btnPrint() async {
     enableClickPrint.value = false;
-    // 由于关闭打印机会抛异常，暂时没法解决，先全局使用
-    await PrintUtils().connect();
-    await PrintUtils().startPrint(mainContext, () {
-      enableClickPrint.value = true;
-    });
+    if (KioskConfig().kioskType == "xk") {
+      await XKPrintUtils().connect();
+      await XKPrintUtils().startPrint(mainContext, () {
+        enableClickPrint.value = true;
+      });
+    } else {
+      // 由于关闭打印机会抛异常，暂时没法解决，先全局使用
+      await PrintUtils().connect();
+      await PrintUtils().startPrint(mainContext, () {
+        enableClickPrint.value = true;
+      });
+    }
   }
 
   Widget buildBottomBtn() {

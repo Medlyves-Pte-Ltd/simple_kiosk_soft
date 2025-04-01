@@ -36,7 +36,12 @@ class FooterState extends State<Footer> {
     super.initState();
 
     if (widget.showStatus) {
-      usbDeviceConnectStatus.value = !DeviceOrderCheck().usbOrderError();
+      if (KioskConfig().kioskType == "xk") {
+        usbDeviceConnectStatus.value = true;
+      } else {
+        usbDeviceConnectStatus.value = !DeviceOrderCheck().usbOrderError();
+      }
+
       timer = makePeriodicTimer(
           Duration(seconds: AppConfig().usbSequenceCheckTime), onTimer,
           fireNow: true);
@@ -67,9 +72,22 @@ class FooterState extends State<Footer> {
 
   // 定时器
   Future<void> onTimer(Timer timer) async {
-    List<DeviceInfo> usbDeviceLostList =
-        await DeviceOrderCheck().checkDeviceLost();
+    List<DeviceInfo> usbDeviceLostList = [];
 
+    // 获取丢失的usb设备
+    if (KioskConfig().kioskType == "xk") {
+      usbDeviceLostList = await DeviceOrderCheck().checkXKDeviceLost();
+      usbDeviceConnectStatus.value = usbDeviceLostList.isEmpty;
+    } else {
+      usbDeviceLostList = await DeviceOrderCheck().checkRelayDeviceLost();
+      if (DeviceOrderCheck().usbOrderError()) {
+        usbDeviceConnectStatus.value = false;
+      } else {
+        usbDeviceConnectStatus.value = usbDeviceLostList.isEmpty;
+      }
+    }
+
+    // 弹窗提示usb丢失
     for (DeviceInfo item in usbDeviceLostList) {
       String error = "${item.deviceName} not found, ${item.usbPath}";
       Fluttertoast.showToast(
@@ -77,12 +95,6 @@ class FooterState extends State<Footer> {
           msg: error,
           backgroundColor: ColorPalette.darkGrey,
           textColor: Colors.red);
-    }
-
-    if (DeviceOrderCheck().usbOrderError()) {
-      usbDeviceConnectStatus.value = false;
-    } else {
-      usbDeviceConnectStatus.value = usbDeviceLostList.isEmpty;
     }
   }
 
@@ -118,19 +130,21 @@ class FooterState extends State<Footer> {
   void shutdown() async {
     LogPrinter.log("click shutdown btn");
 
-    if (AppConfig().enableUsbRelay) {
-      try {
-        // 串口已经关闭继电器，需要重新连接
-        if (UsbRelayControl().relayCommType == RelayCommType.serial) {
-          await UsbRelayControl().connect(RelayCommType.serial);
+    if (KioskConfig().kioskType != "xk") {
+      if (AppConfig().enableUsbRelay) {
+        try {
+          // 串口已经关闭继电器，需要重新连接
+          if (UsbRelayControl().relayCommType == RelayCommType.serial) {
+            await UsbRelayControl().connect(RelayCommType.serial);
+          }
+          await UsbRelayControl().setAllIoStatus(false);
+        } catch (e) {
+          Fluttertoast.showToast(msg: "Error:$e");
+          LogPrinter.log("Error:$e");
+          return;
         }
-        await UsbRelayControl().setAllIoStatus(false);
-      } catch (e) {
-        Fluttertoast.showToast(msg: "Error:$e");
-        LogPrinter.log("Error:$e");
-        return;
+        await Future.delayed(Duration(seconds: 1), () {});
       }
-      await Future.delayed(Duration(seconds: 1), () {});
     }
 
     try {

@@ -12,12 +12,12 @@ import 'package:simple_kiosk_software/common/header.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:volume_controller/volume_controller.dart';
 
-class DeviceStartPage extends StatefulWidget {
+class RelayDeviceStartPage extends StatefulWidget {
   @override
-  _DeviceStartPageState createState() => _DeviceStartPageState();
+  _RelayDeviceStartPageState createState() => _RelayDeviceStartPageState();
 }
 
-class _DeviceStartPageState extends State<DeviceStartPage> {
+class _RelayDeviceStartPageState extends State<RelayDeviceStartPage> {
   late BuildContext _context;
   // 屏幕宽度
   double width = 0;
@@ -103,7 +103,7 @@ class _DeviceStartPageState extends State<DeviceStartPage> {
       }
 
       // 设备列表
-      deviceList = DeviceOrderCheck().usbList();
+      deviceList = DeviceOrderCheck().relayUsbList();
       setState(() {});
     } else {
       if (AppConfig().enableUsbRelay) {
@@ -150,7 +150,7 @@ class _DeviceStartPageState extends State<DeviceStartPage> {
       }
 
       // 设备列表
-      deviceList = DeviceOrderCheck().usbList();
+      deviceList = DeviceOrderCheck().relayUsbList();
       setState(() {});
 
       // 如果有usb顺序错误

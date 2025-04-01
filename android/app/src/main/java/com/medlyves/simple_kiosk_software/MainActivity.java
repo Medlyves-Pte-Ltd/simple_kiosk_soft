@@ -9,13 +9,21 @@ import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.FlutterEngine;
 import androidx.annotation.NonNull;
 import io.flutter.plugin.common.MethodChannel;
+import io.flutter.plugin.common.EventChannel;
+import io.flutter.plugin.common.EventChannel.EventSink;
 
 public class MainActivity extends FlutterActivity {
     private static final String ECG_CHANNEL = "ECG";
     private static final int ECG_ACTIVITY_REQUEST_CODE = 1; // Request code
+
     private MethodChannel ecgChannel;
     private String Shutdown_ChannelName = "Shutdown";
     private MethodChannel shutdownChannel;
+
+    // XK部分设备需要安卓端实现，换芯片了，flutter包可能不行
+    private static final String XK_PRINTER_METHOD_CHANNEL = "XK_PRINTER";
+    private MethodChannel xkPrinterChannel;
+    private XKPrinterHelper xkPrinterHelper;
 
     Intent intent;
     @Override
@@ -55,6 +63,27 @@ public class MainActivity extends FlutterActivity {
                 result.notImplemented();
             }
         });
+
+        xkPrinterHelper = new XKPrinterHelper(this);
+        xkPrinterChannel = new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), XK_PRINTER_METHOD_CHANNEL);
+        xkPrinterChannel.setMethodCallHandler(
+                (call, result) -> {
+                    if (call.method.equals("print")) {
+                        byte[] data = call.argument("data");
+                        boolean printed = xkPrinterHelper.printData(data);
+                        if (printed) {
+                            result.success(true);
+                        } else {
+                            result.error("UNAVAILABLE", "Cannot print", null);
+                        }
+                    } else if (call.method.equals("updatePath")) {
+                        xkPrinterHelper.devPath = call.argument("path");
+                        result.success(true);
+                    } else {
+                        result.notImplemented();
+                    }
+                }
+        );
     }
 
     private boolean openShutdownApp() {
@@ -69,7 +98,6 @@ public class MainActivity extends FlutterActivity {
             return false;
         }
     }
-
 
     private boolean openECGApp(String name, String gender, int age) {
         try {

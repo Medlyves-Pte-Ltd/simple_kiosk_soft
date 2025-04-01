@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_devices_sdk/devices/device_order_check.dart';
+import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 
 class DeviceCheckView extends StatefulWidget {
   @override
@@ -25,20 +26,30 @@ class _DeviceCheckViewState extends State<DeviceCheckView> {
   void start() async {
     await DeviceOrderCheck().checkDeviceOrder();
 
-    deviceList = DeviceOrderCheck().usbList();
-    setState(() {});
-    // hub故障或者继电器故障
-    if (DeviceOrderCheck().hubUsbPathList.isEmpty) {
-      _showInfo.value = "The relay or usb hub is not working properly";
-      return;
+    if (KioskConfig().kioskType == "xk") {
+      deviceList = DeviceOrderCheck().xkUsbList();
+
+      if (DeviceOrderCheck().usbError) {
+        _showInfo.value = "USB devices not found. Please check the connection.";
+      }
+    } else {
+      deviceList = DeviceOrderCheck().relayUsbList();
+
+      // hub故障或者继电器故障
+      if (DeviceOrderCheck().hubUsbPathList.isEmpty) {
+        _showInfo.value = "The relay or usb hub is not working properly";
+        return;
+      }
+
+      // 如果有usb顺序错误
+      if (DeviceOrderCheck().usbOrderError()) {
+        _showInfo.value =
+            "USB device sequence error, \nPlease first check if the USB device sequence is correct, and then restart the machine";
+        return;
+      }
     }
 
-    // 如果有usb顺序错误
-    if (DeviceOrderCheck().usbOrderError()) {
-      _showInfo.value =
-          "USB device sequence error, \nPlease first check if the USB device sequence is correct, and then restart the machine";
-      return;
-    }
+    setState(() {});
   }
 
   @override

@@ -3,7 +3,7 @@
     "deviceName": "Temperature",
     "deviceType": "TEMP_DEVICE",
     "deviceIndex": 2,
-    "deviceList": ["BodyTemperature", "URIONTemperature", "ChengDuDT8861Temperature", "CommonDT8861Temperature"],
+    "deviceList": ["EmptyPlaceholder", "URIONTemperature", "ChengDuDT8861Temperature", "CommonDT8861Temperature"],
     "identificationCodeList": ["","DABCb136G04","cpt6000", ""],
     "enable": true
   },
@@ -11,7 +11,7 @@
     "deviceName": "Blood Oxygen",
     "deviceType": "BO_DEVICE",
     "deviceIndex": 1,
-    "deviceList": ["BloodOxygen", "ChengDuBloodOxygen", "KeRuiKangBloodOxygen"],
+    "deviceList": ["EmptyPlaceholder", "ChengDuBloodOxygen", "KeRuiKangBloodOxygen"],
     "identificationCodeList": ["","cpt6000", ""],
     "enable": true
   },

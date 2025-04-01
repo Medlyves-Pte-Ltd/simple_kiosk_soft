@@ -18,7 +18,7 @@ import 'package:simple_kiosk_software/screens/measurement_pages/body_composition
 import 'package:simple_kiosk_software/screens/measurement_pages/ecg_measure.dart';
 import 'package:simple_kiosk_software/screens/login/scanner_page.dart';
 import 'package:simple_kiosk_software/screens/summary_pages/summary_layout_widget.dart';
-import 'package:simple_kiosk_software/screens/device_start_page.dart';
+import 'package:simple_kiosk_software/screens/relay_device_start_page.dart';
 import 'package:simple_kiosk_software/screens/manager/device_manger/device_diagnostic_page.dart';
 import 'package:simple_kiosk_software/screens/login/user_login_page.dart';
 import 'package:simple_kiosk_software/screens/language/language_page.dart';
@@ -27,6 +27,7 @@ import 'package:simple_kiosk_software/screens/measurement_pages/height_weight_me
 import 'package:simple_kiosk_software/screens/measurement_pages/body_temperature_measure.dart';
 import 'package:simple_kiosk_software/screens/manager/setting_list_page.dart';
 import 'package:flutter_devices_sdk/view/usb_info/usb_info_page.dart';
+import 'package:simple_kiosk_software/screens/xk_device_start_page.dart';
 import 'manager/device_manger/calibration/calibration_setting_list_page.dart';
 import 'manager/device_manger/calibration/height_calibration_page.dart';
 import 'manager/device_manger/device_manger_setting_list_page.dart';
@@ -54,7 +55,8 @@ final Map<String, Function> routes = {
   '/Summary': (context, {arguments}) => SummaryLayoutWidget(),
   '/ScannerPage': (context, {arguments}) => ScannerPage(),
   '/ECGMeasure': (context, {arguments}) => ECGMeasure(),
-  '/DeviceStartPage': (context, {arguments}) => DeviceStartPage(),
+  '/RelayDeviceStartPage': (context, {arguments}) => RelayDeviceStartPage(),
+  '/XKDeviceStartPage': (context, {arguments}) => XKDeviceStartPage(),
   '/DeviceDiagnosticPage': (context, {arguments}) => DeviceDiagnosticPage(),
   '/SettingListPage': (context, {arguments}) => SettingListPage(),
   '/UsbInfoPage': (context, {arguments}) => UsbInfoPage(),

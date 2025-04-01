@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/screens/check/base_check_widget.dart';
+import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 import 'package:simple_kiosk_software/utils/permission_config.dart';
 import 'package:simple_kiosk_software/utils/print_utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:simple_kiosk_software/utils/xk_print_utils.dart';
 
 class PrinterCheck extends BaseCheckWidget {
   // 能后控制打印
@@ -28,7 +30,8 @@ class PrinterCheck extends BaseCheckWidget {
     return ValueListenableBuilder<String>(
         valueListenable: btnText,
         builder: (context, value, child) {
-          return PermissionConfig().havePermission(PermissionModules.DeviceDiagnostic)
+          return PermissionConfig()
+                  .havePermission(PermissionModules.DeviceDiagnostic)
               ? InkWell(
                   onTap: () async {
                     if (value == AppLocalizations.of(mainContext)!.stop) {
@@ -76,11 +79,18 @@ class PrinterCheck extends BaseCheckWidget {
   @override
   Future<void> onStart() async {
     printerStatus.value = "正在打印中...";
-    // 由于关闭打印机会抛异常，暂时没法解决，先全局使用
-    await PrintUtils().connect();
-    await PrintUtils().startPrint(mainContext, () {
-      printerStatus.value = "打印结束";
-    });
+    if (KioskConfig().kioskType == "xk") {
+      await XKPrintUtils().connect();
+      await XKPrintUtils().startPrint(mainContext, () {
+        printerStatus.value = "打印结束";
+      });
+    } else {
+      // 由于关闭打印机会抛异常，暂时没法解决，先全局使用
+      await PrintUtils().connect();
+      await PrintUtils().startPrint(mainContext, () {
+        printerStatus.value = "打印结束";
+      });
+    }
   }
 
   @override

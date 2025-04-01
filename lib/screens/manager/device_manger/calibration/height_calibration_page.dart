@@ -101,25 +101,6 @@ class _HeightCalibrationPageState extends State<HeightCalibrationPage> {
           AppConfig().totalHeight = double.parse(text);
         },
       ),
-      TDInput(
-        readOnly: !allowEdit,
-        inputType: TextInputType.number,
-        type: TDInputType.special,
-        controller: heightOffsetControl,
-        leftLabel: 'Height Offset',
-        hintText: '0.0',
-        backgroundColor: Colors.white,
-        textAlign: TextAlign.end,
-        rightWidget: TDText('cm', textColor: TDTheme.of(context).fontGyColor1),
-        onSubmitted: (text) {
-          setState(() {});
-          if (text.isEmpty) {
-            return;
-          }
-          DeviceSdkParamSetting().heightOffset = double.parse(text);
-          AppConfig().heightOffset = double.parse(text);
-        },
-      ),
       Container(
         padding: EdgeInsets.symmetric(horizontal: width * 0.01),
         child: Row(

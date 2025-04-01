@@ -24,7 +24,6 @@ import 'package:simple_kiosk_software/remote/services/appointment_api.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 import 'package:simple_kiosk_software/utils/permission_utils.dart';
-
 import 'package:simple_kiosk_software/remote/utils/shared_prefs.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 import 'package:volume_controller/volume_controller.dart';
@@ -133,9 +132,15 @@ class MyApp extends StatelessWidget {
               return onCustomGenerateRoute(settings);
             }
           },
-          //initialRoute: kDebugMode ? "/LanguagePage" : "/DeviceStartPage",
-          initialRoute: "/LanguagePage",
-          // initialRoute: "/DeviceStartPage",
+          // initialRoute: kDebugMode
+          //     ? "/LanguagePage"
+          //     : KioskConfig().kioskType == "xk"
+          //         ? "/XKDeviceStartPage"
+          //         : "/RelayDeviceStartPage",
+          //initialRoute: "/LanguagePage",
+          initialRoute: KioskConfig().kioskType == "xk"
+              ? "/XKDeviceStartPage"
+              : "/RelayDeviceStartPage",
           supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData(
             textTheme: GoogleFonts.robotoTextTheme(textTheme).copyWith(
