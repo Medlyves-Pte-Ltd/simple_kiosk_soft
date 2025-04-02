@@ -64,14 +64,6 @@ public class XKPrinterHelper
         write(cmd, cmd.length);
         cmd = PrintCutpaper(1);
         write(cmd, cmd.length);
-        // UsbRequest request = new UsbRequest();
-        // request.initialize(connection, endpoint);
-        // byte[] printerCmd = printBitmap(data);
-        // byte[] printerCmd = SetClean();
-        // connection.bulkTransfer()
-        // ByteBuffer buffer = ByteBuffer.wrap(printerCmd);
-        // request.queue(buffer, printerCmd.length);
-        // return connection.requestWait() == request;
         return true;
     }
 
@@ -95,16 +87,6 @@ public class XKPrinterHelper
         if (bitmap == null) {
             return null;
         }
-        // if (!strPath.substring(strPath.toLowerCase().indexOf(".") + 1).equals("bmp")) {
-        //     Bitmap bitmap2 = UtilsTools.convertToBlackWhite(bitmap);
-        //     int width = bitmap2.getWidth();
-        //     int heigh = bitmap2.getHeight();
-        //     int iDataLen = width * heigh;
-        //     int[] pixels = new int[iDataLen];
-        //     bitmap2.getPixels(pixels, 0, width, 0, 0, width, heigh);
-        //     byte[] bytes = PrintDiskImagefile(pixels, width, heigh);
-        //     return bytes;
-        // }
         int width2 = bitmap.getWidth();
         int heigh2 = bitmap.getHeight();
         int iDataLen2 = width2 * heigh2;
@@ -227,61 +209,6 @@ public class XKPrinterHelper
         return bCmd;
     }
 
-    // public Bitmap convertToBlackWhite(Bitmap bmp) {
-    //     int e;
-    //     System.out.println(bmp.getConfig());
-    //     int width = bmp.getWidth();
-    //     int height = bmp.getHeight();
-    //     if (width > 640) {
-    //         width = WinError.ERROR_MULTIPLE_FAULT_VIOLATION;
-    //     }
-    //     int[] pixels = new int[width * height];
-    //     bmp.getPixels(pixels, 0, width, 0, 0, width, height);
-    //     int[] gray = new int[height * width];
-    //     for (int i = 0; i < height; i++) {
-    //         for (int j = 0; j < width; j++) {
-    //             try {
-    //                 int grey = pixels[(width * i) + j];
-    //                 int red = (16711680 & grey) >> 16;
-    //                 gray[(width * i) + j] = red;
-    //             } catch (Exception e2) {
-    //                 Log.e("ContentValues", "PrintBmp:" + e2.getMessage());
-    //             }
-    //         }
-    //     }
-    //     for (int i2 = 0; i2 < height; i2++) {
-    //         for (int j2 = 0; j2 < width; j2++) {
-    //             int g = gray[(width * i2) + j2];
-    //             if (g >= 128) {
-    //                 pixels[(width * i2) + j2] = -1;
-    //                 e = g - 255;
-    //             } else {
-    //                 int e3 = width * i2;
-    //                 pixels[e3 + j2] = -16777216;
-    //                 e = g + 0;
-    //             }
-    //             if (j2 < width - 1 && i2 < height - 1) {
-    //                 int i3 = (width * i2) + j2 + 1;
-    //                 gray[i3] = gray[i3] + ((e * 3) / 8);
-    //                 int i4 = ((i2 + 1) * width) + j2;
-    //                 gray[i4] = gray[i4] + ((e * 3) / 8);
-    //                 int i5 = ((i2 + 1) * width) + j2 + 1;
-    //                 gray[i5] = gray[i5] + (e / 4);
-    //             } else if (j2 == width - 1 && i2 < height - 1) {
-    //                 int i6 = ((i2 + 1) * width) + j2;
-    //                 gray[i6] = gray[i6] + ((e * 3) / 8);
-    //             } else if (j2 < width - 1 && i2 == height - 1) {
-    //                 int i7 = (width * i2) + j2 + 1;
-    //                 gray[i7] = gray[i7] + (e / 4);
-    //             }
-    //         }
-    //     }
-    //     Bitmap newBmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
-    //     newBmp.setPixels(pixels, 0, width, 0, 0, width, height);
-    //     Bitmap resizeBmp = ThumbnailUtils.extractThumbnail(newBmp, width, height);
-    //     return resizeBmp;
-    // }
-
     public static byte[] SetClean() {
         byte[] bCmd = new byte[2];
         int iIndex = 0 + 1;
@@ -290,7 +217,6 @@ public class XKPrinterHelper
         bCmd[iIndex] = 64;
         return bCmd;
     }
-
 
     public static byte[] PrintFeedline(int iLine) {
         byte[] bCmd = new byte[3];

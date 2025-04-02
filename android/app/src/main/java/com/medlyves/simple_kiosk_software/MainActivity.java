@@ -59,7 +59,6 @@ public class MainActivity extends FlutterActivity {
                     result.error("UNAVAILABLE", "Cannot open the shutdown app.", null);
                 }
             }else{
-                // 方法暂时不支持
                 result.notImplemented();
             }
         });

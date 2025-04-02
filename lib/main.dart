@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -104,6 +105,19 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  // 启动页
+  String startPage() {
+    if (kDebugMode) {
+      return "/LanguagePage";
+    } else {
+      if (KioskConfig().kioskType == "xk") {
+        return "/XKDeviceStartPage";
+      } else {
+        return "/RelayDeviceStartPage";
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -132,15 +146,10 @@ class MyApp extends StatelessWidget {
               return onCustomGenerateRoute(settings);
             }
           },
-          // initialRoute: kDebugMode
-          //     ? "/LanguagePage"
-          //     : KioskConfig().kioskType == "xk"
-          //         ? "/XKDeviceStartPage"
-          //         : "/RelayDeviceStartPage",
-          //initialRoute: "/LanguagePage",
-          initialRoute: KioskConfig().kioskType == "xk"
-              ? "/XKDeviceStartPage"
-              : "/RelayDeviceStartPage",
+          initialRoute: startPage(),
+          // initialRoute: KioskConfig().kioskType == "xk"
+          //     ? "/XKDeviceStartPage"
+          //     : "/RelayDeviceStartPage",
           supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData(
             textTheme: GoogleFonts.robotoTextTheme(textTheme).copyWith(
