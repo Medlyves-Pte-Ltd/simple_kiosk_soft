@@ -300,114 +300,100 @@ class BodyCompositionMeasure extends BaseMeasureLayoutWidget {
           physics: const AlwaysScrollableScrollPhysics(), // 禁止滚动
           shrinkWrap: true,
           children: [
-            bodyFatPercentage.isEmpty
-                ? SizedBox.shrink()
-                : buildItem(
-                    AppLocalizations.of(context)!.bcm_fat,
-                    bodyFatPercentage,
-                    BodyRange().fatRateMin.toString(),
-                    BodyRange().fatRateMax.toString(),
-                    true),
-            basalMetabolism.isEmpty
-                ? SizedBox.shrink()
-                : buildItem(
-                    AppLocalizations.of(context)!.bcm_metabolism,
-                    basalMetabolism,
-                    BodyRange().basalMetabolismMin.toString(),
-                    BodyRange().basalMetabolismMax.toString(),
-                    true),
-            visceralFatLevel.isEmpty
-                ? SizedBox.shrink()
-                : buildItem(
-                    AppLocalizations.of(context)!.bcm_visceralfat,
-                    visceralFatLevel,
-                    BodyRange().visceralFatLevelMin.toString(),
-                    BodyRange().visceralFatLevelMax.toString(),
-                    true),
-            boneMass.isEmpty
-                ? SizedBox.shrink()
-                : buildItem(
-                    AppLocalizations.of(context)!.bcm_bone_mass,
-                    boneMass,
-                    BodyRange().boneMassMin.toStringAsFixed(1),
-                    BodyRange().boneMassMax.toStringAsFixed(1),
-                    true),
-            bodyWaterPercentage.isEmpty
-                ? SizedBox.shrink()
-                : buildItem(
-                    AppLocalizations.of(context)!.bcm_water,
-                    bodyWaterPercentage,
-                    BodyRange().waterRateMin.toStringAsFixed(1),
-                    BodyRange().waterRateMax.toStringAsFixed(1),
-                    true),
-            extracellularFluid.isEmpty
-                ? SizedBox.shrink()
-                : buildItem(
-                    AppLocalizations.of(context)!.bcm_extrac_fluid,
-                    extracellularFluid,
-                    BodyRange().extracellularWaterRateMin.toStringAsFixed(1),
-                    BodyRange().extracellularWaterRateMax.toStringAsFixed(1),
-                    true),
-            intracellularWaterPercentage.isEmpty
-                ? SizedBox.shrink()
-                : buildItem(
-                    AppLocalizations.of(context)!.bcm_intrac_fluid,
-                    intracellularWaterPercentage,
-                    BodyRange().intracellularWaterRateMin.toStringAsFixed(1),
-                    BodyRange().intracellularWaterRateMax.toStringAsFixed(1),
-                    true),
-            totalMoisture.isEmpty
-                ? SizedBox.shrink()
-                : buildItem(
-                    AppLocalizations.of(context)!.bcm_moisture,
-                    totalMoisture,
-                    BodyRange().totalMoistureMin.toStringAsFixed(1),
-                    BodyRange().totalMoistureMax.toStringAsFixed(1),
-                    true),
-            protein.isEmpty
-                ? SizedBox.shrink()
-                : buildItem(
-                    AppLocalizations.of(context)!.bcm_protein,
-                    protein,
-                    BodyRange().proteinMin.toStringAsFixed(1),
-                    BodyRange().proteinMax.toStringAsFixed(1),
-                    true),
-            bodyFatMass.isEmpty
-                ? SizedBox.shrink()
-                : buildItem(
-                    AppLocalizations.of(context)!.bcm_fatmass,
-                    bodyFatMass,
-                    BodyRange().bodyFatMassMin.toStringAsFixed(1),
-                    BodyRange().bodyFatMassMax.toStringAsFixed(1),
-                    true),
-            bodyAge.isEmpty
-                ? SizedBox.shrink()
-                : buildItem(AppLocalizations.of(context)!.body_age, bodyAge, "",
-                    "", false),
-            proteinPercentage.isEmpty
-                ? SizedBox.shrink()
-                : buildItem(
-                    AppLocalizations.of(context)!.bcm_protein_percentage,
-                    proteinPercentage,
-                    BodyRange().proteinRateMin.toStringAsFixed(1),
-                    BodyRange().proteinRateMax.toStringAsFixed(1),
-                    true),
-            skeletalMusclePercentage.isEmpty
-                ? SizedBox.shrink()
-                : buildItem(
-                    AppLocalizations.of(context)!.bcm_skeletal,
-                    skeletalMusclePercentage,
-                    BodyRange().skeletalRateMin.toStringAsFixed(1),
-                    BodyRange().skeletalRageMax.toStringAsFixed(1),
-                    true),
-            muscleMass.isEmpty
-                ? SizedBox.shrink()
-                : buildItem(
-                    AppLocalizations.of(context)!.bcm_muscle_mass,
-                    muscleMass,
-                    BodyRange().muscleMassMin.toStringAsFixed(1),
-                    BodyRange().muscleMassMax.toStringAsFixed(1),
-                    true),
+            if (bodyFatPercentage.isNotEmpty)
+              buildItem(
+                  AppLocalizations.of(context)!.bcm_fat,
+                  bodyFatPercentage,
+                  BodyRange().fatRateMin.toString(),
+                  BodyRange().fatRateMax.toString(),
+                  true),
+            if (basalMetabolism.isNotEmpty)
+              buildItem(
+                  AppLocalizations.of(context)!.bcm_metabolism,
+                  basalMetabolism,
+                  BodyRange().basalMetabolismMin.toString(),
+                  BodyRange().basalMetabolismMax.toString(),
+                  true),
+            if (visceralFatLevel.isNotEmpty)
+              buildItem(
+                  AppLocalizations.of(context)!.bcm_visceralfat,
+                  visceralFatLevel,
+                  BodyRange().visceralFatLevelMin.toString(),
+                  BodyRange().visceralFatLevelMax.toString(),
+                  true),
+            if (boneMass.isNotEmpty)
+              buildItem(
+                  AppLocalizations.of(context)!.bcm_bone_mass,
+                  boneMass,
+                  BodyRange().boneMassMin.toStringAsFixed(1),
+                  BodyRange().boneMassMax.toStringAsFixed(1),
+                  true),
+            if (bodyWaterPercentage.isNotEmpty)
+              buildItem(
+                  AppLocalizations.of(context)!.bcm_water,
+                  bodyWaterPercentage,
+                  BodyRange().waterRateMin.toStringAsFixed(1),
+                  BodyRange().waterRateMax.toStringAsFixed(1),
+                  true),
+            if (extracellularFluid.isNotEmpty)
+              buildItem(
+                  AppLocalizations.of(context)!.bcm_extrac_fluid,
+                  extracellularFluid,
+                  BodyRange().extracellularWaterRateMin.toStringAsFixed(1),
+                  BodyRange().extracellularWaterRateMax.toStringAsFixed(1),
+                  true),
+            if (intracellularWaterPercentage.isNotEmpty)
+              buildItem(
+                  AppLocalizations.of(context)!.bcm_intrac_fluid,
+                  intracellularWaterPercentage,
+                  BodyRange().intracellularWaterRateMin.toStringAsFixed(1),
+                  BodyRange().intracellularWaterRateMax.toStringAsFixed(1),
+                  true),
+            if (totalMoisture.isNotEmpty)
+              buildItem(
+                  AppLocalizations.of(context)!.bcm_moisture,
+                  totalMoisture,
+                  BodyRange().totalMoistureMin.toStringAsFixed(1),
+                  BodyRange().totalMoistureMax.toStringAsFixed(1),
+                  true),
+            if (protein.isNotEmpty)
+              buildItem(
+                  AppLocalizations.of(context)!.bcm_protein,
+                  protein,
+                  BodyRange().proteinMin.toStringAsFixed(1),
+                  BodyRange().proteinMax.toStringAsFixed(1),
+                  true),
+            if (bodyFatMass.isNotEmpty)
+              buildItem(
+                  AppLocalizations.of(context)!.bcm_fatmass,
+                  bodyFatMass,
+                  BodyRange().bodyFatMassMin.toStringAsFixed(1),
+                  BodyRange().bodyFatMassMax.toStringAsFixed(1),
+                  true),
+            if (bodyAge.isNotEmpty)
+              buildItem(AppLocalizations.of(context)!.body_age, bodyAge, "", "",
+                  false),
+            if (proteinPercentage.isNotEmpty)
+              buildItem(
+                  AppLocalizations.of(context)!.bcm_protein_percentage,
+                  proteinPercentage,
+                  BodyRange().proteinRateMin.toStringAsFixed(1),
+                  BodyRange().proteinRateMax.toStringAsFixed(1),
+                  true),
+            if (skeletalMusclePercentage.isNotEmpty)
+              buildItem(
+                  AppLocalizations.of(context)!.bcm_skeletal,
+                  skeletalMusclePercentage,
+                  BodyRange().skeletalRateMin.toStringAsFixed(1),
+                  BodyRange().skeletalRageMax.toStringAsFixed(1),
+                  true),
+            if (muscleMass.isNotEmpty)
+              buildItem(
+                  AppLocalizations.of(context)!.bcm_muscle_mass,
+                  muscleMass,
+                  BodyRange().muscleMassMin.toStringAsFixed(1),
+                  BodyRange().muscleMassMax.toStringAsFixed(1),
+                  true)
           ],
         ),
       );

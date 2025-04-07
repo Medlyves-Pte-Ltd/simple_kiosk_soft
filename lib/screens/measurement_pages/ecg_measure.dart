@@ -22,24 +22,32 @@ import 'package:simple_kiosk_software/utils/user_info.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ECGMeasure extends BaseMeasureLayoutWidget {
-  ECGData ecgData = ECGData();
+  String HR = "";
+  String PR = "";
+  String QT = "";
+  String QTc = "";
+  String P_Width = "";
+  String QRS_Dur = "";
+  String P_Axis = "";
+  String QRS_Axis = "";
+  String T_Axis = "";
 
   ECGMeasure() {
-    ecgData.HR = UserInfo().HR.isNotEmpty ? UserInfo().HR : dataDefaultValue;
-    ecgData.PR = UserInfo().PR.isNotEmpty ? UserInfo().PR : dataDefaultValue;
-    ecgData.QT = UserInfo().QT.isNotEmpty ? UserInfo().QT : dataDefaultValue;
+    HR = UserInfo().HR.isNotEmpty ? UserInfo().HR : dataDefaultValue;
+    PR = UserInfo().PR.isNotEmpty ? UserInfo().PR : dataDefaultValue;
+    QT = UserInfo().QT.isNotEmpty ? UserInfo().QT : dataDefaultValue;
 
-    ecgData.QTc = UserInfo().QTc.isNotEmpty ? UserInfo().QTc : dataDefaultValue;
-    ecgData.P_Width =
+    QTc = UserInfo().QTc.isNotEmpty ? UserInfo().QTc : dataDefaultValue;
+    P_Width =
         UserInfo().P_Width.isNotEmpty ? UserInfo().P_Width : dataDefaultValue;
-    ecgData.QRS_Dur =
+    QRS_Dur =
         UserInfo().QRS_Dur.isNotEmpty ? UserInfo().QRS_Dur : dataDefaultValue;
 
-    ecgData.P_Axis =
+    P_Axis =
         UserInfo().P_Axis.isNotEmpty ? UserInfo().P_Axis : dataDefaultValue;
-    ecgData.QRS_Axis =
+    QRS_Axis =
         UserInfo().QRS_Axis.isNotEmpty ? UserInfo().QRS_Axis : dataDefaultValue;
-    ecgData.T_Axis =
+    T_Axis =
         UserInfo().T_Axis.isNotEmpty ? UserInfo().T_Axis : dataDefaultValue;
   }
 
@@ -113,17 +121,17 @@ class ECGMeasure extends BaseMeasureLayoutWidget {
       //   update = true;
       // } else
       if (state is DeviceDataUpdated && state.deviceData is ECGData) {
-        ecgData = state.deviceData as ECGData;
+        ECGData ecgData = state.deviceData as ECGData;
 
-        UserInfo().HR = ecgData.HR ?? "";
-        UserInfo().P_Width = ecgData.P_Width ?? "";
-        UserInfo().PR = ecgData.PR ?? "";
-        UserInfo().QRS_Dur = ecgData.QRS_Dur ?? "";
-        UserInfo().QT = ecgData.QT ?? "";
-        UserInfo().QTc = ecgData.QTc ?? "";
-        UserInfo().QRS_Axis = ecgData.QRS_Axis ?? "";
-        UserInfo().P_Axis = ecgData.P_Axis ?? "";
-        UserInfo().T_Axis = ecgData.T_Axis ?? "";
+        HR = UserInfo().HR = ecgData.HR ?? "";
+        P_Width = UserInfo().P_Width = ecgData.P_Width ?? "";
+        PR = UserInfo().PR = ecgData.PR ?? "";
+        QRS_Dur = UserInfo().QRS_Dur = ecgData.QRS_Dur ?? "";
+        QT = UserInfo().QT = ecgData.QT ?? "";
+        QTc = UserInfo().QTc = ecgData.QTc ?? "";
+        QRS_Axis = UserInfo().QRS_Axis = ecgData.QRS_Axis ?? "";
+        P_Axis = UserInfo().P_Axis = ecgData.P_Axis ?? "";
+        T_Axis = UserInfo().T_Axis = ecgData.T_Axis ?? "";
         UserInfo().RR = ecgData.RR ?? "";
         UserInfo().Conclusion =
             (ecgData.Conclusion ?? "").replaceAll("\n", " ");
@@ -147,13 +155,6 @@ class ECGMeasure extends BaseMeasureLayoutWidget {
 
         ControlMeasurePageUtils().measured = true;
         update = true;
-      } else if (state is DeviceDisconnected) {
-        if (ControlMeasurePageUtils().measured == false) {
-          ecgData.HR = ecgData.P_Width = ecgData.PR = ecgData.QRS_Dur =
-              ecgData.QT = ecgData.QTc = ecgData.QRS_Axis = ecgData.P_Axis =
-                  ecgData.T_Axis = ecgData.RR = dataDefaultValue;
-          update = true;
-        }
       }
 
       return update;
@@ -170,16 +171,15 @@ class ECGMeasure extends BaseMeasureLayoutWidget {
           mainAxisSpacing: height * 0.01,
         ),
         children: [
-          buildItem(AppLocalizations.of(context)!.ecg_hr, ecgData.HR),
-          buildItem(AppLocalizations.of(context)!.ecg_pr, ecgData.PR),
-          buildItem(AppLocalizations.of(context)!.ecg_qt, ecgData.QT),
-          buildItem(AppLocalizations.of(context)!.ecg_qtc, ecgData.QTc),
-          buildItem(AppLocalizations.of(context)!.ecg_p_width, ecgData.P_Width),
-          buildItem(AppLocalizations.of(context)!.ecg_qrs_dur, ecgData.QRS_Dur),
-          buildItem(AppLocalizations.of(context)!.ecg_p_axis, ecgData.P_Axis),
-          buildItem(
-              AppLocalizations.of(context)!.ecg_qrs_axis, ecgData.QRS_Axis),
-          buildItem(AppLocalizations.of(context)!.ecg_t_axis, ecgData.T_Axis),
+          buildItem(AppLocalizations.of(context)!.ecg_hr, HR),
+          buildItem(AppLocalizations.of(context)!.ecg_pr, PR),
+          buildItem(AppLocalizations.of(context)!.ecg_qt, QT),
+          buildItem(AppLocalizations.of(context)!.ecg_qtc, QTc),
+          buildItem(AppLocalizations.of(context)!.ecg_p_width, P_Width),
+          buildItem(AppLocalizations.of(context)!.ecg_qrs_dur, QRS_Dur),
+          buildItem(AppLocalizations.of(context)!.ecg_p_axis, P_Axis),
+          buildItem(AppLocalizations.of(context)!.ecg_qrs_axis, QRS_Axis),
+          buildItem(AppLocalizations.of(context)!.ecg_t_axis, T_Axis),
         ],
       );
     });

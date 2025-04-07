@@ -263,62 +263,46 @@ class BodyCompositionCheck extends BaseCheckWidget {
             physics: const AlwaysScrollableScrollPhysics(), // 禁止滚动
             shrinkWrap: true,
             children: [
-              basalMetabolism.isEmpty
-                  ? SizedBox.shrink()
-                  : buildItem(
-                      AppLocalizations.of(context)!.bcm_fat, bodyFatPercentage),
-              basalMetabolism.isEmpty
-                  ? SizedBox.shrink()
-                  : buildItem(AppLocalizations.of(context)!.bcm_metabolism,
-                      basalMetabolism),
-              visceralFatLevel.isEmpty
-                  ? SizedBox.shrink()
-                  : buildItem(AppLocalizations.of(context)!.bcm_visceralfat,
-                      visceralFatLevel),
-              boneMass.isEmpty
-                  ? SizedBox.shrink()
-                  : buildItem(
-                      AppLocalizations.of(context)!.bcm_bone_mass, boneMass),
-              bodyWaterPercentage.isEmpty
-                  ? SizedBox.shrink()
-                  : buildItem(AppLocalizations.of(context)!.bcm_water,
-                      bodyWaterPercentage),
-              bodyAge.isEmpty
-                  ? SizedBox.shrink()
-                  : buildItem(AppLocalizations.of(context)!.body_age, bodyAge),
-              extracellularFluid.isEmpty
-                  ? SizedBox.shrink()
-                  : buildItem(AppLocalizations.of(context)!.bcm_extrac_fluid,
-                      extracellularFluid),
-              intracellularWaterPercentage.isEmpty
-                  ? SizedBox.shrink()
-                  : buildItem(AppLocalizations.of(context)!.bcm_intrac_fluid,
-                      intracellularWaterPercentage),
-              totalMoisture.isEmpty
-                  ? SizedBox.shrink()
-                  : buildItem(AppLocalizations.of(context)!.bcm_moisture,
-                      totalMoisture),
-              protein.isEmpty
-                  ? SizedBox.shrink()
-                  : buildItem(
-                      AppLocalizations.of(context)!.bcm_protein, protein),
-              bodyFatMass.isEmpty
-                  ? SizedBox.shrink()
-                  : buildItem(
-                      AppLocalizations.of(context)!.bcm_fatmass, bodyFatMass),
-              skeletalMusclePercentage.isEmpty
-                  ? SizedBox.shrink()
-                  : buildItem(AppLocalizations.of(context)!.bcm_skeletal,
-                      skeletalMusclePercentage),
-              proteinPercentage.isEmpty
-                  ? SizedBox.shrink()
-                  : buildItem(
-                      AppLocalizations.of(context)!.bcm_protein_percentage,
-                      proteinPercentage),
-              muscleMass.isEmpty
-                  ? SizedBox.shrink()
-                  : buildItem(AppLocalizations.of(context)!.bcm_muscle_mass,
-                      muscleMass),
+              if (bodyFatPercentage.isNotEmpty)
+                buildItem(
+                    AppLocalizations.of(context)!.bcm_fat, bodyFatPercentage),
+              if (basalMetabolism.isNotEmpty)
+                buildItem(AppLocalizations.of(context)!.bcm_metabolism,
+                    basalMetabolism),
+              if (visceralFatLevel.isNotEmpty)
+                buildItem(AppLocalizations.of(context)!.bcm_visceralfat,
+                    visceralFatLevel),
+              if (boneMass.isNotEmpty)
+                buildItem(
+                    AppLocalizations.of(context)!.bcm_bone_mass, boneMass),
+              if (bodyWaterPercentage.isNotEmpty)
+                buildItem(AppLocalizations.of(context)!.bcm_water,
+                    bodyWaterPercentage),
+              if (bodyAge.isNotEmpty)
+                buildItem(AppLocalizations.of(context)!.body_age, bodyAge),
+              if (extracellularFluid.isNotEmpty)
+                buildItem(AppLocalizations.of(context)!.bcm_extrac_fluid,
+                    extracellularFluid),
+              if (intracellularWaterPercentage.isNotEmpty)
+                buildItem(AppLocalizations.of(context)!.bcm_intrac_fluid,
+                    intracellularWaterPercentage),
+              if (totalMoisture.isNotEmpty)
+                buildItem(
+                    AppLocalizations.of(context)!.bcm_moisture, totalMoisture),
+              if (protein.isNotEmpty)
+                buildItem(AppLocalizations.of(context)!.bcm_protein, protein),
+              if (bodyFatMass.isNotEmpty)
+                buildItem(
+                    AppLocalizations.of(context)!.bcm_fatmass, bodyFatMass),
+              if (skeletalMusclePercentage.isNotEmpty)
+                buildItem(AppLocalizations.of(context)!.bcm_skeletal,
+                    skeletalMusclePercentage),
+              if (proteinPercentage.isNotEmpty)
+                buildItem(AppLocalizations.of(context)!.bcm_protein_percentage,
+                    proteinPercentage),
+              if (muscleMass.isNotEmpty)
+                buildItem(
+                    AppLocalizations.of(context)!.bcm_muscle_mass, muscleMass),
             ],
           ));
     });
