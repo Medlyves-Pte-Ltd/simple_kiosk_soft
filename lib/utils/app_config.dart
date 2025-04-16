@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter_devices_sdk/devices/device_config.dart';
 import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:flutter_devices_sdk/device_sdk_param_setting.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -32,16 +33,6 @@ class AppConfig {
   set totalHeight(double value) {
     configMap["total_height"] = value;
     DeviceSdkParamSetting().totalHeight1 = value;
-    saveFile();
-  }
-
-  double get heightOffset {
-    return configMap["height_offset"] as double;
-  }
-
-  set heightOffset(double value) {
-    configMap["height_offset"] = value;
-    DeviceSdkParamSetting().heightOffset = value;
     saveFile();
   }
 
@@ -293,8 +284,9 @@ class AppConfig {
     DeviceSdkParamSetting().replayIoCount = relayIoCount;
     DeviceSdkParamSetting().configDir = configDir;
     DeviceSdkParamSetting().totalHeight1 = totalHeight;
-    DeviceSdkParamSetting().heightOffset = heightOffset;
     DeviceSdkParamSetting().upDownIoStopTimeInterval = upDownIoStopTime;
+    DeviceSdkParamSetting().relayCommType =
+        RelayCommType.values.byName(AppConfig().relayCommType);
   }
 
   // 读文件

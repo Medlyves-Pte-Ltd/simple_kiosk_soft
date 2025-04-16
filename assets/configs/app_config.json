@@ -1,11 +1,10 @@
 {
     "info": "Default use of Thai kiosk device parameters",
     "total_height": 211.4,
-    "height_offset": 0.0,
     "enable_usb_relay": true,
-    "relay_comm_list":["usb", "serial"],
+    "relay_comm_list":["usb", "serial", "smart_hub"],
     "relay_comm_type": "usb",
-    "relay_io_count_list": [8, 16],
+    "relay_io_count_list": [8, 9, 10, 11, 12, 13, 14, 15, 16],
     "relay_io_count": 8,
     "relay_usb_converter_vid": 1027,
     "relay_usb_converter_pid": 24577,

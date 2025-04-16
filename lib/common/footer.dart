@@ -129,7 +129,6 @@ class FooterState extends State<Footer> {
   // 关机
   void shutdown() async {
     LogPrinter.log("click shutdown btn");
-
     if (KioskConfig().kioskType != "xk") {
       if (AppConfig().enableUsbRelay) {
         try {

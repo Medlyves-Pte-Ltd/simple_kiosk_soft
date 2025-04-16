@@ -146,10 +146,10 @@ class MyApp extends StatelessWidget {
               return onCustomGenerateRoute(settings);
             }
           },
-          initialRoute: startPage(),
-          // initialRoute: KioskConfig().kioskType == "xk"
-          //     ? "/XKDeviceStartPage"
-          //     : "/RelayDeviceStartPage",
+          // initialRoute: startPage(),
+          initialRoute: KioskConfig().kioskType == "xk"
+              ? "/XKDeviceStartPage"
+              : "/RelayDeviceStartPage",
           supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData(
             textTheme: GoogleFonts.robotoTextTheme(textTheme).copyWith(

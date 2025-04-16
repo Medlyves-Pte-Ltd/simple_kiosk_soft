@@ -29,8 +29,7 @@ class _HeightCalibrationPageState extends State<HeightCalibrationPage> {
   late BuildContext mainContext;
   var totalHeightControl =
       TextEditingController(text: AppConfig().totalHeight.toStringAsFixed(1));
-  var heightOffsetControl =
-      TextEditingController(text: AppConfig().heightOffset.toStringAsFixed(1));
+
   @override
   void initState() {
     super.initState();

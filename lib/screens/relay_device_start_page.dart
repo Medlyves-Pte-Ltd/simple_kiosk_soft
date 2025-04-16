@@ -120,9 +120,9 @@ class _RelayDeviceStartPageState extends State<RelayDeviceStartPage> {
         });
 
         // 关闭继电器
-        if (UsbRelayControl().relayCommType == RelayCommType.serial) {
-          await UsbRelayControl().disConnect();
-        }
+        //if (UsbRelayControl().relayCommType == RelayCommType.reply_serial) {
+        await UsbRelayControl().disConnect();
+        //}
 
         // 检查usb设备的顺序并显示结果
         await Future.delayed(Duration(seconds: 2), () {});
