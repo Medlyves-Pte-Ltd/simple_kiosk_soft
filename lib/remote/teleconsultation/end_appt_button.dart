@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EndApptButton extends StatelessWidget {

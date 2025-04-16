@@ -1,16 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_devices_sdk/device_sdk_param_setting.dart';
-import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:flutter_devices_sdk/devices/device_config.dart';
 import 'package:flutter_devices_sdk/devices/device_order_check.dart';
-import 'package:flutter_devices_sdk/devices/up_down_control.dart';
-import 'package:flutter_devices_sdk/devices/usb_relay_control.dart';
-import 'package:flutter_devices_sdk/kiosk_type.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/header.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
-import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 import 'package:volume_controller/volume_controller.dart';
 
 class XKDeviceStartPage extends StatefulWidget {

@@ -3,13 +3,10 @@ import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:flutter_devices_sdk/devices/boruiwei_dg861_weight_calibration.dart';
 import 'package:flutter_devices_sdk/devices/device_config.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/utils/permission_config.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class WeightCalibration extends StatefulWidget {
   @override

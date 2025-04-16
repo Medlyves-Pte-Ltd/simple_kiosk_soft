@@ -64,7 +64,7 @@ class PrintUtils {
 
     // 延时关闭打印机
     Future.delayed(const Duration(milliseconds: 5000), () async {
-      if (callBack != null) {
+      if (callBack != Null) {
         callBack();
       }
     });

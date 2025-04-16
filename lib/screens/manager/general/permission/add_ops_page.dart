@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:simple_kiosk_software/common/common.dart';
 import 'package:simple_kiosk_software/utils/permission_config.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 import 'package:fluttertoast/fluttertoast.dart';

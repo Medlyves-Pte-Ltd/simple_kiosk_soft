@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:simple_kiosk_software/blocs/device/device_state.dart';
-import 'package:simple_kiosk_software/common/common.dart';
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import 'package:simple_kiosk_software/blocs/device/device_bloc.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
@@ -29,7 +28,7 @@ class ScannerPage extends StatefulWidget {
 
 class ScannerPageState extends State<ScannerPage> {
   DateTime _lastScanLockTime =
-      DateTime.now().subtract(const Duration(seconds: 6)); // 初始化时间确保首次可扫描‌
+  DateTime.now().subtract(const Duration(seconds: 6)); // 初始化时间确保首次可扫描‌
   late final AppointmentBloc appointmentBloc;
   // 数据默认值
   String dataDefaultValue = "- - -";
@@ -258,7 +257,7 @@ class ScannerPageState extends State<ScannerPage> {
                 softWrap: true,
                 style: TextStyle(
                   fontSize:
-                      localeCode == "ta" ? height * 0.018 : height * 0.022,
+                  localeCode == "ta" ? height * 0.018 : height * 0.022,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -285,7 +284,7 @@ class ScannerPageState extends State<ScannerPage> {
                               offset: Offset(-10, 10), //阴影xy轴偏移量
                               blurRadius: 25.0, //阴影模糊程度
                               spreadRadius: 5 //阴影扩散程度
-                              )
+                          )
                         ]),
                     child: Image.asset("assets/images/Medlyves_logo_only.png"),
                   ),
@@ -366,3 +365,4 @@ class ScannerPageState extends State<ScannerPage> {
     return '${AppConfig().videosDir}/$localeCode/$videoFileName';
   }
 }
+

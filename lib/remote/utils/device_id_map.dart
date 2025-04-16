@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:simple_kiosk_software/remote/utils/global_keys.dart';
 
 class DeviceMap {
   static Map<String, int> CODETOID = {

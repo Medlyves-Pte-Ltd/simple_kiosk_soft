@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_devices_sdk/log/log_printer.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
-import 'package:simple_kiosk_software/remote/utils/app_constants.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
-
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import '../../../blocs/device/device_bloc.dart';
 import '../../../blocs/device/device_state.dart';

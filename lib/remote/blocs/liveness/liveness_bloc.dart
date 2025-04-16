@@ -5,7 +5,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:simple_kiosk_software/remote/services/api_methods.dart';
 import 'package:simple_kiosk_software/remote/services/kiosk_api.dart';
-import 'package:simple_kiosk_software/remote/utils/app_constants.dart';
 import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 part 'liveness_event.dart';
 part 'liveness_state.dart';

@@ -1,13 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_devices_sdk/log/log_printer.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
-import 'package:flutter_devices_sdk/comm/usb_interface.dart';
 
 class ControlMeasurePageUtils {
   int pageIndex = 0;

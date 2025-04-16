@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
-import 'package:simple_kiosk_software/utils/permission_config.dart';
 
 class SettingListPage extends StatefulWidget {
   @override

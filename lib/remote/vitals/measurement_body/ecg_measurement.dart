@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
-
 import 'package:simple_kiosk_software/remote/blocs/appointment/appointment_bloc.dart';
 import '../../../blocs/device/device_bloc.dart';
 import '../../../blocs/device/device_state.dart';

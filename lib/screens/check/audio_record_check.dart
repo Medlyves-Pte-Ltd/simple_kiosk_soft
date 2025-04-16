@@ -1,11 +1,7 @@
-import 'dart:io';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:simple_kiosk_software/constants/colors.dart';
 import 'package:simple_kiosk_software/screens/check/base_check_widget.dart';
-//import 'package:record/record.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AudioRecordCheck extends BaseCheckWidget {

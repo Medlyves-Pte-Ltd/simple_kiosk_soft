@@ -34,7 +34,7 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     emit(DeviceConnected(deviceType: deviceType));
     Future.delayed(
         const Duration(milliseconds: 100),
-        () => add(DeviceStartEvent(
+            () => add(DeviceStartEvent(
             deviceType: deviceType, autoStop: event.autoStop)));
   }
 

@@ -16,10 +16,10 @@ class IdCardLoginPage extends StatefulWidget {
   const IdCardLoginPage({Key? key}) : super(key: key);
 
   @override
-  State<IdCardLoginPage> createState() => IdCardLoginPageState();
+  State<IdCardLoginPage> createState() => _IdCardLoginPageState();
 }
 
-class IdCardLoginPageState extends State<IdCardLoginPage> {
+class _IdCardLoginPageState extends State<IdCardLoginPage> {
   // 屏幕宽度
   double width = 0;
   // 屏幕高度
@@ -39,7 +39,6 @@ class IdCardLoginPageState extends State<IdCardLoginPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Future.delayed(Duration(milliseconds: 10), () async {
       await thaiCard.getThaiIdCard();
@@ -68,95 +67,19 @@ class IdCardLoginPageState extends State<IdCardLoginPage> {
         child: Column(
           children: [
             SizedBox(height: height * 0.01),
-            Row(
-              children: [
-                Icon(
-                  Icons.perm_identity,
-                  size: height * 0.018,
-                ),
-                Text(
-                  AppLocalizations.of(context)!.identity_card_number,
-                  style: TextStyle(
-                      color: Color.fromRGBO(103, 155, 206, 1),
-                      fontSize: height * 0.02),
-                ),
-                SizedBox(width: width * 0.01),
-                Expanded(
-                    child: Text(
-                  _thaiID,
-                  style: TextStyle(fontSize: height * 0.016),
-                )),
-              ],
-            ),
+            buildRow(Icons.perm_identity, AppLocalizations.of(context)!.identity_card_number, _thaiID),
             SizedBox(height: height * 0.02),
             buildDivider(),
             SizedBox(height: height * 0.02),
-            Row(
-              children: [
-                Icon(
-                  Icons.person,
-                  size: height * 0.018,
-                ),
-                Text(
-                  AppLocalizations.of(context)!.name,
-                  style: TextStyle(
-                      color: Color.fromRGBO(103, 155, 206, 1),
-                      fontSize: height * 0.02),
-                ),
-                SizedBox(width: width * 0.01),
-                Expanded(
-                    child: Text(
-                  _name,
-                  style: TextStyle(fontSize: height * 0.016),
-                )),
-              ],
-            ),
+            buildRow(Icons.person, AppLocalizations.of(context)!.name, _name),
             SizedBox(height: height * 0.02),
             buildDivider(),
             SizedBox(height: height * 0.02),
-            Row(
-              children: [
-                Icon(
-                  Icons.wc,
-                  size: height * 0.018,
-                ),
-                Text(
-                  AppLocalizations.of(context)!.gender,
-                  style: TextStyle(
-                      color: Color.fromRGBO(103, 155, 206, 1),
-                      fontSize: height * 0.02),
-                ),
-                SizedBox(width: width * 0.01),
-                Expanded(
-                    child: Text(
-                  _genderStr,
-                  style: TextStyle(fontSize: height * 0.016),
-                )),
-              ],
-            ),
+            buildRow(Icons.wc, AppLocalizations.of(context)!.gender, _genderStr),
             SizedBox(height: height * 0.02),
             buildDivider(),
             SizedBox(height: height * 0.02),
-            Row(
-              children: [
-                Icon(
-                  Icons.escalator_warning,
-                  size: height * 0.018,
-                ),
-                Text(
-                  AppLocalizations.of(context)!.print_age,
-                  style: TextStyle(
-                      color: Color.fromRGBO(103, 155, 206, 1),
-                      fontSize: height * 0.02),
-                ),
-                SizedBox(width: width * 0.01),
-                Expanded(
-                    child: Text(
-                  _age,
-                  style: TextStyle(fontSize: height * 0.016),
-                )),
-              ],
-            ),
+            buildRow(Icons.escalator_warning, AppLocalizations.of(context)!.print_age, _age),
             SizedBox(height: height * 0.02),
             buildDivider(),
             SizedBox(height: height * 0.04),
@@ -169,11 +92,30 @@ class IdCardLoginPageState extends State<IdCardLoginPage> {
   int calculateAge(int year, int month, int day) {
     var now = DateTime.now();
     var years = now.year - year;
-    // var birthdayThisYear = DateTime(now.year, month, day);
-    // if (now.isAfter(birthdayThisYear)) {
-    //   years++; // 如果今年已经过了生日，年龄要加1
-    // }
     return years;
+  }
+
+  Widget buildRow(IconData icon, String title, String value) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          size: height * 0.018,
+        ),
+        Text(
+          title,
+          style: TextStyle(
+              color: Color.fromRGBO(103, 155, 206, 1),
+              fontSize: height * 0.02),
+        ),
+        SizedBox(width: width * 0.01),
+        Expanded(
+            child: Text(
+              value,
+              style: TextStyle(fontSize: height * 0.016),
+            )),
+      ],
+    );
   }
 
   @override
@@ -205,10 +147,10 @@ class IdCardLoginPageState extends State<IdCardLoginPage> {
                     // 姓名
                     if (languageCode == 'th') {
                       _name =
-                          '${dataMap['firstnameTH']} ${dataMap['lastnameTH']}';
+                      '${dataMap['firstnameTH']} ${dataMap['lastnameTH']}';
                     } else {
                       _name =
-                          '${dataMap['firstnameEN']} ${dataMap['lastnameEN']}';
+                      '${dataMap['firstnameEN']} ${dataMap['lastnameEN']}';
                     }
 
                     // 年龄
@@ -279,7 +221,7 @@ class IdCardLoginPageState extends State<IdCardLoginPage> {
                         Navigator.pushNamedAndRemoveUntil(
                             context,
                             ControlMeasurePageUtils().firstMeasurePage(),
-                            (route) => false);
+                                (route) => false);
                       } else {
                         showDialog(
                           context: context,

@@ -95,7 +95,7 @@ class SelectLoginMethodPageState extends State<SelectLoginMethodPage> {
               // const Footer(),
               const DateTimeSection(),
               VideoWidget(
-                videoName: "${AppConfig().videosDir}/th/welcome_TH.mp4",
+                videoName: KioskConfig().kioskType != "simple_sg" ? "${AppConfig().videosDir}/th/welcome_TH.mp4" : "${AppConfig().videosDir}/en/welcome_EN.mp4",
                 setLooping: false,
                 fromFile: true,
               ),
@@ -112,118 +112,82 @@ class SelectLoginMethodPageState extends State<SelectLoginMethodPage> {
 
   // 选择登录方式
   Widget selectLoginMethod() {
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
     return Column(
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Column(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  KioskConfig().healthScreeningMode =
-                      HealthScreeningMode.online;
-                  KioskConfig().teleConsultationMode = TeleConsultationMode.on;
-                  Navigator.pushNamed(context, "/ScannerPage");
-                },
-                child: Container(
-                  height: height * 0.08,
-                  width: height * 0.08,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      width: 1,
-                      color: ColorPalette.materialGreen,
-                    ),
-                  ),
-                  child: Transform.scale(
-                    scale: 0.7,
-                    child: Image.asset('assets/images/Medlyves_logo_only.png'),
-                  ),
-                ),
-              ),
-              SizedBox(height: height * 0.02),
-              Text(
-                "Medlyves app",
-                style: TextStyle(
-                    fontSize: height * 0.018,
-                    color: ColorPalette.materialGreen),
-              ),
-            ],
+          _buildLoginMethod(
+            context,
+            'assets/images/Medlyves_logo_only.png',
+            "Medlyves app",
+                () {
+              KioskConfig().healthScreeningMode = HealthScreeningMode.online;
+              KioskConfig().teleConsultationMode = TeleConsultationMode.on;
+              Navigator.pushNamed(context, "/ScannerPage");
+            },
           ),
           SizedBox(
             width: width * 0.14,
           ),
-          Column(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  KioskConfig().healthScreeningMode =
-                      HealthScreeningMode.online;
-                  KioskConfig().teleConsultationMode = TeleConsultationMode.on;
-                  Navigator.pushNamed(context, "/IdCardLoginPage");
-                },
-                child: Container(
-                  height: height * 0.08,
-                  width: height * 0.08,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      width: 1,
-                      color: ColorPalette.materialGreen,
-                    ),
-                  ),
-                  child: Transform.scale(
-                    scale: 0.7,
-                    child: Image.asset('assets/images/thailand_id.png'),
-                  ),
-                ),
-              ),
-              SizedBox(height: height * 0.02),
-              Text(AppLocalizations.of(context)!.id_card,
-                  style: TextStyle(
-                      fontSize: height * 0.018,
-                      color: ColorPalette.materialGreen)),
-            ],
+          _buildLoginMethod(
+            context,
+            'assets/images/thailand_id.png',
+            AppLocalizations.of(context)!.id_card,
+                () {
+              KioskConfig().healthScreeningMode = HealthScreeningMode.standalone;
+              KioskConfig().teleConsultationMode = TeleConsultationMode.off;
+              Navigator.pushNamed(context, "/IdCardLoginPage");
+            },
           ),
           SizedBox(
             width: width * 0.14,
           ),
-          Column(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  KioskConfig().healthScreeningMode =
-                      HealthScreeningMode.online;
-                  KioskConfig().teleConsultationMode = TeleConsultationMode.on;
-                  Navigator.pushNamed(context, "/UserLoginPage");
-                },
-                child: Container(
-                  height: height * 0.08,
-                  width: height * 0.08,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      width: 1,
-                      color: ColorPalette.materialGreen,
-                    ),
-                  ),
-                  child: Transform.scale(
-                    scale: 0.7,
-                    child: Image.asset('assets/images/manual_entry.png'),
-                  ),
-                ),
-              ),
-              SizedBox(height: height * 0.02),
-              Text(AppLocalizations.of(context)!.manual_entry,
-                  style: TextStyle(
-                      fontSize: height * 0.018,
-                      color: ColorPalette.materialGreen)),
-            ],
+          _buildLoginMethod(
+            context,
+            'assets/images/manual_entry.png',
+            AppLocalizations.of(context)!.manual_entry,
+                () {
+              KioskConfig().healthScreeningMode = HealthScreeningMode.standalone;
+              KioskConfig().teleConsultationMode = TeleConsultationMode.off;
+              Navigator.pushNamed(context, "/UserLoginPage");
+            },
           ),
         ]),
         SizedBox(height: height * 0.1),
         buildBackBtn(),
+      ],
+    );
+  }
+
+  Widget _buildLoginMethod(
+      BuildContext context, String imagePath, String text, VoidCallback onTap) {
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: onTap,
+          child: Container(
+            height: height * 0.08,
+            width: height * 0.08,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                width: 1,
+                color: ColorPalette.materialGreen,
+              ),
+            ),
+            child: Transform.scale(
+              scale: 0.7,
+              child: Image.asset(imagePath),
+            ),
+          ),
+        ),
+        SizedBox(height: height * 0.02),
+        Text(
+          text,
+          style: TextStyle(
+            fontSize: height * 0.018,
+            color: ColorPalette.materialGreen,
+          ),
+        ),
       ],
     );
   }
@@ -233,7 +197,10 @@ class SelectLoginMethodPageState extends State<SelectLoginMethodPage> {
     return Container(
       height: height * 0.08,
       padding: EdgeInsets.only(
-          top: height * 0.01, bottom: height * 0.01, right: width * 0.05),
+        top: height * 0.01,
+        bottom: height * 0.01,
+        right: width * 0.05,
+      ),
       child: Row(
         children: [
           const Spacer(),
@@ -242,21 +209,23 @@ class SelectLoginMethodPageState extends State<SelectLoginMethodPage> {
               Navigator.pushNamed(context, "/LanguagePage");
             },
             child: Container(
-                height: height * 0.03,
-                width: width * 0.15,
-                decoration: BoxDecoration(
-                  color: ColorPalette.materialGreen,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Center(
-                  child: Text(
-                    AppLocalizations.of(context)!.back,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: height * 0.015,
-                        fontWeight: FontWeight.w600),
+              height: height * 0.03,
+              width: width * 0.15,
+              decoration: BoxDecoration(
+                color: ColorPalette.materialGreen,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(
+                child: Text(
+                  AppLocalizations.of(context)!.back,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: height * 0.015,
+                    fontWeight: FontWeight.w600,
                   ),
-                )),
+                ),
+              ),
+            ),
           ),
         ],
       ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
-import 'package:logger/logger.dart';
 
 class ColorPalette {
   static const Color colorAppBackground = Colors.white;

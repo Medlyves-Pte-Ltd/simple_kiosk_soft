@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:re_editor/re_editor.dart';
 import 'package:simple_kiosk_software/common/footer.dart';

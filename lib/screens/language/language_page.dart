@@ -34,6 +34,10 @@ class LanguagePageState extends State<LanguagePage> {
     // {"name": "Bahasa Melayu", "code": "ms", "flag": ""},
     // {"name": "தமிழ்", "code": "ta", "flag": ""},
   ];
+  final List<Map<String, String>> sg_languages = [
+    {"name": "English", "code": "en", "flag": "GBR"},
+    {"name": "中文", "code": "zh", "flag": "CHN"},
+  ];
 
   @override
   void initState() {
@@ -102,7 +106,7 @@ class LanguagePageState extends State<LanguagePage> {
               children: [
                 const DateTimeSection(),
                 VideoWidget(
-                  videoName: "${AppConfig().videosDir}/th/welcome_TH.mp4",
+                  videoName: KioskConfig().kioskType != "simple_sg" ? "${AppConfig().videosDir}/th/welcome_TH.mp4" : "${AppConfig().videosDir}/en/welcome_EN.mp4",
                   setLooping: false,
                   fromFile: true,
                 ),
@@ -112,7 +116,7 @@ class LanguagePageState extends State<LanguagePage> {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: languages
+                    children: (KioskConfig().kioskType != "simple_sg" ? languages : sg_languages)
                         .map((language) => Container(
                               margin: EdgeInsets.symmetric(
                                   horizontal: width * 0.02),
@@ -156,14 +160,15 @@ class LanguagePageState extends State<LanguagePage> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        KioskConfig().kioskType != "simple_sg" ?
         Text(
           "กรุณาสแกน QR Code เพื่อลงทะเบียนในแอปพลิเคชันมือถือ",
           overflow: TextOverflow.ellipsis,
           style: TextStyle(fontSize: height * 0.015),
-        ),
+        ): SizedBox.shrink(),
         SizedBox(
           height: height * 0.003,
-        ),
+        ) ,
         Text("Please scan QR code to register in Medlyves mobile application.",
             overflow: TextOverflow.ellipsis,
             style: TextStyle(fontSize: height * 0.015)),

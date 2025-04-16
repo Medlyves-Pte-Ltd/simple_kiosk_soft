@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +15,6 @@ import 'package:simple_kiosk_software/remote/models/notifications/appointment_no
 import 'package:simple_kiosk_software/remote/results/result_list.dart';
 import 'package:simple_kiosk_software/remote/teleconsultation/meeting_room.dart';
 import 'package:simple_kiosk_software/remote/teleconsultation/tc_navigation.dart';
-import 'package:simple_kiosk_software/remote/config/settings.dart';
 import 'package:simple_kiosk_software/remote/vitals/measurement_body/blood_oxygen_measurement.dart';
 import 'package:simple_kiosk_software/remote/vitals/measurement_body/body_comp_measurement.dart';
 import 'package:simple_kiosk_software/remote/vitals/measurement_body/bp_measurement.dart';
@@ -24,16 +22,13 @@ import 'package:simple_kiosk_software/remote/vitals/measurement_body/ecg_measure
 import 'package:simple_kiosk_software/remote/vitals/measurement_body/htwt_measurement.dart';
 import 'package:simple_kiosk_software/remote/vitals/measurement_body/temp_measurement.dart';
 import 'package:simple_kiosk_software/remote/vitals/start_stop_button.dart';
-import 'package:simple_kiosk_software/remote/services/websocket.dart';
 import 'package:simple_kiosk_software/remote/utils/app_constants.dart';
 import 'package:flutter_devices_sdk/device_type.dart';
 import 'package:medlyves_mobile_components/blocs/hms_room_overview/room_overview_bloc.dart';
 import 'package:medlyves_mobile_components/blocs/hms_room_overview/room_overview_event.dart';
 import 'package:medlyves_mobile_components/blocs/hms_room_overview/room_overview_state.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'dart:developer';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 import 'package:simple_kiosk_software/utils/user_info.dart';
 import 'package:video_player/video_player.dart';

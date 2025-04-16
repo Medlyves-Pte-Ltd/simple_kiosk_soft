@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_devices_sdk/view/colors.dart';
 import 'package:simple_kiosk_software/blocs/locale/locale_bloc.dart';
-import 'package:flutter/material.dart';
 import 'package:simple_kiosk_software/common/footer.dart';
 import 'package:simple_kiosk_software/common/header.dart';
 import 'package:simple_kiosk_software/common/video_widget.dart';
@@ -54,128 +54,50 @@ class UserLoginPageState extends State<UserLoginPage> {
         color: Colors.white,
         child: Column(
           children: [
-            //const DateTimeSection(),
             const Header(),
             VideoWidget(
                 videoName: getVideoFileName(),
                 setLooping: false,
                 fromFile: true),
-            // const Footer(),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: SizedBox(
                 width: width * 0.7,
                 child: Column(
                   children: [
-                    // Text Field for StaffId
-                    TextField(
-                      keyboardType: TextInputType.text,
-                      autocorrect: false,
-                      controller: _staffIdController,
-                      textCapitalization: TextCapitalization.none,
-                      cursorColor: const Color.fromRGBO(103, 155, 206, 1),
-                      decoration: InputDecoration(
-                          labelText: AppLocalizations.of(context)!
-                              .identity_card_number,
-                          labelStyle: TextStyle(
-                              color: Color.fromRGBO(103, 155, 206, 1),
-                              fontSize: height * 0.016),
-                          prefixIcon: Icon(
-                            Icons.perm_identity,
-                            size: height * 0.018,
-                          ),
-                          focusedBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                            color: Color.fromRGBO(103, 155, 206, 1),
-                            width: 2.0,
-                          ))),
-                      style: TextStyle(fontSize: height * 0.02),
+                    buildTextField(
+                      AppLocalizations.of(context)!.identity_card_number,
+                      Icons.perm_identity,
+                      _staffIdController,
                     ),
                     SizedBox(height: height * 0.01),
-                    // Text Field for Name
-                    TextField(
-                      keyboardType: TextInputType.text,
-                      autocorrect: false,
-                      controller: _nameController,
-                      textCapitalization: TextCapitalization.words,
-                      cursorColor: const Color.fromRGBO(103, 155, 206, 1),
-                      decoration: InputDecoration(
-                          labelText: AppLocalizations.of(context)!.name,
-                          labelStyle: TextStyle(
-                              color: Color.fromRGBO(103, 155, 206, 1),
-                              fontSize: height * 0.016),
-                          prefixIcon: Icon(
-                            Icons.person,
-                            size: height * 0.018,
-                          ),
-                          focusedBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                            color: Color.fromRGBO(103, 155, 206, 1),
-                            width: 2.0,
-                          ))),
-                      style: TextStyle(fontSize: height * 0.02),
+                    buildTextField(
+                      AppLocalizations.of(context)!.name,
+                      Icons.person,
+                      _nameController,
                     ),
                     SizedBox(height: height * 0.02),
-
-                    // Dropdown for Gender
-                    DropdownButtonFormField<String>(
-                      decoration: InputDecoration(
-                          labelText: AppLocalizations.of(context)!.gender,
-                          labelStyle: TextStyle(
-                              color: Color.fromRGBO(103, 155, 206, 1),
-                              fontSize: height * 0.02),
-                          hintText: 'Select Gender',
-                          prefixIcon: Icon(
-                            Icons.wc,
-                            size: height * 0.018,
-                          ),
-                          focusedBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                            color: Color.fromRGBO(103, 155, 206, 1),
-                            width: 2.0,
-                          ))),
-                      value: selectedGender,
-                      onChanged: (value) {
+                    buildDropdown(
+                      AppLocalizations.of(context)!.gender,
+                      Icons.wc,
+                          (value) {
                         setState(() {
                           selectedGender = value!;
                         });
                       },
-                      items: [
+                      [
                         "",
                         AppLocalizations.of(context)!.male,
                         AppLocalizations.of(context)!.female
-                      ].map((gender) {
-                        return DropdownMenuItem<String>(
-                          value: gender,
-                          child: Text(gender,
-                              style: TextStyle(fontSize: height * 0.01)),
-                        );
-                      }).toList(),
+                      ],
                     ),
                     SizedBox(height: height * 0.02),
-
-                    // Text Field for Age
-                    TextField(
-                      autocorrect: false,
-                      controller: _ageController,
-                      cursorColor: const Color.fromRGBO(103, 155, 206, 1),
-                      decoration: InputDecoration(
-                          labelText: AppLocalizations.of(context)!.print_age,
-                          labelStyle: TextStyle(
-                            color: Color.fromRGBO(103, 155, 206, 1),
-                            fontSize: height * 0.016,
-                          ),
-                          prefixIcon: Icon(Icons.escalator_warning,
-                              size: height * 0.018),
-                          focusedBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                            color: Color.fromRGBO(103, 155, 206, 1),
-                            width: 2.0,
-                          ))),
-                      style: TextStyle(fontSize: height * 0.016),
+                    buildTextField(
+                      AppLocalizations.of(context)!.print_age,
+                      Icons.escalator_warning,
+                      _ageController,
                       keyboardType: TextInputType.number,
                     ),
-
                     SizedBox(height: height * 0.04),
                   ],
                 ),
@@ -225,10 +147,10 @@ class UserLoginPageState extends State<UserLoginPage> {
                         UserInfo().patientId = staffId;
                         UserInfo().name = name;
                         UserInfo().gender = gender.contains('男性') ||
-                                gender.contains('Male') ||
-                                gender.contains('Lelaki') ||
-                                gender.contains('ஆண்') ||
-                                gender.contains('ชาย')
+                            gender.contains('Male') ||
+                            gender.contains('Lelaki') ||
+                            gender.contains('ஆண்') ||
+                            gender.contains('ชาย')
                             ? 1
                             : 0;
                         UserInfo().age = age;
@@ -240,7 +162,7 @@ class UserLoginPageState extends State<UserLoginPage> {
                         Navigator.pushNamedAndRemoveUntil(
                             context,
                             ControlMeasurePageUtils().firstMeasurePage(),
-                            (route) => false);
+                                (route) => false);
                       } else {
                         showDialog(
                           context: context,
@@ -267,6 +189,61 @@ class UserLoginPageState extends State<UserLoginPage> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget buildTextField(String labelText, IconData icon, TextEditingController controller,
+      {TextInputType? keyboardType}) {
+    return TextField(
+      keyboardType: keyboardType,
+      autocorrect: false,
+      controller: controller,
+      textCapitalization: TextCapitalization.none,
+      cursorColor: const Color.fromRGBO(103, 155, 206, 1),
+      decoration: InputDecoration(
+          labelText: labelText,
+          labelStyle: TextStyle(
+              color: Color.fromRGBO(103, 155, 206, 1),
+              fontSize: height * 0.016),
+          prefixIcon: Icon(
+            icon,
+            size: height * 0.018,
+          ),
+          focusedBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: Color.fromRGBO(103, 155, 206, 1),
+                width: 2.0,
+              ))),
+      style: TextStyle(fontSize: height * 0.02),
+    );
+  }
+
+  Widget buildDropdown(String labelText, IconData icon, ValueChanged<String?> onChanged, List<String> items) {
+    return DropdownButtonFormField<String>(
+      decoration: InputDecoration(
+          labelText: labelText,
+          labelStyle: TextStyle(
+              color: Color.fromRGBO(103, 155, 206, 1),
+              fontSize: height * 0.02),
+          hintText: 'Select Gender',
+          prefixIcon: Icon(
+            icon,
+            size: height * 0.018,
+          ),
+          focusedBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: Color.fromRGBO(103, 155, 206, 1),
+                width: 2.0,
+              ))),
+      value: selectedGender,
+      onChanged: onChanged,
+      items: items.map((gender) {
+        return DropdownMenuItem<String>(
+          value: gender,
+          child: Text(gender,
+              style: TextStyle(fontSize: height * 0.01)),
+        );
+      }).toList(),
     );
   }
 }

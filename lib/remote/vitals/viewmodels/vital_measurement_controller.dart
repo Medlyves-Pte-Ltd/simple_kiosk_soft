@@ -4,7 +4,6 @@ import 'package:simple_kiosk_software/remote/models/vital_measurements.dart';
 import 'package:simple_kiosk_software/remote/services/api_methods.dart';
 import 'package:simple_kiosk_software/remote/services/device_readings.dart';
 import 'package:simple_kiosk_software/remote/utils/shared_prefs.dart';
-import 'dart:developer';
 
 class VitalMeasurementsController extends ChangeNotifier {
   bool _verifyloading = false;

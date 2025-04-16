@@ -8,12 +8,10 @@ import 'package:http/http.dart' as http;
 import 'package:medlyves_mobile_components/medlyves_mobile_components.dart'
     as mobile_components;
 import 'package:path/path.dart';
-import 'package:simple_kiosk_software/utils/app_config.dart';
 import 'package:simple_kiosk_software/utils/kiosk_config.dart';
 import 'dart:convert';
 import 'dart:developer';
 import '../config/settings.dart';
-import '../utils/app_constants.dart';
 
 class AppointmentApi {
   static final appoinmentEventUrl =
